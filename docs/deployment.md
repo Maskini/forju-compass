@@ -3,9 +3,11 @@
 ## Current status
 
 Prepared locally, not yet deployed. Private repository created: https://github.com/Maskini/forju-compass.
-Git upload and Render authorization are in progress. No live URL exists yet.
+Source is committed locally. GitHub password confirmation for CLI access and
+Render account creation are pending. No source has been pushed; no live URL
+exists yet. Render identity authorization was approved and completed.
 
-The production build and 27 automated tests pass. ESLint has seven existing
+The production build and 28 automated tests pass. ESLint has seven existing
 image optimization warnings and no errors. The candidate Git files and existing
 commit were checked for local credential values and common token patterns; none
 were found. This is a scoped scan, not a comprehensive security audit.
@@ -64,10 +66,15 @@ must only be supplied through Render's private environment settings, never Git.
   the seven demo embeddings; all prior rows were preserved.
 - Added single-instance AI limits: 12 requests/minute and 300/day shared across
   visitors. Restarts reset these counters; use provider spending limits too.
-- Resolve prototype feedback delivery without modifying official ForJu DNS.
+- Explicit prototype email mode is implemented and unit-tested; verify delivery
+  on the live host after deployment. No ForJu DNS changes are required.
 - Create the private GitHub repository, push `main`, connect Render and deploy.
 - Test public homepage, navigation, mobile layout, chat, Supabase retrieval,
   source pages, feedback, error handling and browser asset secret exposure.
 - Verify a subsequent main commit redeploys to the same HTTPS URL.
 
 Do not describe the configuration alone as a completed deployment.
+
+Production-mode local chat succeeded with real OpenAI and Supabase calls.
+Configured credential values were absent from tracked files and browser static
+assets. Public/mobile/live email testing still awaits deployment.
