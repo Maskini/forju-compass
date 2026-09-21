@@ -1,0 +1,119 @@
+/* Keep the floating control clear of legal links within the textured footer. */
+.official-footer { padding-bottom: 76px; }
+.feedback-launcher, .feedback-submit {
+  border: 0; border-radius: 999px; background: #f1cadf; color: #861456;
+  font: 700 14px/20px 'ForJu Public Sans', Arial, sans-serif;
+  box-shadow: var(--control-raised), var(--control-cast);
+  transition: background-color var(--control-motion), box-shadow var(--control-motion), transform var(--control-motion);
+}
+.feedback-launcher { position: fixed; z-index: 45; right: max(20px, env(safe-area-inset-right)); bottom: max(16px, env(safe-area-inset-bottom)); display: flex; align-items: center; gap: 8px; min-height: 44px; padding: 12px 18px; }
+.feedback-launcher svg, .feedback-close svg { width: 20px; height: 20px; flex: none; }
+.feedback-launcher:hover, .feedback-submit:hover:not(:disabled) { background: var(--control-hover-fill); box-shadow: var(--control-inset); }
+.feedback-launcher:active, .feedback-submit:active:not(:disabled) { transform: translateY(1px); box-shadow: var(--control-press); }
+.feedback-drawer {
+  position: fixed; inset: 0 0 0 auto; margin: 0; width: min(460px, 100%); max-width: 100%; height: 100dvh; max-height: 100dvh;
+  padding: 28px 24px max(28px, env(safe-area-inset-bottom)); border: 0; border-left: 1px solid #e7ded8;
+  border-radius: 24px 0 0 24px; background: linear-gradient(#fffdfbb8, #fffdfbb8), #fffdfb url('/forju/paper-fiber-cream.webp') repeat 0 0 / 220px;
+  color: #2d1e1e; box-shadow: -12px 0 40px #2d1e1e20; overflow-y: auto; overscroll-behavior: contain;
+  font: 14px/1.5 'ForJu Public Sans', Arial, sans-serif; letter-spacing: .2px;
+}
+.feedback-drawer[open] { animation: feedback-slide 220ms cubic-bezier(0,0,.2,1); }
+.feedback-drawer::backdrop { background: #2d1e1e50; backdrop-filter: blur(2px); }
+.feedback-drawer-header { display: flex; gap: 16px; align-items: flex-start; }
+.feedback-drawer h2 { margin: 4px 0 0; font: 700 25px/1.15 'ForJu Space Grotesk', Arial, sans-serif; letter-spacing: -.5px; }
+.feedback-eyebrow { margin: 0; color: #861456; font-weight: 700; font-size: 12px; }
+.feedback-close { display: grid; place-items: center; flex: none; margin-left: auto; width: 44px; height: 44px; border-radius: 50%; background: transparent; }
+.feedback-close:hover { background: var(--control-hover-fill); color: #861456; }
+#feedback-subtitle { margin: 16px 0 24px; color: #6b5a5a; }
+.feedback-form { display: grid; gap: 20px; }
+.feedback-form fieldset { min-width: 0; border: 0; padding: 0; margin: 0; }
+.feedback-form legend, .feedback-form > div > label { display: block; font-weight: 700; margin-bottom: 8px; }
+.feedback-types { display: grid; gap: 8px; }
+.feedback-type { display: flex; align-items: flex-start; gap: 10px; padding: 11px 12px; background: #fffdfbc9; border: 1px solid #e7ded8; border-radius: 14px; cursor: pointer; }
+.feedback-type:hover, .feedback-type:has(input:checked) { border-color: #c0107070; background: #fcedf5; }
+.feedback-type input { flex: none; width: 18px; height: 18px; margin-top: 3px; accent-color: #a11b67; }
+.feedback-type strong { display: block; font-size: 14px; }
+.feedback-type small { display: block; color: #6b5a5a; font-size: 12px; margin-top: 2px; }
+.feedback-form textarea, .feedback-form input[type=email] { width: 100%; border: 1px solid #ded2cc; border-radius: 12px; padding: 12px; background: #fff; color: #2d1e1e; font: inherit; box-shadow: inset 1px 2px 6px #2d1e1e0d; }
+.feedback-form textarea { min-height: 120px; resize: vertical; }
+.feedback-form [aria-invalid=true] { border-color: #b42345; }
+.feedback-counter { margin: 4px 0 0; text-align: right; font-size: 12px; color: #6b5a5a; }
+.feedback-field-error, .feedback-validation-summary { margin: 6px 0 0; color: #9e1c3c; font-size: 13px; }
+.feedback-privacy { font-size: 12px; line-height: 1.6; color: #6b5a5a; margin: 0; }
+.feedback-submit { min-height: 44px; padding: 12px 24px; width: 100%; }
+.feedback-form :disabled { cursor: not-allowed; }
+.feedback-form :is(fieldset, textarea, input[type=email], button):disabled { opacity: .5; }
+.feedback-submit:disabled { box-shadow: none; }
+.feedback-honeypot { position: absolute; width: 1px; height: 1px; clip-path: inset(50%); overflow: hidden; white-space: nowrap; }
+.feedback-success { padding: 32px 0; }
+.feedback-success h3 { font: 700 24px/1.2 'ForJu Space Grotesk', Arial, sans-serif; }
+.feedback-success-icon { display: grid; place-items: center; width: 48px; height: 48px; background: #e0eedf; color: #267042; border-radius: 50%; font-size: 24px; }
+.feedback-launcher:focus-visible, .feedback-drawer :focus-visible { outline: 3px solid #ff3aae; outline-offset: 3px; }
+@keyframes feedback-slide { from { transform: translateX(100%); opacity: .5; } to { transform: translateX(0); opacity: 1; } }
+@media (max-width: 480px) {
+  .feedback-drawer { border-radius: 0; padding: 20px 18px max(24px, env(safe-area-inset-bottom)); }
+  .feedback-launcher { right: 12px; bottom: max(12px, env(safe-area-inset-bottom)); padding: 10px 14px; font-size: 13px; }
+}
+@media (prefers-reduced-motion: reduce) { .feedback-drawer[open] { animation: none; } }
+
+/* Compact report control and inset paper panel from the feedback mockup. */
+.feedback-launcher {
+  min-height: 44px; padding: 10px 17px; gap: 8px;
+  background: linear-gradient(145deg, #fff0f7, #f8dfed); border: 1px solid #e9b8d2;
+  color: #94145f; font-size: 13px; font-weight: 600; line-height: 20px; letter-spacing: 0;
+  box-shadow: inset 0 1px 0 #fff, 0 2px 4px #38212d26, 0 5px 12px #38212d0d;
+}
+.feedback-launcher svg { width: 23px; height: 23px; }
+.feedback-launcher:hover { background: #f9e5f0; box-shadow: inset 0 1px 3px #a34b7626, 0 1px 2px #38212d1a; }
+.feedback-drawer {
+  inset: 14px 12px 14px auto; width: min(420px, calc(100% - 24px));
+  height: calc(100dvh - 28px); max-height: calc(100dvh - 28px);
+  padding: 26px 28px; border: 1px solid #e9e0dd; border-radius: 22px;
+  background: linear-gradient(#fffaf9f5, #fffaf9f5), #fffaf9 url('/forju/paper-fiber-cream.webp') repeat 0 0 / 220px;
+  box-shadow: 0 8px 30px #392a2321, 0 1px 2px #392a2314;
+  font-size: 13px; line-height: 1.45; letter-spacing: 0;
+}
+.feedback-drawer::backdrop { background: #38232204; backdrop-filter: none; }
+.feedback-drawer-header { margin-bottom: 16px; align-items: flex-start; }
+.feedback-report-badge {
+  display: grid; place-items: center; width: 62px; height: 62px; border-radius: 50% 50% 50% 12px;
+  color: #961269; background: linear-gradient(140deg, #ffe9f5, #f8d7e9);
+  box-shadow: 0 2px 2px #68405426, inset 0 1px 0 #fff8;
+}
+.feedback-report-badge svg { width: 33px; height: 33px; }
+.feedback-close { margin-top: -12px; margin-right: -14px; color: #787e85; border: 0; cursor: pointer; }
+.feedback-drawer h2 { margin: 0; font: 700 22px/1.2 'ForJu Public Sans', Arial, sans-serif; letter-spacing: -.7px; color: #201c20; }
+#feedback-subtitle { margin: 10px 0 24px; color: #707078; font-size: 13px; line-height: 1.45; }
+.feedback-form { gap: 19px; }
+.feedback-form legend, .feedback-form > div > label { font-weight: 600; margin-bottom: 7px; color: #27222a; }
+.feedback-types { gap: 2px; }
+.feedback-type { min-height: 50px; padding: 9px 10px; gap: 12px; border: 1px solid transparent; border-radius: 8px; background: transparent; transition: background-color 150ms ease; }
+.feedback-type:hover { background: #f9eef3; border-color: transparent; }
+.feedback-type:has(input:checked) { background: #f7e7ef; border-color: transparent; }
+.feedback-type input { width: 22px; height: 22px; margin: 1px 0 0; }
+.feedback-type strong { font-size: 13px; line-height: 18px; font-weight: 500; color: #29232b; }
+.feedback-type small { margin-top: 2px; font-size: 11px; line-height: 15px; color: #74737b; }
+.feedback-form textarea, .feedback-form input[type=email] { border-color: #d4cfce; border-radius: 7px; padding: 11px 12px; background: #ffffffb3; box-shadow: inset 0 1px 2px #32212a08; font-size: 12px; }
+.feedback-form textarea { min-height: 90px; display: block; }
+.feedback-form input[type=email] { height: 44px; padding-left: 43px; }
+.feedback-email-control { position: relative; }
+.feedback-email-control svg { position: absolute; width: 21px; height: 21px; left: 13px; top: 11px; color: #858891; pointer-events: none; }
+.feedback-counter { color: #7c7982; margin-top: 6px; }
+.feedback-privacy { display: flex; align-items: flex-start; gap: 11px; border-radius: 9px; background: #eaecef; padding: 12px 13px; font-size: 11px; color: #72727c; line-height: 1.5; }
+.feedback-privacy > svg { width: 21px; height: 21px; flex: none; margin-top: 3px; color: #3176b2; }
+.feedback-privacy p { margin: 0; }
+.feedback-privacy details { margin-top: 6px; }
+.feedback-privacy summary { cursor: pointer; color: #626572; }
+.feedback-privacy details p { padding-top: 5px; }
+.feedback-messages:empty { display: none; }
+.feedback-submit { display: flex; align-items: center; justify-content: center; gap: 17px; min-height: 50px; background: #b44889; color: white; font-weight: 500; font-size: 14px; letter-spacing: 0; box-shadow: inset 0 1px 0 #ffffff26, 0 2px 4px #46203326; cursor: pointer; }
+.feedback-submit svg { width: 22px; height: 22px; }
+.feedback-submit:hover:not(:disabled) { background: #a6387b; box-shadow: inset 0 2px 4px #66194526; }
+@media (max-width: 480px) {
+  .feedback-drawer { inset: 0; width: 100%; height: 100dvh; max-height: 100dvh; border-radius: 0; padding: 24px 20px max(24px, env(safe-area-inset-bottom)); }
+  .feedback-launcher { padding: 10px 14px; font-size: 12px; }
+  .feedback-form textarea, .feedback-form input[type=email] { font-size: 16px; }
+}
+@media (min-width: 900px) {
+  body:has(.feedback-drawer[open]) .feedback-launcher { right: 448px; }
+}

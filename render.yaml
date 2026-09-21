@@ -1,0 +1,30 @@
+# Private GitHub repository; connect with Render's GitHub integration.
+services:
+  - type: web
+    name: forju-compass
+    runtime: node
+    plan: free
+    branch: main
+    autoDeployTrigger: commit
+    buildCommand: npm ci --include=dev && npm run build
+    startCommand: npm start -- --hostname 0.0.0.0
+    healthCheckPath: /
+    envVars:
+      - key: NODE_VERSION
+        value: 24.21.0
+      - key: NODE_ENV
+        value: production
+      - key: OPENAI_API_KEY
+        sync: false
+      - key: SUPABASE_URL
+        sync: false
+      - key: SUPABASE_SECRET_KEY
+        sync: false
+      - key: FEEDBACK_DEMO_MODE
+        value: "true"
+      - key: FEEDBACK_TO_EMAIL
+        value: adam.maskini@icloud.com
+      - key: FEEDBACK_FROM_EMAIL
+        value: onboarding@resend.dev
+      - key: RESEND_API_KEY
+        sync: false

@@ -1,3 +1,39 @@
+# ForJu Compass
+
+ForJu Compass is an AI knowledge assistant being developed as a prototype for ForJu.
+
+## Development principles
+
+- Preserve existing functionality and ForJu branding.
+- Keep the UI responsive on desktop and mobile.
+- Never commit real `.env` files or expose secrets; `.env.example` contains names and placeholders only.
+- Keep server-side secrets server-side; never put credentials in `NEXT_PUBLIC_` variables.
+- Prefer maintainable, simple solutions; do not rewrite working functionality without a reason.
+- Run the production build before completing major changes.
+- Fix TypeScript/lint errors caused by your changes.
+- Keep deployment compatibility in mind.
+- Do not publish internal ForJu documents or knowledge without explicit publication clearance.
+- Do not modify the official ForJu site or DNS as part of this prototype.
+
+## Stack and commands
+
+Next.js App Router, React, TypeScript, CSS/Tailwind, Node.js 24, npm lockfile.
+Server API routes use OpenAI for embeddings/answers, Supabase for vector retrieval,
+and Resend for feedback. No application authentication is currently implemented.
+
+- `npm ci`: install locked dependencies.
+- `npm run dev`: localhost development.
+- `npm test`: request, retrieval, citation and feedback tests.
+- `npm run lint`: ESLint.
+- `npx tsc --noEmit`: TypeScript check.
+- `npm run build`: production build.
+- `npm start`: production server; respects the host's PORT environment variable.
+
+Render uses a free Node Web Service described in `render.yaml`, with automatic
+builds from private GitHub `main`. Read `docs/deployment.md` before publishing.
+Knowledge import scripts write to Supabase: do not run them casually or against
+production without confirming the intended dataset.
+
 <!-- BEGIN:nextjs-agent-rules -->
 
 # This is NOT the Next.js you know

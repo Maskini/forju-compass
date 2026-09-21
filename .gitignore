@@ -39,3 +39,9 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Local import snapshots, evaluation results and opt-in feedback
+/work/
+
+# Safe template only; real environment files stay ignored.
+!.env.example
