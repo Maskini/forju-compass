@@ -18,7 +18,8 @@ ForJu Compass is an AI knowledge assistant being developed as a prototype for Fo
 ## Stack and commands
 
 Next.js App Router, React, TypeScript, CSS/Tailwind, Node.js 24, npm lockfile.
-Server API routes use OpenAI for embeddings/answers, Supabase for vector retrieval,
+
+Server API routes use OpenAI for embeddings and answers, Supabase for vector retrieval,
 and Resend for feedback. No application authentication is currently implemented.
 
 - `npm ci`: install locked dependencies.
@@ -29,10 +30,12 @@ and Resend for feedback. No application authentication is currently implemented.
 - `npm run build`: production build.
 - `npm start`: production server; respects the host's PORT environment variable.
 
-Render uses a free Node Web Service described in `render.yaml`, with automatic
-builds from private GitHub `main`. Read `docs/deployment.md` before publishing.
-Knowledge import scripts write to Supabase: do not run them casually or against
-production without confirming the intended dataset.
+Render uses a Node Web Service described in `render.yaml`, with automatic builds
+from the `main` branch. Read `docs/deployment.md` before changing deployment
+configuration.
+
+Knowledge import scripts write to Supabase. Confirm the intended dataset and
+environment before running them.
 
 <!-- BEGIN:nextjs-agent-rules -->
 
