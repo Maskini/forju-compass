@@ -1,4 +1,4 @@
-# Private GitHub repository; connect with Render's GitHub integration.
+# Connect with Render's GitHub integration.
 services:
   - type: web
     name: forju-compass
@@ -23,8 +23,8 @@ services:
       - key: FEEDBACK_DEMO_MODE
         value: "true"
       - key: FEEDBACK_TO_EMAIL
-        value: adam.maskini@icloud.com
+        sync: false
       - key: FEEDBACK_FROM_EMAIL
-        value: onboarding@resend.dev
+        sync: false
       - key: RESEND_API_KEY
         sync: false
