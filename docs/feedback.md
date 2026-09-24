@@ -2,9 +2,9 @@
 
 ## Overview
 
-ForJu Compass includes a feedback and issue-reporting system that allows users to submit structured reports from the application interface.
+ForJu Compass includes a feedback and issue-reporting system that allows users to submit structured reports directly from the application interface.
 
-The feedback flow supports German and English and is designed to preserve user input when submission fails.
+The feedback flow supports German and English and is designed to preserve user input if submission fails.
 
 ## Implementation
 
@@ -40,28 +40,122 @@ Run:
 
 ```bash
 npm run dev
-## Real delivery verification
+```
 
-Once explicitly configured, submit a clearly labelled test using the actual drawer. Expect a success state and an accepted message in Resend. Check Resend's delivery status and the recipient's inbox/spam folder at `adam.maskini@forju.at`; verify subject, body, metadata and Reply-To. Acceptance by Resend is not a guarantee of inbox arrival. The authorized development test to iCloud was confirmed Delivered in Resend; delivery to the production ForJu inbox has not been tested.
+Then open:
+
+```text
+http://localhost:3000
+```
+
+The feedback interface can be tested locally without exposing production credentials.
+
+Automated checks:
+
+```bash
+npm test
+npx tsc --noEmit
+npm run lint
+npm run build
+```
+
+Tests use a mock email transport and do not send real messages.
+
+## Environment variables
+
+Feedback delivery uses server-side environment variables:
+
+```dotenv
+RESEND_API_KEY=
+FEEDBACK_TO_EMAIL=
+FEEDBACK_FROM_EMAIL=
+FEEDBACK_IP_HEADER=
+```
+
+These variables must not be prefixed with `NEXT_PUBLIC_` or exposed to client-side code.
+
+Sensitive values should be configured only through local environment files or the deployment platform's secret settings.
+
+## Email delivery
+
+The application uses Resend for feedback delivery.
+
+`FEEDBACK_FROM_EMAIL` must use a sender address permitted by the configured email provider.
+
+`FEEDBACK_TO_EMAIL` defines the destination for feedback reports.
+
+The optional email entered by a user is used only as a Reply-To address and is not used as the sender or destination.
+
+For production use, sender-domain configuration and DNS verification should only be performed by an authorized administrator.
 
 ## Security and privacy
 
-- Shared Zod schema, strict server field allowlist, trimmed/bounded values, valid timestamp, category and email.
-- 16 KiB streamed request limit; five-second body-read timeout; same-origin checks when browser origin metadata is present; JSON only.
-- Escaped HTML and plain-text email; fixed subject labels; CR/LF controls rejected in single-line fields.
-- Honeypot silently ignored. Five valid attempts per client bucket per ten minutes.
-- API errors never return stack traces, provider details or secrets. Logs contain generic event names and random request IDs, not report contents or email addresses.
-- Only the requested page/browser/viewport/time/language metadata is collected. No chat messages, cookies, account details, storage contents or invented session/conversation IDs. URL credentials/query/fragment are stripped.
-- Client prevents rapid duplicate submissions and reuses the same payload/key on unchanged retries. Resend receives a stable idempotency key that includes a payload hash.
+The feedback API includes:
 
-## Deployment and limitations
+- shared Zod validation
+- strict server-side field allowlisting
+- trimmed and bounded input values
+- category and email validation
+- streamed request-size limits
+- request body timeouts
+- same-origin checks when browser origin metadata is available
+- JSON-only requests
+- HTML escaping
+- plain-text email generation
+- CR/LF protection for single-line fields
+- honeypot spam protection
+- request rate limiting
+- idempotency protection
+- sanitized URLs
+- generic public error responses
 
-No deployment was performed. If deploying later, use a Node-capable Next.js host, set the three email variables in server-side secret settings, restart/redeploy, and keep `.env*` ignored (`.env.example` is the intentional exception). Never publish `.env.local` or server source as public assets. The feedback API is not compatible with static-only export hosting.
+Application logs do not contain report contents, email addresses, credentials, or provider secrets.
 
-The rate limiter is process-local: it resets on restart and is not shared across serverless instances. By default, unidentified clients share one bucket. Only set `FEEDBACK_IP_HEADER` if a trusted ingress proxy overwrites that header and clients cannot bypass it. For a public multi-instance deployment, replace the limiter dependency with a shared store or use an edge rate limit. Origin checks and honeypots alone do not prevent determined non-browser spam.
+The feedback system collects only metadata required for the submitted report, such as:
 
-There is no database queue, delivery webhook, or automatic retry worker. Reports are not persisted locally. The provider wait is bounded to 15 seconds, but timing out does not cancel an already-running provider request; the client waits 22 seconds and unchanged retries reuse the idempotency key. Provider acceptance can be followed by a later bounce. Resend retains messages according to the account's policy; inbox access and retention must be managed by the recipient.
+- current page
+- browser information
+- viewport information
+- timestamp
+- interface language
 
-## Authorized local iCloud test (current)
+It does not intentionally collect:
 
-Local development now sets `FEEDBACK_LOCAL_TEST=true`, `FEEDBACK_TO_EMAIL=adam.maskini@icloud.com`, and `FEEDBACK_FROM_EMAIL=onboarding@resend.dev`. This exception only works with `NODE_ENV=development`; production still requires the original ForJu recipient. Resend's test sender is restricted to the account owner's email address. The sending-only replacement API key is now configured locally. To revert, remove the local-test flag and restore the ForJu recipient and a verified sender. Never deploy these local-test settings.
+- chat history
+- cookies
+- account credentials
+- local storage contents
+- unrelated application data
+
+## Rate limiting
+
+The current rate limiter is process-local.
+
+This is sufficient for the current prototype, but a shared rate-limit store should be used if the application is later deployed across multiple instances.
+
+`FEEDBACK_IP_HEADER` should only be configured when the hosting proxy reliably overwrites the selected header.
+
+## Reliability limitations
+
+The current prototype does not include:
+
+- a persistent feedback queue
+- delivery webhooks
+- an automatic retry worker
+- durable local report storage
+
+Email-provider acceptance does not guarantee inbox delivery.
+
+Retries use stable idempotency handling to reduce the risk of duplicate feedback emails.
+
+## Deployment
+
+The feedback service runs server-side and therefore requires a Node-capable Next.js deployment.
+
+Required email settings should be configured through the hosting provider's environment configuration rather than committed to Git.
+
+Environment files containing real credentials must remain excluded from version control.
+
+## Prototype status
+
+The feedback system is part of the current ForJu Compass prototype and may be extended as the project develops.
