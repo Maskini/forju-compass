@@ -1,80 +1,108 @@
-# Prototype deployment
+# Deployment
 
 ## Current status
 
-Prepared locally, not yet deployed. Private repository created: https://github.com/Maskini/forju-compass.
-Source is committed locally. GitHub password confirmation for CLI access and
-Render account creation are pending. No source has been pushed; no live URL
-exists yet. Render identity authorization was approved and completed.
+ForJu Compass is deployed as a prototype on Render.
 
-The production build and 28 automated tests pass. ESLint has seven existing
-image optimization warnings and no errors. The candidate Git files and existing
-commit were checked for local credential values and common token patterns; none
-were found. This is a scoped scan, not a comprehensive security audit.
+Live demo:
+https://forju-compass.onrender.com
+
+The application is configured for automatic deployment from the `main` branch.
 
 ## Architecture
 
-Next.js 16 App Router, React 19, TypeScript, npm, Node 24. Server routes use
-OpenAI embeddings and grounded answers, Supabase `match_documents` retrieval,
-and Resend feedback email. There is no user authentication or Supabase browser
-client, so no login callback/redirect URL changes are needed. Requests use
-relative same-origin API URLs. The official ForJu site and DNS remain untouched.
+ForJu Compass is built with:
+
+- Next.js 16 App Router
+- React 19
+- TypeScript
+- Node.js 24
+- OpenAI for embeddings and grounded AI responses
+- Supabase for vector-based knowledge retrieval
+- Resend for feedback email delivery
+- Render for hosting
+
+AI and database operations are handled through server-side routes. Sensitive
+credentials are not exposed to the browser.
+
+Requests use relative same-origin API URLs.
 
 ## Render configuration
 
-`render.yaml` declares a free Node Web Service, repository root, `main` branch,
-automatic deployment on commits, `npm ci --include=dev && npm run build`, and
-`npm start -- --hostname 0.0.0.0`. Next respects Render's PORT variable.
-Node is pinned to 24.21.0, matching the tested local runtime. Render's private
-GitHub integration must be connected; do not make the repository public.
+`render.yaml` defines a Node Web Service with:
 
-Free hosting may sleep when idle and uses ephemeral storage. Existing paid
-external API usage is separate from the hosting plan. Do not promise that
-OpenAI requests cost zero. Do not enable local-file feedback storage on Render
-as though it were durable.
+- `main` as the deployment branch
+- automatic deployment on commits
+- `npm ci --include=dev && npm run build`
+- `npm start -- --hostname 0.0.0.0`
+- health checks on `/`
+- Node.js 24.21.0
 
-References: https://render.com/docs/deploy-nextjs-app and
-https://render.com/docs/blueprint-spec
+Render's free hosting tier may sleep when idle. External services such as
+OpenAI may have separate usage costs.
 
 ## Environment variables
 
 No browser-exposed environment variables are required.
 
-Required server-only variables, copied securely from local configuration:
-- OPENAI_API_KEY
-- SUPABASE_URL (service address, not a secret but kept server-side)
-- SUPABASE_SECRET_KEY
+Required server-side variables:
 
-Optional server-only configuration:
-- OPENAI_CHAT_MODEL: override the existing model.
-- RESEND_API_KEY, FEEDBACK_FROM_EMAIL, FEEDBACK_TO_EMAIL: feedback delivery.
-- FEEDBACK_IP_HEADER: only a header the hosting proxy reliably overwrites.
-- KNOWLEDGE_FEEDBACK_DIR: requires durable private storage; omit on free Render.
+- `OPENAI_API_KEY`
+- `SUPABASE_URL`
+- `SUPABASE_SECRET_KEY`
 
-FEEDBACK_LOCAL_TEST works only in development. Render explicitly enables
-FEEDBACK_DEMO_MODE=true, which permits only the fixed account-owner recipient
-adam.maskini@icloud.com and onboarding@resend.dev sender. Provider delivery
-must be verified from the deployed service. Do not change ForJu DNS.
+Feedback-related variables:
 
-NODE_ENV=production and NODE_VERSION are set by the Blueprint. Secret values
-must only be supplied through Render's private environment settings, never Git.
+- `RESEND_API_KEY`
+- `FEEDBACK_FROM_EMAIL`
+- `FEEDBACK_TO_EMAIL`
 
-## Publication checks still required
+Optional configuration:
 
-- Completed: seven public website summaries replace private-document excerpts.
-  Originals remain in ignored work/private-knowledge-before-demo. Supabase has
-  the seven demo embeddings; all prior rows were preserved.
-- Added single-instance AI limits: 12 requests/minute and 300/day shared across
-  visitors. Restarts reset these counters; use provider spending limits too.
-- Explicit prototype email mode is implemented and unit-tested; verify delivery
-  on the live host after deployment. No ForJu DNS changes are required.
-- Create the private GitHub repository, push `main`, connect Render and deploy.
-- Test public homepage, navigation, mobile layout, chat, Supabase retrieval,
-  source pages, feedback, error handling and browser asset secret exposure.
-- Verify a subsequent main commit redeploys to the same HTTPS URL.
+- `OPENAI_CHAT_MODEL`
+- `FEEDBACK_IP_HEADER`
+- `KNOWLEDGE_FEEDBACK_DIR`
 
-Do not describe the configuration alone as a completed deployment.
+`FEEDBACK_DEMO_MODE=true` can be used for the current prototype feedback
+configuration.
 
-Production-mode local chat succeeded with real OpenAI and Supabase calls.
-Configured credential values were absent from tracked files and browser static
-assets. Public/mobile/live email testing still awaits deployment.
+Sensitive values must be configured through Render's environment settings and
+must never be committed to Git.
+
+## Security
+
+The public prototype is designed to use only approved public-source knowledge.
+
+Current protections include:
+
+- server-side API credentials
+- environment files excluded from Git
+- restricted knowledge retrieval
+- input validation
+- AI request rate limiting
+- feedback validation and rate limiting
+- HTML escaping and URL sanitization
+- generic outward-facing error responses
+- disabled public ingestion and diagnostic endpoints
+
+The public repository must not contain private ForJu documents, credentials,
+API keys, or internal-only datasets.
+
+## Deployment workflow
+
+1. Push changes to the `main` branch.
+2. Render automatically starts a new deployment.
+3. Verify that the build succeeds.
+4. Test the deployed application:
+   - homepage and navigation
+   - responsive/mobile layout
+   - AI chat
+   - knowledge retrieval
+   - source pages
+   - feedback submission
+   - error handling
+
+## Prototype status
+
+ForJu Compass is an active prototype and does not represent the final planned
+scope of the project.
