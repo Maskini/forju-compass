@@ -20,8 +20,6 @@ services:
         sync: false
       - key: SUPABASE_SECRET_KEY
         sync: false
-      - key: FEEDBACK_DEMO_MODE
-        value: "true"
       - key: FEEDBACK_TO_EMAIL
         sync: false
       - key: FEEDBACK_FROM_EMAIL
