@@ -44,7 +44,7 @@ const EN: Record<string, string> = {
   "Neues Gespräch": "New conversation",
   "Relevante ForJu Seiten": "Relevant ForJu pages",
   "Quellen werden gesucht …": "Looking for sources …",
-  "Öffentliche Quelle": "Public source",
+  "Positionspapier 2026 · Quellenauszug": "Position paper 2026 · Source excerpt",
   "Beratung & Unterstützung": "Advice & support",
   "Begleitung für deine Ideen und Fragen": "Guidance for your ideas and questions",
   "ForJu kennenlernen": "Get to know ForJu",
@@ -61,6 +61,8 @@ const EN: Record<string, string> = {
   "IDEEN VERBINDEN. ZUKUNFT GESTALTEN.": "CONNECT IDEAS. SHAPE THE FUTURE.",
   "Du hast eine Idee und möchtest weiterkommen? ForJu verbindet junge Menschen mit Wissen, Mentor:innen und Möglichkeiten. Frag Compass, welche Unterstützung zu deinem Vorhaben passt.": "Have an idea and want to move forward? ForJu connects young people with knowledge, mentors and opportunities. Ask Compass what support fits your project."
 };
+
+import KnowledgeFeedback from "@/app/components/KnowledgeFeedback";
 
 type Source = {
   title: string;
@@ -379,6 +381,7 @@ export default function Home() {
                   <div className="chat-turn" key={index}>
                     <p className="answer-copy__question">{t("Du")}: {turn.question}</p>
                     <p className="chat-answer">{turn.answer}</p>
+                    <KnowledgeFeedback question={turn.question} language={language} />
                     {turn.sources.length > 0 && (
                       <div className="chat-sources">
                         <strong>{t("Gefundene Quellen")}</strong>
@@ -424,7 +427,7 @@ export default function Home() {
               <div className="resource-list">
                 {latestSources.length > 0 ? latestSources.map((source) => (
                   <a className="resource-row" key={source.url} href={source.url} target="_blank" rel="noopener noreferrer">
-                    <span><strong>{source.title}</strong><small>{source.url.startsWith("/wissen/") ? t("Öffentliche Quelle") : new URL(source.url).hostname}</small></span>
+                    <span><strong>{source.title}</strong><small>{source.url.startsWith("/wissen/") ? t("Positionspapier 2026 · Quellenauszug") : new URL(source.url).hostname}</small></span>
                     <ChevronIcon />
                   </a>
                 )) : loading ? <p>{t("Quellen werden gesucht …")}</p> : [
