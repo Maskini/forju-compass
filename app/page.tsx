@@ -62,8 +62,6 @@ const EN: Record<string, string> = {
   "Du hast eine Idee und möchtest weiterkommen? ForJu verbindet junge Menschen mit Wissen, Mentor:innen und Möglichkeiten. Frag Compass, welche Unterstützung zu deinem Vorhaben passt.": "Have an idea and want to move forward? ForJu connects young people with knowledge, mentors and opportunities. Ask Compass what support fits your project."
 };
 
-import KnowledgeFeedback from "@/app/components/KnowledgeFeedback";
-
 type Source = {
   title: string;
   url: string;
@@ -381,7 +379,6 @@ export default function Home() {
                   <div className="chat-turn" key={index}>
                     <p className="answer-copy__question">{t("Du")}: {turn.question}</p>
                     <p className="chat-answer">{turn.answer}</p>
-                    <KnowledgeFeedback question={turn.question} language={language} />
                     {turn.sources.length > 0 && (
                       <div className="chat-sources">
                         <strong>{t("Gefundene Quellen")}</strong>
