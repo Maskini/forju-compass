@@ -44,7 +44,7 @@ const EN: Record<string, string> = {
   "Neues Gespräch": "New conversation",
   "Relevante ForJu Seiten": "Relevant ForJu pages",
   "Quellen werden gesucht …": "Looking for sources …",
-  "Positionspapier 2026 · Quellenauszug": "Position paper 2026 · Source excerpt",
+  "Öffentliche Quelle": "Public source",
   "Beratung & Unterstützung": "Advice & support",
   "Begleitung für deine Ideen und Fragen": "Guidance for your ideas and questions",
   "ForJu kennenlernen": "Get to know ForJu",
@@ -427,7 +427,7 @@ export default function Home() {
               <div className="resource-list">
                 {latestSources.length > 0 ? latestSources.map((source) => (
                   <a className="resource-row" key={source.url} href={source.url} target="_blank" rel="noopener noreferrer">
-                    <span><strong>{source.title}</strong><small>{source.url.startsWith("/wissen/") ? t("Positionspapier 2026 · Quellenauszug") : new URL(source.url).hostname}</small></span>
+                    <span><strong>{source.title}</strong><small>{source.url.startsWith("/wissen/") ? t("Öffentliche Quelle") : new URL(source.url).hostname}</small></span>
                     <ChevronIcon />
                   </a>
                 )) : loading ? <p>{t("Quellen werden gesucht …")}</p> : [
