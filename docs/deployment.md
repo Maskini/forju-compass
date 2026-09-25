@@ -63,9 +63,6 @@ Optional configuration:
 - `FEEDBACK_IP_HEADER`
 - `KNOWLEDGE_FEEDBACK_DIR`
 
-`FEEDBACK_DEMO_MODE=true` can be used for the current prototype feedback
-configuration.
-
 Sensitive values must be configured through Render's environment settings and
 must never be committed to Git.
 
