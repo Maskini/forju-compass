@@ -61,7 +61,6 @@ Optional configuration:
 
 - `OPENAI_CHAT_MODEL`
 - `FEEDBACK_IP_HEADER`
-- `KNOWLEDGE_FEEDBACK_DIR`
 
 Sensitive values must be configured through Render's environment settings and
 must never be committed to Git.
@@ -80,7 +79,6 @@ Current protections include:
 - feedback validation and rate limiting
 - HTML escaping and URL sanitization
 - generic outward-facing error responses
-- disabled public ingestion and diagnostic endpoints
 
 The public repository must not contain private ForJu documents, credentials,
 API keys, or internal-only datasets.
