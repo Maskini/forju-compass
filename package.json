@@ -9,6 +9,7 @@
     "lint": "eslint",
     "test": "node --test tests/*.test.mjs",
     "test:visitors": "npm --prefix tools/visitor-checks test",
+    "test:release": "bash tools/release/run.sh",
     "check:release": "npm run lint && npm test && npm run build && npm run test:visitors",
     "knowledge:import": "node scripts/import-knowledge.mjs"
   },

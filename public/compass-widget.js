@@ -121,9 +121,9 @@
     const launcherLabel = dialog.open ? (en ? "Minimize chat" : "Chat minimieren")
       : started ? (en ? "Resume chat" : "Chat fortsetzen")
       : (en ? "ForJu Compass: chat assistance" : "ForJu Compass: Chathilfe");
-    launcher.setAttribute("aria-label", launcherLabel);
-    launcher.title = launcherLabel;
     hint.hidden = dialog.open || !card.hidden;
+    launcher.setAttribute("aria-label", hint.hidden ? launcherLabel : launcherLabel + " — " + hint.textContent);
+    launcher.title = launcherLabel;
   }
   function toggleWelcome(show) {
     card.hidden = !show;
@@ -184,7 +184,9 @@
   window.addEventListener("message",event=>{
     if(event.origin!==origin||event.source!==frame.contentWindow)return;
     if(event.data?.type==="forju:draft" && dialog.open && typeof event.data.open==="boolean"){
-      dialog.toggleAttribute("data-draft",event.data.open);applyLayout();
+      dialog.toggleAttribute("data-draft",event.data.open);
+      applyLayout();
+      frame.contentWindow.postMessage({type:"forju:draft-layout",open:event.data.open},origin);
     }
     if(event.data?.type==="forju:ready"){ready=true;clearTimeout(waitTimer);recovery.hidden=true;frame.hidden=false;if(dialog.open)send();}
     if(event.data?.type==="forju:close"&&dialog.open&&!dialog.hasAttribute("data-draft"))closeChat();

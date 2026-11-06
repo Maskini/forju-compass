@@ -3,16 +3,17 @@ import assert from "node:assert/strict";
 import {createRequire} from "node:module";
 import {readFileSync} from "node:fs";
 import ts from "typescript";
+import * as requestBody from "../lib/server/request-body.mjs";
 const require=createRequire(import.meta.url);
 function load(path,overrides={}){
  const src=readFileSync(new URL(path,import.meta.url),"utf8"),out=ts.transpileModule(src,{compilerOptions:{module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2022}}).outputText,e={};
  new Function("require","exports",out)(id=>id==="server-only"?{}:(overrides[id]??require(id)),e);return e;
 }
-const shared=load("../lib/server/feedback-handler.ts",{"../feedback-validation":{},"./feedback-email":{}});
+
 const constants=load("../lib/project-mail.ts"),calls=[];
 let result={data:{id:"synthetic"}};
 class FakeResend { emails={send:async (...args)=>{calls.push(args);return result}} }
-const mod=load("../lib/server/project-submission.ts",{"./feedback-handler":shared,"../project-mail":constants,resend:{Resend:FakeResend}});
+const mod=load("../lib/server/project-submission.ts",{"./request-body.mjs":requestBody,"../project-mail":constants,resend:{Resend:FakeResend}});
 const config=()=>({key:"fake-only",from:"demo@example.org"}),limit=()=>({allowed:true,retryAfter:0});
 const post=mod.createProjectHandler({config,limit,deliver:mod.deliverProject});
 const body={draft:"Our synthetic class project.",language:"en",confirmed:true};

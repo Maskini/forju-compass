@@ -3,7 +3,7 @@ import {createHash} from "node:crypto";
 import {Resend} from "resend";
 import {z} from "zod";
 import {PROJECT_MAX_LENGTH} from "../project-mail";
-import {BodyError,readBody} from "./feedback-handler";
+import {BodyError,readBody} from "./request-body.mjs";
 
 const PROJECT_RECIPIENT = "adam.maskini@forju.at";
 const projectSubject = (lang:"de"|"en") => lang==="de" ? "[ForJu Compass] Projektentwurf" : "[ForJu Compass] Project draft";

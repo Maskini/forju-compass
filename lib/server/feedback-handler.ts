@@ -4,36 +4,9 @@ import { z } from "zod";
 import { feedbackSchema, type FeedbackReport } from "../feedback-validation";
 import { FeedbackConfigurationError } from "./feedback-email";
 
-export const MAX_FEEDBACK_BYTES = 64 * 1024;
+import {BodyError, readBody} from "./request-body.mjs";
 const errorMessage = "Das Feedback konnte nicht gesendet werden. Bitte versuche es erneut.";
 const json = (body: object, status = 200, extra: Record<string, string> = {}) => Response.json(body, { status, headers: { "Cache-Control": "no-store", ...extra } });
-export class BodyError extends Error { constructor(public status: number) { super("invalid_body"); } }
-export async function readBody(request: Request) {
-  if (Number(request.headers.get("content-length")) > MAX_FEEDBACK_BYTES) throw new BodyError(413);
-  if (!request.body) throw new BodyError(400);
-  const reader = request.body.getReader();
-  let bytes = 0, text = "";
-  const decoder = new TextDecoder("utf-8", { fatal: true });
-  let timer: ReturnType<typeof setTimeout> | undefined;
-  try {
-    return await Promise.race([
-      (async () => {
-        for (;;) {
-          const { done, value } = await reader.read();
-          if (done) break;
-          bytes += value.byteLength;
-          if (bytes > MAX_FEEDBACK_BYTES) throw new BodyError(413);
-          text += decoder.decode(value, { stream: true });
-        }
-        return JSON.parse(text + decoder.decode()) as unknown;
-      })(),
-      new Promise<never>((_, reject) => { timer = setTimeout(() => reject(new BodyError(408)), 5000); }),
-    ]);
-  } catch (error) {
-    if (error instanceof SyntaxError || error instanceof TypeError) throw new BodyError(400);
-    throw error;
-  } finally { if (timer) clearTimeout(timer); void reader.cancel().catch(() => {}); }
-}
 export function createFeedbackHandler(deps: {
   send: (report: FeedbackReport, key: string) => Promise<string>;
   limit: (request: Request) => { allowed: boolean; retryAfter: number };

@@ -69,7 +69,7 @@ export default function FeedbackForm({ language, exchange, onAccepted }: {
     <p>{t("Deine Rückmeldung wurde erfolgreich übermittelt.", "Your feedback was submitted successfully.")}</p>
     <button type="button" className="feedback-submit" onClick={() => { setErrors({}); setStatus("idle"); requestAnimationFrame(() => formRef.current?.querySelector<HTMLInputElement>('input[name="type"]')?.focus()); }}>{t("Weiteres Feedback senden", "Send more feedback")}</button>
   </div>;
-  return <form ref={formRef} className="feedback-form" onSubmit={submit} noValidate aria-busy={status === "sending"}>
+  return <form method="post" action="/api/feedback" ref={formRef} className="feedback-form" onSubmit={submit} noValidate aria-busy={status === "sending"}>
     <fieldset disabled={status === "sending"} aria-describedby={errors.type ? "feedback-type-error" : undefined}>
       <legend>{t("Art des Problems", "Problem type")}</legend>
       <div className="feedback-types">{feedbackTypes.map(value => <label key={value} className="feedback-type">

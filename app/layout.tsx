@@ -1,3 +1,4 @@
+import {connection} from "next/server";
 import type { Metadata } from "next";
 
 import "./globals.css";
@@ -9,7 +10,8 @@ export const metadata: Metadata = {
   description: "ForJu Compass begleitet deine Ideen mit Wissen, Orientierung und Quellen aus der Forschenden Jugend.",
 };
 
-export default function RootLayout({ children }: LayoutProps<"/">) {
+export default async function RootLayout({ children }: LayoutProps<"/">) {
+  await connection(); // Each HTML response carries a fresh script nonce.
   return (
     <html
       lang="de"

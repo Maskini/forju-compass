@@ -1,0 +1,6 @@
+**
+!package.json
+!package-lock.json
+!tools/
+!tools/visitor-checks/
+!tools/visitor-checks/package*.json

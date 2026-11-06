@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import fc from 'fast-check';
 import { readFileSync } from 'node:fs';
 import ts from 'typescript';
+import * as requestBody from '../lib/server/request-body.mjs';
 import * as chat from '../lib/chat.ts';
 import {guidedReply,isGuidedPrompt} from '../lib/dialogue.ts';
 import {visitorEnquiry} from '../lib/visitor-enquiry.ts';
@@ -22,7 +23,7 @@ function setup({matches=[],searchError=null,answer=JSON.stringify({paragraphs:[{
     embeddings={create:async (input)=>{calls.embeddings.push(input);return {data:[{embedding:[0.1]}]};}};
     responses={create:async (input)=>{calls.responses.push(input);return {status,output_text:answer};}};
   }
-  const modules={"@/lib/visitor-guidance":visitorGuidance,"@/lib/workshop-guide":workshopGuide,"@/lib/visitor-enquiry":{visitorEnquiry},"@/lib/dialogue":{guidedReply,isGuidedPrompt},"@/lib/conversation":conversation,"@/lib/server/ai-limit":{takeAiRequest:()=>0},openai:{default:OpenAI},'next/server':{NextResponse:Response},'@/lib/chat':chat,'@/lib/knowledge':knowledgeModule,'@/lib/server/public-retrieval':{retrievePublicKnowledge:async()=>{if(searchError)throw Error('Search failed');return matches;}}};
+  const modules={"@/lib/server/request-body.mjs":requestBody,"@/lib/visitor-guidance":visitorGuidance,"@/lib/workshop-guide":workshopGuide,"@/lib/visitor-enquiry":{visitorEnquiry},"@/lib/dialogue":{guidedReply,isGuidedPrompt},"@/lib/conversation":conversation,"@/lib/server/ai-limit":{takeAiRequest:()=>0},openai:{default:OpenAI},'next/server':{NextResponse:Response},'@/lib/chat':chat,'@/lib/knowledge':knowledgeModule,'@/lib/server/public-retrieval':{retrievePublicKnowledge:async()=>{if(searchError)throw Error('Search failed');return matches;}}};
   const exports={};
   new Function('require','exports',compiled)((id)=>modules[id],exports);
   return {POST:exports.POST,calls};

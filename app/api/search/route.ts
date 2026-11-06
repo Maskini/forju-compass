@@ -1,10 +1,14 @@
+import {BodyError, readBody} from "@/lib/server/request-body.mjs";
 import {takeAiRequest} from "@/lib/server/ai-limit";
 import {localKnowledge,selectCatalogKnowledge} from "@/lib/knowledge";
 import OpenAI from "openai";
 
 export async function POST(request: Request) {
-  if(Number(request.headers.get("content-length")||0)>32000) return Response.json({error:"Anfrage zu groß."},{status:413});
-  const body=await request.json().catch(()=>null);
+  let body;
+  try { body = await readBody(request, 32000); }
+  catch (error) {
+    return Response.json({error:"Ungültige Suchanfrage."},{status:error instanceof BodyError ? error.status : 400});
+  }
   const query=typeof body?.query==="string" ? body.query.trim() : "";
   if(!query || query.length>2000) return Response.json({error:"Ungültige Suchanfrage."},{status:400});
   const retry=process.env.NODE_ENV==="production"?takeAiRequest(request):0;

@@ -85,6 +85,10 @@ export function guidedReply(message:string,en:boolean,history:ChatMessage[],reco
   const lang=en?1:0, last=history.filter(t=>t.role==="assistant").at(-1)?.content;
   const menu=(Object.values(menus)).find(m=>m.ask.some(s=>s===last));
   const offer=(id:Menu):Reply=>({mode:"conversation",answer:menus[id].ask[lang],sources:[],suggestions:menus[id].options.map(o=>labels[o][lang])});
+  // A deictic request without an earlier subject needs the existing topic menu.
+  if (!history.length && /^(?:can (?:you|forju) help(?: me| us)? with (?:that|this|it)|kannst du (?:mir|uns) (?:damit|dabei) helfen)[?!. ]*$/i.test(message)) {
+    return offer("start");
+  }
   // Only strip conversational correction prefixes, never strip a negation
   // from the requested subject (“not funding” is not a funding request).
   const request=message.replace(/^(?:nein[, ]+ich (?:meine|meinte)|eigentlich meine ich|no[, ]+i (?:mean|meant)|actually[, ]+i (?:mean|meant))\s+/i,"");

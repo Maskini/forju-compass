@@ -68,9 +68,8 @@ unlisted origin is denied framing. The standalone page should still open.
 
 “Projektentwurf starten” / “Start a project draft” uses the visitor’s words
 from this chat. Guided answers and edits live in component memory. Reloading
-the page clears them. Both languages link to the corresponding official
-`/kontakt?intent=projekt` form. The visitor transfers the editable message,
-enters their name and email there, and decides whether to submit. Compass can also email an explicitly confirmed draft when a project sender is configured. If a host disables clipboard
-writing, visitors can select and copy the message manually.
+the page clears them. On Review, visitors can expand the final text, select it and use the
+device’s Copy command. Send requests delivery using the configured project sender.
+If the sender is unavailable, Compass keeps the draft in the current tab.
 
 The draft follows six optional steps: idea and goals, audience, implementation, resources, impact, and review. Closing the draft returns to the conversation; reopening resumes the same step. No account or browser storage is used for project details. Only a layout toggle (no draft content) is sent to the host widget to expand its desktop dialog.

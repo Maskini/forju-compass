@@ -1,3 +1,4 @@
+import {BodyError, readBody} from "@/lib/server/request-body.mjs";
 import { offersPartnership, publicGuidance } from "@/lib/visitor-guidance";
 import { createWorkshopGuide } from "@/lib/workshop-guide";
 import { visitorEnquiry } from "@/lib/visitor-enquiry";
@@ -14,16 +15,11 @@ const workshopGuide = createWorkshopGuide(knowledgeCatalog);
 const enquiryTopic = (text: string) => offersPartnership(text) ? "partnerpool" : visitorTopic(text);
 
 export async function POST(request: Request) {
-  if (Number(request.headers.get("content-length") || 0) > 32000) {
-    return NextResponse.json({error: "Anfrage zu groß."}, {status: 413});
-  }
-
-  // The catalog's official /de pages have matching paths in ForJu’s English sitemap.
-  const readerUrl = (url: string) => en ? url.replace(/^https:\/\/forju\.at\/de(?=\/|#|\?|$)/, "https://forju.at/en") : url;
   let parsed;
   try {
-    parsed = parseChatRequest(await request.json());
+    parsed = parseChatRequest(await readBody(request, 32000));
   } catch (error) {
+    if (error instanceof BodyError) return NextResponse.json({error:error.status===413 ? "Anfrage zu groß." : "Ungültige Anfrage."},{status:error.status});
     return NextResponse.json({ error: error instanceof SyntaxError ? "Ungültiges JSON." : error instanceof Error ? error.message : "Ungültige Anfrage." }, { status: 400 });
   }
   const raw = questionAfterGreeting(parsed.message);
@@ -32,6 +28,8 @@ export async function POST(request: Request) {
   const en = /^(what|where|when|how|who|can|could|is there|by what|i|we|for my|for our|not sure|explain|give me|help with)\b/i.test(message) ? true
     : /^(was|wo|wann|wie|wer|gibt|bietet|kann|bis wann|und wie|ich|wir|für|kannst|einfacher|hilfe bei)\b/i.test(message) ? false
     : request.headers.get("accept-language")?.toLowerCase().startsWith("en") ?? false;
+  // The published English offers use the same paths as the German pages.
+  const readerUrl = (url:string) => en ? url.replace(/^https:\/\/forju\.at\/de(?=\/|#|\?|$)/, "https://forju.at/en") : url;
   const retry = process.env.NODE_ENV === "production" ? takeAiRequest(request) : 0;
   if (retry) return NextResponse.json({error:request.headers.get("accept-language")?.startsWith("en") ? "Too many requests. Please try again later." : "Zu viele Anfragen. Bitte versuche es später erneut."},{status:429,headers:{"Retry-After":String(retry)}});
   const prior = knowledgeCatalog.find(r=>r.id===parsed.topic);
@@ -46,10 +44,13 @@ export async function POST(request: Request) {
       : (en ? "What did I miss? Tell me which part you still need help with, or contact the ForJu team directly." : "Welcher Teil deiner Frage ist noch offen? Sag mir, was dir fehlt, oder frag direkt beim ForJu-Team nach.");
     return NextResponse.json({mode:"conversation", answer, sources:[], suggestions:[team], topic:wrong ? undefined : prior?.id});
   }
-  if (wantsTeam(message)) {
-    if (prior?.publicContact) {
-      const contact = prior.publicContact;
-      return NextResponse.json({mode:"library", topic:prior.id,
+  const partnerContact = /partnerschaft|kooperation|partnership|cooperation/i.test(message)
+    && /contact|who (?:do|should|can|is)|ansprech|kontakt|an wen/i.test(message);
+  if (partnerContact || wantsTeam(message)) {
+    const contactCard = partnerContact ? knowledgeCatalog.find(r=>r.id==="partnerpool") : prior;
+    if (contactCard?.publicContact) {
+      const contact = contactCard.publicContact;
+      return NextResponse.json({mode:"library", topic:contactCard.id,
         answer:en ? "For partnerships, email "+contact.name+" at "+contact.email+" or use the partnership form." : "Für Kooperationen schreib "+contact.name+" an "+contact.email+" oder nutze das Partnerschaftsformular.",
         sources:[{title:en ? "Partnership enquiries" : "Partnerschaft anfragen",url:readerUrl(contact.sourceUrl)}]});
     }
@@ -79,7 +80,10 @@ export async function POST(request: Request) {
   if (social) return NextResponse.json({mode:"conversation",answer:social,sources:[],topic:parsed.topic});
   const previous = history.filter(m => m.role === "user").at(-1)?.content;
   const deadline = /deadline|cut[ -]?off|by (what|which) date|last day|how late|\bfrist|anmeldefrist|bewerbungsfrist|bis wann|spätestens/i.test(message);
-  const registration = /sign[ -]?up|register|registration|book(ing)?|anmeld|melde.{0,24}an|termin vereinbaren/i.test(message);
+  // An implicit request for the booking contact retains the service discussed.
+  // Only accept a complete contact question; an explicitly named new topic wins.
+  const bookingContact = /^(?:(?:and|und) )?(?:who (?:do|should|can) (?:i|we) (?:write to|email|contact|ask)(?: (?:for|about|to (?:book|arrange)) (?:a |an |the )?(?:date|appointment|booking))?|(?:wem|an wen) (?:schreib(?:e|en)|wende[n]?) (?:ich|wir)(?: (?:für|wegen) (?:eines? |einem? |den )?termin[s]?)?)[?.! ]*$/i.test(message);
+  const registration = bookingContact || /sign[ -]?up|register|registration|book(ing)?|anmeld|melde.{0,24}an|termin vereinbaren/i.test(message);
   function needsContext(question: string) {
     if (visitorTopic(question)) return false;
     // A conjunction alone also introduces a new subject ("And who won the game?").
@@ -99,7 +103,7 @@ export async function POST(request: Request) {
   }
   // Bare price, contact and booking questions can refer to a tap/ordinal as
   // easily as to a typed topic. Explicit new subjects still go to retrieval.
-  const elliptical = /^(?:(?:und|and) )?(?:was kostet (?:es|das)|was würde das kosten|wie (?:teuer|viel) ist das|ist (?:es|das) (?:gratis|kostenlos|verfügbar)|an wen (?:wende ich mich|sollen wir uns wenden)|wo (?:frage ich|fragen wir) (?:an|nach)|wie melde ich (?:mich|meine klasse) (?:dafür )?an|how much (?:is it|does (?:it|that) cost)|what does (?:it|that) cost|would it be free(?: of charge)?|is (?:it|that) (?:free|available)|who should (?:i|we) contact|who do (?:i|we) contact|how do (?:i|we) (?:register|sign up)(?: for (?:it|that))?)[?.! ]*$/i.test(message);
+  const elliptical = bookingContact || /^(?:(?:und|and) )?(?:was kostet (?:es|das)|was würde das kosten|wie (?:teuer|viel) ist das|ist (?:es|das) (?:gratis|kostenlos|verfügbar)|an wen (?:wende ich mich|sollen wir uns wenden)|wo (?:frage ich|fragen wir) (?:an|nach)|wie melde ich (?:mich|meine klasse) (?:dafür )?an|how much (?:is it|does (?:it|that) cost)|what does (?:it|that) cost|would it be free(?: of charge)?|is (?:it|that) (?:free|available)|who should (?:i|we) contact|who do (?:i|we) contact|how do (?:i|we) (?:register|sign up)(?: for (?:it|that))?)[?.! ]*$/i.test(message);
   const local = prior && elliptical ? selectCatalogKnowledge([{title:prior.indexTitle, similarity:1}], message) : selectCatalogKnowledge(localKnowledge(contextual), message);
   if ((registration || deadline) && school?.booking) {
     // Resolve an implicit subject from the last user question, never from assistant claims.

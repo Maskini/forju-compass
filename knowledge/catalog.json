@@ -76,6 +76,14 @@
         "also": [
           "spenden"
         ]
+      },
+      "direct": {
+        "de": "ForJu sponsert Projekte nicht selbst. Das Team hilft dir bei der Kostenschätzung und vermittelt Kontakte zu möglichen Förderpartnern. Beschreibe dein Projekt in der Finanzierungsanfrage.",
+        "en": "ForJu does not sponsor projects directly. The team can help estimate costs and introduce you to potential funding partners. Describe your project in the funding enquiry."
+      },
+      "eligibility": {
+        "de": "Eine allgemeine Förderberechtigung nach Alter oder Wohnort ist auf der Finanzierungsseite nicht bestätigt. ForJu sponsert Projekte nicht selbst. Beschreibe dein Vorhaben, damit das Team passende Partner und deren Kriterien mit dir klären kann.",
+        "en": "The funding page does not confirm eligibility based on age or location. ForJu does not directly sponsor projects. Describe your idea so the team can help you find partners and check their criteria."
       }
     }
   },
@@ -580,7 +588,10 @@
       "en": "The 2024 article describes funding for Vienna schools in grades 1–9. It gives no current price per pupil. Ask Anja Hofer to confirm the cost for your class."
     },
     "coverage": {
-      "places": ["Wien", "Vienna"],
+      "places": [
+        "Wien",
+        "Vienna"
+      ],
       "de": "ForJu beschreibt Workshops für Wiener Schulen.",
       "en": "ForJu’s workshop page describes workshops for schools in Vienna."
     },

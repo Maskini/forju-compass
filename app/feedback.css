@@ -91,14 +91,14 @@
 .feedback-type:has(input:checked) { background: #f7e7ef; border-color: transparent; }
 .feedback-type input { width: 22px; height: 22px; margin: 1px 0 0; }
 .feedback-type strong { font-size: 13px; line-height: 18px; font-weight: 500; color: #29232b; }
-.feedback-type small { margin-top: 2px; font-size: 11px; line-height: 15px; color: #74737b; }
+.feedback-type small { margin-top: 2px; font-size: 11px; line-height: 15px; color: #56535c; }
 .feedback-form textarea, .feedback-form input[type=email] { border-color: #d4cfce; border-radius: 7px; padding: 11px 12px; background: #ffffffb3; box-shadow: inset 0 1px 2px #32212a08; font-size: 12px; }
 .feedback-form textarea { min-height: 90px; display: block; }
 .feedback-form input[type=email] { height: 44px; padding-left: 43px; }
 .feedback-email-control { position: relative; }
 .feedback-email-control svg { position: absolute; width: 21px; height: 21px; left: 13px; top: 11px; color: #858891; pointer-events: none; }
-.feedback-counter { color: #7c7982; margin-top: 6px; }
-.feedback-privacy { display: flex; align-items: flex-start; gap: 11px; border-radius: 9px; background: #eaecef; padding: 12px 13px; font-size: 11px; color: #72727c; line-height: 1.5; }
+.feedback-counter { color: #625e69; margin-top: 6px; }
+.feedback-privacy { display: flex; align-items: flex-start; gap: 11px; border-radius: 9px; background: #eaecef; padding: 12px 13px; font-size: 11px; color: #555660; line-height: 1.5; }
 .feedback-privacy > svg { width: 21px; height: 21px; flex: none; margin-top: 3px; color: #3176b2; }
 .feedback-privacy p { margin: 0; }
 .feedback-privacy details { margin-top: 6px; }

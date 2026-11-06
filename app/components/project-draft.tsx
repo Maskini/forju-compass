@@ -1,6 +1,6 @@
 "use client";
 
-import {useId, useLayoutEffect, useRef, useState} from "react";
+import {useEffect, useId, useLayoutEffect, useRef, useState} from "react";
 import "./project-draft.css";
 import Image from "next/image";
 import {useProjectDelivery} from "./project-delivery";
@@ -67,6 +67,19 @@ export function ProjectDraft({lang,turns,ready,widget=false}:{lang:Language;turn
   else if (mail.tooLong) deliveryNotice = ui.tooLong;
   else if (mail.unavailable) deliveryNotice = ui.unavailable;
   function signal(open:boolean){if(widget && window.parent!==window)window.parent.postMessage({type:"forju:draft",open},"*")}
+  useEffect(() => {
+    if (!widget || window.parent === window) return;
+    function restoreFocus(event: MessageEvent) {
+      if (event.source !== window.parent || event.data?.type !== "forju:draft-layout") return;
+      // The host switches its dialog between modal and non-modal and can take
+      // focus from the iframe. Restore it only for the current dialog state.
+      if (event.data.open === dialog.current?.open) {
+        (event.data.open ? stage.current : trigger.current)?.focus({preventScroll:true});
+      }
+    }
+    window.addEventListener("message", restoreFocus);
+    return () => window.removeEventListener("message", restoreFocus);
+  }, [widget]);
   function open(){
     if(step<0){setDraftLang(lang);setFields([seed.title,ctx,"","","","",""]);if(seed.goal){setGoals([5]);setCustom(seed.goal)}setSeeded(Boolean(ctx));setStep(0)}
     dialog.current?.showModal();signal(true)
@@ -86,6 +99,12 @@ export function ProjectDraft({lang,turns,ready,widget=false}:{lang:Language;turn
        <div className="draft-rail"><h2 id={id}>{ui.title}</h2><p>{ui.intro}</p><ol>{ui.steps.map((name,i)=><li key={name}><button type="button" aria-current={step===i?"step":undefined} onClick={()=>changeStep(i)}><span>{i+1}</span><b>{name}<small>{ui.captions[i]}</small></b></button></li>)}</ol></div>
        <div className="draft-center"><div className="draft-banner"><div><strong>{ui.step} {step+1} {ui.of} 6</strong><h3 ref={stage} tabIndex={-1}>{ui.steps[step]}</h3><p>{ui.lead[step]}</p></div><Bulb/></div>
         <div className="draft-inputs">{review ? <>{field(0)}{field(1)}{goalFields}{[2,3,4,5,6].map(field)}</>:<>{sections[step].map(field)}{step===0&&goalFields}</>}
+        {review && message && <details className="draft-excerpts">
+          <summary>{en ? "View final text" : "Fertigen Text ansehen"}</summary>
+          <label className="draft-field"><span>{en ? "Select and copy your project" : "Projekttext auswählen und kopieren"}</span>
+            <textarea readOnly rows={6} value={message} onFocus={e=>e.currentTarget.select()}/>
+          </label>
+        </details>}
         {review&&<label className="draft-field"><span>{en?"Your email for a reply (optional)":"Deine E-Mail für Rückfragen (optional)"}</span>
           <input type="email" autoComplete="email" maxLength={254} value={mail.reply} disabled={mail.busy} onChange={e=>mail.setReply(e.target.value)} aria-invalid={!mail.validReply} aria-describedby={!mail.validReply?id+"-email-error":undefined}/>
           {!mail.validReply&&<small id={id+"-email-error"}>{en?"Check the address or leave it blank.":"Prüfe die Adresse oder lass sie leer."}</small>}

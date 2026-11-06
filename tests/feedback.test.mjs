@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { createRequire } from 'node:module';
 import ts from 'typescript';
+import * as requestBody from '../lib/server/request-body.mjs';
 const require = createRequire(import.meta.url);
 function load(file, overrides = {}) {
   const code = ts.transpileModule(readFileSync(new URL(file, import.meta.url), 'utf8'), { compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2022 } }).outputText;
@@ -12,7 +13,7 @@ function load(file, overrides = {}) {
 }
 const validation = load('../lib/feedback-validation.ts');
 const email = load('../lib/server/feedback-email.ts', { '../feedback-validation': validation });
-const { createFeedbackHandler } = load('../lib/server/feedback-handler.ts', { '../feedback-validation': validation, './feedback-email': email });
+const { createFeedbackHandler } = load('../lib/server/feedback-handler.ts', { '../feedback-validation': validation, './feedback-email': email, './request-body.mjs': requestBody });
 const { createFeedbackLimiter } = load('../lib/server/feedback-rate-limit.ts');
 const report = { type: 'technical_problem', description: 'The search button does not respond.', timestamp: '2026-09-20T12:00:00.000Z', language: 'en' };
 const request = (body = report, headers = {}) => new Request('http://localhost/api/feedback', { method: 'POST', headers: { 'content-type': 'application/json', ...headers }, body: typeof body === 'string' ? body : JSON.stringify(body) });
