@@ -41,7 +41,7 @@ test('API sends only validated reports, stable idempotency keys and safe success
 test('API rejects malformed, oversized, cross-site and wrong-content requests before sending', async () => {
   let calls = 0;
   const post = handler(async () => { calls++; return 'id'; });
-  for (const [req, status] of [[request('{'), 400], [request({ ...report, description: '' }), 400], [request('x'.repeat(17000)), 413], [request(report, { origin: 'https://attacker.example' }), 403], [request(report, { 'sec-fetch-site': 'cross-site' }), 403], [request(report, { 'content-type': 'text/plain' }), 415], [request(report, { 'idempotency-key': 'bad' }), 400]]) assert.equal((await post(req)).status, status);
+  for (const [req, status] of [[request('{'), 400], [request({ ...report, description: '' }), 400], [request('x'.repeat(65537)), 413], [request(report, { origin: 'https://attacker.example' }), 403], [request(report, { 'sec-fetch-site': 'cross-site' }), 403], [request(report, { 'content-type': 'text/plain' }), 415], [request(report, { 'idempotency-key': 'bad' }), 400]]) assert.equal((await post(req)).status, status);
   assert.equal(calls, 0);
 });
 
@@ -106,4 +106,15 @@ test('public demo delivery permits only the fixed account-owner recipient and te
   const env = { NODE_ENV: 'production', FEEDBACK_DEMO_MODE: 'true', RESEND_API_KEY: 'test-key', FEEDBACK_FROM_EMAIL: 'onboarding@resend.dev', FEEDBACK_TO_EMAIL: 'adam.maskini@icloud.com' };
   assert.equal(email.feedbackEmailConfig(env).to, 'adam.maskini@icloud.com');
   for (const patch of [{ FEEDBACK_DEMO_MODE: '' }, { FEEDBACK_FROM_EMAIL: 'other@example.com' }, { FEEDBACK_TO_EMAIL: 'other@example.com' }]) assert.throws(() => email.feedbackEmailConfig({ ...env, ...patch }), email.FeedbackConfigurationError);
+});
+
+test('embedded reports allow one selected exchange on the public origin',async()=>{
+  const delivered=[];
+  const post=handler(async r=>{delivered.push(r);return "provider-id"});
+  const exchange={question:"What is ForJu?",answer:"Answer <example>"};
+  const res=await post(request({...report,exchange},{origin:"https://forju-compass.onrender.com","sec-fetch-site":"cross-site"}));
+  assert.equal(res.status,200);
+  assert.match(email.feedbackEmail(delivered[0]).html,/Answer &lt;example&gt;/);
+  assert.equal((await post(request({...report,exchange:{...exchange,history:[]}}))).status,400);
+  assert.equal((await post(request({...report,exchange:[exchange]}))).status,400);
 });

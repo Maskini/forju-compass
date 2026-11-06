@@ -1,5 +1,6 @@
 "use client";
 import {useEffect,useEffectEvent,useRef,useState} from "react";
+import FeedbackWidget, {type ReportControls} from "@/app/components/feedback/FeedbackWidget";
 import {ProjectDraft} from "@/app/components/project-draft";
 import {useCompassChat} from "@/lib/use-compass-chat";
 import {MAX_MESSAGE_LENGTH} from "@/lib/chat";
@@ -46,6 +47,7 @@ export default function CompassPanel({initialLanguage,widget=false}:{initialLang
     window.parent.postMessage({type:"forju:ready"},"*");
     return ()=>{window.removeEventListener("message",message);window.removeEventListener("keydown",key)};
   },[widget]);
+  const reports = useRef<ReportControls>(null);
   const suggestions:Topic[]=["projects","volunteer","funding","idea"];
   return <main lang={lang} className={"embed-panel"+(widget?" widget-mode":"")}>
     <header><img src="/forju/forju-compass-logo.png" alt="ForJu Compass"/><p>{en?"Your AI assistant for youth, research and opportunities.":"Dein KI-Assistent für Jugend, Forschung und Möglichkeiten."}</p>
@@ -61,6 +63,7 @@ export default function CompassPanel({initialLanguage,widget=false}:{initialLang
         <div className="question-bubble"><p>{turn.question}</p><i><Icon type="user"/></i></div>
         <div className="response"><i className="compass-avatar" aria-hidden="true"/><div><p>{turn.answer}</p>
         {turn.library&&<small>{en?"Public knowledge catalog":"Öffentlicher Wissenskatalog"}</small>}</div></div>
+        <button type="button" className="report-answer" aria-haspopup="dialog" onClick={e=>reports.current?.reportAnswer(turn,e.currentTarget)}>{en?"Report this answer":"Diese Antwort melden"}</button>
         <time dateTime={new Date(turn.answeredAt).toISOString()}>{new Date(turn.answeredAt).toLocaleTimeString(lang,{hour:"2-digit",minute:"2-digit"})}</time>
         {!!turn.sources.length&&<nav className="read-more" aria-label={en?"Read more":"Mehr dazu"}>{turn.sources.map(s=><a href={s.url} key={s.url} target="_blank" rel="noopener noreferrer"><Icon type="idea"/><span><strong>{s.title}</strong><small>{new URL(s.url).hostname}</small></span><b aria-hidden="true">↗</b></a>)}</nav>}
       </article>)}</div>
@@ -78,6 +81,7 @@ export default function CompassPanel({initialLanguage,widget=false}:{initialLang
           : source.includes("schulworkshops") ? [en?"Enquire about a school workshop":"Schulworkshop anfragen","/kontakt?intent=service"] : null;
         return action && <a className="next-step" href={"https://forju.at/"+(source.startsWith("https://forju.at/en/")?"en":"de")+action[1]} target="_blank" rel="noopener noreferrer">{action[0]} →</a>
       })()}
+      <FeedbackWidget ref={reports} inline language={lang}/>
       <ProjectDraft lang={lang} turns={turns}/>
       {loading&&<div role="status"><div className="question-bubble"><p>{submittedQuestion}</p></div>{en?"Looking for an answer…":"Ich suche eine Antwort …"}</div>}
       {error&&<p role="alert">{en?"Your question could not be sent.":"Deine Frage konnte nicht gesendet werden."} <button onClick={()=>submit(submittedQuestion)}>{en?"Retry":"Erneut versuchen"}</button>{" · "}<a href={"https://forju.at/"+lang+"/kontakt"} target="_blank" rel="noopener noreferrer">{en?"Contact ForJu":"ForJu kontaktieren"}</a></p>}

@@ -1,16 +1,14 @@
 # ForJu Compass feedback
 
-## Current status
+## Visitor reports
 
-Implemented locally. On 2026-09-21 the authorized iCloud test returned HTTP 200 with success=true from POST /api/feedback, and Resend showed Delivered to adam.maskini@icloud.com. The sending-only replacement key is saved in ignored .env.local (mode 0600). The official ForJu website and DNS were not changed. Production delivery to the ForJu recipient remains unconfigured; this is development-only testing.
-
-## Implementation
-
-New files: `app/components/feedback/FeedbackWidget.tsx`, `FeedbackForm.tsx`, `app/feedback.css`, `app/api/feedback/route.ts`, `lib/feedback-validation.ts`, `lib/server/feedback-handler.ts`, `feedback-email.ts`, `feedback-rate-limit.ts`, `lib/language.ts`, `tests/feedback.test.mjs`, `.env.example`, and this guide.
-
-Modified: `app/layout.tsx` mounts the global drawer; `app/page.tsx` shares the existing language store; package manifests install `resend`, `zod`, `server-only`; `.gitignore` permits the empty `.env.example` while ignoring actual environment files. Existing chat and knowledge feedback remain separate.
-
-The persistent DE/EN button opens a native modal drawer, with focus management, Escape/close support, keyboard containment, background scroll lock, validation, counters, disabled sending state, retained drafts on error and a success state. A new report can be started after success.
+The homepage and embedded panel use the same POST /api/feedback endpoint and
+server-configured recipient. Visitors can open a general report or report an
+individual answer. The optional checkbox starts unchecked. Selecting it sends
+only that question and answer, which the visitor can preview before sending.
+The reply email is optional. Error responses preserve the report and its retry
+key. Confirmation requires a successful response after the provider accepts
+the message. Closing the form returns focus to its opener.
 
 ## Local use now
 
@@ -48,21 +46,25 @@ Once explicitly configured, submit a clearly labelled test using the actual draw
 ## Security and privacy
 
 - Shared Zod schema, strict server field allowlist, trimmed/bounded values, valid timestamp, category and email.
-- 16 KiB streamed request limit; five-second body-read timeout; same-origin checks when browser origin metadata is present; JSON only.
+- 64 KiB streamed request limit; five-second body-read timeout; same-origin checks when browser origin metadata is present; JSON only.
 - Escaped HTML and plain-text email; fixed subject labels; CR/LF controls rejected in single-line fields.
 - Honeypot silently ignored. Five valid attempts per client bucket per ten minutes.
 - API errors never return stack traces, provider details or secrets. Logs contain generic event names and random request IDs, not report contents or email addresses.
-- Only the requested page/browser/viewport/time/language metadata is collected. No chat messages, cookies, account details, storage contents or invented session/conversation IDs. URL credentials/query/fragment are stripped.
+- Only the requested page/browser/viewport/time/language metadata is collected. Only one explicitly selected exchange may accompany the report. The API rejects conversation arrays and extra fields. URL credentials/query/fragment are stripped.
 - Client prevents rapid duplicate submissions and reuses the same payload/key on unchanged retries. Resend receives a stable idempotency key that includes a payload hash.
 
 ## Deployment and limitations
 
-No deployment was performed. If deploying later, use a Node-capable Next.js host, set the three email variables in server-side secret settings, restart/redeploy, and keep `.env*` ignored (`.env.example` is the intentional exception). Never publish `.env.local` or server source as public assets. The feedback API is not compatible with static-only export hosting.
+Use a Node-capable Next.js host, set the three email variables in server-side secret settings, restart/redeploy, and keep `.env*` ignored (`.env.example` is the intentional exception). Never publish `.env.local` or server source as public assets. The feedback API is not compatible with static-only export hosting.
 
 The rate limiter is process-local: it resets on restart and is not shared across serverless instances. By default, unidentified clients share one bucket. Only set `FEEDBACK_IP_HEADER` if a trusted ingress proxy overwrites that header and clients cannot bypass it. For a public multi-instance deployment, replace the limiter dependency with a shared store or use an edge rate limit. Origin checks and honeypots alone do not prevent determined non-browser spam.
 
 There is no database queue, delivery webhook, or automatic retry worker. Reports are not persisted locally. The provider wait is bounded to 15 seconds, but timing out does not cancel an already-running provider request; the client waits 22 seconds and unchanged retries reuse the idempotency key. Provider acceptance can be followed by a later bounce. Resend retains messages according to the account's policy; inbox access and retention must be managed by the recipient.
 
-## Authorized local iCloud test (current)
+## Designated test inbox
 
-Local development now sets `FEEDBACK_LOCAL_TEST=true`, `FEEDBACK_TO_EMAIL=adam.maskini@icloud.com`, and `FEEDBACK_FROM_EMAIL=onboarding@resend.dev`. This exception only works with `NODE_ENV=development`; production still requires the original ForJu recipient. Resend's test sender is restricted to the account owner's email address. The sending-only replacement API key is now configured locally. To revert, remove the local-test flag and restore the ForJu recipient and a verified sender. Never deploy these local-test settings.
+Development test mode and the deployed FEEDBACK_DEMO_MODE permit the
+account-owner test inbox adam.maskini@icloud.com with onboarding@resend.dev.
+Outside these modes the server accepts only the configured ForJu recipient.
+Keep credentials server-side. Provider acceptance and a message visible in
+the recipient mailbox are separate checks.

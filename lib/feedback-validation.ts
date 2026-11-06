@@ -9,6 +9,7 @@ export const feedbackFieldsSchema = z.object({
   email: z.union([singleLine(254).pipe(z.email()), z.literal("")]).optional(),
 });
 export const feedbackSchema = feedbackFieldsSchema.extend({
+  exchange: z.object({question: z.string().trim().min(1).max(2000), answer: z.string().trim().min(1).max(6000)}).strict().optional(),
   pageUrl: singleLine(2048).pipe(z.url()).refine(value => {
     const url = new URL(value);
     return ["http:", "https:"].includes(url.protocol) && !url.username && !url.password;

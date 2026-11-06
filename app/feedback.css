@@ -119,3 +119,9 @@
 }
 
 .compass-page .feedback-launcher{left:max(12px,env(safe-area-inset-left));right:auto}
+
+.report-inline,.report-answer{display:inline-flex;align-items:center;gap:6px;margin:6px 0;padding:6px 9px;border-radius:10px;background:transparent;color:#861456;font:inherit;font-size:13px;cursor:pointer}
+.report-inline svg{height:18px;width:18px}.report-answer:hover,.report-inline:hover{text-decoration:underline}
+.report-context{padding:10px!important;background:#fff4f9;border-radius:10px}.report-context input{accent-color:#861456}.report-context details{margin-top:7px}.report-context p{white-space:pre-wrap;overflow-wrap:anywhere;max-height:10em;overflow:auto}
+
+.embed-panel .feedback-close{width:auto;margin:8px 30px 0 auto;padding:6px 10px;color:#861456;font-size:14px}

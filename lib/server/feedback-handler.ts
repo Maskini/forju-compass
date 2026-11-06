@@ -4,7 +4,7 @@ import { z } from "zod";
 import { feedbackSchema, type FeedbackReport } from "../feedback-validation";
 import { FeedbackConfigurationError } from "./feedback-email";
 
-export const MAX_FEEDBACK_BYTES = 16 * 1024;
+export const MAX_FEEDBACK_BYTES = 64 * 1024;
 const errorMessage = "Das Feedback konnte nicht gesendet werden. Bitte versuche es erneut.";
 const json = (body: object, status = 200, extra: Record<string, string> = {}) => Response.json(body, { status, headers: { "Cache-Control": "no-store", ...extra } });
 class BodyError extends Error { constructor(public status: number) { super("invalid_body"); } }
@@ -43,7 +43,13 @@ export function createFeedbackHandler(deps: {
     const requestId = randomUUID();
     try {
       const origin = request.headers.get("origin");
-      if ((origin && origin !== new URL(request.url).origin) || request.headers.get("sec-fetch-site") === "cross-site") return json({ error: errorMessage }, 403);
+      // Behind Render, request.url can contain the internal HTTP origin.
+      // Compare with the configured public URL, never a forwarded header.
+      const publicOrigin = process.env.RENDER_EXTERNAL_URL || "https://forju-compass.onrender.com";
+      const trustedOrigin = origin === new URL(request.url).origin || origin === publicOrigin;
+      if (origin ? !trustedOrigin : request.headers.get("sec-fetch-site") === "cross-site") {
+        return json({ error: errorMessage }, 403);
+      }
       if (request.headers.get("content-type")?.split(";")[0].trim().toLowerCase() !== "application/json") return json({ error: errorMessage }, 415);
       const raw = await readBody(request);
       const parsed = feedbackSchema.safeParse(raw);

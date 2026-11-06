@@ -1,9 +1,9 @@
 "use client";
 
-import { useEffect, useState, type ReactNode } from "react";
+import { useEffect, useState, useRef, type ReactNode } from "react";
 import { useAppLanguage, setAppLanguage } from "@/lib/language";
 import Script from "next/script";
-import FeedbackWidget from "@/app/components/feedback/FeedbackWidget";
+import FeedbackWidget, {type ReportControls} from "@/app/components/feedback/FeedbackWidget";
 import FloatingOrigami from "@/app/components/FloatingOrigami";
 import { MAX_MESSAGE_LENGTH } from "@/lib/chat";
 
@@ -98,6 +98,7 @@ const QUICK_QUESTIONS = [
 ] as const;
 
 export default function Home() {
+  const reports = useRef<ReportControls>(null);
   const language = useAppLanguage();
   const [conversationId, setConversationId] = useState(0);
   const t = (text: string) => language === "en" ? (EN[text] ?? text) : text;
@@ -108,7 +109,7 @@ export default function Home() {
   return (
     <main className="compass-page">
       <Script src="/compass-widget.js" strategy="afterInteractive" />
-      <FeedbackWidget />
+      <FeedbackWidget language={language} ref={reports}/>
       <FloatingOrigami />
       <section className="scene">
         <div
@@ -313,6 +314,7 @@ export default function Home() {
                     <p className="answer-copy__question">{t("Du")}: {turn.question}</p>
                     {turn.library && <small>{language === "en" ? "From the public knowledge catalog" : "Aus dem öffentlichen Wissenskatalog"}</small>}
                     <p className="chat-answer">{turn.answer}</p>
+        <button type="button" className="report-answer" aria-haspopup="dialog" onClick={e=>reports.current?.reportAnswer(turn,e.currentTarget)}>{language==="en"?"Report this answer":"Diese Antwort melden"}</button>
                     <KnowledgeFeedback question={turn.question} language={language} />
                     {turn.sources.length > 0 && (
                       <div className="chat-sources">

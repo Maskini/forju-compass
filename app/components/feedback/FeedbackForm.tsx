@@ -9,9 +9,12 @@ const copy = {
   outdated_information: ["Veraltete Information", "Outdated information", "Die Inhalte sind nicht mehr aktuell.", "The information is no longer current."],
   other: ["Sonstiges", "Other", "Ein anderes Problem oder Feedback.", "Another problem or general feedback."],
 };
-export default function FeedbackForm({ language }: { language: AppLanguage }) {
+export default function FeedbackForm({ language, exchange, onAccepted }: {
+  language: AppLanguage; exchange?: FeedbackReport["exchange"]; onAccepted:()=>void;
+}) {
+  const [includeExchange,setIncludeExchange] = useState(false);
   const t = (de: string, en: string) => language === "en" ? en : de;
-  const [type, setType] = useState("");
+  const [type, setType] = useState(exchange ? "incorrect_answer" : "");
   const [description, setDescription] = useState("");
   const [email, setEmail] = useState("");
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -39,10 +42,11 @@ export default function FeedbackForm({ language }: { language: AppLanguage }) {
     setErrors({}); inFlight.current = true; setStatus("sending");
     try {
       const honeypot = String(new FormData(event.currentTarget).get("website") || "");
-      const fingerprint = JSON.stringify({ ...parsed.data, honeypot, language });
+      const fields = includeExchange && exchange ? {...parsed.data, exchange} : parsed.data;
+      const fingerprint = JSON.stringify({ ...fields, honeypot, language });
       if (retry.current?.fingerprint !== fingerprint) {
         retry.current = { fingerprint, key: crypto.randomUUID(), payload: {
-          ...parsed.data, honeypot, timestamp: new Date().toISOString(),
+          ...fields, honeypot, timestamp: new Date().toISOString(),
           pageUrl: feedbackPageUrl(window.location.href), pathname: window.location.pathname.slice(0, 1024),
           pageTitle: document.title.slice(0, 200), language,
           userAgent: navigator.userAgent.slice(0, 512),
@@ -54,7 +58,7 @@ export default function FeedbackForm({ language }: { language: AppLanguage }) {
         body: JSON.stringify(attempt.payload), signal: AbortSignal.timeout(22000) });
       const result = await response.json();
       if (!response.ok || result.success !== true) throw new Error("feedback_failed");
-      setType(""); setDescription(""); setEmail(""); retry.current = null; setStatus("success");
+      onAccepted(); setIncludeExchange(false); setType(""); setDescription(""); setEmail(""); retry.current = null; setStatus("success");
       requestAnimationFrame(() => successRef.current?.focus());
     } catch { setStatus("error"); }
     finally { inFlight.current = false; }
@@ -85,15 +89,22 @@ export default function FeedbackForm({ language }: { language: AppLanguage }) {
     <div>
       <label htmlFor="feedback-email">{t("E-Mail für Rückmeldung (optional)", "Email for a reply (optional)")}</label>
       <div className="feedback-email-control"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m4 7 8 6 8-6"/></svg><input id="feedback-email" name="email" type="email" autoComplete="email" maxLength={254} value={email} onChange={event => setEmail(event.target.value)} disabled={status === "sending"}
-        placeholder="deine@email.de" aria-invalid={Boolean(errors.email)} aria-describedby={errors.email ? "feedback-email-error" : undefined} /></div>
+        placeholder={t("name@beispiel.at","name@example.com")} aria-invalid={Boolean(errors.email)} aria-describedby={errors.email ? "feedback-email-error" : undefined} /></div>
       {errors.email && <p id="feedback-email-error" className="feedback-field-error">{errors.email}</p>}
     </div>
+    {exchange && <fieldset disabled={status==="sending"} className="report-context">
+      <label><input type="checkbox" checked={includeExchange} onChange={e=>setIncludeExchange(e.target.checked)}/>{" "}
+        {t("Diese Frage und Antwort mitsenden", "Include this question and answer")}</label>
+      <details><summary>{t("Frage und Antwort ansehen","Preview question and answer")}</summary>
+        <strong>{t("Frage","Question")}</strong><p>{exchange.question}</p>
+        <strong>{t("Antwort","Answer")}</strong><p>{exchange.answer}</p>
+      </details></fieldset>}
     <div className="feedback-honeypot" aria-hidden="true"><label htmlFor="feedback-website">Website</label><input id="feedback-website" name="website" tabIndex={-1} autoComplete="off" maxLength={200} /></div>
-    <div className="feedback-privacy"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v6m0-10v1"/></svg><div><p>{t("Die aktuelle Seite und der Zeitpunkt werden automatisch mitgesendet, damit wir dein Feedback besser zuordnen können.", "The current page and time are included automatically to help us understand your feedback.")}</p><details><summary>{t("Welche Daten werden übermittelt?", "What data is included?")}</summary><p>{t("Zusätzlich werden Sprache, Seitentitel, Browser und Fenstergröße übermittelt. Dein Chatverlauf wird nicht mitgesendet. Bitte keine vertraulichen Angaben eintragen.", "Language, page title, browser and viewport size are also included. Your chat history is not sent. Please do not enter confidential information.")}</p></details></div></div>
+    <div className="feedback-privacy"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v6m0-10v1"/></svg><div><p>{t("Die aktuelle Seite und der Zeitpunkt werden automatisch mitgesendet, damit wir dein Feedback besser zuordnen können.", "The current page and time are included automatically to help us understand your feedback.")}</p><details><summary>{t("Welche Daten werden übermittelt?", "What data is included?")}</summary><p>{t("Zusätzlich werden Sprache, Seitentitel, Browser und Fenstergröße übermittelt. Nur ein ausdrücklich ausgewähltes Frage-Antwort-Paar wird mitgesendet. Bitte keine vertraulichen Angaben eintragen.", "Language, page title, browser and viewport size are also included. Only a question and answer you explicitly select can be included. Please do not enter confidential information.")}</p></details></div></div>
     <div className="feedback-messages" aria-live="polite" aria-atomic="true">
       {status === "error" && <p className="feedback-field-error" role="alert">{t("Das Feedback konnte nicht gesendet werden. Bitte versuche es erneut.", "Your feedback could not be sent. Please try again.")}</p>}
       {Object.keys(errors).length > 0 && <p className="feedback-validation-summary">{t("Bitte prüfe die markierten Felder.", "Please check the highlighted fields.")}</p>}
     </div>
-    <button className="feedback-submit" type="submit" disabled={status === "sending"}>{status === "sending" ? t("Wird gesendet …", "Sending …") : t("Senden", "Send")}<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M4 12h16m-6-6 6 6-6 6"/></svg></button>
+    <button className="feedback-submit" type="submit" disabled={status === "sending"}>{status === "sending" ? t("Wird gesendet …", "Sending …") : status==="error" ? t("Erneut versuchen", "Retry") : t("Senden", "Send")}<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M4 12h16m-6-6 6 6-6 6"/></svg></button>
   </form>;
 }

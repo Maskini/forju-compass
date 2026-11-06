@@ -26,6 +26,7 @@ export function feedbackEmail(report: FeedbackReport) {
   const rows: [string, string][] = [
     ["Art des Problems", labels[report.type]], ["Beschreibung", report.description],
     ["Kontakt-E-Mail", report.email || "Nicht angegeben"],
+    ...(report.exchange ? [["Gemeldete Frage", report.exchange.question], ["Gemeldete Antwort", report.exchange.answer]] as [string, string][] : []),
     ["Seite", report.pageUrl ? feedbackPageUrl(report.pageUrl) : "Nicht angegeben"],
     ["Pfad", report.pathname?.split(/[?#]/)[0] || "Nicht angegeben"],
     ["Seitentitel", report.pageTitle || "Nicht angegeben"], ["Zeitpunkt", report.timestamp],
