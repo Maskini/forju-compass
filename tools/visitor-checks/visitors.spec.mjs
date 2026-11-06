@@ -1,7 +1,19 @@
 import { test, expect } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
+import { DatabaseSync } from 'node:sqlite';
+import { existsSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import { relative } from 'node:path';
 
 test.beforeEach(async ({ context, baseURL }) => {
+  // Each journey is a separate visitor trial. Reset only the disposable DB
+  // created by run.mjs; all production limits still apply within each journey.
+  const fixture = process.env.COMPASS_TEST_QUOTA;
+  if (!fixture || !/^compass-check-[a-zA-Z0-9]+[/\\]quota\.sqlite$/.test(relative(tmpdir(),fixture))) throw Error('Expected an isolated visitor-test quota');
+  if (existsSync(fixture)) {
+    const db = new DatabaseSync(fixture);
+    try { db.exec('DELETE FROM counts'); } finally { db.close(); }
+  }
   // A test can inspect a public link. It cannot send a message or leave localhost.
   await context.route('**/*', route => {
     const req = route.request();
@@ -150,4 +162,23 @@ test('stakeholder preview: launch the German widget and recover from an unrelate
   await page.getByRole('link',{name:'EN',exact:true}).click();
   await expect(page.locator('html')).toHaveAttribute('lang','en');
   await expect(page.getByRole('link',{name:'Open chat directly'})).toHaveAttribute('href','/embed?lang=en');
+});
+
+test('English mobile: correct what the class measures, accept a draft, then ask a person', async ({page})=>{
+  await page.setViewportSize({width:390,height:844});
+  await page.goto('/preview?lang=en');
+  const host=page.locator('forju-compass-widget');
+  await host.locator('.launcher').click();
+  await host.locator('.welcome .start').click();
+  const panel=host.frameLocator('iframe');
+  await ask(panel,'Can our class borrow a sensor to measure air quality?');
+  const corrected=await ask(panel,'Actually, not air quality but water quality.');
+  await expect(corrected.locator('.response p')).toContainText('email draft');
+  const draft=await ask(panel,'Yes please');
+  const mail=new URL(await draft.getByRole('link',{name:'Open in email app'}).getAttribute('href'));
+  expect(mail.pathname).toBe('office@forju.at');
+  expect(mail.searchParams.get('body')).toMatch(/sensor to measure water quality/i);
+  expect(mail.searchParams.get('body')).not.toMatch(/air quality/i);
+  const handoff=await ask(panel,'Can I talk to a real person?');
+  await expect(handoff.locator('a[href*="thema=ressourcen"]')).toBeVisible();
 });

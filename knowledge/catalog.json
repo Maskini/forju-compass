@@ -568,7 +568,11 @@
     "active": true,
     "indexTitle": "forju-public:workshop-konflikte:41432670ebe9",
     "titleEn": "Team conflict",
-    "contentEn": "Students practise recognising conflict and finding solutions through role play and group exercises."
+    "contentEn": "Students practise recognising conflict and finding solutions through role play and group exercises.",
+    "plainLanguage": {
+      "de": "Ihr spielt einen Streit nach und übt, gemeinsam eine Lösung zu finden.",
+      "en": "You act out a disagreement and practise finding a solution together."
+    }
   },
   {
     "id": "workshop-klima",
@@ -591,7 +595,11 @@
     "active": true,
     "indexTitle": "forju-public:workshop-klima:c166b06dbb2c",
     "titleEn": "Climate workshop",
-    "contentEn": "Students explore climate change, renewable energy, transport and ways to reduce their environmental footprint."
+    "contentEn": "Students explore climate change, renewable energy, transport and ways to reduce their environmental footprint.",
+    "plainLanguage": {
+      "de": "Ihr schaut euch an, warum sich das Klima ändert und was ihr im Alltag tun könnt, zum Beispiel bei der Wahl eurer Verkehrsmittel.",
+      "en": "You explore why the climate is changing and how everyday choices, like how you travel, can help."
+    }
   },
   {
     "id": "workshop-zeit",
@@ -614,7 +622,11 @@
     "active": true,
     "indexTitle": "forju-public:workshop-zeit:00f0b9fa3dea",
     "titleEn": "Time management",
-    "contentEn": "Students practise setting priorities and scheduling tasks with methods such as Pomodoro and the Eisenhower matrix."
+    "contentEn": "Students practise setting priorities and scheduling tasks with methods such as Pomodoro and the Eisenhower matrix.",
+    "plainLanguage": {
+      "de": "Ihr übt, wichtige Aufgaben zuerst zu erledigen und beim Lernen Pausen einzuplanen.",
+      "en": "You practise deciding what to do first and making time for breaks when you study."
+    }
   },
   {
     "id": "workshop-ethik",
@@ -637,7 +649,11 @@
     "active": true,
     "indexTitle": "forju-public:workshop-ethik:3250c9d2f906",
     "titleEn": "Science and ethics",
-    "contentEn": "Groups discuss ethical dilemmas in science and practise explaining responsible decisions."
+    "contentEn": "Groups discuss ethical dilemmas in science and practise explaining responsible decisions.",
+    "plainLanguage": {
+      "de": "Ihr besprecht schwierige Entscheidungen in der Forschung: Was würdet ihr tun und warum?",
+      "en": "You discuss difficult choices in science: what would you do and why?"
+    }
   },
   {
     "id": "workshop-stress",
@@ -660,7 +676,11 @@
     "active": true,
     "indexTitle": "forju-public:workshop-stress:3c774c366366",
     "titleEn": "School stress",
-    "contentEn": "Students explore breathing exercises, mindfulness and concentration strategies for school."
+    "contentEn": "Students explore breathing exercises, mindfulness and concentration strategies for school.",
+    "plainLanguage": {
+      "de": "Ihr probiert Atemübungen aus, die euch im Schulalltag helfen können, zur Ruhe zu kommen.",
+      "en": "You try breathing exercises that may help you feel calmer at school."
+    }
   },
   {
     "id": "workshop-zukunft",
@@ -683,7 +703,11 @@
     "active": true,
     "indexTitle": "forju-public:workshop-zukunft:bb3f80a89b38",
     "titleEn": "Career planning",
-    "contentEn": "Students compare their interests and strengths with different occupations and education pathways."
+    "contentEn": "Students compare their interests and strengths with different occupations and education pathways.",
+    "plainLanguage": {
+      "de": "Ihr findet heraus, was euch liegt und welche Berufe oder Ausbildungen dazu passen könnten.",
+      "en": "You look at what you enjoy and which jobs or courses might suit you."
+    }
   },
   {
     "id": "workshop-medien",
@@ -706,7 +730,11 @@
     "active": true,
     "indexTitle": "forju-public:workshop-medien:b9c185446bce",
     "titleEn": "Media literacy workshop",
-    "contentEn": "The Vienna school workshop covers TikTok and Instagram, privacy, cyberbullying, misinformation and creating content responsibly. Ask ForJu about a date for your class."
+    "contentEn": "The Vienna school workshop covers TikTok and Instagram, privacy, cyberbullying, misinformation and creating content responsibly. Ask ForJu about a date for your class.",
+    "plainLanguage": {
+      "de": "Es geht um TikTok und Instagram: Wie schützt ihr private Infos und wie erkennt ihr falsche Nachrichten?",
+      "en": "You look at TikTok and Instagram: how can you protect your privacy and spot false information?"
+    }
   },
   {
     "id": "workshop-rollen",
@@ -729,7 +757,11 @@
     "active": true,
     "indexTitle": "forju-public:workshop-rollen:9d9c6c95e0e1",
     "titleEn": "Gender roles workshop",
-    "contentEn": "Students reflect on role models in family life and the media, including how language influences perceptions of careers."
+    "contentEn": "Students reflect on role models in family life and the media, including how language influences perceptions of careers.",
+    "plainLanguage": {
+      "de": "Ihr besprecht, wie Familie, Medien und Sprache beeinflussen, welche Berufe ihr euch vorstellen könnt.",
+      "en": "You discuss how family, media and language shape the jobs you can picture yourself doing."
+    }
   },
   {
     "id": "wissensbase",

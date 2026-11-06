@@ -5,7 +5,7 @@ type Pair = [string, string];
 type Menu = "start" | "class" | "project";
 type Topic = "workshops" | "ressourcen" | "finanzierung" | "science-beratung" | "connections" | "ehrenamt";
 type Intent = Menu | Topic | "short" | "next";
-type Card = {title:string; titleEn:string; id:string; content:string; contentEn:string; sourceUrl:string; requestUrl?:string; booking?:{de:string;en:string}};
+type Card = {title:string; titleEn:string; id:string; content:string; contentEn:string; sourceUrl:string; requestUrl?:string; plainLanguage?:{de:string;en:string}; booking?:{de:string;en:string}};
 type Reply = {mode:"conversation"|"library"; answer:string; sources:{title:string;url:string}[]; suggestions?:string[]; topic?:string};
 
 const menus:Record<Menu,{ask:Pair; options:Intent[]}> = {
@@ -115,6 +115,7 @@ export function guidedReply(message:string,en:boolean,history:ChatMessage[],reco
     }
   }
   else if (kind === "next" && group === "spenden-bestaetigung") answer = en ? card.contentEn : card.content;
+  else if(kind==="short" && card.plainLanguage)answer=card.plainLanguage[en?"en":"de"];
   else if(kind==="short" && isTopic(group))answer=brief[group][lang];
   else if(!follow)answer=en?card.contentEn:card.content;
   else if(kind==="next")answer=en?"Open the ForJu page below for the details. If your question is still open, you can ask the team.":"Öffne die ForJu-Seite unten für die Details. Falls deine Frage offenbleibt, kannst du das Team fragen.";

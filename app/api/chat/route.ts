@@ -1,6 +1,6 @@
 import { visitorEnquiry } from "@/lib/visitor-enquiry";
 import {guidedReply,isGuidedPrompt} from "@/lib/dialogue";
-import {conversationalReply, questionAfterGreeting, topicHistory} from "@/lib/conversation";
+import {affirmedRequest, repairRequest, wantsTeam, conversationalReply, questionAfterGreeting, topicHistory} from "@/lib/conversation";
 import { takeAiRequest } from "@/lib/server/ai-limit";
 import OpenAI from "openai";
 import { NextResponse } from "next/server";
@@ -21,15 +21,41 @@ export async function POST(request: Request) {
   } catch (error) {
     return NextResponse.json({ error: error instanceof SyntaxError ? "Ungültiges JSON." : error instanceof Error ? error.message : "Ungültige Anfrage." }, { status: 400 });
   }
-  const message = questionAfterGreeting(parsed.message);
+  const raw = questionAfterGreeting(parsed.message);
+  const message = affirmedRequest(raw);
   const englishUI = request.headers.get("accept-language")?.toLowerCase().startsWith("en") ?? false;
   const en = /^(what|where|when|how|who|can|could|is there|by what|i|we|for my|for our|not sure|explain|give me|help with)\b/i.test(message) ? true
     : /^(was|wo|wann|wie|wer|gibt|bietet|kann|bis wann|und wie|ich|wir|für|kannst|einfacher|hilfe bei)\b/i.test(message) ? false
     : request.headers.get("accept-language")?.toLowerCase().startsWith("en") ?? false;
   const retry = process.env.NODE_ENV === "production" ? takeAiRequest(request) : 0;
   if (retry) return NextResponse.json({error:request.headers.get("accept-language")?.startsWith("en") ? "Too many requests. Please try again later." : "Zu viele Anfragen. Bitte versuche es später erneut."},{status:429,headers:{"Retry-After":String(retry)}});
-  const history = topicHistory(parsed.history,isGuidedPrompt);
-  const enquiry = visitorEnquiry(message, en, history, parsed.topic, knowledgeCatalog, readerUrl, visitorTopic);
+  const prior = knowledgeCatalog.find(r=>r.id===parsed.topic);
+  const school = knowledgeCatalog.find(r=>r.id==="workshops");
+  const lang = en ? "en" : "de";
+  const team = en ? "Contact the ForJu team" : "Mit ForJu sprechen";
+  const repair = repairRequest(raw);
+  if (repair) {
+    const wrong = repair === "wrong-topic";
+    const answer = wrong
+      ? (en ? "I misunderstood. What were you hoping to do? You can tell me in your own words." : "Dann habe ich dich falsch verstanden. Was wolltest du herausfinden oder tun? Beschreib es gern in deinen Worten.")
+      : (en ? "What did I miss? Tell me which part you still need help with, or contact the ForJu team directly." : "Welcher Teil deiner Frage ist noch offen? Sag mir, was dir fehlt, oder frag direkt beim ForJu-Team nach.");
+    return NextResponse.json({mode:"conversation", answer, sources:[], suggestions:[team], topic:wrong ? undefined : prior?.id});
+  }
+  if (wantsTeam(message)) {
+    const contact = knowledgeCatalog.find(r=>r.id==="kontakt")!;
+    const isSchool = prior && (prior.id===school?.id || prior.id.startsWith("workshop-"));
+    const card = isSchool && school?.booking ? school : contact;
+    const answer = card.booking?.[lang] ?? (en ? contact.contentEn : contact.content);
+    const sources = [{title:en ? card.titleEn : card.title, url:readerUrl(card.sourceUrl)}];
+    if (prior?.requestUrl) sources.unshift({title:en ? prior.titleEn : prior.title,url:readerUrl(prior.requestUrl)});
+    return NextResponse.json({mode:"library",answer,sources,topic:prior?.id ?? card.id});
+  }
+  // A rejected subject must not leak back into retrieval or an email two turns later.
+  const boundary = parsed.history.findLastIndex(t=>t.role==="user" && repairRequest(t.content)==="wrong-topic");
+  const relevantHistory = topicHistory(parsed.history.slice(boundary < 0 ? 0 : boundary+2),isGuidedPrompt)
+    .filter((_,i,turns)=>!repairRequest(turns[i-i%2].content));
+  const history = relevantHistory.map(t=>t.role==="user" ? {...t,content:affirmedRequest(t.content)} : t);
+  const enquiry = visitorEnquiry(raw, en, relevantHistory, parsed.topic, knowledgeCatalog, readerUrl, visitorTopic, affirmedRequest);
   if (enquiry) return NextResponse.json(enquiry);
   const guided = guidedReply(message,en,history,knowledgeCatalog,parsed.topic);
   if (guided) return NextResponse.json(guided);
@@ -55,12 +81,10 @@ export async function POST(request: Request) {
       if (!needsContext(turn.content)) break;
     }
   }
-  const prior = knowledgeCatalog.find(r=>r.id===parsed.topic);
   // Bare price, contact and booking questions can refer to a tap/ordinal as
   // easily as to a typed topic. Explicit new subjects still go to retrieval.
   const elliptical = /^(?:(?:und|and) )?(?:was kostet (?:es|das)|was würde das kosten|wie (?:teuer|viel) ist das|ist (?:es|das) (?:gratis|kostenlos|verfügbar)|an wen (?:wende ich mich|sollen wir uns wenden)|wo (?:frage ich|fragen wir) (?:an|nach)|wie melde ich (?:mich|meine klasse) (?:dafür )?an|how much (?:is it|does (?:it|that) cost)|what does (?:it|that) cost|would it be free(?: of charge)?|is (?:it|that) (?:free|available)|who should (?:i|we) contact|who do (?:i|we) contact|how do (?:i|we) (?:register|sign up)(?: for (?:it|that))?)[?.! ]*$/i.test(message);
   const local = prior && elliptical ? selectCatalogKnowledge([{title:prior.indexTitle, similarity:1}], message) : selectCatalogKnowledge(localKnowledge(contextual), message);
-  const school = knowledgeCatalog.find(entry => entry.id === "workshops");
   if ((registration || deadline) && school?.booking) {
     // Resolve an implicit subject from the last user question, never from assistant claims.
     const subject = message.replace(/\b(und|and|wie|melde|ich|mich|wir|uns|dafür|dazu|an|how|do|can|i|we|sign|up|register|registration|for|it|that|this|the|what|is|deadline)\b/gi, " ").trim();
@@ -78,7 +102,13 @@ export async function POST(request: Request) {
       });
     }
   }
-  const unknown = en ? "I don't have verified information about that. Which ForJu service or project do you mean?" : "Dazu habe ich keine gesicherte Information. Welchen ForJu-Service oder welches Projekt meinst du?";
+  const missing = {en:"I don't have verified information about that. Which ForJu service or project do you mean?", de:"Dazu habe ich keine gesicherte Information. Welchen ForJu-Service oder welches Projekt meinst du?"};
+  const recovery = {en:"I still can’t match that to a ForJu offer. If you need an answer from ForJu, I can show you how to reach the team.", de:"Ich kann deine Frage weiterhin keinem ForJu-Angebot zuordnen. Wenn du eine Auskunft von ForJu brauchst, zeige ich dir gern, wie du das Team erreichst."};
+  const previousAnswer=history.at(-1)?.content;
+  const stillMissing = !!previousAnswer && [...Object.values(missing), ...Object.values(recovery)].includes(previousAnswer);
+  const unknown = (stillMissing ? recovery : missing)[lang];
+  const alternatives = en ? ["School workshops","Borrow equipment","Project funding"] : ["Schulworkshops","Messgeräte ausleihen","Projektfinanzierung"];
+  const suggestions = stillMissing ? [team,...alternatives] : alternatives;
   function libraryReply() {
     let first = local[0];
     if (first?.requestUrl) {
@@ -102,7 +132,7 @@ export async function POST(request: Request) {
       first = local.find(e => e.id === target) ?? selectCatalogKnowledge(localKnowledge(target),target).find(e => e.id === target) ?? first;
     }
     return NextResponse.json(first ? {mode:"library",topic:first.id,answer: en ? first.contentEn : first.content,
-      sources:[{title:en ? first.titleEn : first.title,url:readerUrl(first.url)}]} : {mode:"library", answer:unknown,sources:[],suggestions:en ? ["School workshops","Borrow equipment","Project funding"] : ["Schulworkshops","Messgeräte ausleihen","Projektfinanzierung"]});
+      sources:[{title:en ? first.titleEn : first.title,url:readerUrl(first.url)}]} : {mode:"library", answer:unknown,sources:[],suggestions});
   }
   if (deadline && local.length) {
     const answer = en ? "I can’t confirm that deadline from the approved ForJu information. Ask ForJu about the specific project and application period."
@@ -121,7 +151,7 @@ export async function POST(request: Request) {
     } catch (err) {
       if ((err as {status?:number})?.status === 401) return libraryReply();
     }
-    if (!matches.length) return NextResponse.json({answer:unknown,sources:[]});
+    if (!matches.length) return NextResponse.json({answer:unknown,sources:[],suggestions});
     const response = await openai.responses.create({
       model: process.env.OPENAI_CHAT_MODEL || "gpt-5.6-luna",
       store: false,

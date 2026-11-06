@@ -17,6 +17,28 @@ export function questionAfterGreeting(text: string) {
   // Remove only a salutation, never the question following it.
   return text.replace(/^(?:hi+|hey+|hello+|hallo+|moin|servus|guten (?:morgen|tag|abend)|good (?:morning|afternoon|evening)|danke|thanks|thank you)(?:\s+(?:compass|forju compass))?(?:\s*[,!:;.—👋]+\s*|\s+(?=(?:how|who|can|what|where|which|wie|wo|was|wer|welche|kann|und|and)\b))/iu,"").trim() || text;
 }
+// Visitors often name both the wrong subject and its replacement. Indexing both
+// makes yesterday's "microscope" beat today's "thermometer", even in a draft.
+export function affirmedRequest(text: string) {
+  const contrast = text.match(/^(?:(?:no|nein|actually|correction|korrektur|eigentlich)[\s,:.!–—-]+)*(?:(?:i|we) (?:mean|meant|need) |(?:ich|wir) (?:meine[n]?|meinte[n]?|brauche[n]?|suche[n]?) )?(?:not (?!only\b|just\b)|nicht (?!nur\b)|kein(?:e[nrms]?)? )[^.!?;]{1,100}?(?:,?\s+(?:but (?!also\b)|sondern (?!auch\b))|[.!;]\s*(?=(?:we|i|wir|ich)\b))(.+)/iu);
+  if (contrast) return contrast[1].trim();
+  // Also accept the reverse order in short edits. Questions and additive
+  // comparisons ("not only … but also …") must keep their original meaning.
+  const reverse = text.match(/^([^,;.!?]{1,85}?)(?:,\s*(?:not|nicht|kein(?:e[nrms]?)?)\s+|\s+(?:instead of|anstatt|statt)\s+)([^,;.!?]{1,60})[.!]?$/iu);
+  if (reverse && !/^(?:only|just|nur)\b/i.test(reverse[2]) && !/\b(?:can|kann|could|should|soll|would|why|warum|wenn|if)\b/i.test(reverse[1])) return reverse[1].trim();
+  return text;
+}
+const normalizeTurn = (text:string) => text.toLowerCase().replace(/[’']/g, "").replace(/[^\p{L}\p{N}]+/gu," ").trim();
+export function repairRequest(text:string) {
+  const s = normalizeTurn(text);
+  if (/^(?:(?:no|nein) )?(?:(?:thats not|that is not|that isnt) what i (?:meant|asked)|that(?:s| is) not it|i meant something else|das (?:meinte ich nicht|habe ich nicht gemeint)|ich meinte (?:etwas|was) anderes|(?:not|kein(?:e[nrs]?)?) (?:equipment|funding|workshops?|geräte|finanzierung|messgeräte)|du hast mich falsch verstanden|you misunderstood me)$/.test(s)) return "wrong-topic";
+  if (/^(?:(?:no|nein) )?(?:(?:that|this|you) (?:didnt|doesnt|did not|does not) answer my question|(?:that|this) (?:didnt help|wasnt helpful|isnt helpful)|das (?:hilft mir nicht(?: weiter)?|beantwortet meine frage nicht)|meine frage (?:war anders|wurde nicht beantwortet)|this (?:isnt|is not) helping|du verstehst mich nicht|you(?:re| are) not listening)$/.test(s)) return "not-helpful";
+  return null;
+}
+export function wantsTeam(text:string) {
+  const s=normalizeTurn(text);
+  return /^(?:contact the forju team|mit forju sprechen|(?:can|could|may) i (?:please )?(?:talk|speak|chat) (?:to|with) (?:a (?:real person|human|person)|the (?:forju )?team|someone (?:at|from) forju)(?: (?:about (?:this|that)|instead|please))?|(?:ich (?:möchte|will|würde gern)|kann ich) (?:bitte )?mit (?:einem (?:echten )?menschen|jemandem(?: (?:bei|von) forju)?|dem (?:forju )?team) (?:sprechen|reden|schreiben)(?: bitte)?)$/.test(s);
+}
 export function conversationalReply(text: string, englishUI: boolean) {
   const kind = intent(text) ?? intent(questionAfterGreeting(text));
   if (!kind) return null;

@@ -304,3 +304,88 @@ test('a receipt or introduction enquiry keeps the right public destination throu
   assert.match(draft.answer, /Luftqualität/);
   assert.ok(draft.sources.some(s => s.url.endsWith('thema=connections')));
 });
+
+test('a visitor can replace a rejected goal and reach the right person, without carrying over the old loan', async () => {
+  const v=visitor('en');
+  await v.ask('Can our class borrow a microscope in April?');
+  const introduction=await v.ask('No, not equipment. We need someone who studies air quality.');
+  assert.equal(introduction.topic,'connections');
+  assert.ok(introduction.sources.some(s=>s.url.endsWith('thema=connections')));
+  const draft=await v.ask('Could you draft an email?');
+  assert.match(draft.answer,/introduce us.*air quality/i);
+  assert.doesNotMatch(draft.answer,/microscope|April/i);
+  assert.deepEqual(v.calls,{embeddings:[],responses:[]});
+});
+
+test('explicit corrections replace the device or measurement, before and after drafting', async () => {
+  const de=visitor('de');
+  await de.ask('Unsere Klasse möchte im März ein Mikroskop ausleihen.');
+  await de.ask('Kannst du eine E-Mail formulieren?');
+  const correction=await de.ask('Korrektur: Kein Mikroskop, sondern ein Thermometer.');
+  assert.equal(correction.mode,'draft');
+  assert.match(correction.answer,/Unsere Klasse.*Thermometer/s);
+  assert.match(correction.answer,/März/);
+  assert.doesNotMatch(correction.answer,/Mikroskop/);
+  const unknown=await de.ask('Kein Thermometer, sondern eine Wärmebildkamera.');
+  assert.match(unknown.answer,/Wärmebildkamera/);
+  assert.doesNotMatch(unknown.answer,/Thermometer|Mikroskop/);
+  for(const edit of ['Actually, not air quality but water quality.','Water quality instead of air quality.']) {
+    const v=visitor('en');
+    await v.ask('Our class wants to borrow a sensor to measure air quality.');
+    const prompt=await v.ask(edit);
+    assert.equal(prompt.mode,'conversation');assert.match(prompt.answer,/email draft/i);
+    const accepted=await v.ask('Yes, please.');
+    assert.equal(accepted.mode,'draft');
+    assert.match(accepted.answer,/our class.*sensor.*water quality/i);
+    assert.doesNotMatch(accepted.answer,/air quality/i);
+    assert.deepEqual(v.calls,{embeddings:[],responses:[]});
+  }
+});
+
+test('misunderstandings can be repaired or taken to a verified human contact', async () => {
+  const v=visitor('en');
+  await v.ask('We need funding for our class project');
+  const repair=await v.ask('That didn’t answer my question.');
+  assert.equal(repair.mode,'conversation');assert.deepEqual(repair.sources,[]);
+  const team=await v.ask(repair.suggestions[0]);
+  assert.match(team.answer,/office@forju.at/);
+  assert.ok(team.sources.some(s=>s.url.endsWith('thema=finanziell')));
+  const de=visitor('de');
+  await de.ask('Schulworkshops');
+  assert.match((await de.ask('Kann ich mit einem echten Menschen sprechen?')).answer,/anja\.hofer@forju.at/);
+  const reset=await de.ask('Nein, das meinte ich nicht.');
+  assert.equal(reset.topic,undefined);assert.equal(reset.mode,'conversation');
+  const generic=await de.ask(reset.suggestions[0]);
+  assert.match(generic.answer,/office@forju.at/);assert.doesNotMatch(generic.answer,/anja/i);
+  assert.deepEqual(generic.sources.map(s=>s.url),['https://forju.at/de/kontakt']);
+});
+
+test('plain language and a price follow-up stay with the specific workshop', async () => {
+  for(const lang of ['de','en']){
+    const en=lang==='en', v=visitor(lang);
+    await v.ask(en?'Do you have a workshop about climate change?':'Ich suche einen Workshop zum Klima.');
+    const simple=await v.ask(en?'Can you say that more simply?':'Kannst du das bitte einfacher erklären?');
+    assert.equal(simple.topic,'workshop-klima');assert.match(simple.answer,/Klima|climate/i);assert.doesNotMatch(simple.answer,/stress|medien/i);
+    const cost=await v.ask(en?'How much does that cost per pupil?':'Was kostet das eigentlich?');
+    assert.match(cost.answer,/keinen? aktuellen Preis|aktuellen Preis.*nicht|no current price/i);
+    assert.equal(cost.sources[0].url,'https://forju.at/'+lang+'/projects/schulworkshops');
+  }
+});
+
+test('questions and additive contrasts retain their full meaning',()=>{
+  for (const q of ['Not only air quality but also water quality.', 'Nicht nur Geräte, sondern auch Kontakte.', 'Can we borrow instead of buying?', 'Is it free, not just subsidised?']) {
+    assert.equal(conversation.affirmedRequest(q),q);
+  }
+});
+
+test('two misses offer a way out instead of cycling through the same clarification',async()=>{
+  const v=visitor('de');
+  const first=await v.ask('Wie viele Monde hat Jupiter?');
+  const second=await v.ask('Und wie viele hat Neptun?');
+  assert.deepEqual(first.sources,[]);assert.deepEqual(second.sources,[]);
+  assert.notEqual(first.answer,second.answer);
+  const team=await v.ask(second.suggestions[0]);
+  assert.match(team.answer,/office@forju\.at/);
+  assert.equal(team.sources[0].url,'https://forju.at/de/kontakt');
+  assert.deepEqual(v.calls,{embeddings:[],responses:[]});
+});

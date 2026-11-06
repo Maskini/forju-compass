@@ -32,7 +32,8 @@ export function visitorTopic(input: string) {
   // Distinguish people from physical resources, and money given from money needed.
   const wantsIntroduction = /introduc|put .{0,28}in touch|connect .{0,28}with|in kontakt bringen|kennenlernen|vermittel/.test(q);
   const mentionsPerson = /scientist|researcher|someone in a lab|expert|wissenschaftler|forscher|forschend|fachperson/.test(q);
-  if (wantsIntroduction && mentionsPerson) return "connections";
+  const lookingForResearcher = /(?:need|looking for|speak (?:to|with)|talk (?:to|with)) (?:a (?:scientist|researcher)|someone who (?:studies|researches))\b|(?:suchen|brauchen) (?:jemanden,? (?:der|die) .{1,50}forscht|eine[n]? (?:forscher|wissenschaftler))/.test(q);
+  if ((lookingForResearcher && !/\b(?:jobs?|vacanc(?:y|ies)|stelle|stellenangebot)\b/.test(q)) || (wantsIntroduction && mentionsPerson)) return "connections";
 
   const gaveMoney = /donat|spende|uberwiesen|(?:gave|sent|transferred).{0,32}money/.test(q);
   const wantsProof = /receipt|acknowledg|confirmation|proof|nachweis|beleg|quittung|bestatigung/.test(q);

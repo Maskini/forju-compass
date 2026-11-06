@@ -7,7 +7,7 @@ type Topic = "ressourcen" | "workshops" | "finanzierung" | "science-beratung" | 
 const subjectTerms: [Topic, RegExp][] = [
   ["connections", /introductions?|vorstellung bei|kontaktvermittlung/i],
   ["spenden-bestaetigung", /donation (?:receipt|confirmation)|spendenbestätigung|spendenquittung/i],
-  ["ressourcen", /sensor|messgerät|messger[aä]t|ausleih|messinstrument|borrow|equipment|microscope|mikroskop|gerät.*leihen/i],
+  ["ressourcen", /sensor|messgerät|messger[aä]t|ausleih|messinstrument|borrow|equipment|microscope|mikroskop|thermometer|gerät.*leihen/i],
   ["workshops", /workshops?|schulseminar/i],
   ["finanzierung", /finanzier|förderpartner|funding|fundrais/i],
   ["science-beratung", /beratung|research idea|projektidee|project idea/i],
@@ -17,6 +17,7 @@ const chooseSubject = [
   "Worum soll es in deiner Anfrage gehen: um Geräte, einen Schulworkshop, Finanzierung oder eine Projektidee?",
   "What would you like to ask ForJu about: equipment, a school workshop, funding or a project idea?",
 ];
+const revisionOffer = ["Soll ich eine E-Mail mit dieser Änderung formulieren?", "Would you like an email draft with that change?"];
 const draftLabel = ["E-Mail formulieren","Draft an email"];
 function topicOf(message:string) {
   return subjectTerms.find(([,pattern]) => pattern.test(message))?.[0];
@@ -69,17 +70,22 @@ const equipment: [RegExp,string,string][] = [
   [/sensor/i,"einen Sensor","a sensor"], [/mikroskop|microscope/i,"ein Mikroskop","a microscope"],
   [/thermometer/i,"ein Thermometer","a thermometer"], [/laborraum|lab space/i,"einen Laborraum","lab space"],
 ];
-function term(messages:string[], terms:[RegExp,string,string][],en:boolean) {
-  for (const message of messages.toReversed()) {
-    const hit=terms.find(([pattern])=>pattern.test(message));
+type Detail = {raw:string; text:string};
+function term(details:Detail[], terms:[RegExp,string,string][],en:boolean) {
+  for (const {raw,text} of details.toReversed()) {
+    const hit=terms.find(([pattern])=>pattern.test(text));
     if (hit) return hit[en?2:1];
+    // An unknown replacement must never resurrect an explicitly rejected detail.
+    if (raw!==text && terms.some(([pattern])=>pattern.test(raw))) return;
   }
 }
 export function visitorEnquiry(
-  message:string, en:boolean, history:ChatMessage[], hint:string|undefined, records:Card[], readerUrl:(url:string)=>string, catalogTopic:(text:string)=>string|null
+  raw:string, en:boolean, history:ChatMessage[], hint:string|undefined, records:Card[], readerUrl:(url:string)=>string, catalogTopic:(text:string)=>string|null, affirmed:(text:string)=>string
 ) {
+  const message=affirmed(raw);
+  const corrected=raw!==message;
   const lang=en?1:0;
-  const resolveTopic = (text:string) => catalogTopic(text) ?? topicOf(text);
+  const resolveTopic = (text:string) => catalogTopic(affirmed(text)) ?? topicOf(affirmed(text));
   const current=resolveTopic(message);
   const prior=hint?.startsWith("workshop-")?"workshops":hint;
   const asks=askForDraft.test(message) && !/(?:don.t|do not|keine?|nicht)\s+(?:write|draft|e-?mail|anfrage|schreiben)/i.test(message);
@@ -88,8 +94,18 @@ export function visitorEnquiry(
   const card=records.find(r=>r.id===topic);
   const lastAnswer=history.at(-1)?.content ?? "";
   const revising=/^(?:Hello ForJu team,|Hallo ForJu-Team,)/.test(lastAnswer)
-    && /^(?:actually|correction|make that|change (?:it|the date)|korrektur|doch|eigentlich|ändere)\b/i.test(message);
-  const wantDraft=asks || answeringPrompt || revising;
+    && (!current || current===prior) && !message.includes("?")
+    && (corrected || /^(?:actually|correction|make that|change (?:it|the date)|korrektur|doch|eigentlich|ändere)\b/i.test(message));
+  const offeredDraft = revisionOffer.some(q=>lastAnswer.endsWith(q));
+  const yes = /^(?:ja(?: bitte| gern[e]?)?|yes(?: please)?|please do|gern[e]?|mach das|sure|ok(?:ay)?)[\s.!]*$/i.test(message.replace(/,\s*/g," "));
+  if (offeredDraft && /^(?:no|nein)(?:[, ]+(?:thanks|thank you|danke))?[.! ]*$/i.test(message)) {
+    return {mode:"conversation",topic,answer:en?"Okay. What else would you like to know?":"Alles klar. Was möchtest du noch wissen?",sources:[]};
+  }
+  const wantDraft=asks || answeringPrompt || revising || (offeredDraft && yes);
+  if (!wantDraft && corrected && prior===topic && topic==="ressourcen" && !message.includes("?")) {
+    const recognized=[...equipment,...measurements].some(([pattern])=>pattern.test(message));
+    if (recognized) return {mode:"conversation",topic,answer:(en?"Got it: ":"Verstanden: ")+message.replace(/[.!]+$/,"")+". "+revisionOffer[lang],sources:[],suggestions:[draftLabel[lang]]};
+  }
   if (!wantDraft && topic!=="workshops") return null;
   if (wantDraft && !subjectTerms.some(([id])=>id===topic)) {
     return {mode:"conversation",answer:chooseSubject[lang],sources:[],suggestions:en?["Equipment","School workshop","Funding","Project idea"]:["Messgeräte","Schulworkshop","Finanzierung","Projektidee"]};
@@ -98,19 +114,20 @@ export function visitorEnquiry(
   const page={title:en?card.titleEn:card.title,url:readerUrl(card.sourceUrl)};
   // Carry only recognized details from user turns about this subject. The
   // assistant's text and unrelated conversations never become email content.
-  const messages:string[]=[];
+  const details:Detail[]=[];
   for (const turn of history.toReversed()) {
     if (turn.role!=="user") continue;
     const previousTopic=resolveTopic(turn.content);
     if (current && prior && current!==prior) break;
     if (previousTopic && previousTopic!==topic) break;
     // Only a relevant subject or an explicit logistical detail can fill a slot.
-    if (previousTopic===topic || visitQuestion.test(turn.content) ||
+    if (previousTopic===topic || affirmed(turn.content)!==turn.content || visitQuestion.test(turn.content) ||
         /^(?:actually|correction|make that|instead|timing|our class|korrektur|doch|zeitraum|termin|unsere klasse)\b/i.test(turn.content)) {
-      messages.unshift(turn.content);
+      details.unshift({raw:turn.content,text:affirmed(turn.content)});
     }
   }
-  messages.push(message);
+  details.push({raw,text:message});
+  const messages=details.map(d=>d.text);
   const currentPlace=namedPlace(message);
   const mentionedPlace=messages.toReversed().find(m=>namedPlace(m));
   const place=mentionedPlace && !/(?:außerhalb|ausserhalb|outside)(?: of| von)? (?:Wien|Vienna)/i.test(mentionedPlace)
@@ -119,32 +136,37 @@ export function visitorEnquiry(
     const asksWhere=/bei uns|zu uns|at our school|our area|come to|travel to|outside|außerhalb|ausserhalb/i.test(message);
     const askedAboutPlace=(visitQuestion.test(message) && (currentPlace || asksWhere))
       || (currentPlace && message.trim().split(/\s+/).length<=3);
+    // A price-only follow-up can refer to a particular workshop without naming the school or town again.
+    if (!askedAboutPlace && card.pricing && /^(?:(?:und|and) )?(?:was kostet (?:es|das)(?: (?:eigentlich|pro (?:kind|person)))?|wie teuer ist (?:es|das)|ist (?:es|das) (?:gratis|kostenlos)|(?:how much (?:is (?:it|that)|does (?:it|that) cost)|what does (?:it|that) cost)(?: per (?:student|pupil))?|is (?:it|that) free)[?!. ]*$/i.test(message)) {
+      return {mode:"library",topic:hint && (hint==="workshops" || hint.startsWith("workshop-")) ? hint : card.id,answer:card.pricing[en?"en":"de"],sources:[page],suggestions:[draftLabel[lang]]};
+    }
     if (!askedAboutPlace || !card.coverage) return null;
     const inArea=place && card.coverage.places.includes(place) && !/au[ßs]+erhalb|outside/i.test(message);
     const area=place && !inArea?place:undefined;
     const where=area?" in "+area:(en?" at your school":" an eurer Schule");
     const text=card.coverage[en?"en":"de"]+" ";
-    const details=inArea ? (en?"Ask the workshop contact to confirm a date for your class.":"Ob ein Termin für eure Klasse frei ist, klärt ihr mit dem Workshopkontakt.")
+    const locationAnswer=inArea ? (en?"Ask the workshop contact to confirm a date for your class.":"Ob ein Termin für eure Klasse frei ist, klärt ihr mit dem Workshopkontakt.")
       : en?"A visit"+where+" needs confirmation. Ask the workshop contact whether the team can come to you.":"Ob ein Workshop"+where+" möglich ist, geht daraus nicht hervor. Frag beim Workshopteam nach, ob es zu euch kommen kann.";
     const asksAboutCost = /kost(?:et|en)|preis|gebühr|gratis|teuer|zahlen|bezahlen|\b(?:costs?|prices?|fees?|free|pay)\b|how much/i.test(message);
     const price = asksAboutCost ? card.pricing?.[en ? "en" : "de"] : undefined;
-    const answer = price ? text + details + " " + price : text + details;
+    const answer = price ? text + locationAnswer + " " + price : text + locationAnswer;
     return {mode:"library",topic:card.id,answer,sources:[page],suggestions:[draftLabel[lang]]};
   }
   const date=timing(messages,en);
   const school=messages.some(m=>/klasse|class\b|school|schule|students/i.test(m));
+  const plural=school || details.some(d=>/\b(?:wir|uns|we|our|us)\b/i.test(d.raw));
   let body:string;
   if (topic==="ressourcen") {
-    const device=term(messages,equipment,en) ?? (en?"measuring equipment":"ein Messgerät");
-    const measure=term(messages,measurements,en);
-    body=en?(school?"Our class":"I")+" would like to borrow "+device+(measure?" to measure "+measure:"")+". Could you confirm availability and any cost?"
-      :(school?"Unsere Klasse möchte ":"Ich möchte ")+device+" ausleihen"+(measure?", um "+measure+" zu messen":"")+". Können Sie uns sagen, ob das möglich ist und welche Kosten anfallen?";
+    const device=term(details,equipment,en) ?? (en?"measuring equipment":"ein Messgerät");
+    const measure=term(details,measurements,en);
+    body=en?(school?"Our class":plural?"We":"I")+" would like to borrow "+device+(measure?" to measure "+measure:"")+". Could you confirm availability and any cost?"
+      :(school?"Unsere Klasse möchte ":plural?"Wir möchten ":"Ich möchte ")+device+" ausleihen"+(measure?", um "+measure+" zu messen":"")+". Können Sie "+(plural?"uns":"mir")+" sagen, ob das möglich ist und welche Kosten anfallen?";
   } else if (topic==="workshops") {
-    const subject=term(messages,[[/klima|climate/i,"zum Klima"," on climate"],[/medien|media literacy/i,"zu Medienkompetenz"," on media literacy"],[/stress/i,"zu Stressbewältigung"," on managing stress"]],en);
+    const subject=term(details,[[/klima|climate/i,"zum Klima"," on climate"],[/medien|media literacy/i,"zu Medienkompetenz"," on media literacy"],[/stress/i,"zu Stressbewältigung"," on managing stress"]],en);
     body=en?"Could you offer a workshop"+(subject??"")+" for our class"+(place?" in "+place:"")+"? What dates would be possible, and would there be a cost?"
       :"Wäre ein Workshop"+(subject?" "+subject:"")+" für unsere Klasse"+(place?" in "+place:"")+" möglich? Welche Termine kämen infrage und welche Kosten würden anfallen?";
   } else if (topic==="connections") {
-    const field = term(messages, measurements, en) ?? (en ? "[field of research]" : "[Fachgebiet]");
+    const field = term(details, measurements, en) ?? (en ? "[field of research]" : "[Fachgebiet]");
     body = en ? "Could you introduce us to a researcher working on " + field + "? Our question is: [what we would like to find out]."
       : "Könnten Sie uns jemanden aus der Forschung zum Thema " + field + " vorstellen? Unsere Frage ist: [Was möchten wir herausfinden?]";
   } else if (topic==="spenden-bestaetigung") {
@@ -154,6 +176,11 @@ export function visitorEnquiry(
     body=en?"Could you help us estimate the costs of our project and identify potential funding partners?":"Können Sie uns helfen, die Kosten unseres Projekts einzuschätzen und mögliche Förderpartner zu finden?";
   } else {
     body=en?"I would like to develop a research idea. Could we arrange a meeting to discuss it?":"Ich möchte eine Forschungsidee weiterentwickeln. Können wir dafür einen Beratungstermin vereinbaren?";
+  }
+  const latestEdit=details.findLast(d=>d.raw!==d.text);
+  if (topic==="ressourcen" && latestEdit && ![...equipment,...measurements].some(([pattern])=>pattern.test(latestEdit.text))
+      && [...equipment,...measurements].some(([pattern])=>pattern.test(latestEdit.raw))) {
+    body+="\n\n"+(en?"What we need: ":"Was wir brauchen: ")+latestEdit.text;
   }
   if (date && topic !== "spenden-bestaetigung") body+="\n\n"+(en?"Preferred timing: ":"Gewünschter Zeitraum: ")+date;
   const answer=(en?"Hello ForJu team,":"Hallo ForJu-Team,")+"\n\n"+body+"\n\n"+(en?"Thank you!":"Vielen Dank!");
