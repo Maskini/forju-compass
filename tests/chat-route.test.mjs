@@ -92,3 +92,22 @@ test('school registration uses reviewed contact details before any provider call
   assert.equal(calls.embeddings.length, 0);
   assert.equal(calls.responses.length, 0);
 });
+
+test('catalog follows an equipment request through cost and contact questions', async () => {
+  const {POST, calls} = setup();
+  const history = [];
+  for (const [message, expected, path] of [
+    ['Can our class borrow something to measure air quality?', /particular device.*needs confirmation/i, '/services/ressourcen'],
+    ['Would it be free of charge?', /no loan price/i, '/services/ressourcen'],
+    ['Who should I contact?', /office@forju.at/, '/kontakt?intent=service&thema=ressourcen'],
+  ]) {
+    const res = await POST(new Request('http://localhost/api/chat', {
+      method: 'POST', headers: {'Accept-Language':'en'}, body: JSON.stringify({message, history}),
+    }));
+    const reply = await res.json();
+    assert.match(reply.answer, expected);
+    assert.ok(reply.sources.some(source => source.url === 'https://forju.at/en' + path));
+    history.push({role:'user', content:message}, {role:'assistant', content:reply.answer});
+  }
+  assert.equal(calls.embeddings.length, 0);
+});

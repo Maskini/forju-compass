@@ -1,6 +1,6 @@
 # Public demo knowledge
 
-catalog.json contains seven summaries of the public ForJu website, read on 2026-09-21.
+catalog.json contains the bilingual records served by Compass. See [public knowledge maintenance](../docs/public-knowledge.md) for the source review and release procedure.
 Every entry links to its public source. No strategy-paper excerpts are shipped.
 Original document-derived data is preserved locally in ignored work/private-knowledge-before-demo/.
 

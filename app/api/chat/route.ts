@@ -3,7 +3,7 @@ import OpenAI from "openai";
 import { NextResponse } from "next/server";
 import { parseChatRequest, retrievalQuery } from "@/lib/chat";
 
-import { knowledgeCatalog, localKnowledge, selectCatalogKnowledge, parseGroundedAnswer, answerFormat } from "@/lib/knowledge";
+import { visitorTopic, knowledgeCatalog, localKnowledge, selectCatalogKnowledge, parseGroundedAnswer, answerFormat } from "@/lib/knowledge";
 
 export async function POST(request: Request) {
   if (Number(request.headers.get("content-length") || 0) > 32000) {
@@ -27,8 +27,20 @@ export async function POST(request: Request) {
   const previous = history.filter(m => m.role === "user").at(-1)?.content;
   const deadline = /deadline|cut[ -]?off|by (what|which) date|last day|how late|\bfrist|anmeldefrist|bewerbungsfrist|bis wann|spätestens/i.test(message);
   const registration = /sign[ -]?up|register|registration|book(ing)?|anmeld|melde.{0,24}an|termin vereinbaren/i.test(message);
-  const followUp = /^(and |what about|who (can|should)|how (do|can)|und |wie (kann|melde)|an wen)|\b(dafür|dazu|for (it|that)|for this)\b/i.test(message);
-  const contextual = previous && followUp ? previous + "\n" + message : message;
+  function needsContext(question: string) {
+    if (visitorTopic(question)) return false;
+    return /^(and |what about|who (can|should)|how (do|can)|und |wie (kann|melde)|an wen)|\b(dafür|dazu|for (it|that)|for this)\b/i.test(question) ||
+      /^(how much (does|would|is)|what (would it|does it) cost|is (it|that) (free|available)|would (it|that) be|was kostet|kostet (das|es)|ist (es|das) (gratis|kostenlos|verfügbar)|wo (frage|fragen)|where (do|can) (we|i) (ask|request))/i.test(question);
+  }
+  // Resolve short follow-ups against user questions, never assistant assertions.
+  let contextual = message;
+  if (needsContext(message)) {
+    for (const turn of [...history].reverse()) {
+      if (turn.role !== "user") continue;
+      contextual = turn.content + "\n" + contextual;
+      if (!needsContext(turn.content)) break;
+    }
+  }
   const local = selectCatalogKnowledge(localKnowledge(contextual), message);
   const school = knowledgeCatalog.find(entry => entry.id === "workshops");
   if ((registration || deadline) && school?.booking) {
@@ -51,17 +63,23 @@ export async function POST(request: Request) {
   const unknown = en ? "I don't have verified information about that. Which ForJu service or project do you mean?" : "Dazu habe ich keine gesicherte Information. Welchen ForJu-Service oder welches Projekt meinst du?";
   function libraryReply() {
     let first = local[0];
+    if (first?.requestUrl) {
+      const form = {title: en ? "Enquire with ForJu" : "Bei ForJu anfragen", url:readerUrl(first.requestUrl)};
+      const page = {title: en ? first.titleEn : first.title, url:readerUrl(first.url)};
+      if (first.id === "ressourcen" && /kostet|kostenlos|gebühr|gratis|how much|cost|price|fee|free of charge/i.test(message)) {
+        const answer = en ? "ForJu’s resources page gives no loan price. Ask the team to confirm the cost for your device and dates."
+          : "ForJus Ressourcenseite nennt keinen Leihpreis. Frag das Team nach den Kosten für euer Gerät und euren Zeitraum.";
+        return NextResponse.json({mode:"library", answer, sources:[page,form]});
+      }
+      if (/who.{0,16}contact|where.{0,12}(ask|request)|an wen|wo.{0,12}(anfragen|fragen)|kontaktieren/i.test(message)) {
+        const answer = en ? "Use the enquiry form linked here or email office@forju.at. Briefly describe your project and the help you need."
+          : "Nutze das verlinkte Anfrageformular oder schreib an office@forju.at. Beschreibe kurz dein Vorhaben und welche Unterstützung du brauchst.";
+        return NextResponse.json({mode:"library", answer, sources:[form]});
+      }
+      return NextResponse.json({mode:"library", answer:en ? first.contentEn : first.content,sources:[page,form]});
+    }
     if (/\b(contact|kontakt|kontaktieren|erreichen|an wen|ansprechpartner|bewerben|apply)\b/i.test(message)) {
       const topic = contextual.toLowerCase();
-      if (local[0]?.id === "ressourcen") {
-        const source = local[0];
-        const action = en ? "Use ForJu’s resources enquiry form to describe the equipment you need and when you need it."
-          : "Beschreibe in ForJus Ressourcenanfrage, welche Geräte du brauchst und für welchen Zeitraum.";
-        return NextResponse.json({mode:"library", answer:action, sources:[{
-          title: en ? "Request equipment or space" : "Geräte oder Räume anfragen",
-          url:readerUrl("https://forju.at/de/kontakt?intent=service&thema=ressourcen")
-        }]});
-      }
       const target = /press|presse/.test(topic) ? "presse" : /job|volunteer|bewerb|ehrenamt|apply/.test(topic) ? "ehrenamt" : "kontakt";
       first = local.find(e => e.id === target) ?? selectCatalogKnowledge(localKnowledge(target),target).find(e => e.id === target) ?? first;
     }

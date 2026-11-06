@@ -27,8 +27,11 @@ function terms(text: string) {
 // High-confidence visitor intents complement term matching for short introductions
 // and German compounds. More specific workshop, donation and job topics keep
 // their ordinary relevance ranking.
-function visitorTopic(input: string) {
+export function visitorTopic(input: string) {
   const q=input.toLowerCase().normalize("NFKD").replace(/\p{M}/gu,"");
+  if (/mitglied werden|mitgliedschaft|beitreten|join forju|become a member|membership form/.test(q)) return "mitglied";
+  if (/submit.{0,22}(thesis|research project)|(?:abschlussarbeit|diplomarbeit|projekt).{0,20}einreichen/.test(q)) return "einreichen";
+  if (/(?:air quality|luftqualitat|luftgute|co2|carbon dioxide)/.test(q) && /borrow|lend|measur|monitor|sensor|leih|mess/.test(q)) return "ressourcen";
   if (/\b(messgerat|messinstrument|mikroskop|microscope|lab space|laborraum|measuring instrument)/.test(q)) return "ressourcen";
   if (/fur wen.{0,16}forju|who is forju for|who (can|may) (take part|participate)|zielgruppe/.test(q)) return "mission";
   if (/projektidee|research idea|project idea/.test(q) && !/finanz|fund|geld|forder|donat/.test(q)) return "science-beratung";
@@ -76,6 +79,7 @@ export function selectCatalogKnowledge(rows: unknown, question: string) {
     sourceUpdatedAt: entry.sourceUpdatedAt,
     reviewStatus: entry.reviewStatus,
     url: entry.sourceUrl,
+    requestUrl: entry.requestUrl,
     similarity,
     citation: index + 1,
   }));

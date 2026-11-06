@@ -2,10 +2,18 @@
 
 On 6 November 2026 the 24 German sitemap pages were collected again and compared
 with the earlier snapshots. Partner, team and contact information was reviewed.
-The catalog now has 43 bilingual entries: 35 website topic summaries, five job
+The catalog now has 45 bilingual entries: 37 website topic summaries, five job
 categories covering 23 roles displayed on the jobs page, and three historical
 LinkedIn summaries. Jobs describe a dated listing, never guaranteed availability.
-Facebook is not indexed. English catalog answers are editorial translations.
+Facebook is not indexed. English catalog answers are reviewed English summaries.
+
+With COMPASS_LOCAL_ONLY=true, POST /api/chat calls localKnowledge and
+selectCatalogKnowledge, then libraryReply reads the winning record’s content or
+contentEn. sourceUrl supports the answer; requestUrl, when present, opens the
+specific public enquiry form. For example, a class asking to borrow a device
+to measure air quality maps to ressourcen. Device availability and price must
+be confirmed by the team. Refreshing the JSON and deploying main updates
+this path without a database import.
 
 ## Privacy and answer presentation
 
