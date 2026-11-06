@@ -39,7 +39,6 @@ export default function FeedbackWidget({language, inline=false, ref}: {
   function closed() { restoreScroll.current?.(); opener.current?.focus({preventScroll:true}); }
   return <>
     <button ref={trigger} type="button" className={inline?"report-inline":"feedback-launcher"} onClick={()=>open()} aria-haspopup="dialog" aria-controls="feedback-drawer">
-      <ReportIcon />
       {t("Problem melden", "Report a problem")}
     </button>
     <dialog ref={dialog} id="feedback-drawer" className="feedback-drawer" aria-labelledby="feedback-title" aria-describedby="feedback-subtitle" onClose={closed} onCancel={event => { event.preventDefault(); dialog.current?.close(); }} onKeyDown={event => {

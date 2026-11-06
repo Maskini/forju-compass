@@ -225,12 +225,15 @@ test('English phone widget: one Send, retained draft on failure, stable retry an
   await page.goto('/preview?lang=en');
   const host=page.locator('forju-compass-widget');
   await host.locator('.launcher').click();
+  await expect(host.locator('.welcome .start svg')).toHaveCount(0);
   await host.locator('.welcome .start').click();
   const panel=host.frameLocator('iframe');
   const turn=await ask(panel,'How can I volunteer?');
   await expect(turn.locator('.read-more a').first()).toBeVisible();
   await expect(turn).not.toContainText(/knowledge catalog/i);
-  await panel.getByRole('button',{name:'Report a problem',exact:true}).click();
+  const report = panel.getByRole('button',{name:'Report a problem',exact:true});
+  await expect(report.locator('svg')).toHaveCount(0);
+  await report.click();
   const badge=panel.locator('.feedback-report-badge');
   await expect(badge).toBeInViewport();
   const art=await badge.evaluate(b=>{
@@ -247,12 +250,13 @@ test('English phone widget: one Send, retained draft on failure, stable retry an
     await review.getByRole('button',{name:/^Continue/}).click();
   }
   await expect(review).not.toContainText(/email your draft|recipient:|adam\.maskini@/i);
-  await expect(review.locator('a[href^="mailto:"]')).toHaveCount(0);
+  await expect(review.getByRole('button',{name:'Copy draft'})).toHaveCount(0);
+  await expect(review.getByRole('link')).toHaveCount(0);
   expect(requests).toHaveLength(0);
   await review.getByRole('button',{name:'Send',exact:true}).click();
   await expect(review.getByRole('status')).toContainText('wasn’t confirmed');
   await expect(review.getByLabel('Project title',{exact:true})).toHaveValue('Testing our school pond');
-  await review.getByRole('button',{name:'Try again',exact:true}).click();
+  await review.getByRole('button',{name:'Send',exact:true}).click();
   await expect(review.getByRole('status')).toContainText('accepted for delivery');
   await expect(review.getByRole('button',{name:'Sent',exact:true})).toBeDisabled();
   expect(requests).toHaveLength(2);expect(requests[1]).toEqual(requests[0]);
@@ -264,15 +268,32 @@ test('English phone widget: one Send, retained draft on failure, stable retry an
   await expect(review.getByRole('button',{name:'Sent',exact:true})).toBeDisabled();
 });
 
-test('German standalone review: the official form stays usable without a sender',async({page})=>{
+test('German desktop: keep the project in the form while offline, then send when delivery recovers', async ({page}) => {
   await page.goto('/');
-  await page.getByRole('button',{name:/Projektentwurf starten/}).click();
-  const review=page.getByRole('dialog');
-  await review.getByLabel('Projekttitel',{exact:true}).fill('Luftqualität in der Klasse');
-  for(let i=0;i<5;i++) await review.getByRole('button',{name:/^Weiter/}).click();
-  await expect(review.getByRole('link',{name:/Projektformular öffnen/})).toHaveAttribute('href','https://forju.at/de/kontakt?intent=projekt');
-  await expect(review.getByRole('button',{name:'Entwurf kopieren'})).toBeEnabled();
-  await expect(review.getByRole('status')).toContainText('Direktes Senden ist nicht verfügbar');
-  await expect(review.getByRole('button',{name:'Senden',exact:true})).toHaveCount(0);
-  await expect(review).not.toContainText(/Empfänger:|Zum E-Mail-Versand|Überspringen/);
+  await expect(page.getByRole('button', {name:'Problem melden', exact:true}).locator('svg')).toHaveCount(0);
+  await page.getByRole('button', {name:/Projektentwurf starten/}).click();
+  const review = page.getByRole('dialog');
+  await expect(review.getByRole('status')).toContainText('derzeit nicht gesendet');
+  await review.getByLabel('Projekttitel', {exact:true}).fill('Luftqualität in der Klasse');
+  for (let step = 0; step < 5; step++) await review.getByRole('button', {name:/^Weiter/}).click();
+  await expect(review.getByRole('link')).toHaveCount(0);
+  await expect(review.getByRole('button', {name:'Entwurf kopieren'})).toHaveCount(0);
+  const send = review.getByRole('button', {name:'Senden',exact:true});
+  const submissions=[];
+  page.on('request', request => {
+    if (request.method()==='POST' && new URL(request.url()).pathname==='/api/project-submission') submissions.push(request.postDataJSON());
+  });
+  await send.click();
+  await expect(review.getByRole('status')).toContainText('Dein Projekt wurde nicht gesendet');
+  expect(submissions).toEqual([]);
+  await expect(review.getByLabel('Projekttitel', {exact:true})).toHaveValue('Luftqualität in der Klasse');
+
+  // Recovery without refreshing the visitor's draft. Never contact a mail provider.
+  await page.route('**/api/project-submission', route => route.fulfill({
+    json:route.request().method()==='GET' ? {direct:true} : {accepted:true}
+  }));
+  await send.click();
+  await expect(review.getByRole('button', {name:'Gesendet',exact:true})).toBeDisabled();
+  expect(submissions).toHaveLength(1);
+  expect(submissions[0].draft).toContain('Luftqualität in der Klasse');
 });

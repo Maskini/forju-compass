@@ -24,7 +24,7 @@ button:hover{filter:brightness(.96)}.launcher{display:flex;align-items:center;ga
 :host{font-family:var(--font-public-sans,'ForJu Public Sans',system-ui),sans-serif;color:#2d1e1e}
 .welcome{background:linear-gradient(#fffaf6dd,#fffaf6dd),url('/forju/paper-fiber-cream.webp') center/200px;box-shadow:inset 0 1px 1px white,0 3px 6px #2d1e1e26,0 12px 38px #2d1e1e1a}
 h2,h3,.start{font-family:var(--font-space-grotesk,'ForJu Space Grotesk',system-ui),sans-serif}
-.mark,.start svg{width:20px;height:20px;flex:none}.mark svg{display:block;width:100%;height:100%}.topic1 .mark{color:#9a3412}.topic2 .mark{color:#1e6b41}
+.mark{width:20px;height:20px;flex:none}.mark svg{display:block;width:100%;height:100%}.topic1 .mark{color:#9a3412}.topic2 .mark{color:#1e6b41}
 .topic,.start,.dismiss,.close,.seal{transition:box-shadow .16s,color .16s,background-color .16s}
 .start{background:#f1ccde;color:#861456;box-shadow:inset 0 1px #fff9,0 2px 3px #2d1e1e28}
 .hint{position:relative;padding-right:25px;background:#fffaf6 url('/forju/origami/pink-airplane.png') right 5px center/18px auto no-repeat}

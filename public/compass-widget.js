@@ -16,8 +16,7 @@
   const paths={
     bulb:"M9 18h6m-5 3h4m-5-6a6 6 0 1 1 6 0l-1 2h-4z",
     page:"M6 3h8l4 4v14H6z M14 3v5h4 M9 12h6m-6 4h5",
-    people:"M3 20v-2a5 5 0 0 1 10 0v2m2-7a5 5 0 0 1 6 5v2M8 4a3.5 3.5 0 1 0 .01 0m8 1a3 3 0 1 1 0 6",
-    chat:"M21 11a9 9 0 0 1-9 9H4l-2 2 1.4-6A9 9 0 1 1 21 11z M8 11h.01m4 0h.01m4 0h.01"
+    people:"M3 20v-2a5 5 0 0 1 10 0v2m2-7a5 5 0 0 1 6 5v2M8 4a3.5 3.5 0 1 0 .01 0m8 1a3 3 0 1 1 0 6"
   };
   function icon(name,parent){
     const ns="http://www.w3.org/2000/svg",svg=document.createElementNS(ns,"svg"),path=document.createElementNS(ns,"path");
@@ -36,7 +35,7 @@
     const label=el("span","",b);const arrow=el("span","arrow",b);arrow.textContent="→";return label;
   });
   const start=button("start",card,()=>open());
-  icon("chat",start);const startLabel=el("span","",start);
+  const startLabel=el("span","",start);
   const go=el("span","",start);go.textContent="→";go.ariaHidden="true";
   const launcher=button("launcher",wrap,()=>toggle(card.hidden));
   launcher.setAttribute("aria-controls",card.id);

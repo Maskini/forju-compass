@@ -3,13 +3,17 @@
 import {useEffect, useRef, useState} from "react";
 import {PROJECT_MAX_LENGTH} from "@/lib/project-mail";
 
-type Availability = "unknown" | "available" | "unavailable";
-type Receipt = {identity: string; state: "accepted" | "error"};
+async function checkSender(signal: AbortSignal) {
+  const response = await fetch("/api/project-submission", {cache:"no-store", signal});
+  if (!response.ok) throw new Error("Could not check sending availability");
+  return (await response.json()).direct === true;
+}
+type Receipt = {identity: string; state: "accepted" | "unavailable" | "error"};
 
 // Lives with the draft, so going back a step or returning to chat keeps the
 // reply address and receipt. Only an explicit press of Send can post a draft.
-export function useProjectDelivery(review: boolean, lang: "de" | "en", message: string) {
-  const [availability, setAvailability] = useState<Availability>("unknown");
+export function useProjectDelivery(started: boolean, lang: "de" | "en", message: string) {
+  const [unavailable, setUnavailable] = useState(false);
   const [reply, setReply] = useState("");
   const [receipt, setReceipt] = useState<Receipt | null>(null);
   const [busy, setBusy] = useState(false);
@@ -20,18 +24,16 @@ export function useProjectDelivery(review: boolean, lang: "de" | "en", message: 
   const identity = JSON.stringify([lang, message, replyEmail]);
   const result = receipt?.identity === identity ? receipt.state : null;
   const tooLong = message.length > PROJECT_MAX_LENGTH;
-  const canSend = Boolean(message) && validReply && !tooLong && !busy && result !== "accepted" && availability !== "unavailable";
+  const canSend = Boolean(message) && validReply && !tooLong && !busy && result !== "accepted";
 
   useEffect(() => {
-    if (!review) return;
+    if (!started) return;
     const ctrl = new AbortController();
-    fetch("/api/project-submission", {cache:"no-store", signal:ctrl.signal})
-      .then(async r => r.ok ? (await r.json()).direct : undefined)
-      .then(configured => {
-        if (!ctrl.signal.aborted && typeof configured === "boolean") setAvailability(configured ? "available" : "unavailable");
-      }).catch(() => {}); // The POST can still work when a status check fails.
+    checkSender(ctrl.signal).then(ready => {
+      if (!ctrl.signal.aborted) setUnavailable(!ready);
+    }).catch(() => {}); // The submission endpoint can still work if this check fails.
     return () => ctrl.abort();
-  }, [review]);
+  }, [started]);
 
   async function send() {
     if (lock.current || !canSend) return;
@@ -39,6 +41,15 @@ export function useProjectDelivery(review: boolean, lang: "de" | "en", message: 
     setBusy(true);
     setReceipt(null);
     try {
+      if (unavailable) {
+        // Recheck before transmitting any draft data to a known offline sender.
+        const ready = await checkSender(AbortSignal.timeout(10000));
+        if (!ready) {
+          setReceipt({identity, state:"unavailable"});
+          return;
+        }
+        setUnavailable(false);
+      }
       // The endpoint also includes a payload digest in its provider key.
       key.current ||= crypto.randomUUID();
       const response = await fetch("/api/project-submission", {
@@ -46,7 +57,11 @@ export function useProjectDelivery(review: boolean, lang: "de" | "en", message: 
         body:JSON.stringify({draft:message, language:lang, confirmed:true, ...(replyEmail ? {replyEmail} : {})}),
         signal:AbortSignal.timeout(20000),
       });
-      if (response.status === 503) setAvailability("unavailable");
+      if (response.status === 503) {
+        setUnavailable(true);
+        setReceipt({identity, state:"unavailable"});
+        return;
+      }
       if (!response.ok || (await response.json()).accepted !== true) throw Error();
       setReceipt({identity, state:"accepted"});
     } catch {
@@ -56,5 +71,5 @@ export function useProjectDelivery(review: boolean, lang: "de" | "en", message: 
       setBusy(false);
     }
   }
-  return {availability, reply, setReply, validReply, result, busy, canSend, send, tooLong};
+  return {unavailable, reply, setReply, validReply, result, busy, canSend, send, tooLong};
 }

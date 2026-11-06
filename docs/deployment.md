@@ -71,8 +71,8 @@ sender if the project-specific setting is absent. The demo sender cannot send
 to the ForJu inbox. No changes to the official ForJu website are necessary.
 
 After saving the setting and redeploying, GET `/api/project-submission` should
-return `{"direct":true}`. This checks configuration, not delivery. Without a
-sender the review offers Copy draft and the official project form. Failed sends
+return `{"direct":true}`. This checks configuration, not delivery. When the sender is unavailable, the form shows its status and keeps the draft
+in the current tab. Pressing Send rechecks availability. Failed sends
 retain the draft; retries use the same provider idempotency key for identical
 content. A provider ID confirms acceptance for delivery, not inbox receipt.
 Use mocked transport for tests; do not send test emails.
