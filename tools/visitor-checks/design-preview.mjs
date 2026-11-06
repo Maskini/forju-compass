@@ -18,7 +18,7 @@ try {
   for (const phone of capture ? [false,true] : [process.argv.includes('--phone')]) {
     const device = phone ? 'phone' : 'desktop';
     const context = await browser.newContext({viewport:phone?{width:390,height:844}:{width:1440,height:900},
-      locale:'de-AT', reducedMotion:'reduce', hasTouch:phone, isMobile:phone, serviceWorkers:'block'});
+      locale:'de-AT', ...(capture ? {reducedMotion:'reduce'} : {}), hasTouch:phone, isMobile:phone, serviceWorkers:'block'});
     await context.route('**/*',async route=>{
       const request = route.request(), url = new URL(request.url());
       const read = ['GET','HEAD'].includes(request.method());
