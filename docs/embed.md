@@ -13,8 +13,11 @@ load this URL after the body is available.
 <script defer src="https://forju-compass.onrender.com/compass-widget.js"></script>
 ```
 
-The launcher follows the host document’s `lang`. On desktop it opens a side
-panel, on mobile a full-screen dialog. The conversation lasts until the host
+The launcher follows the host document’s `lang`. It starts collapsed. Set
+`data-welcome="open"` to display the welcome card on load. Desktop chat opens
+as a compact floating panel, with controls to expand, restore or minimize it.
+Visitors can scroll and click the host page alongside either desktop size.
+Phones use a full-screen chat. Reopening the launcher resumes the exchange. The conversation lasts until the host
 document reloads. The same panel is also available on its own at
 `/embed?lang=en` or `/embed?lang=de`; all surfaces use `/api/chat`.
 

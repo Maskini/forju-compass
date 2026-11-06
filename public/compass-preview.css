@@ -2,7 +2,8 @@
 @font-face{font-family:Space Grotesk;src:url(/forju/fonts/space-grotesk.woff2) format("woff2");font-display:swap;font-weight:300 700}
 *{box-sizing:border-box}
 html{min-height:100%;background:#faf5ec url(/forju/paper-fiber-cream.webp)}
-body{margin:0;min-height:100svh;color:#332823;font:1rem/1.55 "Public Sans",sans-serif;
+body{margin:0;min-height:100svh;color:#332823;font:1rem/1.55 "Public Sans",sans-serif}
+.preview-scene{min-height:84svh;
 background:linear-gradient(95deg,rgba(255,250,242,.96) 16%,rgba(255,250,242,.88) 47%,rgba(255,250,242,.12)),url(/forju/background-discover.webp) center / cover no-repeat}
 header,main{width:min(65rem,calc(100% - 3rem));margin-inline:auto}
 header{display:flex;justify-content:space-between;align-items:center;padding:1.4rem 0;border-bottom:1px solid #70584240}
@@ -14,4 +15,10 @@ main{padding:clamp(4rem,13vh,8.5rem) 0 10rem}
 h1{font:650 clamp(2.25rem,6vw,4.25rem)/1.05 "Space Grotesk",sans-serif;letter-spacing:-.045em;max-width:12ch;margin:.45em 0 .35em}
 main>p:not(.preview-label){font-size:clamp(1.05rem,2vw,1.3rem);max-width:35ch}
 a:focus-visible{outline:3px solid #992165;outline-offset:3px;border-radius:4px}
-@media(max-width:38rem){body{background:linear-gradient(180deg,#fff9f0e8 20%,#fff9f0df 57%,#fff9f033),url(/forju/background-discover.webp) center / cover no-repeat}}
+@media(max-width:38rem){.preview-scene{background:linear-gradient(180deg,#fff9f0e8 20%,#fff9f0df 57%,#fff9f033),url(/forju/background-discover.webp) center / cover no-repeat}}
+
+.preview-services{width:min(65rem,calc(100% - 3rem));margin:auto;padding:3rem 0 6rem}
+.preview-services h2{margin:0 0 1.25rem;font:650 clamp(1.5rem,3vw,2.25rem)/1.15 "Space Grotesk",sans-serif}
+.preview-services ul{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,15rem),1fr));gap:.8rem;list-style:none;margin:0;padding:0}
+.preview-services a{display:flex;align-items:center;justify-content:space-between;gap:.5rem;padding:1.25rem;color:#573443;text-decoration:none;font-weight:600;background:#fffaf5;border:1px solid #dfcfc5;border-radius:1rem}
+@media(hover:hover) and (pointer:fine){.preview-services a:hover{color:#77174e;border-color:#a12968}}

@@ -83,6 +83,7 @@ test('English: edit and copy an equipment email with the visitor’s month', asy
 test('Separate website origin: open the widget by keyboard, ask, close and resume', async ({page,context,baseURL}) => {
   // The browser enforces real origin boundaries and the app’s production CSP.
   // Both HTTPS origins are fixtures: asset and chat traffic go to loopback.
+  await page.setViewportSize({width:1366,height:850});
   const compassOrigin = 'https://compass.example.test';
   await context.route(compassOrigin+'/**',async route=>{
     const url=new URL(route.request().url());
@@ -92,15 +93,49 @@ test('Separate website origin: open the widget by keyboard, ask, close and resum
   });
   const preview='https://www.forju.at/visitor-preview';
   await page.route(preview, route => route.fulfill({contentType:'text/html',body:
-    '<!doctype html><html lang="en"><title>Website preview</title><main><h1>Website preview</h1></main><script defer src="'+compassOrigin+'/compass-widget.js"></script></html>'}));
+    '<!doctype html><html lang="en"><title>Website preview</title><main style="min-height:300vh"><h1>Website preview</h1><button style="position:fixed;top:80px">Website action</button></main><script defer src="'+compassOrigin+'/compass-widget.js"></script></html>'}));
   await page.goto(preview);
   const host = page.locator('forju-compass-widget');
   const start = host.locator('.welcome .start');
-  await start.focus();
-  await page.keyboard.press('Enter');
+  const launcher = host.locator('.launcher');
+  await expect(start).toBeHidden();
+  await launcher.hover();
+  await expect(start).toBeHidden();
+  await launcher.press('Enter');
+  await expect(start).toBeFocused();
+  await page.mouse.move(160,420);
+  await page.mouse.wheel(0,360);
+  await expect.poll(()=>page.evaluate(()=>scrollY)).toBeGreaterThan(0);
+  await start.press('Enter');
   const panel = host.frameLocator('iframe');
+  const drawer = host.locator('.drawer');
+  await expect(panel.locator('.suggestions')).toBeVisible();
+  const compactWidth = (await drawer.boundingBox()).width;
+  expect(compactWidth).toBe(360);
+  const question = panel.getByRole('textbox',{name:'Your question'});
+  await question.fill('Unsent classroom question');
+  await host.getByRole('button',{name:'Expand chat',exact:true}).click();
+  await expect.poll(async ()=>(await drawer.boundingBox()).width).toBeGreaterThan(compactWidth);
+  await expect(question).toHaveValue('Unsent classroom question');
+  const hostButton=page.getByRole('button',{name:'Website action'});
+  await hostButton.click();
+  await expect(hostButton).toBeFocused();
+  await expect(drawer).toBeVisible();
+  await host.getByRole('button',{name:'Restore compact chat',exact:true}).click();
+  const beforePageScroll=await page.evaluate(()=>scrollY);
+  await page.mouse.move(200,320);await page.mouse.wheel(0,320);
+  await expect.poll(()=>page.evaluate(()=>scrollY)).toBeGreaterThan(beforePageScroll);
   const first = await ask(panel, 'Which workshops are available for schools?');
   await expect(first.locator('a[href*="schulworkshops"]').first()).toBeVisible();
+  const pageAt=await page.evaluate(()=>scrollY);
+  const log=panel.locator('.embed-log');
+  const scrollBox=await log.boundingBox();
+  await expect.poll(()=>log.evaluate(el=>el.scrollTop)).toBeGreaterThan(0);
+  const bottom=await log.evaluate(el=>el.scrollTop);
+  await page.mouse.move(scrollBox.x+scrollBox.width/2,scrollBox.y+scrollBox.height/2);
+  await page.mouse.wheel(0,-200);
+  await expect.poll(()=>log.evaluate(el=>el.scrollTop)).toBeLessThan(bottom);
+  expect(await page.evaluate(()=>scrollY)).toBe(pageAt);
   const next = await ask(panel, 'How do I register my class for it?');
   await expect(next.locator('.response p')).toContainText('anja.hofer@forju.at');
   const email=await ask(panel, 'Could you draft an email?');
@@ -110,7 +145,7 @@ test('Separate website origin: open the widget by keyboard, ask, close and resum
   await expect(host.locator('.drawer')).toBeHidden();
   await expect(host.locator('.launcher')).toBeFocused();
   await page.keyboard.press('Enter');
-  await start.press('Enter');
+  await expect(start).toBeHidden();
   await expect(panel.locator('[role=log] article')).toHaveCount(3);
 });
 
@@ -152,6 +187,9 @@ test('stakeholder preview: launch the German widget and recover from an unrelate
   await host.getByRole('button', {name:'ForJu Compass: Chathilfe'}).click();
   await host.locator('.welcome .start').click();
   const panel = host.frameLocator('iframe');
+  await expect(host.locator('.resize')).toBeHidden();
+  await expect.poll(()=>host.locator('.drawer').evaluate(el=>el.matches(':modal'))).toBe(true);
+  expect(await page.evaluate(()=>document.body.style.overflowY)).toBe('hidden');
   const turn = await ask(panel,'Wie viele Monde hat der Jupiter?');
   await expect(turn.locator('.read-more a')).toHaveCount(0);
   await turn.getByRole('button',{name:'Schulworkshops',exact:true}).click();
@@ -159,6 +197,7 @@ test('stakeholder preview: launch the German widget and recover from an unrelate
   await expect(reply.locator('a[href="https://forju.at/de/projects/schulworkshops"]').first()).toBeVisible();
   await host.getByRole('button',{name:'Chat schließen'}).click();
   await expect(host.locator('.drawer')).toBeHidden();
+  expect(await page.evaluate(()=>document.body.style.overflowY)).toBe('');
   await page.getByRole('link',{name:'EN',exact:true}).click();
   await expect(page.locator('html')).toHaveAttribute('lang','en');
   await expect(page.locator('a[href^="/embed"]')).toHaveCount(0);
