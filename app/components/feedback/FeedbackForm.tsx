@@ -1,5 +1,5 @@
 "use client";
-import { useRef, useState } from "react";
+import { useLayoutEffect, useRef, useState } from "react";
 import { feedbackFieldsSchema, feedbackPageUrl, feedbackTypes, type FeedbackReport } from "@/lib/feedback-validation";
 import type { AppLanguage } from "@/lib/language";
 
@@ -23,6 +23,12 @@ export default function FeedbackForm({ language, exchange, onAccepted }: {
   const retry = useRef<{ fingerprint: string; key: string; payload: FeedbackReport } | null>(null);
   const formRef = useRef<HTMLFormElement>(null);
   const successRef = useRef<HTMLDivElement>(null);
+  useLayoutEffect(() => {
+    // Focus the mounted receipt before paint. A queued frame can steal focus
+    // from Back to chat if a keyboard user has already moved there.
+    const receipt = successRef.current;
+    if (status === "success" && receipt?.closest("dialog[open]")) receipt.focus();
+  }, [status]);
   async function submit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     if (inFlight.current || status === "success") return;
@@ -59,7 +65,6 @@ export default function FeedbackForm({ language, exchange, onAccepted }: {
       const result = await response.json();
       if (!response.ok || result.success !== true) throw new Error("feedback_failed");
       onAccepted(); setIncludeExchange(false); setType(""); setDescription(""); setEmail(""); retry.current = null; setStatus("success");
-      requestAnimationFrame(() => successRef.current?.focus());
     } catch { setStatus("error"); }
     finally { inFlight.current = false; }
   }
