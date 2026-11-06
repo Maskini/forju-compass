@@ -61,11 +61,18 @@ parent origins, and a complete conversation on a physical phone. Verify live
 feedback delivery separately with an authorized recipient if enabling email.
 
 ### Project draft email
-Review offers an addressed email to adam.maskini@forju.at. The visitor sends
-that email in their own mail app. To enable delivery inside Compass, set
-PROJECT_FROM_EMAIL to a sender on a domain verified in the existing Resend
-account; RESEND_API_KEY needs sending access for that domain. Do not use
-onboarding@resend.dev or change the feedback recipient. GET /api/project-submission
-reports only whether direct sending is configured. Only explicit confirmation
-posts the final draft and optional Reply-To. A provider ID means accepted for
-delivery, not delivered to the inbox. Use mocked transport for all tests.
+On Review, **Send / Senden** submits the edited draft and optional reply address to
+the server. The server sets the recipient to adam.maskini@forju.at; it never
+accepts a visitor-specified recipient or forwards the conversation.
+
+Set `PROJECT_FROM_EMAIL` on Render to a sender on a domain verified for the
+existing Resend key. A non-sandbox `FEEDBACK_FROM_EMAIL` can also serve as the
+sender if the project-specific setting is absent. The demo sender cannot send
+to the ForJu inbox. No changes to the official ForJu website are necessary.
+
+After saving the setting and redeploying, GET `/api/project-submission` should
+return `{"direct":true}`. This checks configuration, not delivery. Without a
+sender the review offers Copy draft and the official project form. Failed sends
+retain the draft; retries use the same provider idempotency key for identical
+content. A provider ID confirms acceptance for delivery, not inbox receipt.
+Use mocked transport for tests; do not send test emails.

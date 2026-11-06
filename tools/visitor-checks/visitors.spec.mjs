@@ -213,3 +213,66 @@ test('an English-speaking lab can offer equipment and prepare an email to the pa
   expect(mail.pathname).toEqual('alexander.bayer@forju.at');
   expect(mail.searchParams.get('body')).toContain('offer microscopes');
 });
+
+test('English phone widget: one Send, retained draft on failure, stable retry and receipt', async ({page})=>{
+  await page.setViewportSize({width:390,height:844});
+  const requests=[];
+  await page.route('**/api/project-submission', route=>{
+    if(route.request().method()==='GET') return route.fulfill({json:{direct:true}});
+    requests.push({data:route.request().postDataJSON(),key:route.request().headers()['idempotency-key']});
+    return requests.length===1 ? route.fulfill({status:502,json:{error:'unconfirmed'}}) : route.fulfill({json:{accepted:true}});
+  });
+  await page.goto('/preview?lang=en');
+  const host=page.locator('forju-compass-widget');
+  await host.locator('.launcher').click();
+  await host.locator('.welcome .start').click();
+  const panel=host.frameLocator('iframe');
+  const turn=await ask(panel,'How can I volunteer?');
+  await expect(turn.locator('.read-more a').first()).toBeVisible();
+  await expect(turn).not.toContainText(/knowledge catalog/i);
+  await panel.getByRole('button',{name:'Report a problem',exact:true}).click();
+  const badge=panel.locator('.feedback-report-badge');
+  await expect(badge).toBeInViewport();
+  const art=await badge.evaluate(b=>{
+    const rect=b.getBoundingClientRect(), icon=b.querySelector('svg').getBoundingClientRect();
+    return {size:icon.width,dx:Math.abs(icon.x+icon.width/2-rect.x-rect.width/2),dy:Math.abs(icon.y+icon.height/2-rect.y-rect.height/2)};
+  });
+  expect(art.size).toBe(28);expect(art.dx).toBeLessThan(1);expect(art.dy).toBeLessThan(1);
+  await panel.getByRole('button',{name:'Back to chat',exact:true}).click();
+  await panel.getByRole('button',{name:/start a project draft/i}).click();
+  const review=panel.getByRole('dialog');
+  await review.getByLabel('Project title',{exact:true}).fill('Testing our school pond');
+  for(let i=0;i<5;i++) {
+    await expect(review.getByRole('button',{name:/skip/i})).toHaveCount(0);
+    await review.getByRole('button',{name:/^Continue/}).click();
+  }
+  await expect(review).not.toContainText(/email your draft|recipient:|adam\.maskini@/i);
+  await expect(review.locator('a[href^="mailto:"]')).toHaveCount(0);
+  expect(requests).toHaveLength(0);
+  await review.getByRole('button',{name:'Send',exact:true}).click();
+  await expect(review.getByRole('status')).toContainText('wasn’t confirmed');
+  await expect(review.getByLabel('Project title',{exact:true})).toHaveValue('Testing our school pond');
+  await review.getByRole('button',{name:'Try again',exact:true}).click();
+  await expect(review.getByRole('status')).toContainText('accepted for delivery');
+  await expect(review.getByRole('button',{name:'Sent',exact:true})).toBeDisabled();
+  expect(requests).toHaveLength(2);expect(requests[1]).toEqual(requests[0]);
+  expect(Object.keys(requests[0].data).sort()).toEqual(['confirmed','draft','language']);
+  expect(requests[0].data.draft).toContain('Testing our school pond');
+  expect(requests[0].data.draft).not.toContain('volunteer');
+  await review.getByRole('button',{name:/^← Back$/}).click();
+  await review.getByRole('button',{name:/^Continue/}).click();
+  await expect(review.getByRole('button',{name:'Sent',exact:true})).toBeDisabled();
+});
+
+test('German standalone review: the official form stays usable without a sender',async({page})=>{
+  await page.goto('/');
+  await page.getByRole('button',{name:/Projektentwurf starten/}).click();
+  const review=page.getByRole('dialog');
+  await review.getByLabel('Projekttitel',{exact:true}).fill('Luftqualität in der Klasse');
+  for(let i=0;i<5;i++) await review.getByRole('button',{name:/^Weiter/}).click();
+  await expect(review.getByRole('link',{name:/Projektformular öffnen/})).toHaveAttribute('href','https://forju.at/de/kontakt?intent=projekt');
+  await expect(review.getByRole('button',{name:'Entwurf kopieren'})).toBeEnabled();
+  await expect(review.getByRole('status')).toContainText('Direktes Senden ist nicht verfügbar');
+  await expect(review.getByRole('button',{name:'Senden',exact:true})).toHaveCount(0);
+  await expect(review).not.toContainText(/Empfänger:|Zum E-Mail-Versand|Überspringen/);
+});

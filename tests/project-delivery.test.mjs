@@ -20,6 +20,8 @@ function req(data=body,headers={}){return new Request("https://example.org/api/p
 test("missing or sandbox sender disables direct mail",()=>{
  assert.equal(mod.projectMailConfig({RESEND_API_KEY:"fake",PROJECT_FROM_EMAIL:"onboarding@resend.dev"}),null);
  assert.equal(mod.projectMailConfig({RESEND_API_KEY:"fake"}),null);
+ assert.equal(mod.projectMailConfig({RESEND_API_KEY:"fake",FEEDBACK_FROM_EMAIL:"onboarding@resend.dev"}),null);
+ assert.equal(mod.projectMailConfig({RESEND_API_KEY:"fake",FEEDBACK_FROM_EMAIL:"team@example.org"}).from,"team@example.org");
  assert.equal(mod.projectMailConfig({RESEND_API_KEY:"fake",PROJECT_FROM_EMAIL:"demo@example.org"}).from,"demo@example.org");
 });
 test("no confirmation, alternative recipient, chat history, invalid reply-to, oversize or cross-site must not call transport",async()=>{

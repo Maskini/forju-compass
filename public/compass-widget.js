@@ -41,7 +41,7 @@
   const launcher=button("launcher",wrap,()=>toggle(card.hidden));
   launcher.setAttribute("aria-controls",card.id);
   const hint=el("span","hint",launcher),seal=el("span","seal",launcher);
-  image("forju-compass-logo.png","star",seal);
+  image("compass-mark.webp","star",seal);
   const dialog=el("dialog","drawer",root);dialog.setAttribute("aria-label","ForJu Compass");
   const close=button("close",dialog,()=>dialog.close());close.textContent="×";
   const frame=el("iframe","",dialog);frame.title="ForJu Compass";frame.allow="clipboard-write";frame.referrerPolicy="no-referrer";

@@ -76,11 +76,11 @@
 .feedback-drawer::backdrop { background: #38232204; backdrop-filter: none; }
 .feedback-drawer-header { margin-bottom: 16px; align-items: flex-start; }
 .feedback-report-badge {
-  display: grid; place-items: center; width: 62px; height: 62px; border-radius: 50% 50% 50% 12px;
+  display: grid; place-items: center; flex: none; width: 46px; height: 46px; border-radius: 50%;
   color: #961269; background: linear-gradient(140deg, #ffe9f5, #f8d7e9);
   box-shadow: 0 2px 2px #68405426, inset 0 1px 0 #fff8;
 }
-.feedback-report-badge svg { width: 33px; height: 33px; }
+.feedback-drawer .feedback-report-badge svg { display: block; width: 28px; height: 28px; }
 .feedback-close { margin-top: -12px; margin-right: -14px; color: #787e85; border: 0; cursor: pointer; }
 .feedback-drawer h2 { margin: 0; font: 700 22px/1.2 'ForJu Public Sans', Arial, sans-serif; letter-spacing: -.7px; color: #201c20; }
 #feedback-subtitle { margin: 10px 0 24px; color: #707078; font-size: 13px; line-height: 1.45; }

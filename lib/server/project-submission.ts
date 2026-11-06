@@ -2,11 +2,14 @@ import "server-only";
 import {createHash} from "node:crypto";
 import {Resend} from "resend";
 import {z} from "zod";
-import {PROJECT_MAX_LENGTH,PROJECT_RECIPIENT,projectSubject} from "../project-mail";
+import {PROJECT_MAX_LENGTH} from "../project-mail";
 import {BodyError,readBody} from "./feedback-handler";
 
+const PROJECT_RECIPIENT = "adam.maskini@forju.at";
+const projectSubject = (lang:"de"|"en") => lang==="de" ? "[ForJu Compass] Projektentwurf" : "[ForJu Compass] Project draft";
+
 export function projectMailConfig(env=process.env){
-  const key=env.RESEND_API_KEY?.trim(),from=env.PROJECT_FROM_EMAIL?.trim();
+  const key=env.RESEND_API_KEY?.trim(),from=env.PROJECT_FROM_EMAIL?.trim() || env.FEEDBACK_FROM_EMAIL?.trim();
   return key && from && z.email().safeParse(from).success && !/@(?:[^@]+\.)?resend\.dev$/i.test(from) ? {key,from} : null;
 }
 const payload=z.strictObject({confirmed:z.literal(true),language:z.enum(["de","en"]),draft:z.string().trim().min(1).max(PROJECT_MAX_LENGTH),replyEmail:z.email().max(254).optional()});

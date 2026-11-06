@@ -10,7 +10,7 @@ export function useCompassChat(language:"en"|"de") {
   const [question, setQuestion] = useState("");
   const [submittedQuestion, setSubmittedQuestion] = useState("");
 
-  const [turns, setTurns] = useState<{ question: string; answer: string; sources: Source[]; library: boolean; draft: boolean; recipient?:string; suggestions:string[]; topic?:string; answeredAt:number }[]>([]);
+  const [turns, setTurns] = useState<{ question: string; answer: string; sources: Source[]; draft: boolean; recipient?:string; suggestions:string[]; topic?:string; answeredAt:number }[]>([]);
   const inFlight = useRef(false);
   const transcript = useRef<HTMLDivElement>(null);
   const [loading, setLoading] = useState(false);
@@ -67,7 +67,7 @@ export function useCompassChat(language:"en"|"de") {
       ) : [];
       const suggestions:string[] = Array.isArray(data.suggestions)
         ? data.suggestions.filter((s:unknown)=>typeof s==="string" && s.length>0 && s.length<80).slice(0,4) : [];
-      setTurns((previous) => [...previous, { question: next, answer: data.answer, sources, suggestions, topic:typeof data.topic==="string"?data.topic:undefined, library:data.mode === "library" && sources.length > 0, draft:data.mode === "draft", recipient: typeof data.recipient==="string" && /^[\w.+-]+@forju\.at$/i.test(data.recipient) ? data.recipient : undefined, answeredAt:Date.now() }]);
+      setTurns((previous) => [...previous, { question: next, answer: data.answer, sources, suggestions, topic:typeof data.topic==="string"?data.topic:undefined, draft:data.mode === "draft", recipient: typeof data.recipient==="string" && /^[\w.+-]+@forju\.at$/i.test(data.recipient) ? data.recipient : undefined, answeredAt:Date.now() }]);
       setSubmittedQuestion("");
     } catch (err) {
 
