@@ -1,3 +1,4 @@
+import {conversationalReply, questionAfterGreeting, topicHistory} from "@/lib/conversation";
 import { takeAiRequest } from "@/lib/server/ai-limit";
 import OpenAI from "openai";
 import { NextResponse } from "next/server";
@@ -18,12 +19,16 @@ export async function POST(request: Request) {
   } catch (error) {
     return NextResponse.json({ error: error instanceof SyntaxError ? "Ungültiges JSON." : error instanceof Error ? error.message : "Ungültige Anfrage." }, { status: 400 });
   }
-  const { message, history } = parsed;
+  const message = questionAfterGreeting(parsed.message);
+  const englishUI = request.headers.get("accept-language")?.toLowerCase().startsWith("en") ?? false;
   const en = /^(what|where|when|how|who|can|could|is there|by what)\b/i.test(message) ? true
     : /^(was|wo|wann|wie|wer|gibt|bietet|kann|bis wann|und wie)\b/i.test(message) ? false
     : request.headers.get("accept-language")?.toLowerCase().startsWith("en") ?? false;
   const retry = process.env.NODE_ENV === "production" ? takeAiRequest(request) : 0;
   if (retry) return NextResponse.json({error:request.headers.get("accept-language")?.startsWith("en") ? "Too many requests. Please try again later." : "Zu viele Anfragen. Bitte versuche es später erneut."},{status:429,headers:{"Retry-After":String(retry)}});
+  const social = conversationalReply(parsed.message, englishUI);
+  if (social) return NextResponse.json({mode:"conversation",answer:social,sources:[]});
+  const history = topicHistory(parsed.history);
   const previous = history.filter(m => m.role === "user").at(-1)?.content;
   const deadline = /deadline|cut[ -]?off|by (what|which) date|last day|how late|\bfrist|anmeldefrist|bewerbungsfrist|bis wann|spätestens/i.test(message);
   const registration = /sign[ -]?up|register|registration|book(ing)?|anmeld|melde.{0,24}an|termin vereinbaren/i.test(message);

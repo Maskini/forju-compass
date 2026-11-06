@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import ts from 'typescript';
 import * as chat from '../lib/chat.ts';
+import * as conversation from '../lib/conversation.ts';
 
 const catalog = JSON.parse(readFileSync(new URL('../knowledge/catalog.json',import.meta.url),'utf8'));
 const knowledgeModule = {};
@@ -16,7 +17,7 @@ function setup({matches=[],searchError=null,answer=JSON.stringify({paragraphs:[{
     embeddings={create:async (input)=>{calls.embeddings.push(input);return {data:[{embedding:[0.1]}]};}};
     responses={create:async (input)=>{calls.responses.push(input);return {status,output_text:answer};}};
   }
-  const modules={"@/lib/server/ai-limit":{takeAiRequest:()=>0},openai:{default:OpenAI},'next/server':{NextResponse:Response},'@/lib/chat':chat,'@/lib/knowledge':knowledgeModule,'@/lib/server/public-retrieval':{retrievePublicKnowledge:async()=>{if(searchError)throw Error('Search failed');return matches;}}};
+  const modules={"@/lib/conversation":conversation,"@/lib/server/ai-limit":{takeAiRequest:()=>0},openai:{default:OpenAI},'next/server':{NextResponse:Response},'@/lib/chat':chat,'@/lib/knowledge':knowledgeModule,'@/lib/server/public-retrieval':{retrievePublicKnowledge:async()=>{if(searchError)throw Error('Search failed');return matches;}}};
   const exports={};
   new Function('require','exports',compiled)((id)=>modules[id],exports);
   return {POST:exports.POST,calls};
@@ -45,7 +46,7 @@ test('chat request flow',async(t)=>{
    assert.deepEqual((await result.json()).sources,[{title:catalog[0].title,url:catalog[0].sourceUrl}]);
   });
   await t.test('missing citations return a cautious fallback',async()=>{
-   const {POST}=setup({matches:knowledge,answer:'Guaranteed money'});const result=await POST(request({message:'Hi'}));
+   const {POST}=setup({matches:knowledge,answer:'Guaranteed money'});const result=await POST(request({message:'Welche Mondstationen gibt es?'}));
    assert.match((await result.json()).answer,/keine gesicherte/);
   });
   await t.test('incomplete generation still returns a reviewed workshop answer',async()=>{
@@ -110,4 +111,23 @@ test('catalog follows an equipment request through cost and contact questions', 
     history.push({role:'user', content:message}, {role:'assistant', content:reply.answer});
   }
   assert.equal(calls.embeddings.length, 0);
+});
+
+test('ordinary conversation needs neither a knowledge citation nor a provider call',async()=>{
+  const {POST,calls}=setup();
+  for(const [message,lang,pattern] of [['hi','de',/^Hallo/],['Hi! 👋','en',/^Hi/],['Servus Compass!','en',/^Hallo/],['Danke dir!','de',/Gerne/],['Thank you','de',/welcome/],['Hallo, was kannst du?','de',/Workshop/],['👋','de',/^Hallo/]]){
+    const r=await POST(new Request('http://localhost/api/chat',{method:'POST',headers:{'Accept-Language':lang},body:JSON.stringify({message})}));
+    const v=await r.json();assert.equal(v.mode,'conversation',message);assert.match(v.answer,pattern);assert.deepEqual(v.sources,[]);
+  }
+  assert.deepEqual(calls,{embeddings:[],responses:[]});
+});
+
+test('a mixed greeting still answers the actual question, and thanks does not erase the topic',async()=>{
+  const {POST}=setup();
+  const question='Hi, welche Workshops gibt es für Schulen?';
+  const reply=await (await POST(request({message:question}))).json();
+  assert.match(reply.sources[0].url,/schulworkshops/);
+  const history=[{role:'user',content:question},{role:'assistant',content:reply.answer},{role:'user',content:'Danke!'},{role:'assistant',content:'Gerne!'}];
+  const follow=await (await POST(request({message:'Und wie melde ich meine Klasse dafür an?',history}))).json();
+  assert.match(follow.answer,/anja\.hofer@forju\.at/);assert.match(follow.sources[0].url,/schulworkshops/);
 });
