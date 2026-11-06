@@ -1,5 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
+import fc from 'fast-check';
 import { readFileSync } from 'node:fs';
 import ts from 'typescript';
 import * as chat from '../lib/chat.ts';
@@ -218,4 +219,40 @@ test('a new equipment request leaves the previous workshop location and month ou
   assert.equal(draft.mode,'draft');assert.match(draft.answer,/microscope/);
   assert.doesNotMatch(draft.answer,/April|Linz|workshop/i);
   const contact=await v.ask('Who should I contact?');assert.notEqual(contact.mode,'draft');
+});
+
+test('a mixed workshop question covers both the location and current price', async () => {
+  const towns = fc.constantFrom('Graz', 'Linz', 'Wiener Neustadt', 'Innsbruck');
+  const costs = fc.constantFrom(
+    ['was kostet das pro Kind', 'how much would it cost per pupil'],
+    ['ist das kostenlos', 'is it free'],
+    ['müssen wir dafür bezahlen', 'would we have to pay'],
+  );
+  await fc.assert(fc.asyncProperty(fc.boolean(), towns, costs, fc.boolean(), async (english, town, cost, priceFirst) => {
+    const visit = english ? 'do you offer workshops in ' + town : 'kommt ihr für einen Schulworkshop nach ' + town;
+    const parts = [visit, cost[Number(english)]];
+    const query = (priceFirst ? parts.reverse() : parts).join(english ? ', and ' : ', und ') + '?';
+    const reply = await visitor(english ? 'en' : 'de').ask(query);
+    assert.ok(reply.answer.includes(town));
+    assert.match(reply.answer, english ? /current price|current cost/i : /aktuellen Preis|aktuellen Kosten/i);
+    assert.match(reply.answer, english ? /confirm|unconfirmed/i : /bestätig|klären/i);
+    assert.ok(reply.sources.some(s => s.url.endsWith('/projects/schulworkshops')));
+    assert.doesNotMatch(reply.answer, /(?:€|EUR)\s*\d|\d\s*(?:€|EUR)/i);
+  }), {numRuns:60, seed:11606});
+});
+
+test('a corrected month replaces the old month in a bilingual equipment draft', async () => {
+  const months = fc.uniqueArray(fc.constantFrom('April', 'August', 'September', 'November'), {minLength:2,maxLength:2});
+  await fc.assert(fc.asyncProperty(fc.boolean(), months, async (en, [first, last]) => {
+    const session = visitor(en ? 'en' : 'de');
+    await session.ask(en ? 'Our class wants to borrow a microscope in ' + first : 'Unsere Klasse möchte im ' + first + ' ein Mikroskop ausleihen.');
+    const draft = await session.ask(en ? 'Could you draft an email?' : 'Kannst du eine E-Mail formulieren?');
+    assert.ok(draft.answer.includes(first));
+    const revised = await session.ask(en ? 'Actually in ' + last + ' instead of ' + first : 'Korrektur: im ' + last + ' statt im ' + first);
+    assert.equal(revised.mode, 'draft');
+    assert.ok(revised.answer.includes(last));
+    assert.ok(!revised.answer.includes(first));
+    assert.match(revised.answer, /microscope|Mikroskop/);
+    assert.equal(revised.recipient, 'office@forju.at');
+  }), {numRuns:40, seed:11607});
 });

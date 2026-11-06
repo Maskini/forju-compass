@@ -532,6 +532,10 @@
     "active": true,
     "indexTitle": "forju-public:workshops:8fbddd30fc3a",
     "titleEn": "Vienna school workshops",
+    "pricing": {
+      "de": "Der Artikel von 2024 beschreibt eine Förderung für Wiener Schulen der Schulstufen 1 bis 9. Einen aktuellen Preis pro Kind nennt er nicht. Anja Hofer kann euch die Kosten für eure Klasse bestätigen.",
+      "en": "The 2024 article describes funding for Vienna schools in grades 1–9. It gives no current price per pupil. Ask Anja Hofer to confirm the cost for your class."
+    },
     "coverage": {
       "places": ["Wien", "Vienna"],
       "de": "ForJu beschreibt Workshops für Wiener Schulen.",

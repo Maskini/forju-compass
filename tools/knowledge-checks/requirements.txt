@@ -1,0 +1,5 @@
+# Maintainer-only, tested with Python 3.12. Neither the app nor Render needs these.
+urlwatch==2.29
+onnxruntime==1.31.1
+tokenizers==0.23.3
+numpy==2.5.4

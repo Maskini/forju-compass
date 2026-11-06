@@ -36,8 +36,9 @@ test('German on mobile: answer whether a Vienna workshop is available in Graz', 
   await page.goto('/embed?lang=de');
   const first = await ask(page, 'Wir sind eine Klasse aus Graz und möchten einen Schulworkshop zum Klima. Geht das bei uns auch?');
   await expect(first.locator('.read-more a').first()).toHaveAttribute('href','https://forju.at/de/projects/schulworkshops');
-  const follow = await ask(page, 'Heißt das, ihr kommt auch nach Graz?');
+  const follow = await ask(page, 'Heißt das, ihr kommt auch nach Graz, und was kostet das pro Kind?');
   const answer = await follow.locator('.response p').innerText();
+  expect(answer).toMatch(/aktuellen Preis pro Kind/i);
   expect.soft(answer, 'Address the location asked about').toMatch(/Graz|außerhalb (?:von )?Wien/i);
   expect.soft(answer, 'Explain the uncertainty about regional coverage').toMatch(/nicht bestätigt|nicht bestätigen|nicht belegt|keine (?:Angabe|Bestätigung)|offen|klären|nachfragen|frag.*(?:Team|Anja)|bestätigen lassen|unklar|nicht (?:aus|hervor)/i);
   await expect(follow.locator('.read-more a').first()).toHaveAttribute('href','https://forju.at/de/projects/schulworkshops');

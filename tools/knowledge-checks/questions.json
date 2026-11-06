@@ -1,0 +1,14 @@
+[
+  ["de", "Bei uns im Klassenraum ist die Luft nach der Pause richtig stickig. Könnt ihr uns etwas zum Messen leihen?", "ressourcen"],
+  ["en", "Nobody on our team knows a scientist. Can you introduce us to someone in a lab?", "connections"],
+  ["de", "Wir wollen mitforschen, aber unser Taschengeld reicht nicht fürs Material. Wer könnte bei den Ausgaben helfen?", "finanzierung"],
+  ["en", "I gave the association money last month. How do I get a written acknowledgement?", "spenden-bestaetigung"],
+  ["de", "Unser Klassenvorstand sucht jemanden, der mit uns über Prüfungsstress spricht. Kommt dafür jemand in die Schule?", "workshop-stress"],
+  ["en", "I would like to send in my completed thesis. Where do I put my details?", "einreichen"],
+  ["de", "Wir sind ein Betrieb und würden gerne ins Netzwerk mit Schulen und Unis aufgenommen werden.", "partnerpool"],
+  ["en", "Is there a person who can help me turn my first rough research idea into a plan?", "science-beratung"],
+  ["de", "Ich nutze einen Screenreader. Wo finde ich die Erklärung zur Zugänglichkeit eurer Website?", "barrierefreiheit"],
+  ["en", "We want to volunteer to build apps for ForJu. Where are the technical roles listed?", "jobs-tech"],
+  ["de", "Wie viele Monde hat der Jupiter?", null],
+  ["en", "Who won the football game yesterday?", null]
+]

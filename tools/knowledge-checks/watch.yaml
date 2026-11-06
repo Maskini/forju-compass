@@ -1,0 +1,14 @@
+display:
+  new: true
+  error: true
+  unchanged: false
+report:
+  stdout:
+    enabled: true
+    color: false
+job_defaults:
+  url:
+    timeout: 20
+    filter:
+      - xpath: '//main//text()[normalize-space() and not(ancestor::script or ancestor::style or ancestor::nav)] | //main//a[starts-with(@href, "mailto:")]/@href'
+      - strip

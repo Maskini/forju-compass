@@ -2,7 +2,7 @@ import { de, en as english } from "chrono-node";
 import placeNames from "../knowledge/language/austrian-places.json" with { type: "json" };
 import type { ChatMessage } from "./chat";
 
-type Card = { id: string; title: string; titleEn: string; sourceUrl: string; requestUrl?: string; content:string; booking?:{de:string;en:string}; coverage?:{places:string[];de:string;en:string} };
+type Card = { id: string; title: string; titleEn: string; sourceUrl: string; requestUrl?: string; content:string; booking?:{de:string;en:string}; pricing?:{de:string;en:string}; coverage?:{places:string[];de:string;en:string} };
 type Topic = "ressourcen" | "workshops" | "finanzierung" | "science-beratung";
 const subjectTerms: [Topic, RegExp][] = [
   ["ressourcen", /sensor|messgerät|messger[aä]t|ausleih|messinstrument|borrow|equipment|microscope|mikroskop|gerät.*leihen/i],
@@ -123,7 +123,10 @@ export function visitorEnquiry(
     const text=card.coverage[en?"en":"de"]+" ";
     const details=inArea ? (en?"Ask the workshop contact to confirm a date for your class.":"Ob ein Termin für eure Klasse frei ist, klärt ihr mit dem Workshopkontakt.")
       : en?"A visit"+where+" needs confirmation. Ask the workshop contact whether the team can come to you.":"Ob ein Workshop"+where+" möglich ist, geht daraus nicht hervor. Frag beim Workshopteam nach, ob es zu euch kommen kann.";
-    return {mode:"library",topic:card.id,answer:text+details,sources:[page],suggestions:[draftLabel[lang]]};
+    const asksAboutCost = /kost(?:et|en)|preis|gebühr|gratis|teuer|zahlen|bezahlen|\b(?:costs?|prices?|fees?|free|pay)\b|how much/i.test(message);
+    const price = asksAboutCost ? card.pricing?.[en ? "en" : "de"] : undefined;
+    const answer = price ? text + details + " " + price : text + details;
+    return {mode:"library",topic:card.id,answer,sources:[page],suggestions:[draftLabel[lang]]};
   }
   const date=timing(messages,en);
   const school=messages.some(m=>/klasse|class\b|school|schule|students/i.test(m));
