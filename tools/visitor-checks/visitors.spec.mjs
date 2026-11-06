@@ -127,7 +127,17 @@ test('Separate website origin: open the widget by keyboard, ask, close and resum
   await expect.poll(()=>page.evaluate(()=>scrollY)).toBeGreaterThan(beforePageScroll);
   const first = await ask(panel, 'Which workshops are available for schools?');
   await expect(first.locator('a[href*="schulworkshops"]').first()).toBeVisible();
-  const pageAt=await page.evaluate(()=>scrollY);
+  // WebKit can deliver the tail of the preceding host wheel after the answer
+  // renders. Measure the host at rest before testing scrolling inside the frame.
+  const pageAt=await page.evaluate(()=>new Promise(resolve=>{
+    let timer;
+    function onScroll(){
+      clearTimeout(timer);
+      timer=setTimeout(()=>{window.removeEventListener('scroll',onScroll);resolve(window.scrollY)},150);
+    }
+    window.addEventListener('scroll',onScroll,{passive:true});
+    onScroll();
+  }));
   const log=panel.locator('.embed-log');
   const scrollBox=await log.boundingBox();
   await expect.poll(()=>log.evaluate(el=>el.scrollTop)).toBeGreaterThan(0);
