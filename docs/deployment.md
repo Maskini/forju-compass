@@ -59,3 +59,13 @@ must only be supplied through Render's private environment settings, never Git.
 After deployment verify the script, response headers, allowed and denied
 parent origins, and a complete conversation on a physical phone. Verify live
 feedback delivery separately with an authorized recipient if enabling email.
+
+### Project draft email
+Review offers an addressed email to adam.maskini@forju.at. The visitor sends
+that email in their own mail app. To enable delivery inside Compass, set
+PROJECT_FROM_EMAIL to a sender on a domain verified in the existing Resend
+account; RESEND_API_KEY needs sending access for that domain. Do not use
+onboarding@resend.dev or change the feedback recipient. GET /api/project-submission
+reports only whether direct sending is configured. Only explicit confirmation
+posts the final draft and optional Reply-To. A provider ID means accepted for
+delivery, not delivered to the inbox. Use mocked transport for all tests.

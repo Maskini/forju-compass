@@ -7,8 +7,8 @@ import { FeedbackConfigurationError } from "./feedback-email";
 export const MAX_FEEDBACK_BYTES = 64 * 1024;
 const errorMessage = "Das Feedback konnte nicht gesendet werden. Bitte versuche es erneut.";
 const json = (body: object, status = 200, extra: Record<string, string> = {}) => Response.json(body, { status, headers: { "Cache-Control": "no-store", ...extra } });
-class BodyError extends Error { constructor(public status: number) { super("invalid_body"); } }
-async function readBody(request: Request) {
+export class BodyError extends Error { constructor(public status: number) { super("invalid_body"); } }
+export async function readBody(request: Request) {
   if (Number(request.headers.get("content-length")) > MAX_FEEDBACK_BYTES) throw new BodyError(413);
   if (!request.body) throw new BodyError(400);
   const reader = request.body.getReader();
