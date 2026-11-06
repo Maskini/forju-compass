@@ -61,3 +61,11 @@ rejected the configured key (401) and the Supabase connection failed. The new
 and updated entries are live in the local catalog; a fresh remote import and
 live generative evaluation still require working credentials/connectivity.
 See [embedding and integration](embed.md) for host configuration.
+
+The dialogue layer in `lib/dialogue.ts` recognizes short requests in English and
+German with MiniSearch 7.2.0 ([MIT license](licenses/minisearch.txt)). It indexes
+bundled example phrases in server memory. Visitors can type an answer or tap a
+suggestion. A follow-up carries a catalog topic ID alongside the existing short
+history; only a reviewed catalog entry can supply facts or links. In local-only
+mode, neither MiniSearch nor chat calls a model provider or an external search
+service. There is no separate index to host or refresh.

@@ -1,4 +1,5 @@
 "use client";
+import {ChatChoices} from "@/app/components/chat-choices";
 import {useEffect,useEffectEvent,useRef,useState} from "react";
 import FeedbackWidget, {type ReportControls} from "@/app/components/feedback/FeedbackWidget";
 import {ProjectDraft} from "@/app/components/project-draft";
@@ -66,6 +67,7 @@ export default function CompassPanel({initialLanguage,widget=false}:{initialLang
         <button type="button" className="report-answer" aria-haspopup="dialog" onClick={e=>reports.current?.reportAnswer(turn,e.currentTarget)}>{en?"Report this answer":"Diese Antwort melden"}</button>
         <time dateTime={new Date(turn.answeredAt).toISOString()}>{new Date(turn.answeredAt).toLocaleTimeString(lang,{hour:"2-digit",minute:"2-digit"})}</time>
         {!!turn.sources.length&&<nav className="read-more" aria-label={en?"Read more":"Mehr dazu"}>{turn.sources.map(s=><a href={s.url} key={s.url} target="_blank" rel="noopener noreferrer"><Icon type="idea"/><span><strong>{s.title}</strong><small>{new URL(s.url).hostname}</small></span><b aria-hidden="true">↗</b></a>)}</nav>}
+        {i===turns.length-1 && !loading && !error && <ChatChoices choices={turn.suggestions} onChoose={submit}/>}
       </article>)}</div>
       {turns.length>0 && !loading && (()=>{
         const source=turns.at(-1)?.sources[0]?.url;

@@ -5,7 +5,7 @@ export function useCompassChat(language:"en"|"de") {
   const [question, setQuestion] = useState("");
   const [submittedQuestion, setSubmittedQuestion] = useState("");
 
-  const [turns, setTurns] = useState<{ question: string; answer: string; sources: Source[]; library: boolean; answeredAt:number }[]>([]);
+  const [turns, setTurns] = useState<{ question: string; answer: string; sources: Source[]; library: boolean; suggestions:string[]; topic?:string; answeredAt:number }[]>([]);
   const inFlight = useRef(false);
   const transcript = useRef<HTMLDivElement>(null);
   const [loading, setLoading] = useState(false);
@@ -37,7 +37,7 @@ export function useCompassChat(language:"en"|"de") {
         },
         signal: AbortSignal.timeout(60000),
         body: JSON.stringify({
-          message: next,
+          message: next, topic: turns.at(-1)?.topic,
           history: turns.slice(-MAX_HISTORY_MESSAGES / 2).flatMap((turn): ChatMessage[] => [
             { role: "user", content: turn.question },
             { role: "assistant", content: turn.answer.slice(0, 4000) },
@@ -60,7 +60,9 @@ export function useCompassChat(language:"en"|"de") {
       const sources: Source[] = Array.isArray(data.sources) ? data.sources.filter(
         (source: Source) => source && typeof source.title === "string" && safeSourceUrl(source.url)
       ) : [];
-      setTurns((previous) => [...previous, { question: next, answer: data.answer, sources, library:data.mode === "library",answeredAt:Date.now() }]);
+      const suggestions:string[] = Array.isArray(data.suggestions)
+        ? data.suggestions.filter((s:unknown)=>typeof s==="string" && s.length>0 && s.length<80).slice(0,4) : [];
+      setTurns((previous) => [...previous, { question: next, answer: data.answer, sources, suggestions, topic:typeof data.topic==="string"?data.topic:undefined, library:data.mode === "library",answeredAt:Date.now() }]);
       setSubmittedQuestion("");
     } catch (err) {
 

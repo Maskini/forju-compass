@@ -1,5 +1,6 @@
 "use client";
 
+import {ChatChoices} from "@/app/components/chat-choices";
 import { useEffect, useState, useRef, type ReactNode } from "react";
 import { useAppLanguage, setAppLanguage } from "@/lib/language";
 import Script from "next/script";
@@ -324,6 +325,7 @@ export default function Home() {
                         ))}
                       </div>
                     )}
+        {index===turns.length-1 && !loading && !error && <ChatChoices choices={turn.suggestions} onChoose={submit}/>}
                   </div>
                 ))}
                 {loading && <p>{t("ForJu Compass sucht eine Antwort auf")} „{submittedQuestion}“ …</p>}

@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import ts from 'typescript';
 import * as chat from '../lib/chat.ts';
+import {guidedReply,isGuidedPrompt} from '../lib/dialogue.ts';
 import * as conversation from '../lib/conversation.ts';
 
 const catalog = JSON.parse(readFileSync(new URL('../knowledge/catalog.json',import.meta.url),'utf8'));
@@ -17,7 +18,7 @@ function setup({matches=[],searchError=null,answer=JSON.stringify({paragraphs:[{
     embeddings={create:async (input)=>{calls.embeddings.push(input);return {data:[{embedding:[0.1]}]};}};
     responses={create:async (input)=>{calls.responses.push(input);return {status,output_text:answer};}};
   }
-  const modules={"@/lib/conversation":conversation,"@/lib/server/ai-limit":{takeAiRequest:()=>0},openai:{default:OpenAI},'next/server':{NextResponse:Response},'@/lib/chat':chat,'@/lib/knowledge':knowledgeModule,'@/lib/server/public-retrieval':{retrievePublicKnowledge:async()=>{if(searchError)throw Error('Search failed');return matches;}}};
+  const modules={"@/lib/dialogue":{guidedReply,isGuidedPrompt},"@/lib/conversation":conversation,"@/lib/server/ai-limit":{takeAiRequest:()=>0},openai:{default:OpenAI},'next/server':{NextResponse:Response},'@/lib/chat':chat,'@/lib/knowledge':knowledgeModule,'@/lib/server/public-retrieval':{retrievePublicKnowledge:async()=>{if(searchError)throw Error('Search failed');return matches;}}};
   const exports={};
   new Function('require','exports',compiled)((id)=>modules[id],exports);
   return {POST:exports.POST,calls};
@@ -130,4 +131,49 @@ test('a mixed greeting still answers the actual question, and thanks does not er
   const history=[{role:'user',content:question},{role:'assistant',content:reply.answer},{role:'user',content:'Danke!'},{role:'assistant',content:'Gerne!'}];
   const follow=await (await POST(request({message:'Und wie melde ich meine Klasse dafür an?',history}))).json();
   assert.match(follow.answer,/anja\.hofer@forju\.at/);assert.match(follow.sources[0].url,/schulworkshops/);
+});
+
+function visitor(lang){
+  const {POST,calls}=setup(); const history=[];let topic;
+  return {calls,async ask(message){
+    const res=await POST(new Request('http://localhost/api/chat',{method:'POST',headers:{'Accept-Language':lang},body:JSON.stringify({message,history:history.slice(-8),topic})}));
+    assert.equal(res.status,200);
+    const r=await res.json();topic=r.topic;
+    history.push({role:'user',content:message},{role:'assistant',content:r.answer});
+    return r;
+  }};
+}
+test('an unsure class can describe its need, simplify the equipment answer and act on it',async()=>{
+  const v=visitor('de');const menu=await v.ask('Ich weiß nicht, wo ich anfangen soll.');
+  assert.equal(menu.suggestions.length,3);assert.deepEqual(menu.sources,[]);
+  const school=await v.ask('Für meine Klasse');assert.equal(school.suggestions.length,3);assert.deepEqual(school.sources,[]);
+  const equipment=await v.ask('Wir brauchen etwas zum Messen');assert.equal(equipment.topic,'ressourcen');
+  const simple=await v.ask('Kannst du das einfacher sagen?');assert.ok(simple.answer.length<equipment.answer.length);
+  assert.match(simple.answer,/Messgerät/);assert.match(simple.answer,/kostet/);assert.match(simple.sources[0].url,/services\/ressourcen$/);
+  const next=await v.ask(simple.suggestions[0]);assert.match(next.answer,/Öffne das Ressourcenformular/);assert.match(next.sources[1].url,/thema=ressourcen$/);
+  assert.notEqual(simple.answer,next.answer);assert.deepEqual(v.calls,{embeddings:[],responses:[]});
+});
+test('an English visitor can select by number, change their mind and ask for the actual workshop contact',async()=>{
+  const v=visitor('en'); assert.equal((await v.ask("I'm not sure where to begin")).mode,'conversation');
+  const menu=await v.ask('the first one');assert.match(menu.answer,/help your class/);
+  const tools=await v.ask('2');assert.equal(tools.topic,'ressourcen');
+  assert.match((await v.ask('How much does it cost?')).answer,/no loan price/);
+  const workshop=await v.ask('No, I meant a workshp');assert.equal(workshop.topic,'workshops');
+  await v.ask('Thanks!');
+  const next=await v.ask("What's the next step?");assert.match(next.answer,/anja\.hofer@forju\.at/);assert.match(next.sources[0].url,/en\/projects\/schulworkshops$/);
+  assert.deepEqual(v.calls,{embeddings:[],responses:[]});
+});
+test('specific questions, unsupported deadlines, and off-topic questions bypass the navigation choices',async()=>{
+  const v=visitor('en');await v.ask('Where do I start?');
+  const question=await v.ask('Can our class borrow a device to measure air quality?');assert.equal(question.topic,'ressourcen');
+  const deadline=await v.ask('What is the deadline to apply for funding?');assert.match(deadline.answer,/can’t confirm that deadline/);
+  const unrelated=await v.ask('How many moons does Jupiter have?');assert.deepEqual(unrelated.sources,[]);
+  const unknown=await v.ask('Could you explain in plain English?');assert.deepEqual(unknown.sources,[]);
+  assert.deepEqual(v.calls,{embeddings:[],responses:[]});
+});
+test('a bare yes does not guess which option, and the pronoun it does not imply IT jobs',async()=>{
+  const v=visitor('en');
+  const initial=await v.ask('Can you help me?');
+  const yes=await v.ask('yes');assert.deepEqual(yes.suggestions,initial.suggestions);assert.equal(yes.suggestions.length,3);assert.deepEqual(yes.sources,[]);
+  const vague=await visitor('en').ask('Does it quack?');assert.deepEqual(vague.sources,[]);
 });

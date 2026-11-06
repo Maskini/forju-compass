@@ -147,7 +147,7 @@ export function localKnowledge(question: string) {
   const normalize = (s: string) => s.toLowerCase().normalize("NFKD").replace(/\p{M}/gu,"");
   const ignore = new Set("the what where when how who does for and can you your are about have with this that there which will would could please want need from my our forju compass ich und wie kann wer ist der die das ein eine ihr mit bei gibt welche einen von fur mochte uns unser unsere unserem unseren bietet auch einem dazu gern".split(" "));
   const words = [...new Set(normalize(question).match(/[\p{L}\p{N}]{3,}/gu) ?? [])].filter(w => !ignore.has(w)).map(correctTransposition);
-  if (/\b(it|tech|technology|technology-related|developer|software|programmierung)\b/i.test(question)) words.push("technologie");
+  if (/\bIT\b/.test(question) || /\b(?:it[- ](?:jobs?|roles?|volunteer)|tech|technology|technology-related|developer|software|programmierung)\b/i.test(question)) words.push("technologie");
   if (/\b(fund|funding|financing|foerderung)\b/i.test(question)) words.push("finanzierung");
   const rows = knowledgeCatalog.map(e => ({e, tags:normalize([e.title,e.titleEn,e.keywords].join(" ")), body:normalize(e.content+" "+e.contentEn)}));
   const scores = rows.map(r => ({title:r.e.indexTitle,score:0}));

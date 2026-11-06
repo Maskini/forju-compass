@@ -33,7 +33,7 @@ export function conversationalReply(text: string, englishUI: boolean) {
   };
   return replies[kind][en?1:0];
 }
-export function topicHistory(history: ChatMessage[]) {
+export function topicHistory(history: ChatMessage[], keepPrompt?:(answer:string)=>boolean) {
   // A polite aside is not a new subject for “How do I sign up for it?”.
-  return history.filter((_,i)=>!conversationalReply(history[i-i%2].content,false));
+  return history.filter((_,i)=>keepPrompt?.(history[i-i%2+1].content) || !conversationalReply(history[i-i%2].content,false));
 }

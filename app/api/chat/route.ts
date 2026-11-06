@@ -1,3 +1,4 @@
+import {guidedReply,isGuidedPrompt} from "@/lib/dialogue";
 import {conversationalReply, questionAfterGreeting, topicHistory} from "@/lib/conversation";
 import { takeAiRequest } from "@/lib/server/ai-limit";
 import OpenAI from "openai";
@@ -21,14 +22,16 @@ export async function POST(request: Request) {
   }
   const message = questionAfterGreeting(parsed.message);
   const englishUI = request.headers.get("accept-language")?.toLowerCase().startsWith("en") ?? false;
-  const en = /^(what|where|when|how|who|can|could|is there|by what)\b/i.test(message) ? true
-    : /^(was|wo|wann|wie|wer|gibt|bietet|kann|bis wann|und wie)\b/i.test(message) ? false
+  const en = /^(what|where|when|how|who|can|could|is there|by what|i|we|for my|for our|not sure|explain|give me|help with)\b/i.test(message) ? true
+    : /^(was|wo|wann|wie|wer|gibt|bietet|kann|bis wann|und wie|ich|wir|für|kannst|einfacher|hilfe bei)\b/i.test(message) ? false
     : request.headers.get("accept-language")?.toLowerCase().startsWith("en") ?? false;
   const retry = process.env.NODE_ENV === "production" ? takeAiRequest(request) : 0;
   if (retry) return NextResponse.json({error:request.headers.get("accept-language")?.startsWith("en") ? "Too many requests. Please try again later." : "Zu viele Anfragen. Bitte versuche es später erneut."},{status:429,headers:{"Retry-After":String(retry)}});
+  const history = topicHistory(parsed.history,isGuidedPrompt);
+  const guided = guidedReply(message,en,history,knowledgeCatalog,parsed.topic);
+  if (guided) return NextResponse.json(guided);
   const social = conversationalReply(parsed.message, englishUI);
-  if (social) return NextResponse.json({mode:"conversation",answer:social,sources:[]});
-  const history = topicHistory(parsed.history);
+  if (social) return NextResponse.json({mode:"conversation",answer:social,sources:[],topic:parsed.topic});
   const previous = history.filter(m => m.role === "user").at(-1)?.content;
   const deadline = /deadline|cut[ -]?off|by (what|which) date|last day|how late|\bfrist|anmeldefrist|bewerbungsfrist|bis wann|spätestens/i.test(message);
   const registration = /sign[ -]?up|register|registration|book(ing)?|anmeld|melde.{0,24}an|termin vereinbaren/i.test(message);
@@ -46,21 +49,25 @@ export async function POST(request: Request) {
       if (!needsContext(turn.content)) break;
     }
   }
-  const local = selectCatalogKnowledge(localKnowledge(contextual), message);
+  const prior = knowledgeCatalog.find(r=>r.id===parsed.topic);
+  // Bare price, contact and booking questions can refer to a tap/ordinal as
+  // easily as to a typed topic. Explicit new subjects still go to retrieval.
+  const elliptical = /^(?:(?:und|and) )?(?:was kostet (?:es|das)|was würde das kosten|wie (?:teuer|viel) ist das|ist (?:es|das) (?:gratis|kostenlos|verfügbar)|an wen (?:wende ich mich|sollen wir uns wenden)|wo (?:frage ich|fragen wir) (?:an|nach)|wie melde ich (?:mich|meine klasse) (?:dafür )?an|how much (?:is it|does (?:it|that) cost)|what does (?:it|that) cost|would it be free(?: of charge)?|is (?:it|that) (?:free|available)|who should (?:i|we) contact|who do (?:i|we) contact|how do (?:i|we) (?:register|sign up)(?: for (?:it|that))?)[?.! ]*$/i.test(message);
+  const local = prior && elliptical ? selectCatalogKnowledge([{title:prior.indexTitle, similarity:1}], message) : selectCatalogKnowledge(localKnowledge(contextual), message);
   const school = knowledgeCatalog.find(entry => entry.id === "workshops");
   if ((registration || deadline) && school?.booking) {
     // Resolve an implicit subject from the last user question, never from assistant claims.
     const subject = message.replace(/\b(und|and|wie|melde|ich|mich|wir|uns|dafür|dazu|an|how|do|can|i|we|sign|up|register|registration|for|it|that|this|the|what|is|deadline)\b/gi, " ").trim();
     const direct = selectCatalogKnowledge(localKnowledge(subject), subject)[0];
     const implicitSubject = /dafür|dazu|for (it|that|this)|^(and |und )?(how (do|can) (i|we) (register|sign up)|wie melde)/i.test(message);
-    const refersToSchool = direct?.url === school.sourceUrl ||
+    const refersToSchool = (elliptical && prior ? (prior.id==="workshops" || prior.id.startsWith("workshop-")) : direct?.url === school.sourceUrl ||
       (implicitSubject && !direct && previous &&
-        selectCatalogKnowledge(localKnowledge(previous), previous)[0]?.url === school.sourceUrl);
+        selectCatalogKnowledge(localKnowledge(previous), previous)[0]?.url === school.sourceUrl));
     if (refersToSchool) {
       const booking = school.booking[en ? "en" : "de"];
       const missing = en ? "The school workshop page gives no registration deadline." : "Die Seite zu den Schulworkshops nennt keine Anmeldefrist.";
       return NextResponse.json({
-        mode: "library", answer: deadline ? missing + " " + booking : booking,
+        mode: "library", topic:school.id, answer: deadline ? missing + " " + booking : booking,
         sources: [{title: en ? school.titleEn : school.title, url: readerUrl(school.sourceUrl)}],
       });
     }
@@ -71,24 +78,24 @@ export async function POST(request: Request) {
     if (first?.requestUrl) {
       const form = {title: en ? "Enquire with ForJu" : "Bei ForJu anfragen", url:readerUrl(first.requestUrl)};
       const page = {title: en ? first.titleEn : first.title, url:readerUrl(first.url)};
-      if (first.id === "ressourcen" && /kostet|kostenlos|gebühr|gratis|how much|cost|price|fee|free of charge/i.test(message)) {
+      if (first.id === "ressourcen" && /kosten|kostet|teuer|gebühr|gratis|how much|cost|price|fee|\bfree\b/i.test(message)) {
         const answer = en ? "ForJu’s resources page gives no loan price. Ask the team to confirm the cost for your device and dates."
           : "ForJus Ressourcenseite nennt keinen Leihpreis. Frag das Team nach den Kosten für euer Gerät und euren Zeitraum.";
-        return NextResponse.json({mode:"library", answer, sources:[page,form]});
+        return NextResponse.json({mode:"library", topic:first.id, answer, sources:[page,form]});
       }
       if (/who.{0,16}contact|where.{0,12}(ask|request)|an wen|wo.{0,12}(anfragen|fragen)|kontaktieren/i.test(message)) {
         const answer = en ? "Use the enquiry form linked here or email office@forju.at. Briefly describe your project and the help you need."
           : "Nutze das verlinkte Anfrageformular oder schreib an office@forju.at. Beschreibe kurz dein Vorhaben und welche Unterstützung du brauchst.";
-        return NextResponse.json({mode:"library", answer, sources:[form]});
+        return NextResponse.json({mode:"library", topic:first.id, answer, sources:[form]});
       }
-      return NextResponse.json({mode:"library", answer:en ? first.contentEn : first.content,sources:[page,form]});
+      return NextResponse.json({mode:"library", topic:first.id, answer:en ? first.contentEn : first.content,sources:[page,form]});
     }
     if (/\b(contact|kontakt|kontaktieren|erreichen|an wen|ansprechpartner|bewerben|apply)\b/i.test(message)) {
       const topic = contextual.toLowerCase();
       const target = /press|presse/.test(topic) ? "presse" : /job|volunteer|bewerb|ehrenamt|apply/.test(topic) ? "ehrenamt" : "kontakt";
       first = local.find(e => e.id === target) ?? selectCatalogKnowledge(localKnowledge(target),target).find(e => e.id === target) ?? first;
     }
-    return NextResponse.json(first ? {mode:"library",answer: en ? first.contentEn : first.content,
+    return NextResponse.json(first ? {mode:"library",topic:first.id,answer: en ? first.contentEn : first.content,
       sources:[{title:en ? first.titleEn : first.title,url:readerUrl(first.url)}]} : {mode:"library", answer:unknown,sources:[]});
   }
   if (deadline) {

@@ -824,3 +824,7 @@ button.quick-action:is(:hover, :focus-visible):not(:disabled) { box-shadow: var(
 .footer-pill:not(.footer-pill--pink) { background: #fff; border: 0; font-weight: 700; }
 .footer-pill:not(.footer-pill--pink):is(:hover, :focus-visible) { background: var(--control-hover-fill); color: #861456; box-shadow: var(--control-chip-hover); }
 button.quick-action:active:not(:disabled), .footer-pill:not(.footer-pill--pink):active { background: var(--control-press-fill); box-shadow: var(--control-press); transform: translateY(1px); }
+
+.chat-choices{display:flex;flex-wrap:wrap;gap:.45rem;margin:.6rem 0}
+.chat-choices button{max-width:100%;padding:.55rem .85rem;border:1px solid #e0bacb;border-radius:1.3rem;color:#821452;background:#fff8fb;font:inherit;font-size:.9rem;cursor:pointer;text-align:start}
+.chat-choices button:hover,.chat-choices button:focus-visible{background:#fae4ef}
