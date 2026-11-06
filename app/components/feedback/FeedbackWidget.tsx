@@ -6,8 +6,8 @@ import ReportIcon from "./ReportIcon";
 
 export type ReportedExchange = {question:string; answer:string};
 export type ReportControls = {reportAnswer:(turn:ReportedExchange, trigger:HTMLButtonElement)=>void};
-export default function FeedbackWidget({language, inline=false, ref}: {
-  language:AppLanguage; inline?:boolean; ref?:Ref<ReportControls>;
+export default function FeedbackWidget({language, ready, inline=false, ref}: {
+  language:AppLanguage; ready:boolean; inline?:boolean; ref?:Ref<ReportControls>;
 }) {
   const [exchange,setExchange] = useState<ReportedExchange>();
   const [formVersion,setFormVersion] = useState(0);
@@ -38,7 +38,7 @@ export default function FeedbackWidget({language, inline=false, ref}: {
   }
   function closed() { restoreScroll.current?.(); opener.current?.focus({preventScroll:true}); }
   return <>
-    <button ref={trigger} type="button" className={inline?"report-inline":"feedback-launcher"} onClick={()=>open()} aria-haspopup="dialog" aria-controls="feedback-drawer">
+    <button ref={trigger} type="button" disabled={!ready} className={inline?"report-inline":"feedback-launcher"} onClick={()=>open()} aria-haspopup="dialog" aria-controls="feedback-drawer">
       {t("Problem melden", "Report a problem")}
     </button>
     <dialog ref={dialog} id="feedback-drawer" className="feedback-drawer" aria-labelledby="feedback-title" aria-describedby="feedback-subtitle" onClose={closed} onCancel={event => { event.preventDefault(); dialog.current?.close(); }} onKeyDown={event => {

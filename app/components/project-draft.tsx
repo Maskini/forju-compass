@@ -50,7 +50,7 @@ const language = {
 };
 const sections=[[0,1],[2],[3,4],[5],[6]];
 function Bulb(){return <svg aria-hidden="true" viewBox="0 0 100 110" className="draft-bulb"><g stroke="#e58c9b" strokeWidth="2.5"><path d="m17 29-10-5m19-7-6-9m54 9 7-10m2 22 10-6"/></g><path fill="#ee95a2" d="m49 12 21 11 10 19-8 21-13 18H40L27 61l-8-20 11-19z"/><path fill="#f6adba" d="m49 12-9 31-10-21z"/><path fill="#d97789" d="m49 12 13 31 8-20zM40 81l-9-40 16 19z"/><path fill="#ec8797" d="m49 12-2 48 15-17z"/><path fill="#be6075" d="M59 81H40l7-21 15-17z"/><path fill="#c66677" d="M39 81h21l-3 12-8 5-8-5z"/><path stroke="#f6bcc4" strokeWidth="2" d="m40 85 19-1m-18 6 17-1"/></svg>}
-export function ProjectDraft({lang,turns,widget=false}:{lang:Language;turns:Turn[];widget?:boolean}){
+export function ProjectDraft({lang,turns,ready,widget=false}:{lang:Language;turns:Turn[];ready:boolean;widget?:boolean}){
   const dialog=useRef<HTMLDialogElement>(null), trigger=useRef<HTMLButtonElement>(null), main=useRef<HTMLDivElement>(null), stage=useRef<HTMLHeadingElement>(null);
   const id=useId(),[draftLang,setDraftLang]=useState(lang),[step,setStep]=useState(-1),[fields,setFields]=useState<string[]>(Array(7).fill("")),[goals,setGoals]=useState<number[]>([]),[custom,setCustom]=useState(""),[seeded,setSeeded]=useState(false);
   const ui=language[draftLang],seed=projectSeed(turns),ctx=seed.description,review=step===5;
@@ -78,7 +78,7 @@ export function ProjectDraft({lang,turns,widget=false}:{lang:Language;turns:Turn
     {i===0||i===4?<input value={fields[i]} onChange={e=>edit(i,e.target.value)} placeholder={review?ui.blank:undefined}/>:<textarea rows={review?2:i===1?3:4} value={fields[i]} onChange={e=>edit(i,e.target.value)} placeholder={review?ui.blank:undefined}/>}
     {i===1&&seeded&&!review&&<small>{ui.from}</small>}</label>;
   const goalFields=<fieldset className="draft-goals"><legend>{ui.goals}</legend><small>{ui.many}</small><div>{ui.options.map((s,i)=><label key={s}><input type="checkbox" checked={goals.includes(i)} onChange={e=>{setGoals(e.target.checked?[...goals,i]:goals.filter(x=>x!==i))}}/>{s}</label>)}</div>{goals.includes(5)&&<label className="draft-field">{ui.own}<input value={custom} onChange={e=>{setCustom(e.target.value)}}/></label>}</fieldset>;
-  return <section className="project-draft">{ctx&&step<0&&<p>{language[lang].offer}</p>}<button ref={trigger} className="draft-launch" type="button" aria-haspopup="dialog" onClick={open}>{step<0?language[lang].launch:language[lang].resume} →</button>
+  return <section className="project-draft">{ctx&&step<0&&<p>{language[lang].offer}</p>}<button ref={trigger} disabled={!ready} className="draft-launch" type="button" aria-haspopup="dialog" onClick={open}>{step<0?language[lang].launch:language[lang].resume} →</button>
     <dialog ref={dialog} lang={draftLang} aria-labelledby={id} onClose={()=>{signal(false);trigger.current?.focus({preventScroll:true})}} onKeyDown={e=>{if(e.key==="Escape")e.stopPropagation()}}>
      {step>=0&&<div className="draft-sheet">
       <div className="draft-bar"><Image unoptimized width={1618} height={302} src="/forju/forju-compass-logo.png" alt="ForJu Compass"/><button type="button" className="draft-dismiss" onClick={()=>dialog.current?.close()}>← {ui.backChat}</button></div>

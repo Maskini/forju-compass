@@ -83,8 +83,8 @@ export default function CompassPanel({initialLanguage,widget=false}:{initialLang
           : source.includes("schulworkshops") ? [en?"Enquire about a school workshop":"Schulworkshop anfragen","/kontakt?intent=service"] : null;
         return action && <a className="next-step" href={"https://forju.at/"+(source.startsWith("https://forju.at/en/")?"en":"de")+action[1]} target="_blank" rel="noopener noreferrer">{action[0]} →</a>
       })()}
-      <FeedbackWidget ref={reports} inline language={lang}/>
-      <ProjectDraft lang={lang} turns={turns} widget={widget}/>
+      <FeedbackWidget ready={ready} ref={reports} inline language={lang}/>
+      <ProjectDraft ready={ready} lang={lang} turns={turns} widget={widget}/>
       {loading&&<div role="status"><div className="question-bubble"><p>{submittedQuestion}</p></div>{en?"Looking for an answer…":"Ich suche eine Antwort …"}</div>}
       {error&&<p role="alert">{en?"Your question could not be sent.":"Deine Frage konnte nicht gesendet werden."} <button onClick={()=>submit(submittedQuestion)}>{en?"Retry":"Erneut versuchen"}</button>{" · "}<a href={"https://forju.at/"+lang+"/kontakt"} target="_blank" rel="noopener noreferrer">{en?"Contact ForJu":"ForJu kontaktieren"}</a></p>}
     </div>

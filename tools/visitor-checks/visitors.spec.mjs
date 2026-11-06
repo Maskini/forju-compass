@@ -269,9 +269,23 @@ test('English phone widget: one Send, retained draft on failure, stable retry an
 });
 
 test('German desktop: keep the project in the form while offline, then send when delivery recovers', async ({page}) => {
-  await page.goto('/');
-  await expect(page.getByRole('button', {name:'Problem melden', exact:true}).locator('svg')).toHaveCount(0);
-  await page.getByRole('button', {name:/Projektentwurf starten/}).click();
+  const {promise: scriptsReady, resolve: loadScripts} = Promise.withResolvers();
+  await page.route(/\/_next\/static\/.*\.js(?:\?|$)/, async route => {
+    await scriptsReady;
+    await route.fallback();
+  });
+  const report = page.getByRole('button', {name:'Problem melden', exact:true});
+  const start = page.getByRole('button', {name:/Projektentwurf starten/});
+  try {
+    await page.goto('/', {waitUntil:'commit'});
+    await expect(report).toBeDisabled();
+    await expect(start).toBeDisabled();
+  } finally {
+    loadScripts();
+  }
+  await expect(report).toBeEnabled();
+  await expect(report.locator('svg')).toHaveCount(0);
+  await start.click();
   const review = page.getByRole('dialog');
   await expect(review.getByRole('status')).toContainText('derzeit nicht gesendet');
   await review.getByLabel('Projekttitel', {exact:true}).fill('Luftqualität in der Klasse');

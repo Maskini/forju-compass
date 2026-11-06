@@ -111,7 +111,7 @@ export default function Home() {
   return (
     <main className="compass-page">
       <Script src="/compass-widget.js" data-welcome="closed" strategy="afterInteractive" />
-      <FeedbackWidget language={language} ref={reports}/>
+      <FeedbackWidget ready={ready} language={language} ref={reports}/>
       <FloatingOrigami />
       <section className="scene">
         <div
@@ -333,7 +333,7 @@ export default function Home() {
                   <button type="button" className="retry-button" onClick={() => submit(submittedQuestion)} disabled={!ready || loading}>{t("Erneut versuchen")}</button>
                 </div>}
               </div>
-              <ProjectDraft key={conversationId} lang={language} turns={turns}/>
+              <ProjectDraft ready={ready} key={conversationId} lang={language} turns={turns}/>
               {turns.length === 0 && !loading && !error && <a className="answer-cta" href={official("/services")} target="_blank" rel="noopener noreferrer">{t("Mehr erfahren")} <ChevronIcon /></a>}
               {(turns.length > 0 || error) && (
                 <button type="button" className="answer-cta" disabled={!ready || loading} onClick={() => {
