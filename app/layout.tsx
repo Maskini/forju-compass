@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 
 import "./globals.css";
 import "./feedback.css";
+import "../public/compass-controls.css";
 
 
 export const metadata: Metadata = {

@@ -111,7 +111,7 @@ test('Separate website origin: open the widget by keyboard, ask, close and resum
   const drawer = host.locator('.drawer');
   await expect(panel.locator('.suggestions')).toBeVisible();
   const compactWidth = (await drawer.boundingBox()).width;
-  expect(compactWidth).toBe(360);
+  expect(compactWidth).toBe(430);
   const question = panel.getByRole('textbox',{name:'Your question'});
   await question.fill('Unsent classroom question');
   await host.getByRole('button',{name:'Expand chat',exact:true}).click();

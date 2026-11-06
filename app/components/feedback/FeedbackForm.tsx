@@ -67,7 +67,7 @@ export default function FeedbackForm({ language, exchange, onAccepted }: {
     <span className="feedback-success-icon" aria-hidden="true">✓</span>
     <h3>{t("Danke für dein Feedback!", "Thank you for your feedback!")}</h3>
     <p>{t("Deine Rückmeldung wurde erfolgreich übermittelt.", "Your feedback was submitted successfully.")}</p>
-    <button type="button" className="feedback-submit" onClick={() => { setErrors({}); setStatus("idle"); requestAnimationFrame(() => formRef.current?.querySelector<HTMLInputElement>('input[name="type"]')?.focus()); }}>{t("Weiteres Feedback senden", "Send more feedback")}</button>
+    <button type="button" className="feedback-submit fj-action" onClick={() => { setErrors({}); setStatus("idle"); requestAnimationFrame(() => formRef.current?.querySelector<HTMLInputElement>('input[name="type"]')?.focus()); }}>{t("Weiteres Feedback senden", "Send more feedback")}</button>
   </div>;
   return <form method="post" action="/api/feedback" ref={formRef} className="feedback-form" onSubmit={submit} noValidate aria-busy={status === "sending"}>
     <fieldset disabled={status === "sending"} aria-describedby={errors.type ? "feedback-type-error" : undefined}>
@@ -80,7 +80,7 @@ export default function FeedbackForm({ language, exchange, onAccepted }: {
     </fieldset>
     <div>
       <label htmlFor="feedback-description">{t("Beschreibung", "Description")}</label>
-      <textarea id="feedback-description" name="description" value={description} onChange={event => setDescription(event.target.value)} minLength={10} maxLength={1000} required disabled={status === "sending"}
+      <textarea className="fj-field" id="feedback-description" name="description" value={description} onChange={event => setDescription(event.target.value)} minLength={10} maxLength={1000} required disabled={status === "sending"}
         placeholder={t("Bitte beschreibe das Problem so genau wie möglich …", "Please describe the problem as clearly as possible …")}
         aria-invalid={Boolean(errors.description)} aria-describedby={`feedback-count${errors.description ? " feedback-description-error" : ""}`} />
       <p id="feedback-count" className="feedback-counter">{description.length} / 1000</p>
@@ -88,7 +88,7 @@ export default function FeedbackForm({ language, exchange, onAccepted }: {
     </div>
     <div>
       <label htmlFor="feedback-email">{t("E-Mail für Rückmeldung (optional)", "Email for a reply (optional)")}</label>
-      <div className="feedback-email-control"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m4 7 8 6 8-6"/></svg><input id="feedback-email" name="email" type="email" autoComplete="email" maxLength={254} value={email} onChange={event => setEmail(event.target.value)} disabled={status === "sending"}
+      <div className="feedback-email-control"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m4 7 8 6 8-6"/></svg><input className="fj-field" id="feedback-email" name="email" type="email" autoComplete="email" maxLength={254} value={email} onChange={event => setEmail(event.target.value)} disabled={status === "sending"}
         placeholder={t("name@beispiel.at","name@example.com")} aria-invalid={Boolean(errors.email)} aria-describedby={errors.email ? "feedback-email-error" : undefined} /></div>
       {errors.email && <p id="feedback-email-error" className="feedback-field-error">{errors.email}</p>}
     </div>
@@ -105,6 +105,6 @@ export default function FeedbackForm({ language, exchange, onAccepted }: {
       {status === "error" && <p className="feedback-field-error" role="alert">{t("Das Feedback konnte nicht gesendet werden. Bitte versuche es erneut.", "Your feedback could not be sent. Please try again.")}</p>}
       {Object.keys(errors).length > 0 && <p className="feedback-validation-summary">{t("Bitte prüfe die markierten Felder.", "Please check the highlighted fields.")}</p>}
     </div>
-    <button className="feedback-submit" type="submit" disabled={status === "sending"}>{status === "sending" ? t("Wird gesendet …", "Sending …") : status==="error" ? t("Erneut versuchen", "Retry") : t("Senden", "Send")}<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M4 12h16m-6-6 6 6-6 6"/></svg></button>
+    <button className="feedback-submit fj-action" type="submit" disabled={status === "sending"}>{status === "sending" ? t("Wird gesendet …", "Sending …") : status==="error" ? t("Erneut versuchen", "Retry") : t("Senden", "Send")}<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M4 12h16m-6-6 6 6-6 6"/></svg></button>
   </form>;
 }

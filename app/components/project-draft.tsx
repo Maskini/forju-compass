@@ -26,7 +26,7 @@ const language = {
     unsent:"Dein Projekt wurde nicht gesendet. Lass diesen Tab offen und versuche es später erneut.",
     unconfirmed:"Der Versand wurde nicht bestätigt. Dein Entwurf ist noch da. Du kannst erneut auf Senden klicken.",
     tooLong:"Kürze deinen Entwurf vor dem Senden.",
-    next:"Weiter",back:"Zurück",up:"Nächste Schritte",step:"Schritt",of:"von",blank:"Noch offen",start:"Hallo ForJu-Team,",end:"Vielen Dank!"
+    next:["Weiter zur Zielgruppe","Weiter zur Umsetzung","Weiter zu Ressourcen","Weiter zur Wirkung","Weiter zur Übersicht"],back:"Zurück",up:"Nächste Schritte",step:"Schritt",of:"von",blank:"Noch offen",start:"Hallo ForJu-Team,",end:"Vielen Dank!"
   },
   en:{
     launch:"Start a project draft",resume:"Continue project draft",offer:"Would you like to turn your idea into a project draft?",
@@ -45,7 +45,7 @@ const language = {
     unsent:"Your project wasn’t sent. Keep this tab open and try again later.",
     unconfirmed:"Sending wasn’t confirmed. Your draft is still here. You can press Send again.",
     tooLong:"Shorten your draft before sending.",
-    next:"Continue",back:"Back",up:"Coming up",step:"Step",of:"of",blank:"Still open",start:"Hello ForJu team,",end:"Thank you!"
+    next:["Continue to audience","Continue to implementation","Continue to resources","Continue to impact","Continue to review"],back:"Back",up:"Coming up",step:"Step",of:"of",blank:"Still open",start:"Hello ForJu team,",end:"Thank you!"
   }
 };
 const sections=[[0,1],[2],[3,4],[5],[6]];
@@ -88,10 +88,10 @@ export function ProjectDraft({lang,turns,ready,widget=false}:{lang:Language;turn
   function edit(i:number,v:string){setFields(a=>a.map((x,n)=>n===i?v:x))}
   useLayoutEffect(()=>{if(step>=0 && dialog.current?.open){main.current?.scrollTo(0,0);stage.current?.focus({preventScroll:true})}},[step]);
   const field=(i:number)=><label key={i} className="draft-field"><span>{ui.labels[i]}</span>
-    {i===0||i===4?<input value={fields[i]} onChange={e=>edit(i,e.target.value)} placeholder={review?ui.blank:undefined}/>:<textarea rows={review?2:i===1?3:4} value={fields[i]} onChange={e=>edit(i,e.target.value)} placeholder={review?ui.blank:undefined}/>}
+    {i===0||i===4?<input className="fj-field" value={fields[i]} onChange={e=>edit(i,e.target.value)} placeholder={review?ui.blank:undefined}/>:<textarea className="fj-field" rows={review?2:i===1?3:4} value={fields[i]} onChange={e=>edit(i,e.target.value)} placeholder={review?ui.blank:undefined}/>}
     {i===1&&seeded&&!review&&<small>{ui.from}</small>}</label>;
-  const goalFields=<fieldset className="draft-goals"><legend>{ui.goals}</legend><small>{ui.many}</small><div>{ui.options.map((s,i)=><label key={s}><input type="checkbox" checked={goals.includes(i)} onChange={e=>{setGoals(e.target.checked?[...goals,i]:goals.filter(x=>x!==i))}}/>{s}</label>)}</div>{goals.includes(5)&&<label className="draft-field">{ui.own}<input value={custom} onChange={e=>{setCustom(e.target.value)}}/></label>}</fieldset>;
-  return <section className="project-draft">{ctx&&step<0&&<p>{language[lang].offer}</p>}<button ref={trigger} disabled={!ready} className="draft-launch" type="button" aria-haspopup="dialog" onClick={open}>{step<0?language[lang].launch:language[lang].resume} →</button>
+  const goalFields=<fieldset className="draft-goals"><legend>{ui.goals}</legend><small>{ui.many}</small><div>{ui.options.map((s,i)=><label key={s}><input type="checkbox" checked={goals.includes(i)} onChange={e=>{setGoals(e.target.checked?[...goals,i]:goals.filter(x=>x!==i))}}/>{s}</label>)}</div>{goals.includes(5)&&<label className="draft-field">{ui.own}<input className="fj-field" value={custom} onChange={e=>{setCustom(e.target.value)}}/></label>}</fieldset>;
+  return <section className="project-draft">{ctx&&step<0&&<p>{language[lang].offer}</p>}<button ref={trigger} disabled={!ready} className="draft-launch fj-action" type="button" aria-haspopup="dialog" onClick={open}>{step<0?language[lang].launch:language[lang].resume} →</button>
     <dialog ref={dialog} lang={draftLang} aria-labelledby={id} onClose={()=>{signal(false);trigger.current?.focus({preventScroll:true})}} onKeyDown={e=>{if(e.key==="Escape")e.stopPropagation()}}>
      {step>=0&&<div className="draft-sheet">
       <div className="draft-bar"><Image unoptimized width={1618} height={302} src="/forju/forju-compass-logo.png" alt="ForJu Compass"/><button type="button" className="draft-dismiss" onClick={()=>dialog.current?.close()}>← {ui.backChat}</button></div>
@@ -102,22 +102,22 @@ export function ProjectDraft({lang,turns,ready,widget=false}:{lang:Language;turn
         {review && message && <details className="draft-excerpts">
           <summary>{en ? "View final text" : "Fertigen Text ansehen"}</summary>
           <label className="draft-field"><span>{en ? "Select and copy your project" : "Projekttext auswählen und kopieren"}</span>
-            <textarea readOnly rows={6} value={message} onFocus={e=>e.currentTarget.select()}/>
+            <textarea className="fj-field" readOnly rows={6} value={message} onFocus={e=>e.currentTarget.select()}/>
           </label>
         </details>}
         {review&&<label className="draft-field"><span>{en?"Your email for a reply (optional)":"Deine E-Mail für Rückfragen (optional)"}</span>
-          <input type="email" autoComplete="email" maxLength={254} value={mail.reply} disabled={mail.busy} onChange={e=>mail.setReply(e.target.value)} aria-invalid={!mail.validReply} aria-describedby={!mail.validReply?id+"-email-error":undefined}/>
+          <input className="fj-field" type="email" autoComplete="email" maxLength={254} value={mail.reply} disabled={mail.busy} onChange={e=>mail.setReply(e.target.value)} aria-invalid={!mail.validReply} aria-describedby={!mail.validReply?id+"-email-error":undefined}/>
           {!mail.validReply&&<small id={id+"-email-error"}>{en?"Check the address or leave it blank.":"Prüfe die Adresse oder lass sie leer."}</small>}
         </label>}
         {step===0&&turns.some(t=>!fields[1].includes(t.question))&&<details className="draft-excerpts"><summary>{ui.other}</summary>{turns.filter(t=>!fields[1].includes(t.question)).map((t,i)=><button key={i} onClick={()=>edit(1,[fields[1],t.question].filter(Boolean).join("\n"))}>{t.question}</button>)}</details>}</div>
        </div>
-       <div className="draft-guide"><Image unoptimized width={1618} height={302} src="/forju/forju-compass-logo.png" alt="" className="draft-guide-logo"/><div className="draft-tip"><strong>✧　{ui.tip}</strong><p>{ui.tips[step]}</p></div>{step<5&&<div className="draft-up"><strong>{ui.up}</strong><ol start={step+2}>{ui.steps.slice(step+1,step+4).map(x=><li key={x}>{x}</li>)}</ol></div>}<p className="draft-local">{ui.local}</p></div>
+       <div className="draft-guide"><Image unoptimized width={1618} height={302} src="/forju/forju-compass-logo.png" alt="" className="draft-guide-logo"/><div className="draft-tip"><strong>{ui.tip}</strong><p>{ui.tips[step]}</p></div>{step<5&&<div className="draft-up"><strong>{ui.up}</strong><ol start={step+2}>{ui.steps.slice(step+1,step+4).map(x=><li key={x}>{x}</li>)}</ol></div>}<p className="draft-local">{ui.local}</p></div>
       </div>
-      <div className="draft-footer"><div className="draft-actions">{step>0&&<button type="button" onClick={()=>changeStep(step-1)}>← {ui.back}</button>}
+      <div className="draft-footer"><div className="draft-actions">{step>0&&<button className="fj-action fj-secondary" type="button" onClick={()=>changeStep(step-1)}>← {ui.back}</button>}
        {review ? (
-         <button className="primary" type="button" disabled={!mail.canSend} onClick={mail.send}>{sendLabel}</button>
+         <button className="primary fj-action" type="button" disabled={!mail.canSend} onClick={mail.send}>{sendLabel}</button>
        ) : (
-         <button className="primary" type="button" onClick={()=>changeStep(step+1)}>{ui.next} →</button>
+         <button className="primary fj-action" type="button" onClick={()=>changeStep(step+1)}>{ui.next[step]} →</button>
        )}</div>
        <div role="status" className="draft-status">{review ? deliveryNotice : step === 0 && mail.unavailable ? ui.unavailable : ""}</div>
       </div>

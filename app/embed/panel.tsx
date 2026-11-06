@@ -52,21 +52,21 @@ export default function CompassPanel({initialLanguage,widget=false}:{initialLang
   const reports = useRef<ReportControls>(null);
   const suggestions:Topic[]=["projects","volunteer","funding","idea"];
   return <main lang={lang} className={"embed-panel"+(widget?" widget-mode":"")}>
-    <header><img src="/forju/forju-compass-logo.png" alt="ForJu Compass"/><p>{en?"Your AI assistant for youth, research and opportunities.":"Dein KI-Assistent für Jugend, Forschung und Möglichkeiten."}</p>
+    <header><img src="/forju/forju-compass-logo.png" alt="ForJu Compass"/>
       {!widget&&<button className="lang" onClick={()=>setLang(en?"de":"en")}>{en?"DE":"EN"}</button>}
     </header>
-    <div className="embed-log" ref={transcript} tabIndex={0} aria-label={en?"Conversation":"Gespräch"}>
-      <section className="greeting"><img src="/forju/origami/pink-airplane.png" alt=""/><h1>{en?"Hello!":"Hallo!"} 👋</h1>
-        <p>{en?"I’m ForJu Compass. Ask me about projects, support for young researchers and ways to get involved.":"Ich bin ForJu Compass und unterstütze dich bei Fragen zu unseren Projekten, Angeboten und rund um Forschung und Engagement für junge Menschen."}</p>
+    <div data-read-latest="start" className="embed-log" ref={transcript} tabIndex={0} aria-label={en?"Conversation":"Gespräch"}>
+      <section className="greeting"><img src="/forju/origami/pink-airplane.png" alt=""/><h1>{en?"How can we help?":"Wie können wir dir helfen?"}</h1>
+        <p>{en?"Ask about a school workshop, explore funding or tell us what you’d like to research.":"Frag nach einem Schulworkshop, finde Unterstützung oder erzähl uns, was du erforschen möchtest."}</p>
         <h2>{en?"Popular questions":"Beliebte Fragen"}</h2>
-        <div className="suggestions">{suggestions.map(t=><button className={t} key={t} disabled={!ready||loading} onClick={()=>submit(prompts[t][en?1:0])}><i><Icon type={t}/></i><span>{prompts[t][en?1:0]}</span><b>›</b></button>)}</div>
+        <div className="suggestions">{suggestions.map(t=><button className={t} key={t} disabled={!ready||loading} onClick={()=>submit(prompts[t][en?1:0])}><i><Icon type={t}/></i><span>{prompts[t][en?1:0]}</span><b aria-hidden="true">→</b></button>)}</div>
       </section>
       <div role="log" aria-live="polite" aria-relevant="additions">{turns.map((turn,i)=><article key={i}>
         <div className="question-bubble"><p>{turn.question}</p><i><Icon type="user"/></i></div>
         <div className="response"><i className="compass-avatar" aria-hidden="true"/><div>{turn.draft ? <EnquiryDraft answer={turn.answer} recipient={turn.recipient} en={en}/> : <p>{turn.answer}</p>}</div></div>
-        <button type="button" className="report-answer" aria-haspopup="dialog" onClick={e=>reports.current?.reportAnswer(turn,e.currentTarget)}>{en?"Report this answer":"Diese Antwort melden"}</button>
-        <time dateTime={new Date(turn.answeredAt).toISOString()}>{new Date(turn.answeredAt).toLocaleTimeString(lang,{hour:"2-digit",minute:"2-digit"})}</time>
-        {!!turn.sources.length&&<nav className="read-more" aria-label={en?"Read more":"Mehr dazu"}>{turn.sources.map(s=><a href={s.url} key={s.url} target="_blank" rel="noopener noreferrer"><Icon type="idea"/><span><strong>{s.title}</strong><small>{new URL(s.url).hostname}</small></span><b aria-hidden="true">↗</b></a>)}</nav>}
+        {!!turn.sources.length&&<nav className="read-more" aria-label={en?"Read more":"Mehr dazu"}>{turn.sources.map(s=><a className="fj-action fj-source" href={s.url} key={s.url} target="_blank" rel="noopener noreferrer"><span>{s.title}</span><span aria-hidden="true">↗</span></a>)}</nav>}
+        <div className="answer-meta"><button type="button" className="report-answer" aria-haspopup="dialog" onClick={e=>reports.current?.reportAnswer(turn,e.currentTarget)}>{en?"Report this answer":"Diese Antwort melden"}</button>
+        <time dateTime={new Date(turn.answeredAt).toISOString()}>{new Date(turn.answeredAt).toLocaleTimeString(lang,{hour:"2-digit",minute:"2-digit"})}</time></div>
         {i===turns.length-1 && !loading && !error && <ChatChoices choices={turn.suggestions} onChoose={submit}/>}
       </article>)}</div>
       {turns.length>0 && !loading && (()=>{
@@ -87,11 +87,11 @@ export default function CompassPanel({initialLanguage,widget=false}:{initialLang
       {loading&&<div role="status"><div className="question-bubble"><p>{submittedQuestion}</p></div>{en?"Looking for an answer…":"Ich suche eine Antwort …"}</div>}
       {error&&<p role="alert">{en?"Your question could not be sent.":"Deine Frage konnte nicht gesendet werden."} <button onClick={()=>submit(submittedQuestion)}>{en?"Retry":"Erneut versuchen"}</button>{" · "}<a href={"https://forju.at/"+lang+"/kontakt"} target="_blank" rel="noopener noreferrer">{en?"Contact ForJu":"ForJu kontaktieren"}</a></p>}
     </div>
-    <aside><i><Icon type="help"/></i><div><strong>{en?"Have a specific question?":"Noch eine spezifische Frage?"}</strong><span>{en?"Our team can help you personally.":"Unser Team hilft dir gerne persönlich weiter."}</span></div><a href={'https://forju.at/'+lang+'/kontakt'} target="_blank" rel="noopener noreferrer">{en?"Contact us":"Kontakt aufnehmen"} →</a></aside>
+    <aside><i><Icon type="help"/></i><div><strong>{en?"Want to ask the team?":"Direkt mit ForJu sprechen?"}</strong><span>{en?"Our team can help you personally.":"Unser Team hilft dir gerne persönlich weiter."}</span></div><a className="fj-action" href={'https://forju.at/'+lang+'/kontakt'} target="_blank" rel="noopener noreferrer">{en?"Contact us":"Kontakt aufnehmen"} →</a></aside>
     <div className="panel-report">
       <FeedbackWidget ready={ready} ref={reports} inline language={lang}/>
     </div>
-    <form onSubmit={e=>{e.preventDefault();void submit()}}><div className="composer">
+    <form onSubmit={e=>{e.preventDefault();void submit()}}><div className="composer fj-field">
       <input ref={file} type="file" hidden accept=".txt,.md,text/plain,text/markdown" onChange={async e=>{
         const f=e.target.files?.[0];e.target.value="";if(!f)return;
         try{if(!/\.(txt|md)$/i.test(f.name)||f.size>MAX_MESSAGE_LENGTH*4)throw Error();
@@ -101,7 +101,7 @@ export default function CompassPanel({initialLanguage,widget=false}:{initialLang
       }}/>
       <button type="button" title={en?"Insert text from a file":"Text aus Datei einfügen"} aria-label={en?"Insert text from a file":"Text aus Datei einfügen"} onClick={()=>file.current?.click()}><Icon type="clip"/></button>
       <input disabled={!ready} aria-label={en?"Your question":"Deine Frage"} type="text" maxLength={MAX_MESSAGE_LENGTH} value={question} onChange={e=>setQuestion(e.target.value)} placeholder={!ready?(en?"Opening Compass…":"Compass lädt …"):en?"Ask ForJu Compass…":"Stelle deine Frage an ForJu Compass …"}/>
-      <button className="send" type="submit" disabled={!ready||loading||!question.trim()} aria-label={en?"Send question":"Frage senden"}><Icon type="send"/></button></div>
+      <button className="send fj-action" type="submit" disabled={!ready||loading||!question.trim()} aria-label={en?"Send question":"Frage senden"}><Icon type="send"/></button></div>
       {fileError&&<span role="alert">{fileError}</span>}
       <small>{en?"ForJu Compass can make mistakes. Please check important information.":"ForJu Compass kann Fehler machen. Bitte prüfe wichtige Informationen."}</small>
     </form>

@@ -18,7 +18,16 @@ export function useCompassChat(language:"en"|"de") {
   const latestSources = !loading && !error ? (turns.at(-1)?.sources ?? []) : [];
 
   useEffect(() => {
-    if (transcript.current) transcript.current.scrollTop = transcript.current.scrollHeight;
+    const log = transcript.current;
+    if (!log) return;
+    const latest = !loading && !error && log.dataset.readLatest === "start"
+      ? log.querySelector("[role=log] article:last-child") : null;
+    if (latest) {
+      // Start reading at the new exchange without scrolling the host document.
+      log.scrollTop += latest.getBoundingClientRect().top - log.getBoundingClientRect().top - 12;
+    } else if (turns.length || loading || error) {
+      log.scrollTop = log.scrollHeight;
+    }
   }, [turns, loading, error]);
 
   async function submit(value?: string, replyLanguage: "de"|"en" = language) {

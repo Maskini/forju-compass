@@ -1,0 +1,60 @@
+/* Loaded inside the launcher's shadow root and bundled into Compass's own document.
+   Only explicitly marked controls opt in. The two documents share no CSS cascade. */
+.fj-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: .5rem;
+  min-height: 44px;
+  padding: 10px 20px;
+  border: 0;
+  border-radius: 16px;
+  background: var(--fj-fill, #f1cadf);
+  color: var(--fj-ink, #861456);
+  font: 700 16px/24px 'Space Grotesk', 'ForJu Space Grotesk', Arial, sans-serif;
+  letter-spacing: -.025em;
+  text-decoration: none;
+  cursor: pointer;
+  box-shadow: inset 0 1px 0 #ffffffd9, inset 0 -1px 2px #2d1e1e1a, 0 0 0 1px #2d1e1e0f;
+  transition: box-shadow 150ms ease-out, background-color 150ms ease-out, transform 150ms ease-out;
+}
+.fj-secondary { --fj-fill: #fcf8f2; --fj-ink: #614b4b; }
+.fj-source {
+  --fj-fill: #d0e2d7;
+  --fj-ink: #195c38;
+  border-radius: 999px;
+  min-height: 36px;
+  padding: 6px 14px;
+  font-size: 14px;
+  line-height: 20px;
+}
+@media (hover: hover) {
+  .fj-action:hover:where(:not(:disabled)) {
+    color: #861456;
+    background: #ffe7f5;
+    box-shadow: inset 1px 2px 3px #2d1e1e38, inset 0 -1px #ffffff52, 0 0 0 1px #2d1e1e0d;
+  }
+}
+.fj-action:active:where(:not(:disabled)) {
+  background: #ffdcf0;
+  box-shadow: inset 2px 3px 4px #2d1e1e3d, inset 0 -1px #ffffff47, 0 0 0 1px #2d1e1e0d;
+  transform: translateY(1px);
+}
+.fj-action:disabled { opacity: .55; cursor: default; }
+.fj-field {
+  width: 100%;
+  min-height: 48px;
+  border: 1px solid #2d1e1e24;
+  border-radius: 12px;
+  padding: 11px 15px;
+  color: #2d1e1e;
+  background: white;
+  box-shadow: inset 1px 2px 6px #2d1e1e1f, inset 0 -1px #ffffff80;
+  font: 400 16px/24px 'Public Sans', 'ForJu Public Sans', Arial, sans-serif;
+  letter-spacing: .025em;
+}
+.fj-field[aria-invalid=true] { border-color: #a81d45; }
+.fj-action:focus-visible, .fj-field:focus-visible { outline: 3px solid #ff3aae; outline-offset: 2px; }
+@media (prefers-reduced-motion: reduce) {
+  .fj-action { transition: none; }
+}

@@ -565,14 +565,14 @@
   {
     "id": "workshops",
     "title": "Schulworkshops in Wien",
-    "content": "Der Workshopartikel, zuletzt aktualisiert am 04.11.2024, beschreibt Angebote für Wiener Schulen. Junge Trainer:innen arbeiten eng mit Lehrkräften zusammen. Genannt werden Konfliktmanagement, Klima, Selbstmanagement, Ethik, Stressbewältigung, Zukunftsplanung, Medienkompetenz und Rollenbilder. Für eine Terminanfrage nennt der Artikel Anja Hofer (anja.hofer@forju.at). Er berichtet über eine vollständige Förderung der Seminare für Schulstufen 1–9 durch Wiener Bildungschancen zum damaligen Stand. Aktuelle Förderbedingungen, Termine und Verfügbarkeit müssen bestätigt werden.",
-    "keywords": "schulworkshops workshop schule wien lehrer bildungschancen school teacher funding teacher class lesson Unterricht Klasse Lehrkraft Klassenworkshop",
+    "content": "Für deine Klasse in Wien kannst du Workshops zu Klima, Konflikten im Team, Medienkompetenz oder Rollenbildern anfragen. Weitere Themen sind Ethik, Stressbewältigung, Selbstmanagement und Zukunftsplanung. Junge Trainer:innen arbeiten dabei mit den Lehrkräften zusammen.\n\nSchreib Anja Hofer (anja.hofer@forju.at), welches Thema euch interessiert. Frag sie nach einem Termin und den Kosten für eure Klasse. Im November 2024 waren die Seminare für die Schulstufen 1–9 über die Wiener Bildungschancen vollständig gefördert.",
+    "keywords": "schulworkshops workshops workshop schule schulen schulklassen wien lehrer bildungschancen school schools teacher teachers funding class lesson Unterricht Klasse Lehrkraft Klassenworkshop",
     "kind": "public-website",
     "sourceId": "https://forju.at/de/projects/schulworkshops",
     "sourceUrl": "https://forju.at/de/projects/schulworkshops",
     "sourceTitle": "Schulworkshops",
     "sourceYear": 2024,
-    "sourceSha256": "8fbddd30fc3ada53a447fe473524b7b310e239e2f37d355e7d878843c43067a2",
+    "sourceSha256": "433da5ef751ba0b0f367e7ffba2a0be46fbacd36e7fbcb0658b2e894979b800e",
     "sourceUpdatedAt": "2024-11-04T10:00:13.000+01:00",
     "lastReviewedAt": "2026-11-06",
     "nextReviewAt": "2026-12-06",
@@ -581,7 +581,7 @@
     "page": 0,
     "section": "Schulworkshops in Wien",
     "active": true,
-    "indexTitle": "forju-public:workshops:8fbddd30fc3a",
+    "indexTitle": "forju-public:workshops:433da5ef751b",
     "titleEn": "Vienna school workshops",
     "pricing": {
       "de": "Der Artikel von 2024 beschreibt eine Förderung für Wiener Schulen der Schulstufen 1 bis 9. Einen aktuellen Preis pro Kind nennt er nicht. Anja Hofer kann euch die Kosten für eure Klasse bestätigen.",
@@ -599,7 +599,7 @@
       "de": "Um einen Schulworkshop zu vereinbaren, schreib Anja Hofer an anja.hofer@forju.at und frag nach einem Termin für deine Klasse.",
       "en": "To arrange a school workshop, email Anja Hofer at anja.hofer@forju.at and ask about a date for your class."
     },
-    "contentEn": "Vienna schools can ask Anja Hofer (anja.hofer@forju.at) to arrange a class workshop, for example on climate, teamwork or media literacy. The November 2024 article described funding for grades 1–9 at that time. Ask Anja to confirm current costs and dates for your class."
+    "contentEn": "For your class in Vienna, you can ask about workshops on climate, team conflict, media literacy or gender roles. Other topics include ethics, managing stress, self-management and planning for the future. Young trainers work with teachers.\n\nEmail Anja Hofer (anja.hofer@forju.at) with the topic your class wants to explore. Ask her about dates and costs. In November 2024, Wiener Bildungschancen covered the full cost for grades 1–9."
   },
   {
     "id": "workshop-konflikte",

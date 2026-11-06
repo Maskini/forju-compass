@@ -28,23 +28,23 @@
   const wrap=el("div","dock",root), card=el("section","welcome",wrap);card.id="compass-welcome";
   image("forju-compass-logo.png","logo",card).alt="ForJu Compass";
   const dismiss=button("dismiss",card,()=>toggleWelcome(false));dismiss.textContent="×";
-  const heading=el("h2","",card);image("origami/pink-airplane.png","plane",card);
-  const intro=el("p","intro",card),note=el("p","notice",card),caption=el("h3","",card);
+  const heading=el("h2","",card);
+  const intro=el("p","intro",card),note=el("p","notice",card);
   const topics=["volunteer","projects","audience"];
   const entries=topics.map((topic,i)=>{
     const b=button("topic topic"+i,card,()=>open(topic));
     icon(["bulb","page","people"][i],el("span","mark",b));
     const label=el("span","",b);const arrow=el("span","arrow",b);arrow.textContent="→";return label;
   });
-  const start=button("start",card,()=>open());
+  const start=button("start fj-action",card,()=>open());
   const startLabel=el("span","",start);
   const go=el("span","",start);go.textContent="→";go.ariaHidden="true";
-  const launcher = button("launcher", wrap, () => {
+  const launcher = button("launcher fj-action", wrap, () => {
     if (dialog.open) closeChat();
     else if (started) open();
     else toggleWelcome(card.hidden);
   });
-  const hint=el("span","hint",launcher),seal=el("span","seal",launcher);
+  const seal=el("span","seal",launcher),hint=el("span","hint",launcher);
   image("compass-mark.webp","star",seal);
   const dialog=el("dialog","drawer",root);dialog.setAttribute("aria-label","ForJu Compass");
   dialog.id = "compass-conversation";
@@ -57,7 +57,7 @@
   const frame=el("iframe","",dialog);frame.title="ForJu Compass";frame.allow="clipboard-write";frame.referrerPolicy="no-referrer";
   const recovery=el("section","recovery",dialog);
   const status=el("p","",recovery);status.setAttribute("role","status");
-  const retry=button("start",recovery,loadFrame);
+  const retry=button("start fj-action",recovery,loadFrame);
   const contact=el("a","",recovery);contact.target="_blank";contact.rel="noopener noreferrer";
   let waitTimer;
   function loadFrame(){
@@ -93,22 +93,21 @@
     contact.href="https://forju.at/"+language()+"/kontakt";
     contact.textContent=en?"Contact ForJu":"ForJu kontaktieren";
     retry.textContent=en?"Try again":"Erneut versuchen";
-    heading.textContent=en?"Hello! I’m ForJu Compass":"Hallo! Ich bin ForJu Compass";
-    intro.textContent=en?"Your AI assistant for our services, projects and association.":"Dein KI-Assistent für Fragen rund um unsere Angebote, Projekte und den Verein.";
-    note.textContent=en?"ⓘ  I use AI to help you. Please leave out sensitive personal information.":"ⓘ  Ich nutze KI, um dir zu helfen. Bitte teile keine sensiblen personenbezogenen Daten mit mir.";
-    caption.textContent=en?"Frequently asked questions":"Häufige Fragen";
+    heading.textContent=en?"What would you like to do?":"Was möchtest du machen?";
+    intro.textContent=en?"Ask about a workshop, find support or tell us about your project idea.":"Frag nach einem Workshop, finde Unterstützung oder erzähl uns von deiner Projektidee.";
+    note.textContent=en?"Please keep confidential details out of the chat.":"Lass vertrauliche Angaben bitte aus dem Chat.";
     const labels=en?["How can I get involved?","What projects are there?","Who is ForJu for?"]:["Wie kann ich mich engagieren?","Welche Projekte gibt es aktuell?","Für wen ist ForJu?"];
     entries.forEach((label,i)=>{label.textContent=labels[i];});
     startLabel.textContent=en?"Open chat":"Chat öffnen";
-    hint.textContent=en?"Questions? I’m here to help!":"Fragen? Ich bin für dich da!";
     updateControls();
     close.ariaLabel=en?"Close chat":"Chat schließen";dismiss.ariaLabel=en?"Dismiss welcome":"Begrüßung schließen";
   }
   function updateControls() {
     const en = language() === "en";
     const draft = dialog.hasAttribute("data-draft");
-    resize.hidden = phone.matches || draft;
-    close.hidden = draft;
+    const report = dialog.hasAttribute("data-report");
+    resize.hidden = phone.matches || draft || report;
+    close.hidden = draft || report;
     const resizeLabel = expanded
       ? (en ? "Restore compact chat" : "Chat verkleinern")
       : (en ? "Expand chat" : "Chat vergrößern");
@@ -121,8 +120,8 @@
     const launcherLabel = dialog.open ? (en ? "Minimize chat" : "Chat minimieren")
       : started ? (en ? "Resume chat" : "Chat fortsetzen")
       : (en ? "ForJu Compass: chat assistance" : "ForJu Compass: Chathilfe");
-    hint.hidden = dialog.open || !card.hidden;
-    launcher.setAttribute("aria-label", hint.hidden ? launcherLabel : launcherLabel + " — " + hint.textContent);
+    hint.textContent = dialog.open ? (en ? "Minimize" : "Minimieren") : "ForJu Compass";
+    launcher.setAttribute("aria-label", launcherLabel);
     launcher.title = launcherLabel;
   }
   function toggleWelcome(show) {
@@ -183,6 +182,10 @@
   });
   window.addEventListener("message",event=>{
     if(event.origin!==origin||event.source!==frame.contentWindow)return;
+    if(event.data?.type==="forju:report" && dialog.open && typeof event.data.open==="boolean"){
+      dialog.toggleAttribute("data-report",event.data.open);
+      updateControls();
+    }
     if(event.data?.type==="forju:draft" && dialog.open && typeof event.data.open==="boolean"){
       dialog.toggleAttribute("data-draft",event.data.open);
       applyLayout();

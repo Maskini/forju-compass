@@ -1,54 +1,86 @@
-:host{all:initial;color-scheme:light;font:15px/1.45 system-ui,sans-serif;color:#30232a}
-*,*::after,*::before{box-sizing:border-box}
-[hidden]{display:none!important}
-button{font:inherit;color:inherit;cursor:pointer;border:0}
-button:focus-visible{outline:3px solid #aa176b;outline-offset:3px}
-.dock{position:fixed;right:max(18px,env(safe-area-inset-right));bottom:max(18px,env(safe-area-inset-bottom));z-index:120;display:grid;justify-items:end;gap:12px;pointer-events:none}
-.dock>*{pointer-events:auto}
-.welcome{position:relative;overflow:auto;width:min(340px,calc(100vw - 28px));max-height:calc(100dvh - 106px);padding:22px;border-radius:22px;background:linear-gradient(#fffaf6e8,#fffaf6e8),url('/forju/paper-fiber-cream.webp');box-shadow:0 8px 28px #3d232032,0 1px 4px #32202124;border:1px solid #e9dfd6}
-.logo{display:block;width:72%;height:auto;margin-bottom:19px}
-.dismiss,.close,.resize{width:34px;height:34px;border-radius:50%;font:24px/1 system-ui;background:transparent;color:#796d70;position:absolute;top:9px;right:8px}
-h2{font-size:24px;letter-spacing:-.04em;line-height:1.1;margin:0 35% 7px 0}
-.plane{position:absolute;width:34px;right:27%;top:89px;transform:rotate(-12deg)}
-p{margin:0}.intro{font-size:14px}.notice{background:#eeecf0;font-size:12px;border-radius:9px;padding:10px 12px;margin:12px 0}
-h3{font-size:14px;margin:10px 0 6px}
-.topic,.start{display:flex;gap:9px;align-items:center;width:100%;min-height:37px;border-radius:11px;font-size:13px;text-align:left;margin-top:5px;padding:6px 10px;background:#f8e5ee}
-.topic1{background:#f9ebdf}.topic2{background:#e9f0e3}
-.mark{font-size:18px;color:#8e205f}.arrow{margin-left:auto}.start{justify-content:center;border-radius:24px;color:#8b1759;background:#f0c6da;font-weight:650;margin-top:12px}
-.launcher{display:flex;align-items:center;gap:12px;background:transparent;padding:0}.hint,.seal{background:#fffaf7;box-shadow:0 3px 12px #32202138;border:1px solid #e6dcd4}
-.hint{font-size:12px;font-weight:600;max-width:120px;text-align:left;border-radius:13px;padding:7px 11px}.seal{position:relative;display:grid;place-items:center;width:58px;height:58px;border-radius:50%}
-.star{display:block;width:70%;height:auto}.seal::after{content:"";position:absolute;right:0;top:-2px;width:12px;height:12px;border-radius:50%;background:#e95196;border:2px solid white}
-.drawer{position:fixed;inset:auto max(18px,env(safe-area-inset-right)) calc(max(18px,env(safe-area-inset-bottom)) + 70px) auto;z-index:121;margin:0;width:360px;height:min(646px,calc(100dvh - 100px));max-height:none;max-width:100vw;border:1px solid #e4d9d1;border-radius:22px;background:#fcf8f2;box-shadow:0 10px 44px #291a2436;padding:0;overflow:hidden}
-.drawer::backdrop{background:#241b2359}.drawer iframe{display:block;width:100%;height:100%;border:0}.resize,.close{z-index:2;background:#f7ece5;color:#903b28;box-shadow:0 2px 3px #38252a24}
-@media(max-width:640px){.drawer{inset:0;width:100vw;height:100dvh;border:0;border-radius:0}.dock{right:12px;bottom:max(12px,env(safe-area-inset-bottom))}.welcome{width:min(268px,calc(100vw - 24px));padding:15px}.welcome h2{font-size:20px}.logo{margin-bottom:12px}.welcome .notice,.welcome h3,.topic2{display:none}.plane{top:65px}.hint{max-width:108px}.close{top:max(9px,env(safe-area-inset-top))}}
-:host{font-family:var(--font-public-sans,'ForJu Public Sans',system-ui),sans-serif;color:#2d1e1e}
-.welcome{background:linear-gradient(#fffaf6dd,#fffaf6dd),url('/forju/paper-fiber-cream.webp') center/200px;box-shadow:inset 0 1px 1px white,0 3px 6px #2d1e1e26,0 12px 38px #2d1e1e1a}
-h2,h3,.start{font-family:var(--font-space-grotesk,'ForJu Space Grotesk',system-ui),sans-serif}
-.mark{width:20px;height:20px;flex:none}.mark svg{display:block;width:100%;height:100%}.topic1 .mark{color:#9a3412}.topic2 .mark{color:#1e6b41}
-.topic,.start,.dismiss,.close,.resize,.seal{transition:box-shadow .16s,color .16s,background-color .16s,border-color .16s}
-.start{background:#f1ccde;color:#861456;box-shadow:inset 0 1px #fff9,0 2px 3px #2d1e1e28}
-.hint{position:relative;padding-right:25px;background:#fffaf6 url('/forju/origami/pink-airplane.png') right 5px center/18px auto no-repeat}
-/* Color the existing edge so hover never moves the label or its neighbours. */
-.topic,.start{border:1px solid transparent}
-@media(hover:hover) and (pointer:fine){
-  .topic:hover,.start:hover{border-color:#a12968;color:#77174e}
-  .dismiss:hover,.close:hover,.resize:hover{background:#f5d6e5;color:#77174e}
-  .launcher:hover .seal{box-shadow:0 3px 12px #32202150}
-  .launcher:not(:hover):not(:focus-visible) .hint{display:none}
-}
-.welcome{overscroll-behavior:contain}
-.resize{right:48px;display:grid;place-items:center;padding:0}
-.resize svg{width:18px;height:18px}
-.drawer[data-expanded]{inset:auto 0 18px;margin-inline:auto;width:min(1160px,calc(100vw - 48px));height:min(80dvh,900px)}
-@media(prefers-reduced-motion:no-preference){
-  .welcome:not([hidden]),.drawer[open]{animation:compass-appear .16s ease-out}
-  @keyframes compass-appear{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
-}
-@media(prefers-reduced-motion:reduce){button,.seal{transition:none}}
+@import url("./compass-controls.css");
 
-:host{display:contents}
-:host([hidden]){display:none}
-.recovery{padding:64px 24px 24px;color:#2d1e1e}
-.recovery .start{max-width:180px}.recovery a{display:inline-block;margin-top:12px;color:#861456}
-
-@media(min-width:641px){.drawer[data-draft]{inset:0;margin:auto;width:min(1240px,calc(100vw - 40px));height:min(860px,calc(100dvh - 40px))}}
+:host {
+  all: initial;
+  display: contents;
+  color-scheme: light;
+  color: #2d1e1e;
+  font: 400 16px/1.5 'Public Sans', 'ForJu Public Sans', Arial, sans-serif;
+  letter-spacing: .025em;
+}
+*, *::before, *::after { box-sizing: border-box; }
+:host([hidden]), [hidden] { display: none !important; }
+button { font: inherit; color: inherit; border: 0; cursor: pointer; }
+button:focus-visible, a:focus-visible { outline: 3px solid #ff3aae; outline-offset: 2px; }
+.dock {
+  position: fixed;
+  right: max(20px, env(safe-area-inset-right));
+  bottom: max(20px, env(safe-area-inset-bottom));
+  z-index: 30;
+  display: grid;
+  justify-items: end;
+  gap: 12px;
+  pointer-events: none;
+}
+.dock > * { pointer-events: auto; }
+.launcher { gap: 8px; padding: 8px 18px 8px 13px; min-height: 46px; }
+.seal, .star { display: block; width: 30px; height: 30px; object-fit: contain; }
+.welcome, .drawer {
+  color: #2d1e1e;
+  background: linear-gradient(#fffaf6d9,#fffaf6d9), #fcf8f2 url('/forju/paper-fiber-cream.webp') repeat 0 0 / 220px;
+  box-shadow: inset 0 1px #fffc, 0 3px 6px #2d1e1e29, 0 14px 36px #2d1e1e24;
+  border: 1px solid #2d1e1e20;
+  border-radius: 20px;
+}
+.welcome {
+  position: relative; overflow: auto; overscroll-behavior: contain;
+  width: min(360px, calc(100vw - 28px)); max-height: calc(100dvh - 96px); padding: 22px;
+}
+.logo { display: block; width: 178px; max-width: 75%; height: auto; }
+.welcome h2 { font: 700 26px/1.15 'Space Grotesk','ForJu Space Grotesk',Arial,sans-serif; letter-spacing: -.02em; margin: 18px 0 8px; }
+.welcome p { margin: 0; }
+.intro { font-size: 15px; line-height: 1.5; }
+.welcome .notice { margin-top: 8px; color: #695959; font-size: 13px; }
+.topic {
+  display: flex; align-items: center; gap: 10px; width: 100%; min-height: 44px; padding: 9px 2px;
+  background: transparent; text-align: start; font-size: 14px; font-weight: 600;
+  border-bottom: 1px solid #2d1e1e20;
+}
+.topic:first-of-type { margin-top: 10px; }
+.topic:hover { color: #861456; }
+.mark { display: grid; place-items: center; color: #861456; }
+.mark svg, .resize svg { width: 18px; height: 18px; }
+.topic1 .mark { color: #9a3412; }
+.topic2 .mark { color: #1e6b41; }
+.arrow { margin-left: auto; }
+.start { width: 100%; margin-top: 14px; }
+.drawer {
+  position: fixed; inset: auto max(20px, env(safe-area-inset-right)) calc(max(20px, env(safe-area-inset-bottom)) + 58px) auto;
+  z-index: 31; margin: 0; padding: 0; width: min(430px, calc(100vw - 36px));
+  height: min(730px, calc(100dvh - 100px)); max-width: none; max-height: none; overflow: hidden;
+}
+.drawer::backdrop { background: #2d1e1e55; }
+.drawer iframe { display: block; width: 100%; height: 100%; border: 0; }
+.dismiss, .close, .resize {
+  position: absolute; top: 8px; right: 8px; z-index: 2; display: grid; place-items: center; width: 44px; height: 44px;
+  border-radius: 14px; background: transparent; color: #614b4b; font: 24px/1 Arial,sans-serif;
+}
+.resize { right: 52px; }
+.dismiss:hover, .close:hover, .resize:hover { background: #f5e4ea; color: #861456; }
+.drawer[data-expanded] { inset: auto 0 18px; margin-inline: auto; width: min(1160px,calc(100vw - 48px)); height: min(80dvh,900px); }
+.recovery { padding: 64px 24px 24px; }
+.recovery .start { max-width: 180px; }
+.recovery a { display: block; margin-top: 12px; color: #861456; }
+@media(min-width:641px) {
+  .drawer[data-draft] { inset: 0; margin: auto; width: min(1240px,calc(100vw - 40px)); height: min(860px,calc(100dvh - 40px)); }
+}
+@media(max-width:640px) {
+  .dock { right: max(12px,env(safe-area-inset-right)); bottom: max(12px,env(safe-area-inset-bottom)); }
+  .drawer { inset: 0; height: 100dvh; width: 100%; border: 0; border-radius: 0; }
+  .welcome { width: min(324px, calc(100vw - 24px)); padding: 18px; }
+  .close { top: max(8px, env(safe-area-inset-top)); }
+}
+@media(prefers-reduced-motion:no-preference) {
+  .welcome:not([hidden]), .drawer[open] { animation: compass-appear 150ms ease-out; }
+  @keyframes compass-appear { from { opacity: 0; translate: 0 4px; } }
+}

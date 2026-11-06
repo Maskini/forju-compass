@@ -1,45 +1,76 @@
-.embed-panel{display:grid;grid-template-rows:auto minmax(0,1fr) auto auto auto;height:100dvh;color:#35272a;background:linear-gradient(#fffaf5e8,#fffaf5e8),url('/forju/paper-fiber-cream.webp');font:15px/1.4 'ForJu Public Sans',sans-serif;--pad:clamp(14px,4vw,28px)}
-.embed-panel header{position:relative;padding:18px 48px 12px var(--pad)}.embed-panel header img{width:min(70%,290px);height:auto}.embed-panel header p{margin:0 0 0 12%;font-size:12px;color:#65555c}.embed-panel .lang{position:absolute;right:12px;top:12px}
-.embed-panel button,.embed-panel a{transition:background-color .16s,box-shadow .16s}.embed-panel button:not(:disabled){cursor:pointer}.embed-panel button:disabled{opacity:.6}.embed-panel :focus-visible{outline:3px solid #a11c62;outline-offset:2px}
-.embed-log{padding:12px var(--pad) 16px;overflow:auto;overscroll-behavior:contain;overflow-wrap:anywhere}
-.greeting{position:relative}.greeting>img{position:absolute;right:0;top:0;width:13%;transform:rotate(-15deg)}.greeting h1{font:700 clamp(26px,6vw,36px)/1.2 'ForJu Space Grotesk',sans-serif;margin:4px 0}.greeting>p{max-width:85%;margin:0;color:#59494d}.greeting h2{margin:14px 0 4px;font-size:12px;color:#655b5e}.suggestions{display:grid;grid-template-columns:1fr 1fr;gap:7px}
-.suggestions button{display:flex;align-items:center;gap:7px;text-align:left;font:inherit;font-size:clamp(11px,2.8vw,14px);border:1px solid #e8dcd4;border-radius:13px;padding:8px;color:inherit;background:#fff9f3;box-shadow:0 2px 3px #49352e16}.suggestions b{margin-left:auto;color:#92415f;font-size:18px}.embed-panel i{display:grid;place-items:center;font-style:normal;flex-shrink:0}.suggestions i,.embed-panel aside i{width:32px;height:32px;border-radius:10px;background:#f9d7e8;color:#a22469}.suggestions .volunteer i{background:#dcebfa;color:#316ba4}.suggestions .funding i,.embed-panel aside i{background:#dcead9;color:#40784b}.suggestions .idea i{background:#ffe4cb;color:#984c24}.embed-panel svg{width:20px;height:20px}
-.embed-log article{margin-top:18px}.question-bubble,.response{display:flex;align-items:flex-start;gap:8px}.question-bubble{justify-content:flex-end;margin:12px 0}.question-bubble p,.response>div{max-width:85%;margin:0;padding:10px 14px;border-radius:16px;background:#f6dfe9}.question-bubble i,.compass-avatar{height:34px;width:34px;border-radius:50%;background:#f6dfe9;color:#9e2468}.response>div{background:#f2eae3}.response p,.question-bubble p{white-space:pre-line;margin:0}.response small{display:block;margin-top:6px;font-size:10px;color:#63585a}.compass-avatar{background:#fffaf4 url('/forju/compass-mark.webp') center/74% no-repeat;box-shadow:0 1px 4px #54372626}
-.read-more{display:flex;flex-wrap:wrap;gap:5px;margin:6px 0 0 42px}.read-more a,.embed-panel aside a{color:#861951;background:#fae8ef;text-decoration:none;border-radius:12px;padding:5px 9px;font-size:12px}.read-more a:hover,.embed-panel aside a:hover{text-decoration:underline}
-.embed-panel aside{display:flex;align-items:center;gap:8px;background:#eaf0e2;border:1px solid #e3e4d9;border-radius:15px;margin:5px var(--pad);padding:9px}.embed-panel aside strong,.embed-panel aside span{display:block;font-size:12px}.embed-panel aside a{margin-left:auto;white-space:nowrap;background:#f2cee0;font-weight:600}
-.panel-report {
+.embed-panel {
+  --pad: clamp(14px, 4vw, 24px);
+  height: 100dvh;
+  min-height: 0;
   display: grid;
-  justify-items: center;
-  align-items: center;
+  grid-template-rows: auto minmax(0,1fr) auto auto auto;
+  background: linear-gradient(#fffaf6d9,#fffaf6d9), #faf6ef url('/forju/paper-fiber-cream.webp') center / 220px;
+  color: #2d1e1e;
+  font: 400 16px/1.5 'ForJu Public Sans', Arial, sans-serif;
+  letter-spacing: .02em;
 }
-.panel-report .report-inline {
-  margin: 0;
-  min-height: 36px;
+.embed-panel > header {
+  position: relative; display: flex; align-items: center; min-height: 60px; padding: 12px 102px 12px var(--pad);
+  border-bottom: 1px solid #2d1e1e18; background: #fffcf7b3;
 }
-.embed-panel > form{padding:10px var(--pad) max(12px,env(safe-area-inset-bottom));background:linear-gradient(135deg,#e9ead8 5px,transparent 0) 0 bottom/14px 7px repeat-x}
-.composer{display:flex;align-items:center;gap:6px;background:#fffaf7;border:1px solid #dbceca;border-radius:23px;padding:5px;box-shadow:0 2px 5px #34272210}
-.composer input[type=text]{min-width:0;flex:1;border:0;background:transparent;font:inherit;color:inherit;font-size:14px;padding:8px 0}.composer button,.embed-panel .lang{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;background:transparent}.composer .send{background:#f4d2e3;color:#99215d}.embed-panel > form>small{display:block;text-align:center;font-size:10px;color:#64595d;margin:7px 0 0}
-@media(max-width:450px){.embed-panel aside span{display:none}.embed-panel aside i{width:26px;height:26px}.embed-panel .suggestions button{background:#faeaf2}.embed-panel .suggestions .volunteer{background:#e9f2fa}.embed-panel .suggestions .funding{background:#edf4e9}.embed-panel .suggestions .idea{background:#fcf0e5}.response>div{background:#fffdf9;box-shadow:0 2px 6px #39202018}}
-@media(max-height:440px){.embed-panel header p,.embed-panel aside{display:none}.embed-panel{grid-template-rows:auto minmax(0,1fr) auto auto}.embed-panel header img{max-height:32px;width:auto}}
-.embed-log time{display:block;text-align:right;font-size:10px;color:#796d70}
-.next-step{display:inline-block;margin:10px 0 0 42px;font-size:13px;font-weight:650;color:#861951;text-decoration:underline;text-underline-offset:.2em}
-@media(max-width:450px) and (min-height:620px){.embed-log{background:linear-gradient(transparent 78%,#d8e6d766),url('/forju/origami/orange-airplane.png') right 18px bottom 8px/42px auto no-repeat}.embed-log article{position:relative}}
-.embed-panel{color:#2d1e1e;background-size:auto,200px}
-.read-more{display:grid}.read-more a{display:flex;align-items:center;gap:9px;width:fit-content;max-width:100%;background:#fffaf6;border:1px solid #e5dcd3;border-radius:12px;color:#2d1e1e;box-shadow:0 2px 3px #2d1e1e12;padding:8px 12px}.read-more strong,.read-more small{display:block}.read-more small{color:#736766}.read-more svg,.read-more b{color:#861456;flex:none}
-@media(hover:hover) and (pointer:fine){
-  .embed-panel .suggestions button:not(:disabled):hover,.embed-panel .read-more a:hover{color:#77174e;border-color:#a12968}
-  .embed-panel aside a:hover,.composer button:not(:disabled):hover{color:#77174e;background-color:#f5d6e5}
+.embed-panel > header img { width: min(100%, 206px); height: auto; }
+.embed-panel .lang { position: absolute; right: 10px; top: 8px; width: 44px; height: 44px; color: #861456; font-weight: 700; }
+.embed-panel :focus-visible { outline: 3px solid #ff3aae; outline-offset: 2px; }
+.embed-panel button:disabled { opacity: .55; }
+.embed-panel svg { width: 20px; height: 20px; }
+.embed-log { padding: 16px var(--pad); overflow: auto; overscroll-behavior: contain; overflow-wrap: anywhere; scroll-padding: 12px; }
+.greeting { position: relative; padding-block: 4px; }
+.greeting > img { position: absolute; right: 0; top: 3px; width: 42px; }
+.greeting h1, .greeting h2 { font-family: 'ForJu Space Grotesk', Arial, sans-serif; }
+.greeting h1 { max-width: calc(100% - 48px); font-size: clamp(26px,5vw,34px); line-height: 1.12; letter-spacing: -.02em; margin: 0 0 10px; }
+.greeting p { margin: 0; color: #655555; }
+.greeting h2 { font-size: 16px; line-height: 24px; margin: 20px 0 6px; }
+.suggestions { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(225px,100%),1fr)); column-gap: 14px; }
+.suggestions button {
+  display: flex; gap: 10px; align-items: center; min-height: 44px; padding: 8px 2px;
+  border-bottom: 1px solid #2d1e1e22; text-align: start; font: 600 14px/1.45 'ForJu Public Sans',Arial,sans-serif;
 }
-.widget-mode header img{max-width:calc(100% - 36px)}
-@media(max-width:450px) and (min-height:620px){.embed-log{background:none}
-  .panel-report {
-    min-height: 44px;
-    background: url('/forju/origami/pink-airplane.png') right 8% top 1px/29px auto no-repeat,
-                url('/forju/origami/compass-landscape.svg') center bottom/100% 100% no-repeat;
-  }
-  .panel-report .report-inline { min-height: 44px; }
-  .embed-panel > form { padding-top: 0; background: linear-gradient(#bed3ba, #e9efdf); }
+.suggestions b { margin-left: auto; color: #861456; }
+.embed-panel i { flex: none; display: grid; place-items: center; font-style: normal; }
+.suggestions i { color: #861456; }
+.suggestions .volunteer i { color: #2f6598; }
+.suggestions .funding i { color: #286d46; }
+.suggestions .idea i { color: #965025; }
+.embed-log article { margin: 18px auto; max-width: 78ch; }
+.question-bubble, .response { display: flex; align-items: flex-start; gap: 8px; }
+.question-bubble { justify-content: flex-end; margin: 0 0 14px; }
+.question-bubble p, .response > div { margin: 0; padding: 12px 15px; border-radius: 16px; overflow-wrap: anywhere; }
+.question-bubble p { background: #f5deea; max-width: 88%; border-bottom-right-radius: 4px; }
+.response > div { min-width: 0; background: #fffcf8; border: 1px solid #2d1e1e18; border-top-left-radius: 4px; }
+.response p, .question-bubble p { white-space: pre-line; }
+.response p { margin: 0; }
+.question-bubble i { display: none; }
+.compass-avatar { width: 30px; height: 30px; margin-top: 4px; border-radius: 50%; background: #fffcf8 url('/forju/compass-mark.webp') center/78% no-repeat; box-shadow: 0 1px 3px #2d1e1e21; }
+.read-more { display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0 0 38px; }
+.read-more a { max-width: 100%; }
+.answer-meta { display: flex; align-items: center; gap: 12px; justify-content: space-between; margin-left: 38px; }
+.answer-meta time { color: #6b5959; font-size: 12px; }
+.embed-panel .report-answer { margin: 0; padding-inline: 0; }
+.next-step, .embed-log [role=alert] a { display: inline-block; margin: 8px 0; color: #861456; font-weight: 650; text-decoration: underline; text-underline-offset: .17em; }
+.embed-panel > aside { display: flex; align-items: center; gap: 10px; margin: 4px var(--pad) 0; padding: 8px 10px; background: #e7eee6; border-radius: 14px; }
+.embed-panel aside i { color: #286d46; }
+.embed-panel aside strong { display: block; font-size: 14px; line-height: 20px; }
+.embed-panel aside span { display: block; font-size: 13px; }
+.embed-panel aside a { flex: none; margin-left: auto; min-height: 36px; padding: 6px 12px; font-size: 14px; }
+.panel-report { display: grid; justify-items: center; }
+.panel-report .report-inline { margin: 0; min-height: 36px; }
+.embed-panel > form { padding: 0 var(--pad) max(10px,env(safe-area-inset-bottom)); }
+.composer { display: flex; align-items: center; padding: 3px; gap: 4px; }
+.composer:focus-within { outline: 2px solid #c12379; outline-offset: 2px; }
+.composer input[type=text] { min-width: 0; flex: 1; background: transparent; border: 0; font: inherit; padding: 7px 0; }
+.composer input[type=text]:focus { outline: none; }
+.composer button { flex: none; display: grid; place-items: center; min-height: 42px; width: 42px; padding: 0; border-radius: 10px; }
+.embed-panel > form > small { display: block; margin-top: 6px; text-align: center; color: #6c5c5c; font-size: 11px; line-height: 15px; }
+@media(hover:hover) { .suggestions button:hover { color: #861456; } }
+@media(max-width:640px) { .embed-panel aside span { display: none; } }
+@media(max-height:500px) {
+  .embed-panel { grid-template-rows: auto minmax(0,1fr) auto auto; }
+  .embed-panel > aside { display: none; }
+  .embed-panel > header { min-height: 52px; }
+  .embed-panel > form > small { display: none; }
 }
-
-@media(max-width:640px){.composer input[type=text]{font-size:16px}}
-.embed-log [role=alert] a{color:#861456;text-decoration:underline}

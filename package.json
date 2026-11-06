@@ -11,7 +11,8 @@
     "test:visitors": "npm --prefix tools/visitor-checks test",
     "test:release": "bash tools/release/run.sh",
     "check:release": "npm run lint && npm test && npm run build && npm run test:visitors",
-    "knowledge:import": "node scripts/import-knowledge.mjs"
+    "knowledge:import": "node scripts/import-knowledge.mjs",
+    "preview:forju": "npm run build && node tools/visitor-checks/preview-forju.mjs"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.116.0",

@@ -73,3 +73,17 @@ device’s Copy command. Send requests delivery using the configured project sen
 If the sender is unavailable, Compass keeps the draft in the current tab.
 
 The draft follows six optional steps: idea and goals, audience, implementation, resources, impact, and review. Closing the draft returns to the conversation; reopening resumes the same step. No account or browser storage is used for project details. Only a layout toggle (no draft content) is sent to the host widget to expand its desktop dialog.
+
+## Review the design inside the ForJu website
+
+For a browser-only installation, use Node 24 and Google Chrome. From this checkout run:
+
+```sh
+npm ci
+npm ci --prefix tools/visitor-checks
+npm run preview:forju
+```
+
+The command builds Compass, starts a temporary local-only server on loopback port 4262, and opens the public German school-workshop article in a fresh Chrome window. Only that window loads the local widget. Open **ForJu Compass** at the bottom right. Follow ForJu links within this window to view other pages. The preview prevents external writes and project or report deliveries. Close the window to stop the preview. For the phone layout run `npm run preview:forju -- --phone`.
+
+For paired screenshots, run `npm run preview:forju -- before` against the baseline and `npm run preview:forju -- after` against the candidate; use this version of the two preview scripts with both builds. Alternatively point `COMPASS_DESIGN_ORIGIN` at a known local-only build and run `node tools/visitor-checks/design-preview.mjs after`. The screenshots and interaction checks go in `work/design-review/`. Phone checks keep the screen size constant and emulate a reduced viewport. Verify the operating system's keyboard on a physical phone before a public install.

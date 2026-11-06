@@ -34,11 +34,15 @@ export default function FeedbackWidget({language, ready, inline=false, ref}: {
     if (gap) document.body.style.paddingRight = `${gap}px`;
     restoreScroll.current = () => { document.body.style.overflow = previous; document.body.style.paddingRight = previousPadding; restoreScroll.current = null; };
     dialog.current.showModal();
+    if (inline && parent !== window) parent.postMessage({type:"forju:report",open:true},"*");
     dialog.current.querySelector<HTMLButtonElement>(".feedback-close")?.focus();
   }
-  function closed() { restoreScroll.current?.(); opener.current?.focus({preventScroll:true}); }
+  function closed() {
+    if (inline && parent !== window) parent.postMessage({type:"forju:report",open:false},"*");
+    restoreScroll.current?.(); opener.current?.focus({preventScroll:true});
+  }
   return <>
-    <button ref={trigger} type="button" disabled={!ready} className={inline?"report-inline":"feedback-launcher"} onClick={()=>open()} aria-haspopup="dialog" aria-controls="feedback-drawer">
+    <button ref={trigger} type="button" disabled={!ready} className={inline?"report-inline":"feedback-launcher fj-action"} onClick={()=>open()} aria-haspopup="dialog" aria-controls="feedback-drawer">
       {t("Problem melden", "Report a problem")}
     </button>
     <dialog ref={dialog} id="feedback-drawer" className="feedback-drawer" aria-labelledby="feedback-title" aria-describedby="feedback-subtitle" onClose={closed} onCancel={event => { event.preventDefault(); dialog.current?.close(); }} onKeyDown={event => {
@@ -53,8 +57,8 @@ export default function FeedbackWidget({language, ready, inline=false, ref}: {
         <span className="feedback-report-badge"><ReportIcon /></span>
         <button type="button" className="feedback-close" aria-label={inline ? t("Zurück zum Chat", "Back to chat") : t("Feedback schließen", "Close feedback")} onClick={() => dialog.current?.close()}>{inline ? t("Zurück zum Chat", "Back to chat") : <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true"><path d="m6 6 12 12M6 18 18 6"/></svg>}</button>
       </div>
-      <h2 id="feedback-title">{t("Problem oder Feedback melden", "Report a problem or feedback")}</h2>
-      <p id="feedback-subtitle">{t("Hilf uns, ForJu Compass noch besser zu machen. Deine Rückmeldung zählt.", "Help us make ForJu Compass even better. Your feedback matters.")}</p>
+      <h2 id="feedback-title">{t("Problem melden", "Report a problem")}</h2>
+      <p id="feedback-subtitle">{t("Was ist dir aufgefallen? Beschreibe kurz, was wir verbessern können.", "What happened? Tell us what we can improve.")}</p>
       <FeedbackForm key={formVersion} language={language} exchange={exchange} onAccepted={()=>{accepted.current=true}} />
     </dialog>
   </>;
