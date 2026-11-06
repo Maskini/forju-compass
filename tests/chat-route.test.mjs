@@ -6,6 +6,8 @@ import ts from 'typescript';
 import * as chat from '../lib/chat.ts';
 import {guidedReply,isGuidedPrompt} from '../lib/dialogue.ts';
 import {visitorEnquiry} from '../lib/visitor-enquiry.ts';
+import * as visitorGuidance from '../lib/visitor-guidance.ts';
+import * as workshopGuide from '../lib/workshop-guide.ts';
 import * as conversation from '../lib/conversation.ts';
 
 const catalog = JSON.parse(readFileSync(new URL('../knowledge/catalog.json',import.meta.url),'utf8'));
@@ -20,7 +22,7 @@ function setup({matches=[],searchError=null,answer=JSON.stringify({paragraphs:[{
     embeddings={create:async (input)=>{calls.embeddings.push(input);return {data:[{embedding:[0.1]}]};}};
     responses={create:async (input)=>{calls.responses.push(input);return {status,output_text:answer};}};
   }
-  const modules={"@/lib/visitor-enquiry":{visitorEnquiry},"@/lib/dialogue":{guidedReply,isGuidedPrompt},"@/lib/conversation":conversation,"@/lib/server/ai-limit":{takeAiRequest:()=>0},openai:{default:OpenAI},'next/server':{NextResponse:Response},'@/lib/chat':chat,'@/lib/knowledge':knowledgeModule,'@/lib/server/public-retrieval':{retrievePublicKnowledge:async()=>{if(searchError)throw Error('Search failed');return matches;}}};
+  const modules={"@/lib/visitor-guidance":visitorGuidance,"@/lib/workshop-guide":workshopGuide,"@/lib/visitor-enquiry":{visitorEnquiry},"@/lib/dialogue":{guidedReply,isGuidedPrompt},"@/lib/conversation":conversation,"@/lib/server/ai-limit":{takeAiRequest:()=>0},openai:{default:OpenAI},'next/server':{NextResponse:Response},'@/lib/chat':chat,'@/lib/knowledge':knowledgeModule,'@/lib/server/public-retrieval':{retrievePublicKnowledge:async()=>{if(searchError)throw Error('Search failed');return matches;}}};
   const exports={};
   new Function('require','exports',compiled)((id)=>modules[id],exports);
   return {POST:exports.POST,calls};
@@ -388,4 +390,94 @@ test('two misses offer a way out instead of cycling through the same clarificati
   assert.match(team.answer,/office@forju\.at/);
   assert.equal(team.sources[0].url,'https://forju.at/de/kontakt');
   assert.deepEqual(v.calls,{embeddings:[],responses:[]});
+});
+
+test('support enquiries answer the requested detail and cite a page the visitor can act on', async () => {
+  const cases=JSON.parse(readFileSync(new URL('../tools/knowledge-checks/support-questions.json',import.meta.url)));
+  for (const [lang,question,path,content] of cases) {
+    const v=visitor(lang), r=await v.ask(question);
+    if (path==='choices') {
+      assert.equal(r.mode,'conversation',question);
+      assert.match(r.suggestions.join(' '),/spend|donat/i);assert.match(r.suggestions.join(' '),/ehrenamt|volunt/i);
+    } else if (path==='no-evidence') assert.deepEqual(r.sources,[],question);
+    else {
+      assert.ok(r.sources.some(s=>s.url==='https://forju.at/'+lang+path),question);
+      assert.match(r.answer,new RegExp(content,'i'),question);
+    }
+    assert.deepEqual(v.calls,{embeddings:[],responses:[]});
+  }
+});
+
+test('teachers can describe the situation without knowing the official workshop title',async()=>{
+  const cases=JSON.parse(readFileSync(new URL('../tools/knowledge-checks/classroom-questions.json',import.meta.url)));
+  for (const [lang,question,id] of cases) {
+    const r=await visitor(lang).ask(question);
+    assert.equal(r.topic??null,id,question);
+    if (id) {
+      assert.ok(r.sources.some(s=>s.url==='https://forju.at/'+lang+'/projects/schulworkshops'),question);
+      const card=catalog.find(c=>c.id===id);
+      assert.ok(r.answer.includes(lang==='en' ? card.contentEn : card.content),question);
+    } else assert.deepEqual(r.sources,[],question);
+  }
+});
+
+test('two classroom needs give a choice; both numbered and named replies reach the right workshop contact',async()=>{
+  for(const lang of ['de','en']) {
+    const en=lang==='en', v=visitor(lang);
+    const r=await v.ask(en?'Our pupils are arguing and sharing fake news online. Which session would fit?':'Unsere Klasse hat Zoff und Probleme mit Falschmeldungen. Was habt ihr dazu?');
+    assert.equal(r.mode,'conversation');assert.equal(r.suggestions.length,2);assert.deepEqual(r.sources,[]);
+    const choice=await v.ask(en?'the second one':r.suggestions[1]);
+    assert.equal(choice.topic,'workshop-medien');assert.match(choice.answer,/TikTok/);
+    const contact=await v.ask(choice.suggestions[0]);
+    assert.match(contact.answer,/anja\.hofer@forju\.at/);
+    assert.equal(contact.sources[0].url,'https://forju.at/'+lang+'/projects/schulworkshops');
+    assert.deepEqual(v.calls,{embeddings:[],responses:[]});
+  }
+});
+
+test('a supporting organisation gets its partnership form and an editable offer, while a borrower gets the loan form',async()=>{
+  const v=visitor('en');
+  const menu=await v.ask('How can I support ForJu?');
+  assert.equal(menu.suggestions.length,3);
+  const partner=await v.ask('the second one');
+  assert.equal(partner.topic,'partnerpool');
+  assert.ok(partner.sources.some(s=>s.url.endsWith('intent=partner')));
+  await v.ask('Our lab could lend microscopes to local schools.');
+  const draft=await v.ask('Could you draft an email?');
+  assert.equal(draft.mode,'draft');assert.equal(draft.recipient,'alexander.bayer@forju.at');
+  assert.match(draft.answer,/offer microscopes/);assert.doesNotMatch(draft.answer,/like to borrow/);
+  assert.ok(draft.sources.some(s=>s.url.endsWith('intent=partner')));
+  const other=await v.ask('Can our students borrow a microscope?');
+  assert.equal(other.topic,'ressourcen');assert.ok(other.sources.some(s=>s.url.endsWith('thema=ressourcen')));
+});
+
+test('campaign goals stay distinct from reimbursements and PayPal instructions stay within the FAQ',async()=>{
+  const v=visitor('de');
+  const money=await v.ask('Kann unsere Klasse die Fahrtkosten zum Wettbewerb erstattet bekommen?');
+  assert.match(money.answer,/bestätigen/);
+  for(const path of ['/spenden','/services/finanziell','/kontakt?intent=service&thema=finanziell']) assert.ok(money.sources.some(s=>s.url==='https://forju.at/de'+path));
+  const stop=await v.ask('Wie kann ich meine monatliche Spende beenden?');
+  assert.match(stop.answer,/Dauerauftrag/);
+  const paypal=await v.ask('Und PayPal?');assert.match(paypal.answer,/PayPal-Spende/);
+  assert.ok(paypal.sources.some(s=>s.url.endsWith('/kontakt')));
+  assert.deepEqual(v.calls,{embeddings:[],responses:[]});
+});
+
+test('additional visitor phrasings keep offers, requests and unrelated tasks separate',async()=>{
+  const cases=JSON.parse(readFileSync(new URL('../tools/knowledge-checks/additional-visitor-questions.json',import.meta.url)));
+  for(const [lang,question,topic] of cases) {
+    const r=await visitor(lang).ask(question);
+    assert.equal(r.topic??null,topic,question);
+    if(topic) assert.ok(r.sources.some(s=>s.url.startsWith('https://forju.at/'+lang+'/')),question);
+    else assert.deepEqual(r.sources,[],question);
+  }
+});
+
+test('a teacher can ask about both suggested workshops without being promised a combined session',async()=>{
+  const v=visitor('de');
+  await v.ask('Unsere Klasse hat Prüfungsangst und Zoff. Welche Workshops gibt es dazu?');
+  const both=await v.ask('Beides.');
+  assert.equal(both.topic,'workshops');assert.match(both.answer,/Atemübungen/);
+  assert.match(both.answer,/Streit/);assert.match(both.answer,/Frag das Workshopteam/);
+  assert.ok(both.sources.every(s=>s.url.endsWith('/projects/schulworkshops')));
 });

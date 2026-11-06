@@ -53,22 +53,31 @@
     "section": "Finanzielle Unterstützung",
     "kind": "public-website",
     "keywords": "Förderung Geld Finanzierung Partner afford budget pay materials money grant bezahlen Materialkosten Budget Geld Zuschuss",
-    "content": "ForJu vergibt selbst kein Projektgeld. Wenn ihr eine Forschungsidee finanzieren wollt, unterstützt euch der Verein bei der Kostenschätzung und Machbarkeit und vermittelt Kontakte zu möglichen Förderpartnern. Beschreibt eure Idee in der Finanzierungsanfrage. Eine Zusage oder Fördersumme ergibt sich daraus nicht.",
+    "content": "Beim Finanzierungsservice hilft ForJu euch, Kosten abzuschätzen, die Machbarkeit zu prüfen und mögliche Förderpartner zu finden. Der Service beschreibt Vermittlung statt direktem Sponsoring. Beschreibt in der Finanzierungsanfrage, wofür ihr Unterstützung braucht. Eine Zusage oder Fördersumme müsst ihr mit ForJu klären.",
     "sourceId": "forju-public-website",
     "sourceTitle": "ForJu – öffentliche Website",
     "sourceUrl": "https://forju.at/de/services/finanziell",
     "sourceYear": 2026,
-    "sourceSha256": "bb657675d62e4511931b9de498379685fefdc2e17c60ce29ce2fd56fe8546b35",
+    "sourceSha256": "0e4d4c53275c6201437e0cbae6cc77435658c30a07bfd83be8059447b1cc0c81",
     "reviewStatus": "public-website-summary",
     "owner": null,
     "lastReviewedAt": "2026-11-06",
     "nextReviewAt": "2026-12-06",
     "active": true,
-    "indexTitle": "forju-public:finanzierung:bb657675d62e",
+    "indexTitle": "forju-public:finanzierung:0e4d4c53275c",
     "sourceUpdatedAt": "2024-05-19T02:02:17.000+02:00",
     "titleEn": "Project funding",
-    "contentEn": "ForJu does not directly sponsor projects. If you need money for a research idea, it can help estimate costs, assess feasibility and introduce potential funding partners. Describe your project in the funding enquiry. A referral does not guarantee an award.",
-    "requestUrl": "https://forju.at/de/kontakt?intent=service&thema=finanziell"
+    "contentEn": "ForJu’s funding service helps you estimate project costs, assess feasibility and find funding partners. The service says it does not directly sponsor projects. Describe what you need in the funding enquiry so the team can check which options apply.",
+    "requestUrl": "https://forju.at/de/kontakt?intent=service&thema=finanziell",
+    "visitorAnswers": {
+      "campaign": {
+        "de": "Die Spendenkampagne sammelt unter anderem für Material, Wettbewerbsfahrten und kleine Beiträge zu Abschlussarbeiten. Das ist ein Spendenziel. Der Finanzierungsservice hilft bei der Kostenschätzung und der Suche nach Förderpartnern. Ob es für euer Vorhaben aktuell Geld oder eine Erstattung gibt, muss ForJu bestätigen. Nennt den Zweck und die erwarteten Kosten in der Finanzierungsanfrage.",
+        "en": "The donation campaign raises money for materials, competition travel and small contributions towards theses. That is a fundraising goal. The funding service helps estimate costs and find funding partners. Ask ForJu to confirm whether funding or reimbursement is available for your project. Include the purpose and expected cost in the enquiry.",
+        "also": [
+          "spenden"
+        ]
+      }
+    }
   },
   {
     "id": "ressourcen",
@@ -312,7 +321,7 @@
     "sourceUrl": "https://forju.at/de/spenden",
     "sourceTitle": "Spenden",
     "sourceYear": 2026,
-    "sourceSha256": "1d860aca7afc50c80339b105c42342fdb1959ec752ceb533c557dd65419e71e0",
+    "sourceSha256": "b6929846c1c482f50b8e6833ce87a4f652b27c67d3d50f02b00265c1eeb134a1",
     "sourceUpdatedAt": "2026-10-30T18:09:34.288Z",
     "lastReviewedAt": "2026-11-06",
     "nextReviewAt": "2026-12-06",
@@ -321,9 +330,29 @@
     "page": 0,
     "section": "ForJu mit Spenden oder Sachleistungen unterstützen",
     "active": true,
-    "indexTitle": "forju-public:spenden:1d860aca7afc",
+    "indexTitle": "forju-public:spenden:b6929846c1c4",
     "titleEn": "Donating",
-    "contentEn": "You can support youth projects with a one-off or monthly donation through the donation page. For an in-kind offer such as space, materials or expertise, use the contact option on that page to discuss it with ForJu."
+    "contentEn": "You can support youth projects with a one-off or monthly donation through the donation page. For an in-kind offer such as space, materials or expertise, use the contact option on that page to discuss it with ForJu.",
+    "visitorAnswers": {
+      "purpose": {
+        "de": "Mit den Spenden plant ForJu unter anderem Material für Jugendprojekte, Fahrten zu Wettbewerben und kleine Beiträge für Abschlussarbeiten zu finanzieren. Weitere Bereiche sind Schulworkshops, Veranstaltungen und der Vereinsbetrieb. Die Spendenseite zeigt die geplante Verteilung.",
+        "en": "ForJu raises money for project materials, travel to competitions and small contributions towards theses. The campaign also budgets for workshops, community events and running the association. Its donation page shows the planned breakdown."
+      },
+      "stop": {
+        "de": "Du kannst eine monatliche Spende jederzeit beenden. Einen Dauerauftrag stoppst du in deiner Banking-App. Bei Kartenzahlung nutzt du den Link in der Bestätigungsmail. Falls dir die Mail fehlt, kannst du ForJu an office@forju.at schreiben.",
+        "en": "You can stop a monthly donation at any time. Cancel a standing order in your banking app. For a card payment, use the link in the confirmation email. If you can’t find it, email ForJu at office@forju.at.",
+        "also": [
+          "kontakt"
+        ]
+      },
+      "paypal": {
+        "de": "ForJu nennt PayPal als Zahlungsart. Die Anleitung zum Beenden beschreibt Daueraufträge und Kartenzahlungen. Für deine PayPal-Spende frag bitte direkt unter office@forju.at nach dem passenden Weg.",
+        "en": "ForJu lists PayPal as a payment method. Its instructions for stopping donations cover standing orders and card payments. For the steps for your PayPal donation, email office@forju.at.",
+        "also": [
+          "kontakt"
+        ]
+      }
+    }
   },
   {
     "id": "spenden-bestaetigung",
@@ -427,7 +456,7 @@
     "sourceUrl": "https://forju.at/de/projects/forju-partnerpool",
     "sourceTitle": "ForJu Partnerpool",
     "sourceYear": 2024,
-    "sourceSha256": "84d8c692d19a30fdda1d288fa150afd09052c4874e55dbc0cf1cbe9329aa0ed9",
+    "sourceSha256": "55d92073168855a9c18b4365e43033f71935923307af5271abc8652a869271dc",
     "sourceUpdatedAt": "2024-05-17T01:19:18.000+02:00",
     "lastReviewedAt": "2026-11-06",
     "nextReviewAt": "2026-12-06",
@@ -436,10 +465,24 @@
     "page": 0,
     "section": "So funktioniert der ForJu Partnerpool",
     "active": true,
-    "indexTitle": "forju-public:partnerpool:84d8c692d19a",
+    "indexTitle": "forju-public:partnerpool:55d920731688",
     "titleEn": "Partner network",
     "contentEn": "Schools, companies, universities and other organisations can offer space, expertise or financial support through the partner pool. Nominate a contact person so ForJu can discuss what you can offer. Use the partnership enquiry to start that conversation.",
-    "requestUrl": "https://forju.at/de/kontakt?intent=partner"
+    "requestUrl": "https://forju.at/de/kontakt?intent=partner",
+    "publicContact": {
+      "name": "Alexander Bayer",
+      "email": "alexander.bayer@forju.at",
+      "sourceUrl": "https://forju.at/de/kontakt?intent=partner"
+    },
+    "visitorAnswers": {
+      "offer": {
+        "de": "Wenn ihr einen Raum, Geräte, Fachwissen oder Sponsoring anbieten möchtet, schreibt Alexander Bayer über die Partnerschaftsanfrage. Nennt eure Organisation, eine Kontaktperson und was ihr anbieten könnt. ForJu bespricht die Zusammenarbeit mit euch.",
+        "en": "To offer space, equipment, expertise or sponsorship, contact Alexander Bayer through the partnership form. Include your organisation, a contact person and what you can offer. ForJu will discuss the arrangements with you.",
+        "also": [
+          "partner"
+        ]
+      }
+    }
   },
   {
     "id": "podium",
@@ -572,7 +615,20 @@
     "plainLanguage": {
       "de": "Ihr spielt einen Streit nach und übt, gemeinsam eine Lösung zu finden.",
       "en": "You act out a disagreement and practise finding a solution together."
-    }
+    },
+    "visitorPhrases": [
+      "arguing",
+      "arguments",
+      "falling out",
+      "resolve disagreements",
+      "group fights",
+      "streiten",
+      "streitet",
+      "Zoff",
+      "Streit schlichten",
+      "Konflikte lösen",
+      "Konfliktlösung"
+    ]
   },
   {
     "id": "workshop-klima",
@@ -599,7 +655,17 @@
     "plainLanguage": {
       "de": "Ihr schaut euch an, warum sich das Klima ändert und was ihr im Alltag tun könnt, zum Beispiel bei der Wahl eurer Verkehrsmittel.",
       "en": "You explore why the climate is changing and how everyday choices, like how you travel, can help."
-    }
+    },
+    "visitorPhrases": [
+      "carbon footprint",
+      "renewable energy",
+      "climate change",
+      "protect planet",
+      "Klimaschutz",
+      "Klimawandel",
+      "erneuerbare Energie",
+      "ökologischer Fußabdruck"
+    ]
   },
   {
     "id": "workshop-zeit",
@@ -626,7 +692,21 @@
     "plainLanguage": {
       "de": "Ihr übt, wichtige Aufgaben zuerst zu erledigen und beim Lernen Pausen einzuplanen.",
       "en": "You practise deciding what to do first and making time for breaks when you study."
-    }
+    },
+    "visitorPhrases": [
+      "procrastinate",
+      "procrastination",
+      "last minute",
+      "time management",
+      "planning time",
+      "putting off homework",
+      "Aufgaben aufschieben",
+      "schieben Aufgaben auf",
+      "Zeit einteilen",
+      "Zeitmanagement",
+      "Lernplan",
+      "Zeit planen"
+    ]
   },
   {
     "id": "workshop-ethik",
@@ -653,7 +733,18 @@
     "plainLanguage": {
       "de": "Ihr besprecht schwierige Entscheidungen in der Forschung: Was würdet ihr tun und warum?",
       "en": "You discuss difficult choices in science: what would you do and why?"
-    }
+    },
+    "visitorPhrases": [
+      "right wrong science",
+      "ethical dilemmas",
+      "research ethics",
+      "responsible decisions",
+      "Wissenschaft Ethik",
+      "moralisch",
+      "ethische Fragen",
+      "richtig falsch Forschung",
+      "moralische Entscheidungen"
+    ]
   },
   {
     "id": "workshop-stress",
@@ -680,7 +771,20 @@
     "plainLanguage": {
       "de": "Ihr probiert Atemübungen aus, die euch im Schulalltag helfen können, zur Ruhe zu kommen.",
       "en": "You try breathing exercises that may help you feel calmer at school."
-    }
+    },
+    "visitorPhrases": [
+      "exam nerves",
+      "exam anxiety",
+      "panic test",
+      "staying calm",
+      "test anxiety",
+      "breathing exercises",
+      "Prüfungsangst",
+      "Prüfungsstress",
+      "Angst Schularbeit",
+      "Stressbewältigung",
+      "zur Ruhe kommen"
+    ]
   },
   {
     "id": "workshop-zukunft",
@@ -707,7 +811,20 @@
     "plainLanguage": {
       "de": "Ihr findet heraus, was euch liegt und welche Berufe oder Ausbildungen dazu passen könnten.",
       "en": "You look at what you enjoy and which jobs or courses might suit you."
-    }
+    },
+    "visitorPhrases": [
+      "career options",
+      "career planning",
+      "future career",
+      "choose career",
+      "what job suits",
+      "after graduation",
+      "Berufsorientierung",
+      "welcher Beruf",
+      "Beruf passt",
+      "nach dem Abschluss",
+      "Berufswahl"
+    ]
   },
   {
     "id": "workshop-medien",
@@ -732,9 +849,22 @@
     "titleEn": "Media literacy workshop",
     "contentEn": "The Vienna school workshop covers TikTok and Instagram, privacy, cyberbullying, misinformation and creating content responsibly. Ask ForJu about a date for your class.",
     "plainLanguage": {
-      "de": "Es geht um TikTok und Instagram: Wie schützt ihr private Infos und wie erkennt ihr falsche Nachrichten?",
-      "en": "You look at TikTok and Instagram: how can you protect your privacy and spot false information?"
-    }
+      "de": "Am Beispiel von TikTok und Instagram lernt ihr, Falschmeldungen und Cybermobbing zu erkennen und eure privaten Infos zu schützen.",
+      "en": "Using TikTok and Instagram as examples, you learn to spot false news and cyberbullying and protect your privacy."
+    },
+    "visitorPhrases": [
+      "fake news",
+      "misinformation",
+      "online bullying",
+      "online privacy",
+      "cyberbullying",
+      "Falschmeldungen",
+      "falsche Nachrichten",
+      "Cybermobbing",
+      "Medienkompetenz",
+      "TikTok",
+      "Instagram"
+    ]
   },
   {
     "id": "workshop-rollen",
@@ -761,7 +891,16 @@
     "plainLanguage": {
       "de": "Ihr besprecht, wie Familie, Medien und Sprache beeinflussen, welche Berufe ihr euch vorstellen könnt.",
       "en": "You discuss how family, media and language shape the jobs you can picture yourself doing."
-    }
+    },
+    "visitorPhrases": [
+      "gender stereotypes",
+      "gender roles",
+      "role models",
+      "Genderrollen",
+      "Rollenbilder",
+      "Geschlechterrollen",
+      "Berufsbilder Sprache"
+    ]
   },
   {
     "id": "wissensbase",
@@ -1051,16 +1190,22 @@
     "sourceTitle": "ForJu – öffentliche Website",
     "sourceUrl": "https://forju.at/de/kontakt?intent=mitglied",
     "sourceYear": 2026,
-    "sourceSha256": "5d55de8401fe0332cfc3c53e8ffb619bc832ef27374e53ebef6b839704180552",
+    "sourceSha256": "406f6bfe24734595442eb31b03c390475ec932901b87259931ed616930893ab5",
     "reviewStatus": "public-website-summary",
     "owner": null,
     "lastReviewedAt": "2026-11-06",
     "nextReviewAt": "2026-12-06",
     "active": true,
-    "indexTitle": "forju-public:mitglied:5d55de8401fe",
+    "indexTitle": "forju-public:mitglied:406f6bfe2473",
     "sourceUpdatedAt": "2026-10-30T18:09:34.288Z",
     "titleEn": "Join ForJu",
-    "contentEn": "To join ForJu, use the membership form. Introduce yourself and say how you would like to get involved. The enquiry goes to the ForJu team; you can also write to office@forju.at."
+    "contentEn": "To join ForJu, use the membership form. Introduce yourself and say how you would like to get involved. The enquiry goes to the ForJu team; you can also write to office@forju.at.",
+    "visitorAnswers": {
+      "terms": {
+        "de": "Das öffentliche Mitgliedsformular nennt weder ein Mindestalter noch einen Mitgliedsbeitrag. Stell dich dort kurz vor und frag nach der Altersgrenze oder dem aktuellen Beitrag, bevor du dich entscheidest.",
+        "en": "The public membership form gives no minimum age or membership fee. Use it to introduce yourself and ask about age requirements or the current fee before deciding whether to join."
+      }
+    }
   },
   {
     "id": "einreichen",

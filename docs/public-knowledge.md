@@ -69,3 +69,25 @@ suggestion. A follow-up carries a catalog topic ID alongside the existing short
 history; only a reviewed catalog entry can supply facts or links. In local-only
 mode, neither MiniSearch nor chat calls a model provider or an external search
 service. There is no separate index to host or refresh.
+
+### Answering specific visitor questions
+
+School workshop records carry short German and English phrases for classroom
+situations. These are search examples. The answer and its link come from the
+reviewed workshop record. If two themes fit, visitors can choose either or
+both, then use the published booking contact. To update a theme, read the
+[school workshop article](https://forju.at/de/projects/schulworkshops) before
+changing its description or example phrases.
+
+Some catalog records contain bilingual `visitorAnswers` for specific questions.
+An optional `also` array points to supporting public records, so a combined
+answer can show both original pages. The funding service and the donation
+campaign describe different things. Keep the campaign’s spending goals separate
+from eligibility for reimbursement or an individual award.
+[Funding service](https://forju.at/en/services/finanziell) ·
+[Donation FAQ](https://forju.at/en/spenden)
+
+Partnership offers and requests to borrow equipment have separate destinations.
+Check the named contact on the partnership form before updating `publicContact`.
+[Partnership form](https://forju.at/en/kontakt?intent=partner) ·
+[Equipment service](https://forju.at/en/services/ressourcen)

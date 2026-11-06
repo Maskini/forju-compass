@@ -1,0 +1,23 @@
+[
+ ["de","Wir möchten ForJu unterstützen. Welche Möglichkeit passt zu uns?","choices",""],
+ ["en","How can we help your organisation?","choices",""],
+ ["de","Wir hätten im Sommer einen Raum für eure Jugendprojekte frei. An wen wenden wir uns?","/kontakt?intent=partner","Alexander Bayer"],
+ ["en","Our lab could lend microscopes to pupils. How do we get in touch?","/kontakt?intent=partner","contact person|contact at|Alexander Bayer"],
+ ["en","We're a small business and would like to sponsor a workshop. Who handles this?","/kontakt?intent=partner","Alexander Bayer"],
+ ["de","Wir brauchen für unseren Versuch ein Mikroskop. Wo können wir es ausborgen?","/services/ressourcen","Verfügbarkeit|verfügbar|anfragen"],
+ ["en","Where does the money go if I give to ForJu?","/spenden","materials|travel"],
+ ["de","Was wird eigentlich mit meinen Spenden bezahlt?","/spenden","Material|Fahrten"],
+ ["de","Wie beende ich die monatliche Spende per Dauerauftrag?","/spenden","Banking|Bank"],
+ ["en","I give every month by card. Can I stop those payments?","/spenden","confirmation email"],
+ ["en","My class needs money for a competition trip. Can we count on reimbursement?","/services/finanziell","confirm|guarantee|promise"],
+ ["de","Auf der Spendenseite stehen kleine Förderbeiträge für Abschlussarbeiten. Kann ich einen beantragen?","/services/finanziell","Spenden|Spendenkampagne"],
+ ["en","Do I need straight As to work on a research idea with you?","/ueber-uns","grades"],
+ ["de","Brauche ich einen bestimmten Notenschnitt, um bei euch zu forschen?","/ueber-uns","Noten"],
+ ["en","Is there a minimum age to become a member?","/kontakt?intent=mitglied","age"],
+ ["de","Was kostet die Mitgliedschaft pro Jahr?","/kontakt?intent=mitglied","Beitrag|Gebühr"],
+ ["en","How do I submit my bachelor's thesis?","/kontakt?intent=projekt","project|thesis"],
+ ["de","Könnt ihr mich mit einer Forscherin in Kontakt bringen?","/services/connections","Kontakt|Forschung"],
+ ["en","Can we book the lab for next Tuesday with a guaranteed price?","/services/ressourcen","confirm|availability"],
+ ["en","Can you cancel my gym subscription?","no-evidence",""],
+ ["de","Welches Team gewinnt morgen im Fußball?","no-evidence",""]
+]

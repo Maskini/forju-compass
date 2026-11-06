@@ -2,26 +2,31 @@ import MiniSearch from "minisearch";
 import type { ChatMessage } from "./chat";
 
 type Pair = [string, string];
-type Menu = "start" | "class" | "project";
+type Menu = "start" | "class" | "project" | "contribute";
 type Topic = "workshops" | "ressourcen" | "finanzierung" | "science-beratung" | "connections" | "ehrenamt";
-type Intent = Menu | Topic | "short" | "next";
-type Card = {title:string; titleEn:string; id:string; content:string; contentEn:string; sourceUrl:string; requestUrl?:string; plainLanguage?:{de:string;en:string}; booking?:{de:string;en:string}};
+type Intent = Menu | Topic | "partnerpool" | "spenden" | "short" | "next";
+type Card = {title:string; titleEn:string; id:string; content:string; contentEn:string; sourceUrl:string; requestUrl?:string; plainLanguage?:{de:string;en:string}; visitorAnswers?:{offer?:{de:string;en:string}}; booking?:{de:string;en:string}};
 type Reply = {mode:"conversation"|"library"; answer:string; sources:{title:string;url:string}[]; suggestions?:string[]; topic?:string};
 
 const menus:Record<Menu,{ask:Pair; options:Intent[]}> = {
+  contribute:{ask:["Wie möchtest du ForJu unterstützen: mit deiner Zeit, mit Ressourcen deiner Organisation oder mit einer Geldspende?","How would you like to help ForJu: volunteer your time, offer resources through an organisation, or donate money?"],options:["ehrenamt","partnerpool","spenden"]},
   start:{ask:["Was führt dich zu ForJu: Suchst du etwas für deine Klasse, arbeitest du an einem eigenen Projekt oder möchtest du mithelfen?","What brings you to ForJu: are you looking for something for your class, working on your own project, or hoping to volunteer?"],options:["class","project","ehrenamt"]},
   class:{ask:["Was würde eurer Klasse helfen: ein Workshop, ein Gerät zum Messen oder Hilfe bei der Finanzierung?","What would help your class: a workshop, equipment to take measurements, or help finding funding?"],options:["workshops","ressourcen","finanzierung"]},
   project:{ask:["Wobei brauchst du für dein Projekt gerade Hilfe: die Idee ausarbeiten, Geräte finden, die Finanzierung klären oder jemanden aus der Forschung kennenlernen?","Where do you need help with your project: shaping the idea, finding equipment, finding funding, or meeting someone in research?"],options:["science-beratung","ressourcen","finanzierung","connections"]}
 };
 const labels:Record<Intent,Pair> = {
+  contribute:["ForJu unterstützen","Support ForJu"],partnerpool:["Als Organisation etwas anbieten","Offer resources as an organisation"],spenden:["Geld spenden","Donate money"],
   start:["Wo fange ich an?","Where do I start?"],class:["Für meine Klasse","For my class"],project:["Für mein Projekt","For my project"],
-  ehrenamt:["Bei ForJu mithelfen","Volunteer with ForJu"],workshops:["Einen Workshop","A workshop"],ressourcen:["Ein Messgerät","Measuring equipment"],
+  ehrenamt:["Ehrenamtlich Zeit einbringen","Volunteer my time"],workshops:["Einen Workshop","A workshop"],ressourcen:["Ein Messgerät","Measuring equipment"],
   finanzierung:["Hilfe bei der Finanzierung","Help with funding"],"science-beratung":["Die Idee ausarbeiten","Shape my idea"],connections:["Kontakte knüpfen","Meet a researcher"],
   short:["Einfacher erklären","Explain more simply"],next:["Was ist der nächste Schritt?","What should I do next?"]
 };
 // Each example is indexed separately. A visitor's entire meaningful phrase must
 // fit one example; a single shared word must not override a substantive question.
 const phrases:Record<Intent,string[]> = {
+  contribute:["Wie können wir euch unterstützen","Wie helfe ich ForJu","Ich möchte ForJu unterstützen","Ich möchte euch helfen","How can I support you","How can we help your organisation","I want to give back","I want to help ForJu"],
+  partnerpool:["Als Betrieb helfen","Als Partner unterstützen","Räume anbieten","Wir können ein Labor zur Verfügung stellen","Our university could help","offer our space","Our organisation","as a company"],
+  spenden:["Geld geben","Finanziell mithelfen","Etwas spenden","donate money","a financial gift","give money","make a donation"],
   start:["Ich weiß nicht wo ich anfangen soll","Ich brauche Hilfe beim Einstieg","Ich brauche Hilfe","Kannst du mir helfen","I need help","Can you help me","I need some guidance","Ich bin neu hier","Ich bin mir nicht sicher wo ich anfangen soll","I don't know where to start","Not sure where to begin","I am lost","I don’t know what to do","How do I get started","Where should I start","Keine Ahnung wo ich anfangen soll","Kannst du mir den Einstieg zeigen","I'm new here","Where should I begin","I'm not sure what I need","Was kann ich hier machen"],
   class:["Meine Schulklasse","Wir sind eine Schulklasse","Ich bin Lehrerin","Ich bin Lehrer","something for my school","für unsere Schule","for my students","for our school","I'm a teacher","something for my class","school class"],
   project:["Mein eigenes Forschungsprojekt","Ich habe eine Projektidee","I'm working on a project","I have a research idea","my own project"],
@@ -30,7 +35,7 @@ const phrases:Record<Intent,string[]> = {
   finanzierung:["Wir brauchen Geld","Geld für unser Projekt","Förderung","Finanzierung","we need money","funding","financial help","money for supplies"],
   "science-beratung":["Hilfe mit meiner Idee","Beratung zu meiner Idee","help developing my idea","advice on my idea"],
   connections:["Jemanden aus der Forschung kennenlernen","Kontakte finden","research contacts","meet someone in research"],
-  ehrenamt:["Ich will mich engagieren","ehrenamtlich mitmachen","ich möchte freiwillig mithelfen","volunteering","I'd like to volunteer"],
+  ehrenamt:["Bei ForJu mithelfen","Volunteer with ForJu","my time","meine Zeit","Ich will mich engagieren","ehrenamtlich mitmachen","ich möchte freiwillig mithelfen","volunteering","I'd like to volunteer"],
   short:["Kannst du das einfacher sagen","Kannst du das bitte einfacher erklären","Erklär das nochmal in einfachen Worten","Kurz gesagt","Fass das kurz zusammen","Das verstehe ich nicht","Ich verstehe das nicht","In einfachen Worten","Can you say that more simply","Could you explain in plain English","Can you explain that in simpler words","I don't understand","Give me the short version","Could you rephrase that","What do you mean","Wie meinst du das","Bitte einfacher","simpler please","can you simplify that"],
   next:["Wie geht es jetzt weiter","was mache ich jetzt","Und dann","was sollen wir als nächstes tun","what now","what's next","how do I get started with that","what do we do next","what's the next step","where do I send the details","where should I send that","wohin schicke ich die Angaben","an wen soll ich schreiben"]
 };
@@ -53,7 +58,7 @@ function recognize(s:string, allowed?:Intent[]):Intent|undefined {
 const brief:Record<Topic,Pair>={
   ressourcen:["Ihr könnt über ForJu bei Partnern nach einem Messgerät fragen. Schreibt ins Formular, was ihr messen wollt und wann. Ob es das Gerät gibt und was es kostet, muss das Team erst klären.","You can ask ForJu to find measuring equipment through its partners. Tell them what you want to measure and when. The team needs to check whether a device is available and what it costs."],
   workshops:["ForJu beschreibt Workshops für Wiener Schulen, etwa zu Klima, Stress oder Medien. Wenn euch ein Thema interessiert, fragt Anja Hofer nach einem Termin für eure Klasse.","ForJu describes workshops for schools in Vienna on topics like climate, stress and media. If a topic interests your class, ask Anja Hofer about a date."],
-  finanzierung:["ForJu gibt euch selbst kein Geld. Das Team hilft euch, die Kosten abzuschätzen und mögliche Förderpartner zu finden. Beschreibt dazu eure Idee im Formular.","ForJu doesn’t give out project money itself. It helps you estimate costs and find possible funding partners. Tell the team about your idea in the enquiry form."],
+  finanzierung:["Beim Finanzierungsservice hilft euch ForJu, die Kosten abzuschätzen und mögliche Förderpartner zu finden. Beschreibt dazu eure Idee im Formular.","ForJu’s funding service helps you estimate costs and find possible funding partners. Tell the team about your idea in the enquiry form."],
   "science-beratung":["Du musst noch keinen fertigen Plan haben. Schreib an office@forju.at, woran du forschen möchtest, und bitte um ein Beratungsgespräch.","You can ask for advice while your idea is still taking shape. Email office@forju.at with what you want to research and ask for a meeting."],
   connections:["Suchst du jemanden aus Forschung oder Wirtschaft für dein Projekt? Schreib ForJu, wen du kennenlernen möchtest und warum. Das Team kann bei der Kontaktaufnahme helfen.","Looking for someone in research or industry for your project? Tell ForJu who you want to meet and why. The team can help you make contact."],
   ehrenamt:["Bei ForJu arbeiten Freiwillige mit, zum Beispiel in Bildung oder IT. Schau dir die Stellen auf der ForJu-Website an und prüfe, welche noch offen sind.","Volunteers help ForJu with areas like education and IT. Look at the roles on the ForJu website and check which ones are currently open."]
@@ -84,7 +89,10 @@ export function guidedReply(message:string,en:boolean,history:ChatMessage[],reco
   // from the requested subject (“not funding” is not a funding request).
   const request=message.replace(/^(?:nein[, ]+ich (?:meine|meinte)|eigentlich meine ich|no[, ]+i (?:mean|meant)|actually[, ]+i (?:mean|meant))\s+/i,"");
   const choice=menu?.options[ordinal(request)] ?? (menu&&recognize(request,menu.options));
-  const kind=choice??recognize(request);
+  const broadOffer=/^(?:(?:ich|wir) (?:mochte[n]?|wurde[n]? gern[e]?) (?:forju|euch) (?:gern[e]? )?(?:unterstutzen|helfen)|wie (?:kann ich|konnen wir) (?:forju|euch) (?:helfen|unterstutzen)|(?:how (?:can|could) (?:i|we)|(?:i|we) (?:want|would like) to) (?:best )?(?:help|support) (?:your organi[sz]ation|forju|you))(?: bitte| today| out)?$/;
+  const [opening, ...rest]=request.split(/[.!?]/u);
+  const askingWhich=rest.every(part=>!part.trim() || /^(?:welche|wie genau|was gibt es|what (?:are|would)|which|how exactly)/.test(normalize(part)));
+  const kind=choice ?? (askingWhich && broadOffer.test(normalize(opening)) ? "contribute" : recognize(request));
   if(!kind) {
     if(menu && /^(?:ja|yes|klar|sure|ok|okay|maybe|vielleicht|keine ahnung|not sure|weiss nicht)$/i.test(normalize(message))) {
       return {mode:"conversation",answer:menu.ask[lang],sources:[],suggestions:menu.options.map(o=>labels[o][lang])};
@@ -117,6 +125,7 @@ export function guidedReply(message:string,en:boolean,history:ChatMessage[],reco
   else if (kind === "next" && group === "spenden-bestaetigung") answer = en ? card.contentEn : card.content;
   else if(kind==="short" && card.plainLanguage)answer=card.plainLanguage[en?"en":"de"];
   else if(kind==="short" && isTopic(group))answer=brief[group][lang];
+  else if(group==="partnerpool" && card.visitorAnswers?.offer)answer=card.visitorAnswers.offer[en?"en":"de"];
   else if(!follow)answer=en?card.contentEn:card.content;
   else if(kind==="next")answer=en?"Open the ForJu page below for the details. If your question is still open, you can ask the team.":"Öffne die ForJu-Seite unten für die Details. Falls deine Frage offenbleibt, kannst du das Team fragen.";
   else return {mode:"conversation",answer:en?"Which word or part of the answer would you like me to explain?":"Welches Wort oder welchen Teil der Antwort soll ich erklären?",sources:[],topic:card.id};

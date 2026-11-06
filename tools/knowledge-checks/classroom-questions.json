@@ -1,0 +1,13 @@
+[
+ ["en","My pupils keep arguing and group work ends in a fight. Do you have something for them?","workshop-konflikte"],
+ ["de","Meine Klasse streitet dauernd. Könnt ihr uns zeigen, wie wir Konflikte lösen?","workshop-konflikte"],
+ ["en","Some of my pupils panic before a test. Is there a session on staying calm?","workshop-stress"],
+ ["de","Bei uns gehen dauernd falsche Nachrichten in der Klassengruppe herum. Gibt es dazu etwas für Schulen?","workshop-medien"],
+ ["en","Could you run something for our class on spotting fake news and online bullying?","workshop-medien"],
+ ["de","Meine Schüler schieben Aufgaben auf, bis keine Zeit mehr bleibt. Was würde ihnen helfen?","workshop-zeit"],
+ ["en","Our students leave their homework to the last minute. Do you have a class session on planning their time?","workshop-zeit"],
+ ["de","Viele in unserer Klasse wissen nicht, welcher Beruf zu ihnen passt. Habt ihr etwas dazu?","workshop-zukunft"],
+ ["en","We want a class discussion on how to decide what is right or wrong in science.","workshop-ethik"],
+ ["de","Wie kann ich mir ein Spiel für den Schulcomputer herunterladen?",null],
+ ["en","Can my pupils book train tickets here?",null]
+]

@@ -1,3 +1,5 @@
+import { offersPartnership, publicGuidance } from "@/lib/visitor-guidance";
+import { createWorkshopGuide } from "@/lib/workshop-guide";
 import { visitorEnquiry } from "@/lib/visitor-enquiry";
 import {guidedReply,isGuidedPrompt} from "@/lib/dialogue";
 import {affirmedRequest, repairRequest, wantsTeam, conversationalReply, questionAfterGreeting, topicHistory} from "@/lib/conversation";
@@ -7,6 +9,9 @@ import { NextResponse } from "next/server";
 import { parseChatRequest, retrievalQuery } from "@/lib/chat";
 
 import { visitorTopic, knowledgeCatalog, localKnowledge, selectCatalogKnowledge, parseGroundedAnswer, answerFormat } from "@/lib/knowledge";
+
+const workshopGuide = createWorkshopGuide(knowledgeCatalog);
+const enquiryTopic = (text: string) => offersPartnership(text) ? "partnerpool" : visitorTopic(text);
 
 export async function POST(request: Request) {
   if (Number(request.headers.get("content-length") || 0) > 32000) {
@@ -42,6 +47,12 @@ export async function POST(request: Request) {
     return NextResponse.json({mode:"conversation", answer, sources:[], suggestions:[team], topic:wrong ? undefined : prior?.id});
   }
   if (wantsTeam(message)) {
+    if (prior?.publicContact) {
+      const contact = prior.publicContact;
+      return NextResponse.json({mode:"library", topic:prior.id,
+        answer:en ? "For partnerships, email "+contact.name+" at "+contact.email+" or use the partnership form." : "Für Kooperationen schreib "+contact.name+" an "+contact.email+" oder nutze das Partnerschaftsformular.",
+        sources:[{title:en ? "Partnership enquiries" : "Partnerschaft anfragen",url:readerUrl(contact.sourceUrl)}]});
+    }
     const contact = knowledgeCatalog.find(r=>r.id==="kontakt")!;
     const isSchool = prior && (prior.id===school?.id || prior.id.startsWith("workshop-"));
     const card = isSchool && school?.booking ? school : contact;
@@ -55,8 +66,13 @@ export async function POST(request: Request) {
   const relevantHistory = topicHistory(parsed.history.slice(boundary < 0 ? 0 : boundary+2),isGuidedPrompt)
     .filter((_,i,turns)=>!repairRequest(turns[i-i%2].content));
   const history = relevantHistory.map(t=>t.role==="user" ? {...t,content:affirmedRequest(t.content)} : t);
-  const enquiry = visitorEnquiry(raw, en, relevantHistory, parsed.topic, knowledgeCatalog, readerUrl, visitorTopic, affirmedRequest);
+  const enquiry = visitorEnquiry(raw, en, relevantHistory, parsed.topic, knowledgeCatalog, readerUrl, enquiryTopic, affirmedRequest);
   if (enquiry) return NextResponse.json(enquiry);
+  const lastAnswer = history.at(-1)?.content;
+  const detail = publicGuidance(message, parsed.topic, lastAnswer, en, knowledgeCatalog, readerUrl);
+  if (detail) return NextResponse.json(detail);
+  const workshop = workshopGuide(message, parsed.topic, lastAnswer, en, readerUrl);
+  if (workshop) return NextResponse.json(workshop);
   const guided = guidedReply(message,en,history,knowledgeCatalog,parsed.topic);
   if (guided) return NextResponse.json(guided);
   const social = conversationalReply(parsed.message, englishUI);
@@ -97,7 +113,7 @@ export async function POST(request: Request) {
       const booking = school.booking[en ? "en" : "de"];
       const missing = en ? "The school workshop page gives no registration deadline." : "Die Seite zu den Schulworkshops nennt keine Anmeldefrist.";
       return NextResponse.json({
-        mode: "library", topic:school.id, answer: deadline ? missing + " " + booking : booking,
+        mode: "library", topic:implicitSubject && prior?.id.startsWith("workshop-") ? prior.id : school.id, answer: deadline ? missing + " " + booking : booking,
         sources: [{title: en ? school.titleEn : school.title, url: readerUrl(school.sourceUrl)}],
       });
     }
@@ -118,6 +134,10 @@ export async function POST(request: Request) {
         const answer = en ? "ForJu’s resources page gives no loan price. Ask the team to confirm the cost for your device and dates."
           : "ForJus Ressourcenseite nennt keinen Leihpreis. Frag das Team nach den Kosten für euer Gerät und euren Zeitraum.";
         return NextResponse.json({mode:"library", topic:first.id, answer, sources:[page,form]});
+      }
+      if (first.id === "partnerpool" && /who|an wen|kontakt|contact|ansprechperson/i.test(message)) {
+        const offer=knowledgeCatalog.find(c=>c.id===first.id)?.visitorAnswers?.offer;
+        if (offer) return NextResponse.json({mode:"library",topic:first.id,answer:offer[lang],sources:[form,page]});
       }
       if (/who.{0,16}contact|where.{0,12}(ask|request)|an wen|wo.{0,12}(anfragen|fragen)|kontaktieren/i.test(message)) {
         const answer = en ? "Use the enquiry form linked here or email office@forju.at. Briefly describe your project and the help you need."

@@ -2,9 +2,10 @@ import { de, en as english } from "chrono-node";
 import placeNames from "../knowledge/language/austrian-places.json" with { type: "json" };
 import type { ChatMessage } from "./chat";
 
-type Card = { id: string; title: string; titleEn: string; sourceUrl: string; requestUrl?: string; content:string; booking?:{de:string;en:string}; pricing?:{de:string;en:string}; coverage?:{places:string[];de:string;en:string} };
-type Topic = "ressourcen" | "workshops" | "finanzierung" | "science-beratung" | "connections" | "spenden-bestaetigung";
+type Card = { id: string; title: string; titleEn: string; sourceUrl: string; requestUrl?: string; content:string; publicContact?:{name:string;email:string;sourceUrl:string}; booking?:{de:string;en:string}; pricing?:{de:string;en:string}; coverage?:{places:string[];de:string;en:string} };
+type Topic = "ressourcen" | "workshops" | "finanzierung" | "science-beratung" | "connections" | "spenden-bestaetigung" | "partnerpool";
 const subjectTerms: [Topic, RegExp][] = [
+  ["partnerpool", /partnership|partnerpool|partnerschaft|als partner|as an organi[sz]ation/i],
   ["connections", /introductions?|vorstellung bei|kontaktvermittlung/i],
   ["spenden-bestaetigung", /donation (?:receipt|confirmation)|spendenbestätigung|spendenquittung/i],
   ["ressourcen", /sensor|messgerät|messger[aä]t|ausleih|messinstrument|borrow|equipment|microscope|mikroskop|thermometer|gerät.*leihen/i],
@@ -162,9 +163,20 @@ export function visitorEnquiry(
     body=en?(school?"Our class":plural?"We":"I")+" would like to borrow "+device+(measure?" to measure "+measure:"")+". Could you confirm availability and any cost?"
       :(school?"Unsere Klasse möchte ":plural?"Wir möchten ":"Ich möchte ")+device+" ausleihen"+(measure?", um "+measure+" zu messen":"")+". Können Sie "+(plural?"uns":"mir")+" sagen, ob das möglich ist und welche Kosten anfallen?";
   } else if (topic==="workshops") {
-    const subject=term(details,[[/klima|climate/i,"zum Klima"," on climate"],[/medien|media literacy/i,"zu Medienkompetenz"," on media literacy"],[/stress/i,"zu Stressbewältigung"," on managing stress"]],en);
+    const selected=hint?.startsWith("workshop-") ? records.find(c=>c.id===hint) : undefined;
+    const subject=term(details,[[/klima|climate/i,"zum Klima"," on climate"],[/medien|media literacy/i,"zu Medienkompetenz"," on media literacy"],[/stress/i,"zu Stressbewältigung"," on managing stress"]],en) ?? (selected ? (en ? " on "+selected.titleEn : " zum Thema „"+selected.title+"“") : undefined);
     body=en?"Could you offer a workshop"+(subject??"")+" for our class"+(place?" in "+place:"")+"? What dates would be possible, and would there be a cost?"
       :"Wäre ein Workshop"+(subject?" "+subject:"")+" für unsere Klasse"+(place?" in "+place:"")+" möglich? Welche Termine kämen infrage und welche Kosten würden anfallen?";
+  } else if (topic==="partnerpool") {
+    const offering = term(details,[
+      [/mikroskop|microscope/i,"Mikroskope","microscopes"],
+      [/raum|räume|raume|space|venue|room/i,"Räume","space"],
+      [/fachwissen|expertise|mentoring/i,"fachliche Begleitung","mentoring"],
+      [/sponser|sponsor/i,"Sponsoring","sponsorship"],
+    ],en) ?? (en ? "[what we can offer]" : "[unser Angebot]");
+    body = en
+      ? "We would like to offer "+offering+" for youth research projects. How could we arrange this with ForJu?\n\nOrganisation: [name]\nContact person: [name and contact details]"
+      : "Wir möchten "+offering+" für Jugendforschungsprojekte anbieten. Wie können wir das mit ForJu vereinbaren?\n\nOrganisation: [Name]\nKontaktperson: [Name und Kontaktdaten]";
   } else if (topic==="connections") {
     const field = term(details, measurements, en) ?? (en ? "[field of research]" : "[Fachgebiet]");
     body = en ? "Could you introduce us to a researcher working on " + field + "? Our question is: [what we would like to find out]."
@@ -188,6 +200,6 @@ export function visitorEnquiry(
   if (card.requestUrl) sources.push({title:en?"Open the enquiry form":"Anfrageformular öffnen",url:readerUrl(card.requestUrl)});
   const contact=records.find(r=>r.id==="kontakt");
   const contactRecord=topic==="workshops"?card.booking?.de:topic==="spenden-bestaetigung"?card.content:contact?.content;
-  const recipient=contactRecord?.match(/\b[A-Za-z0-9._+-]+@forju\.at\b/i)?.[0];
+  const recipient=card.publicContact?.email ?? contactRecord?.match(/\b[A-Za-z0-9._+-]+@forju\.at\b/i)?.[0];
   return {mode:"draft",topic:card.id,answer,sources,recipient};
 }

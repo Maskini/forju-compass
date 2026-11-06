@@ -42,9 +42,13 @@ export function visitorTopic(input: string) {
   const lacksMoney = /reicht nicht|nicht genug|zu wenig|geld fehlt|can.t afford|cannot afford|short of money|lack of funds/.test(q);
   const projectExpense = /material|ausgaben|bauteil|projekt|experiment|equipment|supplies|project/.test(q);
   if (lacksMoney && projectExpense && !gaveMoney) return "finanzierung";
+  if (/notenschnitt|notendurchschnitt|gute noten|straight a(?:s|'s)\b|top grades|grades .{0,20}(?:join|participate)|grades (?:matter|count)/.test(q)) return "mission";
+  if (/^(?:wer (?:ist|arbeitet) (?:bei forju|im (?:forju.)?team)|who (?:works at forju|is (?:on|in) (?:the |your )?team))[?!. ]*$/.test(q)) return "team";
   if (/mitglied werden|mitgliedschaft|beitreten|join forju|become a member|membership form/.test(q)) return "mitglied";
   if (/submit.{0,22}(thesis|research project)|(?:abschlussarbeit|diplomarbeit|projekt).{0,20}einreichen/.test(q)) return "einreichen";
   if (/(?:air quality|luftqualitat|luftgute|co2|carbon dioxide)/.test(q) && /borrow|lend|measur|monitor|sensor|leih|mess/.test(q)) return "ressourcen";
+  const needsSpace = /(?:suchen|brauchen|benotigen|fehlt|ausborgen).{0,55}\b(?:raum|labor)|(?:need|looking for|borrow|use) .{0,35}\b(?:lab|venue|space|room)\b/.test(q);
+  if (needsSpace && !/stellenangebot|\bjobs?\b|workspace account/.test(q)) return "ressourcen";
   if (/\b(messgerat|messinstrument|mikroskop|microscope|lab space|laborraum|measuring instrument)/.test(q)) return "ressourcen";
   if (/fur wen.{0,16}forju|who is forju for|who (can|may) (take part|participate)|zielgruppe/.test(q)) return "mission";
   if (/projektidee|research idea|project idea/.test(q) && !/finanz|fund|geld|forder|donat/.test(q)) return "science-beratung";
@@ -188,11 +192,15 @@ export function localKnowledge(question: string) {
     bodyHits: 0,
   }));
 
+  const audienceOnly = new Set(["team","pupil","pupils","class","klasse","students","schuler","teachers","here"]);
   for (const word of words) {
+    // An audience word also occurs in unrelated questions about train tickets
+    // or sports. Require some evidence for what the visitor wants to do.
+    if (words.size > 1 && audienceOnly.has(word)) continue;
     // Match actual words. For example, "game" inside "4Gamechangers" gives no
     // evidence about a football game. Allow longer prefixes in curated labels.
     const hits = searchIndex.map(({labels, body}) => {
-      if (labels.has(word) || (word.length >= 5 && Array.from(labels).some(label => label.startsWith(word)))) return 2;
+      if (labels.has(word) || (word.length >= 7 && Array.from(labels).some(label => label.startsWith(word)))) return 2;
       return body.has(word) ? 1 : 0;
     });
     const weight = Math.log(1 + scores.length / (1 + hits.filter(Boolean).length));

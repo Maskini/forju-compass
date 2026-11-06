@@ -33,3 +33,22 @@ The runner checks both file hashes before loading the pinned model on the CPU. I
 In the baseline (5e5a8b6), the first page matched the expected destination for **7/10** in-scope questions using Compass and **8/10** using E5 nearest-neighbour retrieval. The two out-of-scope questions got unrelated links from both. E5 found a scientific introduction, project funding, and donation acknowledgement that Compass missed. It missed equipment and partner-pool requests that Compass got right. These are first-page results on ten synthetic tasks, not answer-accuracy estimates. After updating local matching, Compass returns the intended record and page for all ten and offers relevant next-step buttons with no source links on both unrelated questions. The runner now scores the specific topic as well as the URL, since several workshop and job records share a page. The separate ten examples in `visitor-phrasing.json` run with the Node chat route tests. These sets protect known behavior and do not measure real-user success. The E5 experiment runs only on the maintainer’s machine. [Original E5 model, MIT license](https://huggingface.co/intfloat/multilingual-e5-small) and [quantized ONNX conversion](https://huggingface.co/Xenova/multilingual-e5-small).
 
 License notices for installed packages remain in their distributions. fast-check is MIT and urlwatch uses a three-clause BSD license. The E5 weights and Python packages are kept under ignored `work/` when you follow the commands above.
+
+### Synthetic visitor questions
+
+The route suite also reads `support-questions.json`, `classroom-questions.json`
+and `additional-visitor-questions.json`. Run `npm test` to reproduce these 44
+cases. The first 32 were scored on 9adb622 before implementation (8 passed).
+Twelve additional phrasings exposed three more errors: a lab offering space,
+a school seeking space, and a plane ticket incorrectly matching “planet”.
+The evaluation checks the specific destination and, as applicable, answer
+content, clarification options or absence of unsupported links. These counts
+describe the fixed examples. The browser suite checks the working interfaces
+with synthetic details and never sends a message to ForJu.
+
+The evaluation design draws on the UK Government Digital Service’s use of
+reference questions and grounded answers, and Google’s guidance on narrowing
+ambiguous questions. Both were consulted as design guidance. Only reviewed
+ForJu records supply visitor-facing facts.
+[GDS evaluation](https://insidegovuk.blog.gov.uk/2026/05/15/developing-gov-uk-chat-our-data-science-and-ai-engineering-journey/) ·
+[Google conversation design](https://developers.google.com/assistant/conversation-design/questions)

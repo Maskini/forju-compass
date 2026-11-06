@@ -182,3 +182,34 @@ test('English mobile: correct what the class measures, accept a draft, then ask 
   const handoff=await ask(panel,'Can I talk to a real person?');
   await expect(handoff.locator('a[href*="thema=ressourcen"]')).toBeVisible();
 });
+
+test('a teacher can choose between two classroom needs and prepare an enquiry on a phone',async({page})=>{
+  await page.setViewportSize({width:390,height:844});
+  await page.goto('/preview');
+  const host=page.locator('forju-compass-widget');
+  await host.locator('.launcher').click();
+  await host.locator('.welcome .start').click();
+  const panel=host.frameLocator('iframe');
+  const options=await ask(panel,'Meine Klasse hat Zoff und Prüfungsangst. Welche Workshops passen dazu?');
+  await expect(options.getByRole('button',{name:/Konflikte/})).toBeVisible();
+  const selected=await ask(panel,'den ersten');
+  await expect(selected.locator('.response p')).toContainText('Streit');
+  await expect(selected.locator('a[href$="/de/projects/schulworkshops"]')).toBeVisible();
+  const contact=await ask(panel,'Wie melde ich meine Klasse dafür an?');
+  await expect(contact.locator('.response p')).toContainText('anja.hofer@forju.at');
+  const draft=await ask(panel,'Kannst du dafür eine E-Mail formulieren?');
+  const mail=new URL(await draft.getByRole('link',{name:'In Mail-App öffnen'}).getAttribute('href'));
+  expect(mail.pathname).toEqual('anja.hofer@forju.at');
+  expect(mail.searchParams.get('body')).toContain('Konflikte');
+});
+
+test('an English-speaking lab can offer equipment and prepare an email to the partnership contact',async({page})=>{
+  await page.goto('/embed?lang=en');
+  const offer=await ask(page,'Our lab could lend microscopes to schools. Who should we talk to?');
+  await expect(offer.locator('.response p')).toContainText('Alexander Bayer');
+  await expect(offer.locator('a[href$="/en/kontakt?intent=partner"]')).toBeVisible();
+  const draft=await ask(page,'Could you draft a message for us?');
+  const mail=new URL(await draft.getByRole('link',{name:'Open in email app'}).getAttribute('href'));
+  expect(mail.pathname).toEqual('alexander.bayer@forju.at');
+  expect(mail.searchParams.get('body')).toContain('offer microscopes');
+});
