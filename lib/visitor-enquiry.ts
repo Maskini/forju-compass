@@ -3,8 +3,10 @@ import placeNames from "../knowledge/language/austrian-places.json" with { type:
 import type { ChatMessage } from "./chat";
 
 type Card = { id: string; title: string; titleEn: string; sourceUrl: string; requestUrl?: string; content:string; booking?:{de:string;en:string}; pricing?:{de:string;en:string}; coverage?:{places:string[];de:string;en:string} };
-type Topic = "ressourcen" | "workshops" | "finanzierung" | "science-beratung";
+type Topic = "ressourcen" | "workshops" | "finanzierung" | "science-beratung" | "connections" | "spenden-bestaetigung";
 const subjectTerms: [Topic, RegExp][] = [
+  ["connections", /introductions?|vorstellung bei|kontaktvermittlung/i],
+  ["spenden-bestaetigung", /donation (?:receipt|confirmation)|spendenbestätigung|spendenquittung/i],
   ["ressourcen", /sensor|messgerät|messger[aä]t|ausleih|messinstrument|borrow|equipment|microscope|mikroskop|gerät.*leihen/i],
   ["workshops", /workshops?|schulseminar/i],
   ["finanzierung", /finanzier|förderpartner|funding|fundrais/i],
@@ -74,14 +76,15 @@ function term(messages:string[], terms:[RegExp,string,string][],en:boolean) {
   }
 }
 export function visitorEnquiry(
-  message:string, en:boolean, history:ChatMessage[], hint:string|undefined, records:Card[], readerUrl:(url:string)=>string
+  message:string, en:boolean, history:ChatMessage[], hint:string|undefined, records:Card[], readerUrl:(url:string)=>string, catalogTopic:(text:string)=>string|null
 ) {
   const lang=en?1:0;
-  const current=topicOf(message);
+  const resolveTopic = (text:string) => catalogTopic(text) ?? topicOf(text);
+  const current=resolveTopic(message);
   const prior=hint?.startsWith("workshop-")?"workshops":hint;
   const asks=askForDraft.test(message) && !/(?:don.t|do not|keine?|nicht)\s+(?:write|draft|e-?mail|anfrage|schreiben)/i.test(message);
   const answeringPrompt=chooseSubject.includes(history.at(-1)?.content ?? "");
-  const topic=current ?? prior ?? topicOf(history.filter(t=>t.role==="user").at(-1)?.content ?? "");
+  const topic=current ?? prior ?? resolveTopic(history.filter(t=>t.role==="user").at(-1)?.content ?? "");
   const card=records.find(r=>r.id===topic);
   const lastAnswer=history.at(-1)?.content ?? "";
   const revising=/^(?:Hello ForJu team,|Hallo ForJu-Team,)/.test(lastAnswer)
@@ -98,7 +101,7 @@ export function visitorEnquiry(
   const messages:string[]=[];
   for (const turn of history.toReversed()) {
     if (turn.role!=="user") continue;
-    const previousTopic=topicOf(turn.content);
+    const previousTopic=resolveTopic(turn.content);
     if (current && prior && current!==prior) break;
     if (previousTopic && previousTopic!==topic) break;
     // Only a relevant subject or an explicit logistical detail can fill a slot.
@@ -140,17 +143,24 @@ export function visitorEnquiry(
     const subject=term(messages,[[/klima|climate/i,"zum Klima"," on climate"],[/medien|media literacy/i,"zu Medienkompetenz"," on media literacy"],[/stress/i,"zu Stressbewältigung"," on managing stress"]],en);
     body=en?"Could you offer a workshop"+(subject??"")+" for our class"+(place?" in "+place:"")+"? What dates would be possible, and would there be a cost?"
       :"Wäre ein Workshop"+(subject?" "+subject:"")+" für unsere Klasse"+(place?" in "+place:"")+" möglich? Welche Termine kämen infrage und welche Kosten würden anfallen?";
+  } else if (topic==="connections") {
+    const field = term(messages, measurements, en) ?? (en ? "[field of research]" : "[Fachgebiet]");
+    body = en ? "Could you introduce us to a researcher working on " + field + "? Our question is: [what we would like to find out]."
+      : "Könnten Sie uns jemanden aus der Forschung zum Thema " + field + " vorstellen? Unsere Frage ist: [Was möchten wir herausfinden?]";
+  } else if (topic==="spenden-bestaetigung") {
+    body = en ? "Could you send me confirmation of my donation?\n\nDate of donation: [date]\nAmount: [amount]"
+      : "Könnten Sie mir bitte meine Spende bestätigen?\n\nDatum der Spende: [Datum]\nBetrag: [Betrag]";
   } else if (topic==="finanzierung") {
     body=en?"Could you help us estimate the costs of our project and identify potential funding partners?":"Können Sie uns helfen, die Kosten unseres Projekts einzuschätzen und mögliche Förderpartner zu finden?";
   } else {
     body=en?"I would like to develop a research idea. Could we arrange a meeting to discuss it?":"Ich möchte eine Forschungsidee weiterentwickeln. Können wir dafür einen Beratungstermin vereinbaren?";
   }
-  if (date) body+="\n\n"+(en?"Preferred timing: ":"Gewünschter Zeitraum: ")+date;
+  if (date && topic !== "spenden-bestaetigung") body+="\n\n"+(en?"Preferred timing: ":"Gewünschter Zeitraum: ")+date;
   const answer=(en?"Hello ForJu team,":"Hallo ForJu-Team,")+"\n\n"+body+"\n\n"+(en?"Thank you!":"Vielen Dank!");
   const sources=[page];
   if (card.requestUrl) sources.push({title:en?"Open the enquiry form":"Anfrageformular öffnen",url:readerUrl(card.requestUrl)});
   const contact=records.find(r=>r.id==="kontakt");
-  const contactRecord=topic==="workshops"?card.booking?.de:contact?.content;
+  const contactRecord=topic==="workshops"?card.booking?.de:topic==="spenden-bestaetigung"?card.content:contact?.content;
   const recipient=contactRecord?.match(/\b[A-Za-z0-9._+-]+@forju\.at\b/i)?.[0];
   return {mode:"draft",topic:card.id,answer,sources,recipient};
 }

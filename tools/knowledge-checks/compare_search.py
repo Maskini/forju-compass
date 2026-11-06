@@ -62,8 +62,9 @@ def local_answers(questions):
                 req = Request(BASE + "/api/chat", json.dumps({"message": query}).encode(),
                               {"Content-Type": "application/json", "Accept-Language": lang})
                 with urlopen(req, timeout=15) as response:
-                    sources = json.load(response).get("sources", [])
-                yield sources[0]["url"] if sources else None
+                    reply = json.load(response)
+                sources = reply.get("sources", [])
+                yield reply.get("topic"), sources[0]["url"] if sources else None
         finally:
             server.terminate()
             server.wait(10)
@@ -98,12 +99,13 @@ def main():
     queries = encode(session, tokenizer, ["query: " + q for _, q, _ in questions])
     answers = list(local_answers(questions))
     report = []
-    for (lang, q, goal), vector, baseline in zip(questions, queries, answers, strict=True):
+    for (lang, q, goal), vector, (topic, baseline) in zip(questions, queries, answers, strict=True):
         nearest = records[np.argmax(corpus @ vector) // 2]
         e5_url = reader_url(nearest["sourceUrl"], lang)
         wanted = {reader_url(expected[goal][k], lang) for k in ("sourceUrl", "requestUrl") if expected[goal].get(k)} if goal else {None}
         report.append({"question": q, "expected": goal, "compass_first": baseline, "e5_first": e5_url,
-                       "compass_pass": baseline in wanted, "e5_pass": e5_url in wanted})
+                       "compass_pass": baseline in wanted, "e5_pass": e5_url in wanted,
+                       "compass_topic_pass": topic == goal, "e5_topic_pass": nearest["id"] == goal})
     print(json.dumps(report, indent=2, ensure_ascii=False))
 
 

@@ -29,6 +29,18 @@ function terms(text: string) {
 // their ordinary relevance ranking.
 export function visitorTopic(input: string) {
   const q=input.toLowerCase().normalize("NFKD").replace(/\p{M}/gu,"");
+  // Distinguish people from physical resources, and money given from money needed.
+  const wantsIntroduction = /introduc|put .{0,28}in touch|connect .{0,28}with|in kontakt bringen|kennenlernen|vermittel/.test(q);
+  const mentionsPerson = /scientist|researcher|someone in a lab|expert|wissenschaftler|forscher|forschend|fachperson/.test(q);
+  if (wantsIntroduction && mentionsPerson) return "connections";
+
+  const gaveMoney = /donat|spende|uberwiesen|(?:gave|sent|transferred).{0,32}money/.test(q);
+  const wantsProof = /receipt|acknowledg|confirmation|proof|nachweis|beleg|quittung|bestatigung/.test(q);
+  if (gaveMoney && wantsProof) return "spenden-bestaetigung";
+
+  const lacksMoney = /reicht nicht|nicht genug|zu wenig|geld fehlt|can.t afford|cannot afford|short of money|lack of funds/.test(q);
+  const projectExpense = /material|ausgaben|bauteil|projekt|experiment|equipment|supplies|project/.test(q);
+  if (lacksMoney && projectExpense && !gaveMoney) return "finanzierung";
   if (/mitglied werden|mitgliedschaft|beitreten|join forju|become a member|membership form/.test(q)) return "mitglied";
   if (/submit.{0,22}(thesis|research project)|(?:abschlussarbeit|diplomarbeit|projekt).{0,20}einreichen/.test(q)) return "einreichen";
   if (/(?:air quality|luftqualitat|luftgute|co2|carbon dioxide)/.test(q) && /borrow|lend|measur|monitor|sensor|leih|mess/.test(q)) return "ressourcen";
@@ -143,23 +155,55 @@ function correctTransposition(word: string) {
   return word;
 }
 
+const normalizeSearch = (text: string) =>
+  text.toLowerCase().normalize("NFKD").replace(/\p{M}/gu, "").replace(/ß/g, "ss");
+const searchWords = (text: string) => normalizeSearch(text).match(/[\p{L}\p{N}]+/gu) ?? [];
+const stopWords = new Set((
+  "the what where when how who does for and can you your are about have with this that there which will would could please want need from my our forju compass " +
+  "did has had should was were some something been just many much get getting their they them help me any " +
+  "ich und wie kann wer ist der die das ein eine ihr mit bei gibt welche einen von fur mochte uns unser unsere unserem unseren bietet auch einem dazu gern " +
+  "hat haben wird werden wurde war waren sind sein einer den dem des sich mir mich wir sie viele viel bitte etwas welche welcher welches konnte konnen wollt heute morgen gestern today tomorrow yesterday"
+).split(/\s+/));
+const searchIndex = knowledgeCatalog.map(entry => ({
+  entry,
+  labels: new Set(searchWords([entry.title, entry.titleEn, entry.keywords].join(" "))),
+  body: new Set(searchWords(entry.content + " " + entry.contentEn)),
+}));
+
 export function localKnowledge(question: string) {
-  const normalize = (s: string) => s.toLowerCase().normalize("NFKD").replace(/\p{M}/gu,"");
-  const ignore = new Set("the what where when how who does for and can you your are about have with this that there which will would could please want need from my our forju compass ich und wie kann wer ist der die das ein eine ihr mit bei gibt welche einen von fur mochte uns unser unsere unserem unseren bietet auch einem dazu gern".split(" "));
-  const words = [...new Set(normalize(question).match(/[\p{L}\p{N}]{3,}/gu) ?? [])].filter(w => !ignore.has(w)).map(correctTransposition);
-  if (/\bIT\b/.test(question) || /\b(?:it[- ](?:jobs?|roles?|volunteer)|tech|technology|technology-related|developer|software|programmierung)\b/i.test(question)) words.push("technologie");
-  if (/\b(fund|funding|financing|foerderung)\b/i.test(question)) words.push("finanzierung");
-  const rows = knowledgeCatalog.map(e => ({e, tags:normalize([e.title,e.titleEn,e.keywords].join(" ")), body:normalize(e.content+" "+e.contentEn)}));
-  const scores = rows.map(r => ({title:r.e.indexTitle,score:0}));
+  const words = new Set(searchWords(question)
+    .filter(word => word.length >= 3 && !stopWords.has(word))
+    .map(correctTransposition));
+  if (/\bIT\b/.test(question) || /\b(?:it[- ](?:jobs?|roles?|volunteer)|tech|technology|technology-related|developer|software|programmierung)\b/i.test(question)) {
+    words.add("technologie");
+  }
+  if (/\b(fund|funding|financing|foerderung)\b/i.test(question)) words.add("finanzierung");
+  const intent = visitorTopic(question);
+  const asksAboutForJu = /^(what is|was ist|who is|wer ist) forju[?!. ]*$/i.test(question.trim());
+  const scores = searchIndex.map(({entry}) => ({
+    title: entry.indexTitle,
+    score: entry.id === intent ? 14 : entry.id === "organisation" && asksAboutForJu ? 10 : 0,
+    labelHit: false,
+    bodyHits: 0,
+  }));
+
   for (const word of words) {
-    const hits = rows.map(r => r.tags.includes(word) ? 2 : r.body.includes(word) ? 1 : 0);
-    const idf = Math.log(1 + rows.length / (1 + hits.filter(Boolean).length));
-    hits.forEach((hit,i) => { scores[i].score += hit * idf; });
+    // Match actual words. For example, "game" inside "4Gamechangers" gives no
+    // evidence about a football game. Allow longer prefixes in curated labels.
+    const hits = searchIndex.map(({labels, body}) => {
+      if (labels.has(word) || (word.length >= 5 && Array.from(labels).some(label => label.startsWith(word)))) return 2;
+      return body.has(word) ? 1 : 0;
+    });
+    const weight = Math.log(1 + scores.length / (1 + hits.filter(Boolean).length));
+    hits.forEach((hit, i) => {
+      if (hit === 2) scores[i].labelHit = true;
+      if (hit === 1) scores[i].bodyHits++;
+      scores[i].score += hit * weight;
+    });
   }
-  if (/^(what is|was ist|who is|wer ist) forju[?!. ]*$/i.test(question.trim())) {
-    const org=scores.find(s=>s.title===knowledgeCatalog.find(e=>e.id==="organisation")?.indexTitle); if(org) org.score+=10;
-  }
-  const intent=visitorTopic(question);
-  if(intent){const target=scores.find(row=>row.title===knowledgeCatalog.find(e=>e.id===intent)?.indexTitle);if(target)target.score+=14;}
-  return scores.filter(s=>s.score>=2.4).sort((a,b)=>b.score-a.score).map(s=>({title:s.title,similarity:Math.min(.99,.3+s.score*.045)}));
+  return scores
+    .filter((row, i) => row.score >= 2.4 && (row.labelHit || row.bodyHits >= 2 ||
+      searchIndex[i].entry.id === intent || (asksAboutForJu && searchIndex[i].entry.id === "organisation")))
+    .sort((a, b) => b.score - a.score)
+    .map(row => ({title: row.title, similarity: Math.min(.99, .3 + row.score * .045)}));
 }

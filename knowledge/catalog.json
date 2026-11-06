@@ -328,7 +328,7 @@
   {
     "id": "spenden-bestaetigung",
     "title": "Spendenbestätigung und steuerliche Angaben",
-    "content": "Laut der abgerufenen Spendenseite stellt ForJu auf Anfrage eine Bestätigung aus; dafür sollen Datum und Betrag an den allgemeinen Vereinskontakt geschickt werden. Die Seite bezeichnet Spenden zum dortigen Stand als nicht steuerlich absetzbar. Dies ist die Aussage der Vereinswebsite, keine unabhängig geprüfte aktuelle steuerliche Auskunft. Aktuelle Details auf der Spendenseite prüfen.",
+    "content": "Für eine Spendenbestätigung schreib an office@forju.at und nenne Datum und Betrag deiner Spende. Die Seite bezeichnet Spenden zum dortigen Stand als nicht steuerlich absetzbar. Dies ist die Aussage der Vereinswebsite, keine unabhängig geprüfte aktuelle steuerliche Auskunft. Aktuelle Details auf der Spendenseite prüfen.",
     "keywords": "spendenbestätigung steuer absetzbar receipt tax donation",
     "kind": "public-website",
     "sourceId": "https://forju.at/de/spenden",
@@ -346,7 +346,7 @@
     "active": true,
     "indexTitle": "forju-public:spenden-bestaetigung:4666ced061a0",
     "titleEn": "Donation receipts",
-    "contentEn": "ForJu asks for the date and amount when requesting a donation confirmation. Check its current donation page for tax information."
+    "contentEn": "To request a donation confirmation, email office@forju.at with the date and amount of your donation. Check its current donation page for tax information."
   },
   {
     "id": "impressum",
@@ -643,7 +643,7 @@
     "id": "workshop-stress",
     "title": "Stressbewältigung: Relaxed in der Schule",
     "content": "Das beschriebene Seminar bietet Schüler:innen Übungen zu Achtsamkeit, Konzentration und einem ruhigeren Schulalltag. Atemübungen, Meditation und Gruppenaustausch helfen, unterschiedliche Strategien kennenzulernen. Es ist ein Schulworkshop, kein belegtes medizinisches oder psychotherapeutisches Angebot.",
-    "keywords": "stress achtsamkeit meditation schule workshop wellbeing",
+    "keywords": "stress prüfungsstress klausurstress test anxiety exam stress achtsamkeit meditation schule workshop wellbeing",
     "kind": "public-website",
     "sourceId": "https://forju.at/de/projects/schulworkshops",
     "sourceUrl": "https://forju.at/de/projects/schulworkshops",
@@ -919,7 +919,7 @@
     "id": "jobs-tech",
     "title": "Ehrenamt: Technologie und IT",
     "content": "Auf der am 06.11.2026 geprüften Jobs-Seite waren im Bereich Technologie und IT diese Rollen aufgeführt: System- und Toolmanager:in; Requirements Engineer; iOS Entwickler:in; Web-Developer & Digital Marketing/SEO; Backend Engineer; Automation Engineer; Kotlin Entwickler:in – Android-App; Support-Engineer. Stellenliste auf der Jobs-Seite mit dem Lichtschalter öffnen, Rolle auswählen und Aufgaben und Anforderungen prüfen. Bewerbungsadresse auf der Jobs-Seite: bewerbung@forju.at. Die Auflistung ist eine Momentaufnahme, keine Zusage einer freien Stelle.",
-    "keywords": "jobs volunteering apply bewerben Technologie und IT System- und Toolmanager:in Requirements Engineer iOS Entwickler:in Web-Developer & Digital Marketing/SEO Backend Engineer Automation Engineer Kotlin Entwickler:in – Android-App Support-Engineer",
+    "keywords": "jobs volunteering apply bewerben technical roles apps app development Technologie und IT System- und Toolmanager:in Requirements Engineer iOS Entwickler:in Web-Developer & Digital Marketing/SEO Backend Engineer Automation Engineer Kotlin Entwickler:in – Android-App Support-Engineer",
     "kind": "public-website",
     "sourceId": "https://forju.at/de/jobs",
     "sourceUrl": "https://forju.at/de/jobs",

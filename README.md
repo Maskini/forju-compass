@@ -3,6 +3,9 @@
 Bilingual visitor assistant for ForJu. The standalone page and the embeddable
 chat use the same server route and reviewed public knowledge catalog.
 
+Try the hosted [website preview](https://forju-compass.onrender.com/preview)
+or use the [five-minute visitor trial guide](docs/visitor-trial.md).
+
 ## Run a clean checkout
 
 Use Node 24.21.0, then run:

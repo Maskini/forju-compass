@@ -32,7 +32,7 @@ const phrases:Record<Intent,string[]> = {
   connections:["Jemanden aus der Forschung kennenlernen","Kontakte finden","research contacts","meet someone in research"],
   ehrenamt:["Ich will mich engagieren","ehrenamtlich mitmachen","ich möchte freiwillig mithelfen","volunteering","I'd like to volunteer"],
   short:["Kannst du das einfacher sagen","Kannst du das bitte einfacher erklären","Erklär das nochmal in einfachen Worten","Kurz gesagt","Fass das kurz zusammen","Das verstehe ich nicht","Ich verstehe das nicht","In einfachen Worten","Can you say that more simply","Could you explain in plain English","Can you explain that in simpler words","I don't understand","Give me the short version","Could you rephrase that","What do you mean","Wie meinst du das","Bitte einfacher","simpler please","can you simplify that"],
-  next:["Wie geht es jetzt weiter","was mache ich jetzt","Und dann","was sollen wir als nächstes tun","what now","what's next","how do I get started with that","what do we do next","what's the next step"]
+  next:["Wie geht es jetzt weiter","was mache ich jetzt","Und dann","was sollen wir als nächstes tun","what now","what's next","how do I get started with that","what do we do next","what's the next step","where do I send the details","where should I send that","wohin schicke ich die Angaben","an wen soll ich schreiben"]
 };
 function normalize(s:string) {return s.toLowerCase().normalize("NFKD").replace(/\p{M}/gu,"").replace(/ß/g,"ss").replace(/[’']/g,"").replace(/[^\p{L}\p{N}]+/gu," ").trim();}
 const filler = new Set("ich wir du das der die den dem ein einen einem etwas bitte denn mal und i im am we do can could you me my our a an the please that it to for fur meine mein unser unsere".split(" "));
@@ -114,6 +114,7 @@ export function guidedReply(message:string,en:boolean,history:ChatMessage[],reco
       if(jobs)sources.push({title:en?"ForJu jobs":"Stellen bei ForJu",url:url(jobs.sourceUrl)});
     }
   }
+  else if (kind === "next" && group === "spenden-bestaetigung") answer = en ? card.contentEn : card.content;
   else if(kind==="short" && isTopic(group))answer=brief[group][lang];
   else if(!follow)answer=en?card.contentEn:card.content;
   else if(kind==="next")answer=en?"Open the ForJu page below for the details. If your question is still open, you can ask the team.":"Öffne die ForJu-Seite unten für die Details. Falls deine Frage offenbleibt, kannst du das Team fragen.";

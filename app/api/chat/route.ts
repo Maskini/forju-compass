@@ -29,7 +29,7 @@ export async function POST(request: Request) {
   const retry = process.env.NODE_ENV === "production" ? takeAiRequest(request) : 0;
   if (retry) return NextResponse.json({error:request.headers.get("accept-language")?.startsWith("en") ? "Too many requests. Please try again later." : "Zu viele Anfragen. Bitte versuche es später erneut."},{status:429,headers:{"Retry-After":String(retry)}});
   const history = topicHistory(parsed.history,isGuidedPrompt);
-  const enquiry = visitorEnquiry(message, en, history, parsed.topic, knowledgeCatalog, readerUrl);
+  const enquiry = visitorEnquiry(message, en, history, parsed.topic, knowledgeCatalog, readerUrl, visitorTopic);
   if (enquiry) return NextResponse.json(enquiry);
   const guided = guidedReply(message,en,history,knowledgeCatalog,parsed.topic);
   if (guided) return NextResponse.json(guided);
@@ -40,7 +40,10 @@ export async function POST(request: Request) {
   const registration = /sign[ -]?up|register|registration|book(ing)?|anmeld|melde.{0,24}an|termin vereinbaren/i.test(message);
   function needsContext(question: string) {
     if (visitorTopic(question)) return false;
-    return /^(and |what about|who (can|should)|how (do|can)|und |wie (kann|melde)|an wen)|\b(dafür|dazu|for (it|that)|for this)\b/i.test(question) ||
+    // A conjunction alone also introduces a new subject ("And who won the game?").
+    // Carry earlier words only when the visitor actually refers back.
+    return /\b(dafür|dazu|hierfür|for (it|that|this))\b/i.test(question) ||
+      /^(?:(?:and|und) )?(?:who (?:can|should) (?:we|i) (?:ask|contact)|how (?:do|can) (?:we|i) (?:sign up|register)|wie (?:kann|melde) ich mich|an wen (?:kann|soll|wende))\b/i.test(question) ||
       /^(how much (does|would|is)|what (would it|does it) cost|is (it|that) (free|available)|would (it|that) be|was kostet|kostet (das|es)|ist (es|das) (gratis|kostenlos|verfügbar)|wo (frage|fragen)|where (do|can) (we|i) (ask|request))/i.test(question);
   }
   // Resolve short follow-ups against user questions, never assistant assertions.
@@ -93,15 +96,15 @@ export async function POST(request: Request) {
       }
       return NextResponse.json({mode:"library", topic:first.id, answer:en ? first.contentEn : first.content,sources:[page,form]});
     }
-    if (/\b(contact|kontakt|kontaktieren|erreichen|an wen|ansprechpartner|bewerben|apply)\b/i.test(message)) {
+    if (first && /\b(contact|kontakt|kontaktieren|erreichen|an wen|ansprechpartner|bewerben|apply)\b/i.test(message)) {
       const topic = contextual.toLowerCase();
       const target = /press|presse/.test(topic) ? "presse" : /job|volunteer|bewerb|ehrenamt|apply/.test(topic) ? "ehrenamt" : "kontakt";
       first = local.find(e => e.id === target) ?? selectCatalogKnowledge(localKnowledge(target),target).find(e => e.id === target) ?? first;
     }
     return NextResponse.json(first ? {mode:"library",topic:first.id,answer: en ? first.contentEn : first.content,
-      sources:[{title:en ? first.titleEn : first.title,url:readerUrl(first.url)}]} : {mode:"library", answer:unknown,sources:[]});
+      sources:[{title:en ? first.titleEn : first.title,url:readerUrl(first.url)}]} : {mode:"library", answer:unknown,sources:[],suggestions:en ? ["School workshops","Borrow equipment","Project funding"] : ["Schulworkshops","Messgeräte ausleihen","Projektfinanzierung"]});
   }
-  if (deadline) {
+  if (deadline && local.length) {
     const answer = en ? "I can’t confirm that deadline from the approved ForJu information. Ask ForJu about the specific project and application period."
       : "Diese Frist kann ich mit den geprüften ForJu-Informationen nicht bestätigen. Frag ForJu nach dem konkreten Projekt und dem Bewerbungszeitraum.";
     return NextResponse.json({mode:"library", answer, sources:[{title:en ? "Contact ForJu" : "ForJu kontaktieren", url:readerUrl("https://forju.at/de/kontakt")}]});

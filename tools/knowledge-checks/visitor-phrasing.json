@@ -1,0 +1,12 @@
+[
+ ["en","Could you put our students in touch with a researcher who studies water?","connections"],
+ ["de","Könnt ihr uns mit einer Wissenschaftlerin in Kontakt bringen?","connections"],
+ ["en","We can't afford materials for our experiment. Can ForJu help cover the expenses?","finanzierung"],
+ ["de","Unser Budget reicht nicht für die Bauteile. Gibt es Hilfe für die Materialkosten?","finanzierung"],
+ ["de","Ich habe euch etwas überwiesen und brauche einen Beleg für meine Spende.","spenden-bestaetigung"],
+ ["en","I sent ForJu a donation. How can I get a receipt for it?","spenden-bestaetigung"],
+ ["en","What was the score of the tennis match?",null],
+ ["de","Wie wird das Wetter morgen?",null],
+ ["en","How can I bake a loaf of bread?",null],
+ ["de","Wie weit ist der Mond von der Erde entfernt?",null]
+]

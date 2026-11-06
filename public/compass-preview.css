@@ -1,0 +1,18 @@
+@font-face{font-family:Public Sans;src:url(/forju/fonts/public-sans.woff2) format("woff2");font-display:swap;font-weight:100 900}
+@font-face{font-family:Space Grotesk;src:url(/forju/fonts/space-grotesk.woff2) format("woff2");font-display:swap;font-weight:300 700}
+*{box-sizing:border-box}
+html{min-height:100%;background:#faf5ec url(/forju/paper-fiber-cream.webp)}
+body{margin:0;min-height:100svh;color:#332823;font:1rem/1.55 "Public Sans",sans-serif;
+background:linear-gradient(95deg,rgba(255,250,242,.96) 16%,rgba(255,250,242,.88) 47%,rgba(255,250,242,.12)),url(/forju/background-discover.webp) center / cover no-repeat}
+header,main{width:min(65rem,calc(100% - 3rem));margin-inline:auto}
+header{display:flex;justify-content:space-between;align-items:center;padding:1.4rem 0;border-bottom:1px solid #70584240}
+header img{width:clamp(10rem,22vw,13rem);height:auto}
+nav{display:flex;gap:.3rem}nav a{min-width:2.75rem;padding:.55rem .65rem;text-align:center;text-decoration:none;color:#613a38}
+nav a[aria-current]{border-radius:2rem;background:#f4dce5;font-weight:700}
+main{padding:clamp(4rem,13vh,8.5rem) 0 10rem}
+.preview-label{font-size:.95rem;font-weight:650;color:#864366}
+h1{font:650 clamp(2.25rem,6vw,4.25rem)/1.05 "Space Grotesk",sans-serif;letter-spacing:-.045em;max-width:12ch;margin:.45em 0 .35em}
+main>p:not(.preview-label){font-size:clamp(1.05rem,2vw,1.3rem);max-width:35ch}
+.direct{display:inline-block;color:#862059;text-underline-offset:.22em;padding:.6rem 0}
+a:focus-visible{outline:3px solid #992165;outline-offset:3px;border-radius:4px}
+@media(max-width:38rem){body{background:linear-gradient(180deg,#fff9f0e8 20%,#fff9f0df 57%,#fff9f033),url(/forju/background-discover.webp) center / cover no-repeat}}

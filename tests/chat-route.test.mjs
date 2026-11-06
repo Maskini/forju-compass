@@ -256,3 +256,51 @@ test('a corrected month replaces the old month in a bilingual equipment draft', 
     assert.equal(revised.recipient, 'office@forju.at');
   }), {numRuns:40, seed:11607});
 });
+
+test('both the cited destination and answer topic match visitor goals in German and English', async () => {
+  for (const file of ['questions.json', 'visitor-phrasing.json']) {
+    const scenarios = JSON.parse(readFileSync(new URL('../tools/knowledge-checks/' + file, import.meta.url)));
+    for (const [lang, question, expected] of scenarios) {
+      const reply = await visitor(lang).ask(question);
+      assert.equal(reply.topic ?? null, expected, question);
+      if (!expected) {
+        assert.deepEqual(reply.sources, [], question);
+        assert.ok(reply.suggestions?.length, question);
+        continue;
+      }
+      const card = catalog.find(c => c.id === expected);
+      const destinations = [card.sourceUrl, card.requestUrl].filter(Boolean)
+        .map(url => lang === 'en' ? url.replace('forju.at/de', 'forju.at/en') : url);
+      assert.ok(destinations.includes(reply.sources[0]?.url), question);
+      if (expected === 'spenden-bestaetigung') assert.match(reply.answer, /office@forju\.at/);
+    }
+  }
+});
+
+test('a visitor can change the subject to an unrelated question and recover via a suggestion', async () => {
+  const session = visitor('en');
+  await session.ask('Can our class borrow a microscope?');
+  const unrelated = await session.ask('And who won the football game yesterday?');
+  assert.deepEqual(unrelated.sources, []);
+  const recovered = await session.ask(unrelated.suggestions[0]);
+  assert.equal(recovered.topic, 'workshops');
+  assert.match(recovered.sources[0].url, /schulworkshops/);
+});
+
+test('a receipt or introduction enquiry keeps the right public destination through to an email draft', async () => {
+  const donor = visitor('en');
+  await donor.ask('I sent ForJu a donation. How can I get a receipt for it?');
+  const details = await donor.ask('Where do I send the details?');
+  assert.equal(details.topic, 'spenden-bestaetigung');
+  assert.match(details.answer, /office@forju\.at/);
+  const receipt = await donor.ask('Could you draft an email for me?');
+  assert.equal(receipt.mode, 'draft');
+  assert.match(receipt.answer, /Date of donation: \[date\]/);
+  assert.equal(receipt.recipient, 'office@forju.at');
+  const researcher = visitor('de');
+  await researcher.ask('Könnt ihr uns mit einer Wissenschaftlerin für Luftqualität in Kontakt bringen?');
+  const draft = await researcher.ask('Könnt ihr dafür eine E-Mail formulieren?');
+  assert.equal(draft.topic, 'connections');
+  assert.match(draft.answer, /Luftqualität/);
+  assert.ok(draft.sources.some(s => s.url.endsWith('thema=connections')));
+});

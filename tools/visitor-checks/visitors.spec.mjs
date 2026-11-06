@@ -131,3 +131,23 @@ test('Standalone homepage: turn a school workshop enquiry into a German email', 
   await expect(draft.locator('.chat-answer')).toContainText('zum Klima');
   await expect(draft.getByRole('link',{name:'In Mail-App öffnen'})).toHaveAttribute('href',/^mailto:anja\.hofer@forju\.at\?/);
 });
+
+test('stakeholder preview: launch the German widget and recover from an unrelated question', async ({page}) => {
+  await page.setViewportSize({width:390,height:844});
+  await page.goto('/preview');
+  await expect(page.getByRole('heading', {level:1})).toContainText('ForJu Compass');
+  const host = page.locator('forju-compass-widget');
+  await host.getByRole('button', {name:'ForJu Compass: Chathilfe'}).click();
+  await host.locator('.welcome .start').click();
+  const panel = host.frameLocator('iframe');
+  const turn = await ask(panel,'Wie viele Monde hat der Jupiter?');
+  await expect(turn.locator('.read-more a')).toHaveCount(0);
+  await turn.getByRole('button',{name:'Schulworkshops',exact:true}).click();
+  const reply = panel.locator('[role=log] article').last();
+  await expect(reply.locator('a[href="https://forju.at/de/projects/schulworkshops"]').first()).toBeVisible();
+  await host.getByRole('button',{name:'Chat schließen'}).click();
+  await expect(host.locator('.drawer')).toBeHidden();
+  await page.getByRole('link',{name:'EN',exact:true}).click();
+  await expect(page.locator('html')).toHaveAttribute('lang','en');
+  await expect(page.getByRole('link',{name:'Open chat directly'})).toHaveAttribute('href','/embed?lang=en');
+});
