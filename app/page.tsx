@@ -106,7 +106,7 @@ export default function Home() {
   const official = (path = "") => `https://forju.at/${language}${path}`;
   useEffect(() => { document.documentElement.lang = language; }, [language]);
   const switchLanguage = setAppLanguage;
-  const {question,setQuestion,submittedQuestion,turns,transcript,loading,error,latestSources,submit,setTurns,setSubmittedQuestion,setError} = useCompassChat(language);
+  const {ready,question,setQuestion,submittedQuestion,turns,transcript,loading,error,latestSources,submit,setTurns,setSubmittedQuestion,setError} = useCompassChat(language);
   return (
     <main className="compass-page">
       <Script src="/compass-widget.js" data-welcome="closed" strategy="afterInteractive" />
@@ -245,9 +245,9 @@ export default function Home() {
               onChange={(event) =>
                 setQuestion(event.target.value)
               }
-              placeholder={t("Wobei können wir dich unterstützen?")}
+              placeholder={!ready?(language==="en"?"Opening Compass…":"Compass lädt …"):t("Wobei können wir dich unterstützen?")}
               aria-label={t("Frage an ForJu Compass")}
-              disabled={loading}
+              disabled={!ready || loading}
             />
 
             <span className="search__ai">
@@ -259,7 +259,7 @@ export default function Home() {
               className="search__send"
               type="submit"
               aria-label={t("Frage senden")}
-              disabled={loading || !question.trim()}
+              disabled={!ready || loading || !question.trim()}
               aria-busy={loading}
             >
               <ArrowIcon />
@@ -278,7 +278,7 @@ export default function Home() {
                 onClick={() =>
                   submit(t(item.label))
                 }
-                disabled={loading}
+                disabled={!ready || loading}
               >
                 <span>
                   {item.icon}
@@ -330,13 +330,13 @@ export default function Home() {
                 ))}
                 {loading && <p>{t("ForJu Compass sucht eine Antwort auf")} „{submittedQuestion}“ …</p>}
                 {error && <div role="alert"><p className="chat-error">{t(error)}</p>
-                  <button type="button" className="retry-button" onClick={() => submit(submittedQuestion)} disabled={loading}>{t("Erneut versuchen")}</button>
+                  <button type="button" className="retry-button" onClick={() => submit(submittedQuestion)} disabled={!ready || loading}>{t("Erneut versuchen")}</button>
                 </div>}
               </div>
               <ProjectDraft key={conversationId} lang={language} turns={turns}/>
               {turns.length === 0 && !loading && !error && <a className="answer-cta" href={official("/services")} target="_blank" rel="noopener noreferrer">{t("Mehr erfahren")} <ChevronIcon /></a>}
               {(turns.length > 0 || error) && (
-                <button type="button" className="answer-cta" disabled={loading} onClick={() => {
+                <button type="button" className="answer-cta" disabled={!ready || loading} onClick={() => {
                   setConversationId(id => id + 1); setTurns([]); setQuestion(""); setSubmittedQuestion(""); setError("");
                 }}>{t("Neues Gespräch")}</button>
               )}

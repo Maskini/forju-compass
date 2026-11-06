@@ -21,7 +21,7 @@ function Icon({type}:{type:string}){
 }
 export default function CompassPanel({initialLanguage,widget=false}:{initialLanguage:"de"|"en";widget?:boolean}){
   const [lang,setLang]=useState(initialLanguage), en=lang==="en";
-  const {question,setQuestion,turns,transcript,loading,error,submittedQuestion,submit}=useCompassChat(lang);
+  const {ready,question,setQuestion,turns,transcript,loading,error,submittedQuestion,submit}=useCompassChat(lang);
   const [fileError,setFileError]=useState(""),file=useRef<HTMLInputElement>(null);
   const pending=useRef<{topic:Topic;lang:"en"|"de"}|null>(null);
   const handleMessage=useEffectEvent((e:MessageEvent)=>{
@@ -58,7 +58,7 @@ export default function CompassPanel({initialLanguage,widget=false}:{initialLang
       <section className="greeting"><img src="/forju/origami/pink-airplane.png" alt=""/><h1>{en?"Hello!":"Hallo!"} 👋</h1>
         <p>{en?"I’m ForJu Compass. Ask me about projects, support for young researchers and ways to get involved.":"Ich bin ForJu Compass und unterstütze dich bei Fragen zu unseren Projekten, Angeboten und rund um Forschung und Engagement für junge Menschen."}</p>
         <h2>{en?"Popular questions":"Beliebte Fragen"}</h2>
-        <div className="suggestions">{suggestions.map(t=><button className={t} key={t} disabled={loading} onClick={()=>submit(prompts[t][en?1:0])}><i><Icon type={t}/></i><span>{prompts[t][en?1:0]}</span><b>›</b></button>)}</div>
+        <div className="suggestions">{suggestions.map(t=><button className={t} key={t} disabled={!ready||loading} onClick={()=>submit(prompts[t][en?1:0])}><i><Icon type={t}/></i><span>{prompts[t][en?1:0]}</span><b>›</b></button>)}</div>
       </section>
       <div role="log" aria-live="polite" aria-relevant="additions">{turns.map((turn,i)=><article key={i}>
         <div className="question-bubble"><p>{turn.question}</p><i><Icon type="user"/></i></div>
@@ -98,8 +98,8 @@ export default function CompassPanel({initialLanguage,widget=false}:{initialLang
         }catch{setFileError(en?"Choose a TXT or Markdown file that fits in the 2,000-character question.":"Bitte eine TXT- oder Markdown-Datei wählen, die in die Frage mit 2.000 Zeichen passt.");}
       }}/>
       <button type="button" title={en?"Insert text from a file":"Text aus Datei einfügen"} aria-label={en?"Insert text from a file":"Text aus Datei einfügen"} onClick={()=>file.current?.click()}><Icon type="clip"/></button>
-      <input aria-label={en?"Your question":"Deine Frage"} type="text" maxLength={MAX_MESSAGE_LENGTH} value={question} onChange={e=>setQuestion(e.target.value)} placeholder={en?"Ask ForJu Compass…":"Stelle deine Frage an ForJu Compass …"}/>
-      <button className="send" type="submit" disabled={loading||!question.trim()} aria-label={en?"Send question":"Frage senden"}><Icon type="send"/></button></div>
+      <input disabled={!ready} aria-label={en?"Your question":"Deine Frage"} type="text" maxLength={MAX_MESSAGE_LENGTH} value={question} onChange={e=>setQuestion(e.target.value)} placeholder={!ready?(en?"Opening Compass…":"Compass lädt …"):en?"Ask ForJu Compass…":"Stelle deine Frage an ForJu Compass …"}/>
+      <button className="send" type="submit" disabled={!ready||loading||!question.trim()} aria-label={en?"Send question":"Frage senden"}><Icon type="send"/></button></div>
       {fileError&&<span role="alert">{fileError}</span>}
       <small>{en?"ForJu Compass can make mistakes. Please check important information.":"ForJu Compass kann Fehler machen. Bitte prüfe wichtige Informationen."}</small>
     </form>

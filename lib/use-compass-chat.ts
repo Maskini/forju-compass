@@ -1,7 +1,12 @@
 "use client";
-import {useEffect,useRef,useState} from "react";
+import {useEffect,useRef,useState,useSyncExternalStore} from "react";
 import {MAX_HISTORY_MESSAGES, MAX_MESSAGE_LENGTH, safeSourceUrl, type ChatMessage, type Source} from "@/lib/chat";
+// Static HTML can arrive well before React attaches the submit handler.
+const subscribe = () => () => {};
+const clientReady = () => true;
+const serverReady = () => false;
 export function useCompassChat(language:"en"|"de") {
+  const ready = useSyncExternalStore(subscribe,clientReady,serverReady);
   const [question, setQuestion] = useState("");
   const [submittedQuestion, setSubmittedQuestion] = useState("");
 
@@ -77,5 +82,5 @@ export function useCompassChat(language:"en"|"de") {
     }
   }
 
-  return {question,setQuestion,submittedQuestion,turns,transcript,loading,error,latestSources,submit,setTurns,setSubmittedQuestion,setError};
+  return {ready,question,setQuestion,submittedQuestion,turns,transcript,loading,error,latestSources,submit,setTurns,setSubmittedQuestion,setError};
 }
