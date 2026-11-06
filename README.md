@@ -1,5 +1,7 @@
 # ForJu Compass
 
+For the production release gate, run `npm run test:release`. See the [release decision and evidence](docs/release-audit.md) and [offline suite instructions](tools/release/README.md).
+
 Bilingual visitor assistant for ForJu. The standalone page and the embeddable
 chat use the same server route and reviewed public knowledge catalog.
 

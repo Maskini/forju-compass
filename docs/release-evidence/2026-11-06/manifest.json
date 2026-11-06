@@ -1,0 +1,61 @@
+{
+  "candidate": "996f9f1fbafabf9a4b6bfc53cb3796763fc8074c",
+  "run": "20261106T220429Z-final-66770",
+  "stages": {
+    "unit": "PASS",
+    "lint": "PASS",
+    "build": "PASS",
+    "quality": "PASS",
+    "project-inbox": "PASS",
+    "security": "PASS",
+    "browser": "PASS",
+    "load": "PASS",
+    "zap": "PASS",
+    "zap-findings": "PASS",
+    "server-egress": "PASS"
+  },
+  "browser_projects": {
+    "chromium": 20,
+    "firefox": 20,
+    "webkit": 20,
+    "mobile-webkit": 8
+  },
+  "local_feedback_receipts": 8,
+  "first_attempt_unfamiliar": {
+    "passed": 4,
+    "cases": 7
+  },
+  "promptfoo_cases": 19,
+  "raw_sha256": {
+    "promptfoo.json": "b5eb80cb40fef0b5bfa2eba150eb6fba9b11db1599f6af10eb7f153a14c63823",
+    "playwright.json": "aa9f0457b15c67cab782051c36c5bca0f165af52e4a8d4a933505f8226b9aa22",
+    "load.json": "9035b32c5f2485303f92e750ae270f99d71f86921985d74656260b7d5d4a29fa",
+    "zap.json": "d84b085f5b879c9a7a96e81c10f9d48c3b7e796a043f32e3ab005e5215f1c043",
+    "final-answers.jsonl": "b94461fa534a72d69dc5584f0a7ae6aee767d567daac9527e98693c0fc7aeff7"
+  },
+  "zap_urls": 42,
+  "live": {
+    "checkedAt": "2026-11-06T22:14:37.097Z",
+    "scope": "read-only, no chat/report/project POST",
+    "website": [
+      {
+        "url": "https://forju.at/de",
+        "http": 200,
+        "widget": false,
+        "script": false,
+        "frame": false
+      },
+      {
+        "url": "https://forju.at/en",
+        "http": 200,
+        "widget": false,
+        "script": false,
+        "frame": false
+      }
+    ],
+    "projectStatus": {
+      "http": 200,
+      "direct": false
+    }
+  }
+}

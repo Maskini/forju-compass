@@ -1,0 +1,24 @@
+{
+  "checkedAt": "2026-11-06T22:14:37.097Z",
+  "scope": "read-only, no chat/report/project POST",
+  "website": [
+    {
+      "url": "https://forju.at/de",
+      "http": 200,
+      "widget": false,
+      "script": false,
+      "frame": false
+    },
+    {
+      "url": "https://forju.at/en",
+      "http": 200,
+      "widget": false,
+      "script": false,
+      "frame": false
+    }
+  ],
+  "projectStatus": {
+    "http": 200,
+    "direct": false
+  }
+}

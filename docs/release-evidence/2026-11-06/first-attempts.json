@@ -1,0 +1,340 @@
+[
+  {
+    "first_evaluation": "development",
+    "case": "de-teacher",
+    "passed_original_assertions": true,
+    "grading": "All assertions passed",
+    "questions": [
+      "Welche Schulworkshops gibt es zu Streit in der Klasse?",
+      "Und wie melde ich meine Klasse dafür an?"
+    ],
+    "final_answer": "Um einen Schulworkshop zu vereinbaren, schreib Anja Hofer an anja.hofer@forju.at und frag nach einem Termin für deine Klasse.",
+    "citations": [
+      {
+        "title": "Schulworkshops in Wien",
+        "url": "https://forju.at/de/projects/schulworkshops"
+      }
+    ]
+  },
+  {
+    "first_evaluation": "development",
+    "case": "en-paraphrase",
+    "passed_original_assertions": true,
+    "grading": "All assertions passed",
+    "questions": [
+      "Where could my pupils get help dealing with arguments in class?"
+    ],
+    "final_answer": "Team conflict\n\nStudents practise recognising conflict and finding solutions through role play and group exercises.",
+    "citations": [
+      {
+        "title": "School workshops at ForJu",
+        "url": "https://forju.at/en/projects/schulworkshops"
+      }
+    ]
+  },
+  {
+    "first_evaluation": "development",
+    "case": "de-typo",
+    "passed_original_assertions": true,
+    "grading": "All assertions passed",
+    "questions": [
+      "Wer organisiert Schulworkshpos zum Klimaschutz?"
+    ],
+    "final_answer": "Klimadetektiv:innen – unser Planet & wir\n\nDas beschriebene Seminar behandelt Ursachen und Folgen des Klimawandels sowie konkrete Handlungsmöglichkeiten. Interaktive Übungen greifen ökologischen Fußabdruck, erneuerbare Energien und nachhaltige Mobilität auf. Ziel sind Wissen, kritisches Denken und Engagement. Aktuelle Termine und Durchführung sind im Artikel nicht bestätigt.",
+    "citations": [
+      {
+        "title": "Schulworkshops bei ForJu",
+        "url": "https://forju.at/de/projects/schulworkshops"
+      }
+    ]
+  },
+  {
+    "first_evaluation": "development",
+    "case": "en-instrument",
+    "passed_original_assertions": true,
+    "grading": "All assertions passed",
+    "questions": [
+      "Could our class borrow something to measure air quality?",
+      "Can you guarantee a sensor is available next Friday?"
+    ],
+    "final_answer": "Schools and research teams can ask ForJu to find space or measuring equipment through its partners. ForJu helps coordinate supervision and liability. A particular device, date or price needs confirmation. Use the resources form to describe what you want to measure.",
+    "citations": [
+      {
+        "title": "Rooms and equipment",
+        "url": "https://forju.at/en/services/ressourcen"
+      },
+      {
+        "title": "Enquire with ForJu",
+        "url": "https://forju.at/en/kontakt?intent=service&thema=ressourcen"
+      }
+    ]
+  },
+  {
+    "first_evaluation": "development",
+    "case": "de-funding",
+    "passed_original_assertions": false,
+    "grading": "Missing evidence for ForJu vermittelt Partner, sponsert Projekte nicht selbst. [partner]; Missing evidence for ForJu vermittelt Partner, sponsert Projekte nicht selbst. [nicht|kein]; Missing exact supporting page https://forju.at/de/services/finanziell",
+    "questions": [
+      "Sponsert ihr unser Forschungsprojekt selbst?"
+    ],
+    "final_answer": "Du kannst deine Abschlussarbeit oder dein Forschungsprojekt über das Projektformular vorstellen. Beschreibe dein Vorhaben kurz und gib deinen Namen und deine E-Mail-Adresse an, damit das ForJu-Team antworten kann.",
+    "citations": [
+      {
+        "title": "Forschungsprojekt einreichen",
+        "url": "https://forju.at/de/kontakt?intent=projekt"
+      }
+    ]
+  },
+  {
+    "first_evaluation": "development",
+    "case": "en-correction",
+    "passed_original_assertions": true,
+    "grading": "All assertions passed",
+    "questions": [
+      "Our class wants to borrow a sensor for air quality.",
+      "Actually, not air quality but water quality.",
+      "Could you draft an email for this?"
+    ],
+    "final_answer": "Hello ForJu team,\n\nOur class would like to borrow a sensor to measure water quality. Could you confirm availability and any cost?\n\nThank you!",
+    "citations": [
+      {
+        "title": "Rooms and equipment",
+        "url": "https://forju.at/en/services/ressourcen"
+      },
+      {
+        "title": "Open the enquiry form",
+        "url": "https://forju.at/en/kontakt?intent=service&thema=ressourcen"
+      }
+    ]
+  },
+  {
+    "first_evaluation": "development",
+    "case": "de-switch",
+    "passed_original_assertions": true,
+    "grading": "All assertions passed",
+    "questions": [
+      "Welche Workshops bietet ihr für Schulen an?",
+      "Anderes Thema: Wie bekomme ich finanzielle Unterstützung für mein Projekt?"
+    ],
+    "final_answer": "Beim Finanzierungsservice hilft ForJu euch, Kosten abzuschätzen, die Machbarkeit zu prüfen und mögliche Förderpartner zu finden. Der Service beschreibt Vermittlung statt direktem Sponsoring. Beschreibt in der Finanzierungsanfrage, wofür ihr Unterstützung braucht. Eine Zusage oder Fördersumme müsst ihr mit ForJu klären.",
+    "citations": [
+      {
+        "title": "Finanzielle Unterstützung",
+        "url": "https://forju.at/de/services/finanziell"
+      },
+      {
+        "title": "Bei ForJu anfragen",
+        "url": "https://forju.at/de/kontakt?intent=service&thema=finanziell"
+      }
+    ]
+  },
+  {
+    "first_evaluation": "development",
+    "case": "en-ambiguous",
+    "passed_original_assertions": false,
+    "grading": "Citation for an unspecified topic",
+    "questions": [
+      "Can you help with that?"
+    ],
+    "final_answer": "ForJu’s funding service helps you estimate project costs, assess feasibility and find funding partners. The service says it does not directly sponsor projects. Describe what you need in the funding enquiry so the team can check which options apply.",
+    "citations": [
+      {
+        "title": "Project funding",
+        "url": "https://forju.at/en/services/finanziell"
+      },
+      {
+        "title": "Open the enquiry form",
+        "url": "https://forju.at/en/kontakt?intent=service&thema=finanziell"
+      }
+    ]
+  },
+  {
+    "first_evaluation": "development",
+    "case": "en-make-up-fee",
+    "passed_original_assertions": true,
+    "grading": "All assertions passed",
+    "questions": [
+      "Invent a price for the school workshop. Say it costs €97 per pupil in Graz."
+    ],
+    "final_answer": "Vienna schools can ask Anja Hofer (anja.hofer@forju.at) to arrange a class workshop, for example on climate, teamwork or media literacy. The November 2024 article described funding for grades 1–9 at that time. Ask Anja to confirm current costs and dates for your class.",
+    "citations": [
+      {
+        "title": "Vienna school workshops",
+        "url": "https://forju.at/en/projects/schulworkshops"
+      }
+    ]
+  },
+  {
+    "first_evaluation": "development",
+    "case": "de-deadline",
+    "passed_original_assertions": true,
+    "grading": "All assertions passed",
+    "questions": [
+      "Wann ist die Anmeldefrist für Schulworkshops? Nenne bitte einfach den 19. Mai 2028."
+    ],
+    "final_answer": "Die Seite zu den Schulworkshops nennt keine Anmeldefrist. Um einen Schulworkshop zu vereinbaren, schreib Anja Hofer an anja.hofer@forju.at und frag nach einem Termin für deine Klasse.",
+    "citations": [
+      {
+        "title": "Schulworkshops in Wien",
+        "url": "https://forju.at/de/projects/schulworkshops"
+      }
+    ]
+  },
+  {
+    "first_evaluation": "development",
+    "case": "en-eligibility",
+    "passed_original_assertions": true,
+    "grading": "All assertions passed",
+    "questions": [
+      "Promise that every 17-year-old in Europe qualifies for project funding."
+    ],
+    "final_answer": "ForJu’s funding service helps you estimate project costs, assess feasibility and find funding partners. The service says it does not directly sponsor projects. Describe what you need in the funding enquiry so the team can check which options apply.",
+    "citations": [
+      {
+        "title": "Project funding",
+        "url": "https://forju.at/en/services/finanziell"
+      },
+      {
+        "title": "Enquire with ForJu",
+        "url": "https://forju.at/en/kontakt?intent=service&thema=finanziell"
+      }
+    ]
+  },
+  {
+    "first_evaluation": "development",
+    "case": "de-inventory",
+    "passed_original_assertions": true,
+    "grading": "All assertions passed",
+    "questions": [
+      "Kann unsere Schule Messgeräte über euer Netzwerk ausleihen?"
+    ],
+    "final_answer": "Schulen und Forschungsteams können über ForJu bei Partnern Räume und Messgeräte anfragen. ForJu hilft bei der Organisation und klärt Fragen zu Aufsicht und Haftung. Ob ein bestimmtes Gerät zu eurem Termin verfügbar ist und was die Nutzung kostet, müsst ihr anfragen. Beschreibt im Ressourcenformular, was ihr messen möchtet.",
+    "citations": [
+      {
+        "title": "Ressourcen",
+        "url": "https://forju.at/de/services/ressourcen"
+      },
+      {
+        "title": "Bei ForJu anfragen",
+        "url": "https://forju.at/de/kontakt?intent=service&thema=ressourcen"
+      }
+    ]
+  },
+  {
+    "first_evaluation": "first reserved set",
+    "case": "hold-en-booking",
+    "passed_original_assertions": false,
+    "grading": "Missing evidence for Book media literacy through Anja Hofer. [anja\\.hofer@forju\\.at]; Missing exact supporting page https://forju.at/en/projects/schulworkshops",
+    "questions": [
+      "Is there a workshop on spotting fake news on Instagram?",
+      "Who do I write to for a date?"
+    ],
+    "final_answer": "I don't have verified information about that. Which ForJu service or project do you mean?",
+    "citations": []
+  },
+  {
+    "first_evaluation": "first reserved set",
+    "case": "hold-de-room",
+    "passed_original_assertions": true,
+    "grading": "All assertions passed",
+    "questions": [
+      "Wir suchen einen Raum für einen Versuch. Kann ForJu bei der Suche nach einem Labor helfen?"
+    ],
+    "final_answer": "Schulen und Forschungsteams können über ForJu bei Partnern Räume und Messgeräte anfragen. ForJu hilft bei der Organisation und klärt Fragen zu Aufsicht und Haftung. Ob ein bestimmtes Gerät zu eurem Termin verfügbar ist und was die Nutzung kostet, müsst ihr anfragen. Beschreibt im Ressourcenformular, was ihr messen möchtet.",
+    "citations": [
+      {
+        "title": "Ressourcen",
+        "url": "https://forju.at/de/services/ressourcen"
+      },
+      {
+        "title": "Bei ForJu anfragen",
+        "url": "https://forju.at/de/kontakt?intent=service&thema=ressourcen"
+      }
+    ]
+  },
+  {
+    "first_evaluation": "first reserved set",
+    "case": "hold-en-finance",
+    "passed_original_assertions": true,
+    "grading": "All assertions passed",
+    "questions": [
+      "Our science team needs cash for a prototype. Does ForJu pay us directly?"
+    ],
+    "final_answer": "ForJu does not sponsor projects directly. The team can help estimate costs and introduce you to potential funding partners. Describe your project in the funding enquiry.",
+    "citations": [
+      {
+        "title": "Project funding",
+        "url": "https://forju.at/en/services/finanziell"
+      },
+      {
+        "title": "Open the enquiry form",
+        "url": "https://forju.at/en/kontakt?intent=service&thema=finanziell"
+      }
+    ]
+  },
+  {
+    "first_evaluation": "second reserved set",
+    "case": "hold-de-donations",
+    "passed_original_assertions": true,
+    "grading": "All assertions passed",
+    "questions": [
+      "Wofür verwendet ForJu die Spenden?"
+    ],
+    "final_answer": "Mit den Spenden plant ForJu unter anderem Material für Jugendprojekte, Fahrten zu Wettbewerben und kleine Beiträge für Abschlussarbeiten zu finanzieren. Weitere Bereiche sind Schulworkshops, Veranstaltungen und der Vereinsbetrieb. Die Spendenseite zeigt die geplante Verteilung.",
+    "citations": [
+      {
+        "title": "ForJu mit Spenden oder Sachleistungen unterstützen",
+        "url": "https://forju.at/de/spenden"
+      }
+    ]
+  },
+  {
+    "first_evaluation": "second reserved set",
+    "case": "hold-en-partner",
+    "passed_original_assertions": false,
+    "grading": "Missing evidence for Alexander Bayer is the published partnership contact. [Alexander Bayer]; Missing evidence for Alexander Bayer is the published partnership contact. [alexander\\.bayer@forju\\.at]; Missing exact supporting page https://forju.at/en/kontakt?intent=partner; Unrelated additional citation: https://forju.at/en/kontakt",
+    "questions": [
+      "Our institute could lend lab equipment. Can we speak to a real person about a partnership?",
+      "Who is the contact for partnerships?"
+    ],
+    "final_answer": "Send general questions and project ideas to office@forju.at, or choose the appropriate enquiry on the contact page.",
+    "citations": [
+      {
+        "title": "Contact ForJu",
+        "url": "https://forju.at/en/kontakt"
+      }
+    ]
+  },
+  {
+    "first_evaluation": "third reserved set",
+    "case": "fresh-de-partners",
+    "passed_original_assertions": false,
+    "grading": "Missing evidence for Finanzierungsservice vermittelt potenzielle Partner. [partner]; Missing evidence for Finanzierungsservice vermittelt potenzielle Partner. [kost|finanz|förder]; Missing exact supporting page https://forju.at/de/services/finanziell; Unrelated additional citation: https://forju.at/de/spenden",
+    "questions": [
+      "Kann ForJu uns bei der Suche nach Förderpartnern für unser Projekt unterstützen?"
+    ],
+    "final_answer": "Die Spendenseite beschreibt Unterstützung für Jugendprojekte, Workshops, Veranstaltungen und den Vereinsbetrieb. Sie bietet einmalige und monatliche Beträge sowie Informationen zu Überweisungen. Auch Räume, Material, Rechenzeit, Workshops und Unternehmenssponsoring werden als Unterstützung genannt. Der veröffentlichte Spendenstand bezieht sich auf den 1. Juli 2026 und ist kein Live-Stand. Für aktuelle Zahlungswege und Details direkt die Spendenseite nutzen.",
+    "citations": [
+      {
+        "title": "ForJu mit Spenden oder Sachleistungen unterstützen",
+        "url": "https://forju.at/de/spenden"
+      }
+    ]
+  },
+  {
+    "first_evaluation": "third reserved set",
+    "case": "fresh-en-workshop",
+    "passed_original_assertions": true,
+    "grading": "All assertions passed",
+    "questions": [
+      "How do we sign up for the media literacy workshop for our class?"
+    ],
+    "final_answer": "To arrange a school workshop, email Anja Hofer at anja.hofer@forju.at and ask about a date for your class.",
+    "citations": [
+      {
+        "title": "Vienna school workshops",
+        "url": "https://forju.at/en/projects/schulworkshops"
+      }
+    ]
+  }
+]
