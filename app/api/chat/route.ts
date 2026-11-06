@@ -1,3 +1,4 @@
+import { visitorEnquiry } from "@/lib/visitor-enquiry";
 import {guidedReply,isGuidedPrompt} from "@/lib/dialogue";
 import {conversationalReply, questionAfterGreeting, topicHistory} from "@/lib/conversation";
 import { takeAiRequest } from "@/lib/server/ai-limit";
@@ -28,6 +29,8 @@ export async function POST(request: Request) {
   const retry = process.env.NODE_ENV === "production" ? takeAiRequest(request) : 0;
   if (retry) return NextResponse.json({error:request.headers.get("accept-language")?.startsWith("en") ? "Too many requests. Please try again later." : "Zu viele Anfragen. Bitte versuche es später erneut."},{status:429,headers:{"Retry-After":String(retry)}});
   const history = topicHistory(parsed.history,isGuidedPrompt);
+  const enquiry = visitorEnquiry(message, en, history, parsed.topic, knowledgeCatalog, readerUrl);
+  if (enquiry) return NextResponse.json(enquiry);
   const guided = guidedReply(message,en,history,knowledgeCatalog,parsed.topic);
   if (guided) return NextResponse.json(guided);
   const social = conversationalReply(parsed.message, englishUI);

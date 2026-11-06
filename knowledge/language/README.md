@@ -1,0 +1,3 @@
+Austrian place names are adapted from [GeoNames AT.zip](https://download.geonames.org/export/dump/AT.zip), accessed 6 November 2026, under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). The extract retains only unique names of selected administrative areas and settlements. To refresh, download AT.zip and run `python3 scripts/extract-austrian-places.py /path/to/AT.zip`.
+
+Names help Compass interpret visitor wording. Eligibility and service information come exclusively from the approved ForJu catalog. No location lookup is sent to GeoNames. Date recognition uses chrono-node (MIT, see docs/licenses/chrono-node.txt). Compass uses the matched text and never converts it to a guessed calendar date.

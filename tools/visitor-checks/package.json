@@ -1,0 +1,13 @@
+{
+  "name": "compass-visitor-checks",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node run.mjs",
+    "sources": "node sources.mjs"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.65.0",
+    "@axe-core/playwright": "4.14.0"
+  }
+}

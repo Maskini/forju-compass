@@ -828,3 +828,14 @@ button.quick-action:active:not(:disabled), .footer-pill:not(.footer-pill--pink):
 .chat-choices{display:flex;flex-wrap:wrap;gap:.45rem;margin:.6rem 0}
 .chat-choices button{max-width:100%;padding:.55rem .85rem;border:1px solid #e0bacb;border-radius:1.3rem;color:#821452;background:#fff8fb;font:inherit;font-size:.9rem;cursor:pointer;text-align:start}
 .chat-choices button:hover,.chat-choices button:focus-visible{background:#fae4ef}
+
+.enquiry-draft{min-width:0}
+.enquiry-draft .chat-answer{white-space:pre-wrap}
+.enquiry-draft label{display:block;font-weight:600}
+.enquiry-draft textarea{box-sizing:border-box;display:block;width:100%;min-height:9rem;margin:.4rem 0;padding:.65rem;font:inherit;font-weight:400;font-size:1rem;line-height:1.45;border:1px solid #917f84;border-radius:.65rem;background:#fffdfb;color:#302226}
+.enquiry-actions{display:flex;align-items:center;flex-wrap:wrap;gap:.45rem;margin-top:.7rem}
+.enquiry-actions button{font:inherit;font-size:.9rem;min-height:2.75rem;padding:.4rem .9rem;border-radius:2rem;border:1px solid #ccacba;background:#fff8fb;color:#821452;cursor:pointer}
+.enquiry-actions button:hover,.enquiry-actions button:focus-visible{background:#fae4ef}
+.enquiry-draft [role=status]:not(:empty){display:block;margin-top:.4rem}
+
+.enquiry-actions a{color:#821452;text-decoration:underline;padding:.45rem}

@@ -4,6 +4,7 @@ import { readFileSync } from 'node:fs';
 import ts from 'typescript';
 import * as chat from '../lib/chat.ts';
 import {guidedReply,isGuidedPrompt} from '../lib/dialogue.ts';
+import {visitorEnquiry} from '../lib/visitor-enquiry.ts';
 import * as conversation from '../lib/conversation.ts';
 
 const catalog = JSON.parse(readFileSync(new URL('../knowledge/catalog.json',import.meta.url),'utf8'));
@@ -18,7 +19,7 @@ function setup({matches=[],searchError=null,answer=JSON.stringify({paragraphs:[{
     embeddings={create:async (input)=>{calls.embeddings.push(input);return {data:[{embedding:[0.1]}]};}};
     responses={create:async (input)=>{calls.responses.push(input);return {status,output_text:answer};}};
   }
-  const modules={"@/lib/dialogue":{guidedReply,isGuidedPrompt},"@/lib/conversation":conversation,"@/lib/server/ai-limit":{takeAiRequest:()=>0},openai:{default:OpenAI},'next/server':{NextResponse:Response},'@/lib/chat':chat,'@/lib/knowledge':knowledgeModule,'@/lib/server/public-retrieval':{retrievePublicKnowledge:async()=>{if(searchError)throw Error('Search failed');return matches;}}};
+  const modules={"@/lib/visitor-enquiry":{visitorEnquiry},"@/lib/dialogue":{guidedReply,isGuidedPrompt},"@/lib/conversation":conversation,"@/lib/server/ai-limit":{takeAiRequest:()=>0},openai:{default:OpenAI},'next/server':{NextResponse:Response},'@/lib/chat':chat,'@/lib/knowledge':knowledgeModule,'@/lib/server/public-retrieval':{retrievePublicKnowledge:async()=>{if(searchError)throw Error('Search failed');return matches;}}};
   const exports={};
   new Function('require','exports',compiled)((id)=>modules[id],exports);
   return {POST:exports.POST,calls};
@@ -176,4 +177,45 @@ test('a bare yes does not guess which option, and the pronoun it does not imply 
   const initial=await v.ask('Can you help me?');
   const yes=await v.ask('yes');assert.deepEqual(yes.suggestions,initial.suggestions);assert.equal(yes.suggestions.length,3);assert.deepEqual(yes.sources,[]);
   const vague=await visitor('en').ask('Does it quack?');assert.deepEqual(vague.sources,[]);
+});
+
+test('a German workshop enquiry retains the town, workshop theme and the public workshop contact',async()=>{
+  const v=visitor('de');
+  const first=await v.ask('Wir kommen aus Wiener Neustadt und suchen einen Workshop zum Klima. Geht das bei uns auch?');
+  assert.match(first.answer,/Workshop in Wiener Neustadt/);
+  assert.match(first.answer,/geht daraus nicht hervor/);
+  const draft=await v.ask('Kannst du uns eine E-Mail schreiben?');
+  assert.equal(draft.mode,'draft');assert.equal(draft.recipient,'anja.hofer@forju.at');
+  assert.match(draft.answer,/Workshop zum Klima für unsere Klasse in Wiener Neustadt/);
+  assert.deepEqual(v.calls,{embeddings:[],responses:[]});
+});
+
+test('equipment email uses the latest time in the visitor’s own words and only relevant details',async()=>{
+  const v=visitor('en');
+  await v.ask('Our class wants to borrow a sensor to measure air quality in March.');
+  const first=await v.ask('Could you draft an email?');
+  assert.match(first.answer,/Preferred timing: March/);assert.equal(first.recipient,'office@forju.at');
+  const corrected=await v.ask('Actually in two weeks instead of March.');
+  assert.equal(corrected.mode,'draft');assert.match(corrected.answer,/air quality/);
+  assert.match(corrected.answer,/Preferred timing: in two weeks/);assert.doesNotMatch(corrected.answer,/March/);
+  assert.deepEqual(v.calls,{embeddings:[],responses:[]});
+});
+
+test('clarify an unanchored draft request and handle bare German months and uncertain dates',async()=>{
+  const v=visitor('de');
+  const prompt=await v.ask('Kannst du eine E-Mail formulieren?');
+  assert.equal(prompt.mode,'conversation');assert.deepEqual(prompt.sources,[]);
+  const draft=await v.ask('Unsere Klasse möchte im März ein Mikroskop ausleihen.');
+  assert.equal(draft.mode,'draft');assert.match(draft.answer,/Mikroskop/);assert.match(draft.answer,/Zeitraum: März/);
+  const next=await v.ask('Korrektur: Termin noch offen.');
+  assert.equal(next.mode,'draft');assert.doesNotMatch(next.answer,/März|Zeitraum:/);
+});
+
+test('a new equipment request leaves the previous workshop location and month out of the draft',async()=>{
+  const v=visitor('en');
+  await v.ask('Does ForJu offer workshops for schools in Linz in April?');
+  const draft=await v.ask('Draft an email about borrowing a microscope.');
+  assert.equal(draft.mode,'draft');assert.match(draft.answer,/microscope/);
+  assert.doesNotMatch(draft.answer,/April|Linz|workshop/i);
+  const contact=await v.ask('Who should I contact?');assert.notEqual(contact.mode,'draft');
 });

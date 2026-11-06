@@ -20,5 +20,5 @@ needs write access to its quota database under work/ (or COMPASS_QUOTA_DB).
 External AI is opt-in via COMPASS_LOCAL_ONLY=false and server credentials.
 Feedback delivery has separate server-only settings.
 
-See [installation](docs/embed.md), [release and rollback](docs/deployment.md)
-and [updating approved content](docs/public-knowledge.md).
+See [installation](docs/embed.md), [release and rollback](docs/deployment.md), [updating approved content](docs/public-knowledge.md) and the
+[visitor release checks](tools/visitor-checks/README.md).

@@ -532,6 +532,11 @@
     "active": true,
     "indexTitle": "forju-public:workshops:8fbddd30fc3a",
     "titleEn": "Vienna school workshops",
+    "coverage": {
+      "places": ["Wien", "Vienna"],
+      "de": "ForJu beschreibt Workshops für Wiener Schulen.",
+      "en": "ForJu’s workshop page describes workshops for schools in Vienna."
+    },
     "booking": {
       "de": "Um einen Schulworkshop zu vereinbaren, schreib Anja Hofer an anja.hofer@forju.at und frag nach einem Termin für deine Klasse.",
       "en": "To arrange a school workshop, email Anja Hofer at anja.hofer@forju.at and ask about a date for your class."

@@ -1,5 +1,6 @@
 "use client";
 
+import {EnquiryDraft} from "@/app/components/enquiry-draft";
 import {ChatChoices} from "@/app/components/chat-choices";
 import { useEffect, useState, useRef, type ReactNode } from "react";
 import { useAppLanguage, setAppLanguage } from "@/lib/language";
@@ -314,7 +315,7 @@ export default function Home() {
                   <div className="chat-turn" key={index}>
                     <p className="answer-copy__question">{t("Du")}: {turn.question}</p>
                     {turn.library && <small>{language === "en" ? "From the public knowledge catalog" : "Aus dem öffentlichen Wissenskatalog"}</small>}
-                    <p className="chat-answer">{turn.answer}</p>
+                    {turn.draft ? <EnquiryDraft answer={turn.answer} recipient={turn.recipient} en={language==="en"}/> : <p className="chat-answer">{turn.answer}</p>}
         <button type="button" className="report-answer" aria-haspopup="dialog" onClick={e=>reports.current?.reportAnswer(turn,e.currentTarget)}>{language==="en"?"Report this answer":"Diese Antwort melden"}</button>
                     <KnowledgeFeedback question={turn.question} language={language} />
                     {turn.sources.length > 0 && (
