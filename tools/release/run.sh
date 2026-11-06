@@ -35,6 +35,11 @@ git ls-files -co --exclude-standard -z -- app lib public tests knowledge/catalog
   tools/knowledge-checks/'*.json' tools/visitor-checks/'*.mjs' tools/visitor-checks/package.json tools/release \
   tsconfig.json proxy.ts next.config.ts eslint.config.mjs postcss.config.mjs package.json .node-version \
   | COPYFILE_DISABLE=1 tar -cf - --null -T - | docker exec -i "$box" tar --warning=no-unknown-keyword -xf - -C /app
+# Freeze the same test inputs for the three independent tool containers.
+mkdir -p "$out/fixtures"
+docker cp "$box:/app/tools/release/quality" "$out/fixtures/quality"
+docker cp "$box:/app/tools/release/load.js" "$out/fixtures/load.js"
+docker cp "$box:/app/tools/release/zap-hook.py" "$out/fixtures/zap-hook.py"
 inside(){ docker exec "$box" "$@"; }
 failed=0
 stage(){
@@ -54,7 +59,7 @@ docker exec -d "$box" sh -c 'NODE_OPTIONS=--require=/app/tools/release/server-ob
 inside node -e '(async()=>{for(let i=0;i<80;i++){try{if((await fetch("http://127.0.0.1:4196/embed")).ok)return}catch{}await new Promise(r=>setTimeout(r,250))}process.exit(1)})()'
 share=(--rm --network "container:$box" --user 0:0 -v "$out:/out")
 quality(){
- docker run "${share[@]}" -v "$root/tools/release/quality:/quality:ro" -w /quality \
+ docker run "${share[@]}" -v "$out/fixtures/quality:/quality:ro" -w /quality \
   -e PROMPTFOO_DISABLE_TELEMETRY=1 -e PROMPTFOO_DISABLE_UPDATE=1 -e PROMPTFOO_DISABLE_WAL_MODE=1 \
   -e PROMPTFOO_CONFIG_DIR=/tmp/promptfoo -e AUDIT_PHASE="$phase" --entrypoint promptfoo "$pf" \
   eval -c config.cjs --no-cache --max-concurrency 1 --no-progress-bar -o /out/promptfoo.json
@@ -69,11 +74,11 @@ if [ "$phase" != baseline ]; then
     stage browser inside sh -c 'cd tools/visitor-checks && node node_modules/@playwright/test/cli.js test -c release.config.mjs'
   fi
   inside node tools/release/quota-reset.mjs
-  stage load docker run "${share[@]}" -e K6_NO_USAGE_REPORT=true -v "$root/tools/release/load.js:/load.js:ro" "$k6" run --quiet --summary-export=/out/load.json /load.js
+  stage load docker run "${share[@]}" -e K6_NO_USAGE_REPORT=true -v "$out/fixtures/load.js:/load.js:ro" "$k6" run --quiet --summary-export=/out/load.json /load.js
   # ZAP's baseline only spiders and passively scans. No active attacks or real deliveries.
   zap_scan(){
     local code=0
-    docker run "${share[@]}" -v "$out:/zap/wrk:rw" -v "$root/tools/release/zap-hook.py:/audit/hook.py:ro" "$zap" zap-baseline.py -t http://127.0.0.1:4196 -m 1 -T 5 -J zap.json -r zap.html -I --autooff --hook=/audit/hook.py || code=$?
+    docker run "${share[@]}" -v "$out:/zap/wrk:rw" -v "$out/fixtures/zap-hook.py:/audit/hook.py:ro" "$zap" zap-baseline.py -t http://127.0.0.1:4196 -m 1 -T 5 -J zap.json -r zap.html -I --autooff --hook=/audit/hook.py || code=$?
     [ "$code" = 0 ] && [ -s "$out/zap.json" ]
   }
   stage zap zap_scan

@@ -49,6 +49,10 @@ function publicationDetail(message: string, previous?: string): Detail | undefin
   const membership = /mitglied|beitreten|membership|become a member|join (?:the association|forju)/.test(q);
   const terms = /alter\b|altersgrenze|minderjahr|jahr(?:e|ig)|beitrag|gebuhr|kostet|min(?:imum)? age|how old|under \d|years? old|\bfee|dues|annual cost|how much/.test(q);
   if (terms && (membership || (previous === "mitglied" && refersBack))) return {topic:"mitglied", passage:"terms"};
+  // Seeking a funding partner is distinct from giving money as a partner.
+  const seeksFunder = /forderpartner|finanzierungspartner|funding partners?|financial backers?/.test(q)
+    && /such|find|vermittel|looking for|connect|introduc/.test(q);
+  if (seeksFunder) return {topic:"finanzierung", passage:"direct"};
   const projectFunding = /funding|grant|sponsor|sponser|forder|finanzier/.test(q);
   if (projectFunding && /qualif|eligib|entitl|berechtigt|anspruch|altersgrenze/.test(q)) {
     return {topic:"finanzierung", passage:"eligibility"};
