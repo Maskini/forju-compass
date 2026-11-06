@@ -60,3 +60,13 @@ then ask “Und wie melde ich mich dafür an?”. Open the workshop link and
 return to the chat. Close with Escape, reopen and check both turns remain.
 Repeat on a phone with its keyboard open and rotate the phone. Confirm an
 unlisted origin is denied framing. The standalone page should still open.
+
+## Project inquiries
+
+“Projektidee vorbereiten” / “Prepare a project idea” uses the visitor’s words
+from this chat. Guided answers and edits live in component memory. Reloading
+the page clears them. Both languages link to the corresponding official
+`/kontakt?intent=projekt` form. The visitor transfers the editable message,
+enters their name and email there, and decides whether to submit. Compass
+never sends the draft to a submission endpoint. If a host disables clipboard
+writing, visitors can select and copy the message manually.

@@ -1,0 +1,13 @@
+.project-draft{margin:14px 0;color:#35272a}.project-draft>p{margin:0 0 6px;font-size:14px}
+.project-draft button,.project-draft .primary{font:inherit;cursor:pointer}
+.project-draft .draft-launch,.draft-actions button,.draft-actions a{display:inline-block;padding:9px 14px;border:1px solid #dfc8d2;border-radius:24px;background:#fffaf6;color:#861456;text-decoration:none;font-weight:600}
+.project-draft .draft-launch,.draft-actions .primary{background:#f2cedf}
+.project-draft dialog{position:fixed;inset:0;margin:auto;width:min(440px,calc(100% - 24px));max-height:calc(100dvh - 40px);overflow:auto;overscroll-behavior:contain;padding:0;border:1px solid #e4d7d0;border-radius:20px;background:#fffaf6;color:#302425;box-shadow:0 10px 48px #30242536}
+.project-draft dialog::backdrop{background:#30242563}
+.draft-sheet{padding:22px;font:15px/1.45 'ForJu Public Sans',sans-serif}.draft-sheet h2{margin:12px 0 18px;font:700 25px/1.1 'ForJu Space Grotesk',sans-serif}
+.draft-sheet .draft-dismiss{display:block;margin-left:auto;color:#694b57;background:transparent;border:0;padding:5px}
+.draft-sheet label,.draft-sheet small{display:block}.draft-sheet label{font-weight:600}.draft-sheet small{margin:5px 0 10px;font-size:13px;font-weight:400;color:#695e61}
+.draft-sheet textarea{display:block;width:100%;box-sizing:border-box;min-height:85px;padding:10px;margin:8px 0;border:1px solid #c7b7bc;border-radius:10px;background:white;color:inherit;line-height:1.4;font-family:inherit;font-size:16px;font-weight:400;resize:vertical}
+.draft-actions{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:14px 0}.draft-sheet summary{cursor:pointer}.draft-sheet details button{display:block;text-align:left;background:transparent;border:0;color:#861456;padding:7px}.draft-sheet :focus-visible,.draft-launch:focus-visible{outline:3px solid #861456;outline-offset:2px}
+
+.draft-sheet input{display:block;width:100%;box-sizing:border-box;border:1px solid #c7b7bc;border-radius:10px;padding:8px 10px;margin:6px 0 12px;background:white;color:inherit;font:inherit;font-size:16px;font-weight:400}

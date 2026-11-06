@@ -44,7 +44,7 @@
   image("forju-compass-logo.png","star",seal);
   const dialog=el("dialog","drawer",root);dialog.setAttribute("aria-label","ForJu Compass");
   const close=button("close",dialog,()=>dialog.close());close.textContent="×";
-  const frame=el("iframe","",dialog);frame.title="ForJu Compass";frame.referrerPolicy="no-referrer";
+  const frame=el("iframe","",dialog);frame.title="ForJu Compass";frame.allow="clipboard-write";frame.referrerPolicy="no-referrer";
   const recovery=el("section","recovery",dialog);
   const status=el("p","",recovery);status.setAttribute("role","status");
   const retry=button("start",recovery,loadFrame);

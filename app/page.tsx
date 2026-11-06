@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, type ReactNode } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import { useAppLanguage, setAppLanguage } from "@/lib/language";
 import Script from "next/script";
 import FeedbackWidget from "@/app/components/feedback/FeedbackWidget";
@@ -66,6 +66,7 @@ const EN: Record<string, string> = {
 
 import KnowledgeFeedback from "@/app/components/KnowledgeFeedback";
 
+import {ProjectDraft} from "@/app/components/project-draft";
 import {useCompassChat} from "@/lib/use-compass-chat";
 
 const QUICK_QUESTIONS = [
@@ -98,6 +99,7 @@ const QUICK_QUESTIONS = [
 
 export default function Home() {
   const language = useAppLanguage();
+  const [conversationId, setConversationId] = useState(0);
   const t = (text: string) => language === "en" ? (EN[text] ?? text) : text;
   const official = (path = "") => `https://forju.at/${language}${path}`;
   useEffect(() => { document.documentElement.lang = language; }, [language]);
@@ -327,10 +329,11 @@ export default function Home() {
                   <button type="button" className="retry-button" onClick={() => submit(submittedQuestion)} disabled={loading}>{t("Erneut versuchen")}</button>
                 </div>}
               </div>
+              <ProjectDraft key={conversationId} lang={language} turns={turns}/>
               {turns.length === 0 && !loading && !error && <a className="answer-cta" href={official("/services")} target="_blank" rel="noopener noreferrer">{t("Mehr erfahren")} <ChevronIcon /></a>}
               {(turns.length > 0 || error) && (
                 <button type="button" className="answer-cta" disabled={loading} onClick={() => {
-                  setTurns([]); setQuestion(""); setSubmittedQuestion(""); setError("");
+                  setConversationId(id => id + 1); setTurns([]); setQuestion(""); setSubmittedQuestion(""); setError("");
                 }}>{t("Neues Gespräch")}</button>
               )}
 
