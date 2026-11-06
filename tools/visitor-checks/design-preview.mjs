@@ -58,7 +58,11 @@ try {
     const shot = name=>page.screenshot({path:join(output,capture+'-'+device+'-'+name+'.png'),animations:'disabled'});
     if (!capture) {
       console.log('Browser-only ForJu preview. Project and feedback delivery are blocked. Close the browser to finish.');
-      await Promise.race([page.waitForEvent('close',{timeout:0}), browser.waitForEvent('disconnected',{timeout:0})]); break;
+      await new Promise(done=>{
+        page.once('close',done);
+        browser.once('disconnected',done);
+      });
+      break;
     }
     const log = evidence[device] = {};
     assert.deepEqual(await hostStyles(),initialStyles);log.hostTypographyAndGeometry=true;
