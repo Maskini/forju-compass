@@ -6,7 +6,8 @@ let store: ReturnType<typeof openQuota> | undefined;
 export function takeAiRequest(request: Request) {
   try {
     if(!store) {
-      const path=resolve(process.env.COMPASS_QUOTA_DB || "work/ai-quota.sqlite");
+      // The quota file is created at runtime. Its directory is not a build input.
+      const path=resolve(/* turbopackIgnore: true */ process.cwd(), process.env.COMPASS_QUOTA_DB || "work/ai-quota.sqlite");
       mkdirSync(dirname(path),{recursive:true,mode:0o700});
       store=openQuota(path);
     }
