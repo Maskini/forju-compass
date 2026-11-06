@@ -63,10 +63,12 @@ unlisted origin is denied framing. The standalone page should still open.
 
 ## Project inquiries
 
-“Projektidee vorbereiten” / “Prepare a project idea” uses the visitor’s words
+“Projektentwurf starten” / “Start a project draft” uses the visitor’s words
 from this chat. Guided answers and edits live in component memory. Reloading
 the page clears them. Both languages link to the corresponding official
 `/kontakt?intent=projekt` form. The visitor transfers the editable message,
 enters their name and email there, and decides whether to submit. Compass
 never sends the draft to a submission endpoint. If a host disables clipboard
 writing, visitors can select and copy the message manually.
+
+The draft follows six optional steps: idea and goals, audience, implementation, resources, impact, and review. Closing the draft returns to the conversation; reopening resumes the same step. No account or browser storage is used for project details. Only a layout toggle (no draft content) is sent to the host widget to expand its desktop dialog.

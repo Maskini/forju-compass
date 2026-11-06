@@ -35,3 +35,5 @@ h2,h3,.start{font-family:var(--font-space-grotesk,'ForJu Space Grotesk',system-u
 :host([hidden]){display:none}
 .recovery{padding:64px 24px 24px;color:#2d1e1e}
 .recovery .start{max-width:180px}.recovery a{display:inline-block;margin-top:12px;color:#861456}
+
+@media(min-width:641px){.drawer[data-draft]{inset:0;margin:auto;width:min(1240px,calc(100vw - 40px));height:min(860px,calc(100dvh - 40px))}}

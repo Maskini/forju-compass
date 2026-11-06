@@ -104,11 +104,15 @@
   }
   window.addEventListener("message",event=>{
     if(event.origin!==origin||event.source!==frame.contentWindow)return;
+    if(event.data?.type==="forju:draft" && dialog.open && typeof event.data.open==="boolean"){
+      dialog.toggleAttribute("data-draft",event.data.open);close.hidden=event.data.open;fitViewport();
+    }
     if(event.data?.type==="forju:ready"){ready=true;clearTimeout(waitTimer);recovery.hidden=true;frame.hidden=false;if(dialog.open)send();}
     if(event.data?.type==="forju:close"&&dialog.open)dialog.close();
   });
   dialog.addEventListener("click",e=>{if(e.target===dialog){const r=dialog.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)dialog.close();}});
   dialog.addEventListener("close",()=>{
+    dialog.removeAttribute("data-draft");close.hidden=false;
     window.visualViewport?.removeEventListener("resize",fitViewport);
     window.visualViewport?.removeEventListener("scroll",fitViewport);
     document.body.style.overflow=previousOverflow;(lastFocus?.getClientRects().length?lastFocus:launcher).focus({preventScroll:true});});

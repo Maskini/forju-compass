@@ -108,7 +108,7 @@ export default function Home() {
   const {question,setQuestion,submittedQuestion,turns,transcript,loading,error,latestSources,submit,setTurns,setSubmittedQuestion,setError} = useCompassChat(language);
   return (
     <main className="compass-page">
-      <Script src="/compass-widget.js" strategy="afterInteractive" />
+      <Script src="/compass-widget.js" data-welcome="closed" strategy="afterInteractive" />
       <FeedbackWidget language={language} ref={reports}/>
       <FloatingOrigami />
       <section className="scene">
