@@ -117,3 +117,5 @@
 @media (min-width: 900px) {
   body:has(.feedback-drawer[open]) .feedback-launcher { right: 448px; }
 }
+
+.compass-page .feedback-launcher{left:max(12px,env(safe-area-inset-left));right:auto}

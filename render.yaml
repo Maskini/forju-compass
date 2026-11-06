@@ -14,12 +14,10 @@ services:
         value: 24.21.0
       - key: NODE_ENV
         value: production
-      - key: OPENAI_API_KEY
-        sync: false
-      - key: SUPABASE_URL
-        sync: false
-      - key: SUPABASE_SECRET_KEY
-        sync: false
+      - key: COMPASS_LOCAL_ONLY
+        value: "true"
+      - key: COMPASS_EMBED_ORIGINS
+        value: https://forju.at,https://www.forju.at
       - key: FEEDBACK_DEMO_MODE
         value: "true"
       - key: FEEDBACK_TO_EMAIL

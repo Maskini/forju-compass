@@ -1,32 +1,28 @@
 # Prototype deployment
 
-## Current status
+## Release status
 
-Prepared locally, not yet deployed. Private repository created: https://github.com/Maskini/forju-compass.
-Source is committed locally. GitHub password confirmation for CLI access and
-Render account creation are pending. No source has been pushed; no live URL
-exists yet. Render identity authorization was approved and completed.
+Use the existing https://forju-compass.onrender.com service. Render tracks
+GitHub main. Follow [the installation guide](embed.md) for the website snippet.
+Before publishing, record the current successful Render deploy and Git commit.
 
-The production build and 28 automated tests pass. ESLint has seven existing
-image optimization warnings and no errors. The candidate Git files and existing
-commit were checked for local credential values and common token patterns; none
-were found. This is a scoped scan, not a comprehensive security audit.
+## Update and rollback
 
-## Architecture
-
-Next.js 16 App Router, React 19, TypeScript, npm, Node 24. Server routes use
-OpenAI embeddings and grounded answers, Supabase `match_documents` retrieval,
-and Resend feedback email. There is no user authentication or Supabase browser
-client, so no login callback/redirect URL changes are needed. Requests use
-relative same-origin API URLs. The official ForJu site and DNS remain untouched.
+Review a content or code change, run the clean-checkout commands in README,
+then merge it into main. Wait for Render to mark the new deploy Live. Check
+that /compass-widget.js serves JavaScript and try a German or English follow-up.
+For an immediate rollback select the last successful deploy in the existing
+Render service’s Events view and roll back to it. Also revert the corresponding
+release commit on main using git revert, then push, so the next deploy matches.
+Rolling back the initial widget installation removes the launcher. Remove its
+footer snippet if reverting permanently. The standalone site keeps its URL.
 
 ## Render configuration
 
 `render.yaml` declares a free Node Web Service, repository root, `main` branch,
 automatic deployment on commits, `npm ci --include=dev && npm run build`, and
 `npm start -- --hostname 0.0.0.0`. Next respects Render's PORT variable.
-Node is pinned to 24.21.0, matching the tested local runtime. Render's private
-GitHub integration must be connected; do not make the repository public.
+Node is pinned to 24.21.0. Confirm the service tracks the intended release commit.
 
 Free hosting may sleep when idle and uses ephemeral storage. Existing paid
 external API usage is separate from the hosting plan. Do not promise that
@@ -40,10 +36,9 @@ https://render.com/docs/blueprint-spec
 
 No browser-exposed environment variables are required.
 
-Required server-only variables, copied securely from local configuration:
-- OPENAI_API_KEY
-- SUPABASE_URL (service address, not a secret but kept server-side)
-- SUPABASE_SECRET_KEY
+For the catalog-only release, set COMPASS_LOCAL_ONLY=true and configure
+COMPASS_EMBED_ORIGINS before building, as described in [the embed guide](embed.md).
+OpenAI and Supabase credentials are optional and used only by the separate AI mode.
 
 Optional server-only configuration:
 - OPENAI_CHAT_MODEL: override the existing model.
@@ -59,22 +54,8 @@ must be verified from the deployed service. Do not change ForJu DNS.
 NODE_ENV=production and NODE_VERSION are set by the Blueprint. Secret values
 must only be supplied through Render's private environment settings, never Git.
 
-## Publication checks still required
+## Live checks
 
-- Completed: seven public website summaries replace private-document excerpts.
-  Originals remain in ignored work/private-knowledge-before-demo. Supabase has
-  the seven demo embeddings; all prior rows were preserved.
-- Added single-instance AI limits: 12 requests/minute and 300/day shared across
-  visitors. Restarts reset these counters; use provider spending limits too.
-- Explicit prototype email mode is implemented and unit-tested; verify delivery
-  on the live host after deployment. No ForJu DNS changes are required.
-- Create the private GitHub repository, push `main`, connect Render and deploy.
-- Test public homepage, navigation, mobile layout, chat, Supabase retrieval,
-  source pages, feedback, error handling and browser asset secret exposure.
-- Verify a subsequent main commit redeploys to the same HTTPS URL.
-
-Do not describe the configuration alone as a completed deployment.
-
-Production-mode local chat succeeded with real OpenAI and Supabase calls.
-Configured credential values were absent from tracked files and browser static
-assets. Public/mobile/live email testing still awaits deployment.
+After deployment verify the script, response headers, allowed and denied
+parent origins, and a complete conversation on a physical phone. Verify live
+feedback delivery separately with an authorized recipient if enabling email.

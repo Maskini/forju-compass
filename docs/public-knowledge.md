@@ -1,0 +1,55 @@
+# Public knowledge maintenance
+
+On 6 November 2026 the 24 German sitemap pages were collected again and compared
+with the earlier snapshots. Partner, team and contact information was reviewed.
+The catalog now has 43 bilingual entries: 35 website topic summaries, five job
+categories covering 23 roles displayed on the jobs page, and three historical
+LinkedIn summaries. Jobs describe a dated listing, never guaranteed availability.
+Facebook is not indexed. English catalog answers are editorial translations.
+
+## Privacy and answer presentation
+
+Only entries with public provenance are eligible. Retrieval requests embeddings
+for those exact catalog index titles, not a global top-k search across the
+legacy documents table. Old private rows are preserved in the database but are
+never loaded into chat or search. The uploaded internal document is not part of
+the active catalog or the public knowledge pages.
+
+Paragraph evidence IDs stay inside the server. The model may propose zero to
+three useful read-more IDs; validation requires that each is actually used by
+the answer. URLs come from the reviewed catalog, never model-generated URLs.
+Duplicate URLs are removed. No visible numbered citation markers are appended.
+
+Historical project descriptions do not establish current availability. Podcast,
+Wissensbase and expert-board announcements remain labelled as planned. Social
+updates are treated as reports, not evidence of future events. The official
+site's privacy statement is not the Compass privacy statement.
+
+## Refresh
+
+1. Run `python3 scripts/collect-public-website.py` from the project root. Raw public
+   snapshots stay in ignored `work/public-crawl/`.
+2. Review and paraphrase useful topics into `knowledge/catalog.json`. Keep source
+   URL, source publication/update date where known, review date and status. Do
+   not copy private material, login-only posts, navigation or related-article
+   boilerplate. Social publication dates must not be inferred from crawl dates.
+3. Recompute SHA-256 of changed content and its versioned indexTitle. Retire stale
+   entries. Review time-sensitive entries monthly, sooner for known changes.
+4. In the default catalog-only release the reviewed JSON ships with the build.
+   Skip remote imports. Only the optional external AI mode uses Supabase vectors.
+5. Run `npm test`, `npm run lint`, and `npm run build`. Exercise German and English
+   questions about workshops, funding, planned projects and unrelated subjects.
+
+## Runtime status — 6 November 2026
+
+Direct public catalog search works without external credentials. Chat uses
+semantic matches when available, and locally ranked catalog entries when vector
+retrieval fails. When generation fails, the response is identified as a catalog
+answer and uses a reviewed summary in the selected language. Unmatched questions
+get a clarification instead of an invented answer.
+
+The earlier 38 entries had been embedded in September. In this run OpenAI
+rejected the configured key (401) and the Supabase connection failed. The new
+and updated entries are live in the local catalog; a fresh remote import and
+live generative evaluation still require working credentials/connectivity.
+See [embedding and integration](embed.md) for host configuration.

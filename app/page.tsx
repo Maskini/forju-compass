@@ -1,9 +1,11 @@
 "use client";
 
-import { useEffect, useRef, useState, type ReactNode } from "react";
+import { useEffect, type ReactNode } from "react";
 import { useAppLanguage, setAppLanguage } from "@/lib/language";
+import Script from "next/script";
+import FeedbackWidget from "@/app/components/feedback/FeedbackWidget";
 import FloatingOrigami from "@/app/components/FloatingOrigami";
-import { MAX_HISTORY_MESSAGES, MAX_MESSAGE_LENGTH, safeSourceUrl, type ChatMessage } from "@/lib/chat";
+import { MAX_MESSAGE_LENGTH } from "@/lib/chat";
 
 const EN: Record<string, string> = {
 "Die Anfrage konnte nicht verarbeitet werden.":"The request could not be processed.","Die Antwort war leer. Bitte versuche es erneut.":"The answer was empty. Please try again.","Die Anfrage hat zu lange gedauert. Bitte versuche es erneut.":"The request took too long. Please try again.","ForJu Compass ist gerade nicht erreichbar. Bitte versuche es erneut.":"ForJu Compass is currently unavailable. Please try again.","Die Antwort konnte nicht vollständig erzeugt werden. Bitte versuche es erneut.":"The answer could not be completed. Please try again.",
@@ -37,14 +39,14 @@ const EN: Record<string, string> = {
   "Unsere Antwort auf deine Frage": "Our answer to your question",
   "Gesprächsverlauf": "Conversation",
   "Du": "You",
-  "Gefundene Quellen": "Sources found",
+  "Mehr dazu": "Read more",
   "ForJu Compass sucht eine Antwort auf": "ForJu Compass is looking for an answer to",
   "Erneut versuchen": "Try again",
   "Mehr erfahren": "Learn more",
   "Neues Gespräch": "New conversation",
   "Relevante ForJu Seiten": "Relevant ForJu pages",
   "Quellen werden gesucht …": "Looking for sources …",
-  "Positionspapier 2026 · Quellenauszug": "Position paper 2026 · Source excerpt",
+  "Öffentliche Informationen": "Public information",
   "Beratung & Unterstützung": "Advice & support",
   "Begleitung für deine Ideen und Fragen": "Guidance for your ideas and questions",
   "ForJu kennenlernen": "Get to know ForJu",
@@ -64,10 +66,7 @@ const EN: Record<string, string> = {
 
 import KnowledgeFeedback from "@/app/components/KnowledgeFeedback";
 
-type Source = {
-  title: string;
-  url: string;
-};
+import {useCompassChat} from "@/lib/use-compass-chat";
 
 const QUICK_QUESTIONS = [
   {
@@ -103,81 +102,11 @@ export default function Home() {
   const official = (path = "") => `https://forju.at/${language}${path}`;
   useEffect(() => { document.documentElement.lang = language; }, [language]);
   const switchLanguage = setAppLanguage;
-  const [question, setQuestion] = useState("");
-  const [submittedQuestion, setSubmittedQuestion] = useState("");
-
-  const [turns, setTurns] = useState<{ question: string; answer: string; sources: Source[] }[]>([]);
-  const inFlight = useRef(false);
-  const transcript = useRef<HTMLDivElement>(null);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
-  const latestSources = !loading && !error ? (turns.at(-1)?.sources ?? []) : [];
-
-  useEffect(() => {
-    if (transcript.current) transcript.current.scrollTop = transcript.current.scrollHeight;
-  }, [turns, loading, error]);
-
-  async function submit(value?: string) {
-    const next = (value ?? question).trim();
-
-    if (!next || inFlight.current || next.length > MAX_MESSAGE_LENGTH) {
-      return;
-    }
-
-    inFlight.current = true;
-    setSubmittedQuestion(next);
-    setQuestion("");
-    setError("");
-    setLoading(true);
-
-    try {
-      const response = await fetch("/api/chat", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        signal: AbortSignal.timeout(60000),
-        body: JSON.stringify({
-          message: next,
-          history: turns.slice(-MAX_HISTORY_MESSAGES / 2).flatMap((turn): ChatMessage[] => [
-            { role: "user", content: turn.question },
-            { role: "assistant", content: turn.answer.slice(0, 4000) },
-          ]),
-        }),
-      });
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(
-          data.error ||
-            "Die Anfrage konnte nicht verarbeitet werden."
-        );
-      }
-
-      if (typeof data.answer !== "string" || !data.answer.trim()) {
-        throw new Error("Die Antwort war leer. Bitte versuche es erneut.");
-      }
-      const sources: Source[] = Array.isArray(data.sources) ? data.sources.filter(
-        (source: Source) => source && typeof source.title === "string" && safeSourceUrl(source.url)
-      ) : [];
-      setTurns((previous) => [...previous, { question: next, answer: data.answer, sources }]);
-      setSubmittedQuestion("");
-    } catch (err) {
-      console.error(err);
-
-      setQuestion(next);
-      setError(err instanceof Error && err.name === "TimeoutError"
-        ? "Die Anfrage hat zu lange gedauert. Bitte versuche es erneut."
-        : err instanceof Error ? err.message : "Die Anfrage konnte nicht verarbeitet werden.");
-    } finally {
-      inFlight.current = false;
-      setLoading(false);
-    }
-  }
-
+  const {question,setQuestion,submittedQuestion,turns,transcript,loading,error,latestSources,submit,setTurns,setSubmittedQuestion,setError} = useCompassChat(language);
   return (
     <main className="compass-page">
+      <Script src="/compass-widget.js" strategy="afterInteractive" />
+      <FeedbackWidget />
       <FloatingOrigami />
       <section className="scene">
         <div
@@ -380,11 +309,12 @@ export default function Home() {
                 {turns.map((turn, index) => (
                   <div className="chat-turn" key={index}>
                     <p className="answer-copy__question">{t("Du")}: {turn.question}</p>
+                    {turn.library && <small>{language === "en" ? "From the public knowledge catalog" : "Aus dem öffentlichen Wissenskatalog"}</small>}
                     <p className="chat-answer">{turn.answer}</p>
                     <KnowledgeFeedback question={turn.question} language={language} />
                     {turn.sources.length > 0 && (
                       <div className="chat-sources">
-                        <strong>{t("Gefundene Quellen")}</strong>
+                        <strong>{t("Mehr dazu")}</strong>
                         {turn.sources.map((source) => (
                           <a key={source.url} href={source.url} target="_blank" rel="noopener noreferrer">{source.title} ↗</a>
                         ))}
@@ -427,7 +357,7 @@ export default function Home() {
               <div className="resource-list">
                 {latestSources.length > 0 ? latestSources.map((source) => (
                   <a className="resource-row" key={source.url} href={source.url} target="_blank" rel="noopener noreferrer">
-                    <span><strong>{source.title}</strong><small>{source.url.startsWith("/wissen/") ? t("Positionspapier 2026 · Quellenauszug") : new URL(source.url).hostname}</small></span>
+                    <span><strong>{source.title}</strong><small>{source.url.startsWith("/wissen/") ? t("Öffentliche Informationen") : new URL(source.url).hostname}</small></span>
                     <ChevronIcon />
                   </a>
                 )) : loading ? <p>{t("Quellen werden gesucht …")}</p> : [

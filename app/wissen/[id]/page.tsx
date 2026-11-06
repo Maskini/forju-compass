@@ -13,6 +13,6 @@ export default async function KnowledgePage({ params }: { params: Promise<{ id: 
     <p>{entry.sourceTitle} · Stand {entry.sourceYear}</p>
     <p>Diese Demo fasst öffentlich verfügbare Informationen zusammen. Verfügbarkeit und Konditionen bitte direkt bei ForJu prüfen.</p>
     <article className="knowledge-excerpt">{entry.content}</article>
-    <p>Quelle: <a href={entry.sourceUrl} target="_blank" rel="noopener noreferrer">Öffentliche ForJu-Website</a>. Stand: {entry.lastReviewedAt}.</p>
+    <p>Quelle: <a href={entry.sourceUrl} target="_blank" rel="noopener noreferrer">Öffentliche Seite zum Weiterlesen</a>. Stand: {entry.lastReviewedAt}.</p>
   </main>;
 }

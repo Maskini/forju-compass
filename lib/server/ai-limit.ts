@@ -1,12 +1,17 @@
-// Single-instance prototype budget. A restart resets it; use shared limits before scaling.
-let minuteStart = 0;
-let minuteCount = 0;
-let dayStart = 0;
-let dayCount = 0;
-export function takeAiRequest(now = Date.now()): boolean {
-  if (now - minuteStart >= 60_000) { minuteStart = now; minuteCount = 0; }
-  if (now - dayStart >= 86_400_000) { dayStart = now; dayCount = 0; }
-  if (minuteCount >= 12 || dayCount >= 300) return false;
-  minuteCount++; dayCount++;
-  return true;
+import "server-only";
+import { mkdirSync } from "node:fs";
+import { dirname,resolve } from "node:path";
+import { openQuota } from "./quota.mjs";
+let store: ReturnType<typeof openQuota> | undefined;
+export function takeAiRequest(request: Request) {
+  try {
+    if(!store) {
+      const path=resolve(process.env.COMPASS_QUOTA_DB || "work/ai-quota.sqlite");
+      mkdirSync(dirname(path),{recursive:true,mode:0o700});
+      store=openQuota(path);
+    }
+    // Only configure a client-IP header overwritten by your trusted ingress.
+    const header=process.env.COMPASS_CLIENT_IP_HEADER;
+    return store.take(header ? request.headers.get(header)?.trim() : "");
+  } catch { return 60; } // A broken quota store must not allow unlimited paid calls.
 }
