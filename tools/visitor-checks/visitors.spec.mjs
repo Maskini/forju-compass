@@ -161,7 +161,8 @@ test('stakeholder preview: launch the German widget and recover from an unrelate
   await expect(host.locator('.drawer')).toBeHidden();
   await page.getByRole('link',{name:'EN',exact:true}).click();
   await expect(page.locator('html')).toHaveAttribute('lang','en');
-  await expect(page.getByRole('link',{name:'Open chat directly'})).toHaveAttribute('href','/embed?lang=en');
+  await expect(page.locator('a[href^="/embed"]')).toHaveCount(0);
+  await expect(host.locator('.launcher')).toBeVisible();
 });
 
 test('English mobile: correct what the class measures, accept a draft, then ask a person', async ({page})=>{
@@ -233,6 +234,12 @@ test('English phone widget: one Send, retained draft on failure, stable retry an
   await expect(turn).not.toContainText(/knowledge catalog/i);
   const report = panel.getByRole('button',{name:'Report a problem',exact:true});
   await expect(report.locator('svg')).toHaveCount(0);
+  const contactBar = await panel.locator('aside').boundingBox();
+  const reportButton = await report.boundingBox();
+  const composer = await panel.locator('.composer').boundingBox();
+  expect(reportButton.y).toBeGreaterThanOrEqual(contactBar.y + contactBar.height - 1);
+  expect(Math.abs((reportButton.x + reportButton.width/2) - (contactBar.x + contactBar.width/2))).toBeLessThan(1);
+  expect(reportButton.y + reportButton.height).toBeLessThanOrEqual(composer.y + 1);
   await report.click();
   const badge=panel.locator('.feedback-report-badge');
   await expect(badge).toBeInViewport();

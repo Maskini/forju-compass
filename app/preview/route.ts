@@ -17,7 +17,7 @@ export function GET(request: Request) {
 <body>
 <header><img src="/forju/forju-compass-logo.png" alt="ForJu Compass"><nav aria-label="${english ? "Language" : "Sprache"}"><a href="/preview?lang=de" lang="de" hreflang="de"${english ? "" : ' aria-current="page"'}>DE</a><a href="/preview?lang=en" lang="en" hreflang="en"${english ? ' aria-current="page"' : ""}>EN</a></nav></header>
 <main><p class="preview-label">${preview}</p><h1>${title}</h1><p>${instruction}</p>
-<a class="direct" href="/embed?lang=${lang}">${english ? "Open chat directly" : "Chat direkt öffnen"} <span aria-hidden="true">↗</span></a></main>
+</main>
 <script defer src="/compass-widget.js" data-welcome="closed"></script>
 </body></html>`, {headers: {"Content-Type":"text/html; charset=utf-8","X-Robots-Tag":"noindex, nofollow"}});
 }

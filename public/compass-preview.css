@@ -13,6 +13,5 @@ main{padding:clamp(4rem,13vh,8.5rem) 0 10rem}
 .preview-label{font-size:.95rem;font-weight:650;color:#864366}
 h1{font:650 clamp(2.25rem,6vw,4.25rem)/1.05 "Space Grotesk",sans-serif;letter-spacing:-.045em;max-width:12ch;margin:.45em 0 .35em}
 main>p:not(.preview-label){font-size:clamp(1.05rem,2vw,1.3rem);max-width:35ch}
-.direct{display:inline-block;color:#862059;text-underline-offset:.22em;padding:.6rem 0}
 a:focus-visible{outline:3px solid #992165;outline-offset:3px;border-radius:4px}
 @media(max-width:38rem){body{background:linear-gradient(180deg,#fff9f0e8 20%,#fff9f0df 57%,#fff9f033),url(/forju/background-discover.webp) center / cover no-repeat}}
