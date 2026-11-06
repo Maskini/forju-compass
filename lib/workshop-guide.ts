@@ -8,6 +8,7 @@ type Workshop = {
   content: string;
   contentEn: string;
   visitorPhrases?: string[];
+  booking?: {de:string; en:string};
   plainLanguage?: { de: string; en: string };
 };
 const normalize = (text: string) => text.toLowerCase().normalize("NFKD").replace(/\p{M}/gu, "").replace(/ß/g,"ss");
@@ -17,6 +18,7 @@ const label = (card: Workshop, en: boolean) => en ? card.titleEn : card.title;
 // Every word of a short, reviewed cue must be present. A school or a pupil
 // alone cannot constitute evidence for a particular activity.
 export function createWorkshopGuide(catalog: Workshop[]) {
+  const booking = catalog.find(card=>card.id==="workshops")?.booking;
   const workshops = catalog.filter(card => card.visitorPhrases?.length && card.plainLanguage);
   const examples = workshops.flatMap(card => card.visitorPhrases!.map(phrase => ({
     card, terms: [...new Set(words(phrase))], phrase: normalize(phrase),
@@ -72,9 +74,13 @@ export function createWorkshopGuide(catalog: Workshop[]) {
     if (!card?.plainLanguage) return null;
     const selectedFromMenu = !!previousMenu && (choice !== undefined || ordinal !== undefined);
     const description = selectedFromMenu ? card.plainLanguage[en?"en":"de"] : en ? card.contentEn : card.content;
+    const asksOrganizer = /^(?:wer (?:organisiert|veranstaltet|leitet|bietet)|who (?:organi[sz]es|runs|offers|leads))\b/.test(q);
+    const contact = asksOrganizer && booking
+      ? (en ? "ForJu offers these school workshops. " + booking.en : "ForJu bietet diese Schulworkshops an. " + booking.de) + "\n\n"
+      : "";
     return {
       mode:"library",topic:card.id,
-      answer:label(card,en)+"\n\n"+description,
+      answer:contact+label(card,en)+"\n\n"+description,
       sources:[{title:en?"School workshops at ForJu":"Schulworkshops bei ForJu",url:readerUrl(card.sourceUrl)}],
       suggestions:[
         en?"How do we sign up?":"Wie melde ich meine Klasse dafür an?",

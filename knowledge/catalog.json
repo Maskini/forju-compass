@@ -94,7 +94,7 @@
     "section": "Ressourcen",
     "kind": "public-website",
     "keywords": "Labor Infrastruktur Geräte Ressourcen Räume borrow lend loan measuring sensor air quality carbon dioxide classroom lab space ausleihen leihen Luftqualität Luftgüte Sensor CO2 messen Laborraum",
-    "content": "Schulen und Forschungsteams können über ForJu bei Partnern Räume und Messgeräte anfragen. ForJu hilft bei der Organisation und klärt Fragen zu Aufsicht und Haftung. Ob ein bestimmtes Gerät zu eurem Termin verfügbar ist und was die Nutzung kostet, müsst ihr anfragen. Beschreibt im Ressourcenformular, was ihr messen möchtet.",
+    "content": "Schulen und Forschungsteams können über ForJu bei Partnern Räume und Messgeräte anfragen. ForJu hilft bei der Organisation und klärt Fragen zu Aufsicht und Haftung. Ob ein bestimmtes Gerät zu eurem Termin verfügbar ist und was die Nutzung kostet, müsst ihr anfragen. Beschreibt im Ressourcenformular, welchen Raum oder welches Gerät ihr braucht und wofür.",
     "sourceId": "forju-public-website",
     "sourceTitle": "ForJu – öffentliche Website",
     "sourceUrl": "https://forju.at/de/services/ressourcen",
@@ -108,7 +108,7 @@
     "indexTitle": "forju-public:ressourcen:ab46cff46854",
     "sourceUpdatedAt": "2024-06-09T03:48:40.000+02:00",
     "titleEn": "Rooms and equipment",
-    "contentEn": "Schools and research teams can ask ForJu to find space or measuring equipment through its partners. ForJu helps coordinate supervision and liability. A particular device, date or price needs confirmation. Use the resources form to describe what you want to measure.",
+    "contentEn": "Schools and research teams can ask ForJu to find space or measuring equipment through its partners. ForJu helps coordinate supervision and liability. A particular device, date or price needs confirmation. Use the resources form to describe the space or instrument you need and how you would use it.",
     "requestUrl": "https://forju.at/de/kontakt?intent=service&thema=ressourcen"
   },
   {
