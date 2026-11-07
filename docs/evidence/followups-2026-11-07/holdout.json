@@ -1,0 +1,245 @@
+{
+  "phase": "holdout",
+  "commit": "3241a6fd665ef6793e3dfa5b0473ba2e1dbe43e0",
+  "catalogSha256": "e4dceba347cd912887b1c62670f4bd2b6ebcafded894fbd9a81e1cd448e163d0",
+  "mode": "production local-only; synthetic; loopback only; independent quota per scenario",
+  "startupMs": 421,
+  "peakRssBytes": 158777344,
+  "catalogBytes": 79950,
+  "requests": 10,
+  "p95Ms": 84.69733300000001,
+  "passed": 4,
+  "total": 4,
+  "results": [
+    {
+      "id": "hold-class-duration",
+      "holdout": true,
+      "lang": "de",
+      "turns": [
+        "Habt ihr Workshops für Schulen?",
+        "Und wie viel Zeit sollen wir dafür einplanen?"
+      ],
+      "topic": "workshops",
+      "source": "projects/schulworkshops",
+      "facts": [
+        "Dauer",
+        "anja.hofer@forju.at"
+      ],
+      "unknown": "No duration is given.",
+      "answers": [
+        {
+          "mode": "library",
+          "topic": "workshops",
+          "answer": "Für deine Klasse in Wien kannst du Workshops zu Klima, Konflikten im Team, Medienkompetenz oder Rollenbildern anfragen. Weitere Themen sind Ethik, Stressbewältigung, Selbstmanagement und Zukunftsplanung. Junge Trainer:innen arbeiten dabei mit den Lehrkräften zusammen.\n\nSchreib Anja Hofer (anja.hofer@forju.at), welches Thema euch interessiert. Frag sie nach einem Termin und den Kosten für eure Klasse. Im November 2024 waren die Seminare für die Schulstufen 1–9 über die Wiener Bildungschancen vollständig gefördert.",
+          "sources": [
+            {
+              "title": "Schulworkshops in Wien",
+              "url": "https://forju.at/de/projects/schulworkshops"
+            }
+          ]
+        },
+        {
+          "mode": "library",
+          "topic": "workshops",
+          "answer": "Die Schulworkshop-Seite nennt keine Dauer. Frag Anja Hofer unter anja.hofer@forju.at, wie viel Zeit ihr für euren gewünschten Workshop einplanen solltet.",
+          "sources": [
+            {
+              "title": "Schulworkshops in Wien",
+              "url": "https://forju.at/de/projects/schulworkshops"
+            }
+          ]
+        }
+      ],
+      "checks": {
+        "topic": true,
+        "source": true,
+        "facts": true,
+        "noFabrication": true
+      },
+      "pass": true
+    },
+    {
+      "id": "hold-loan-period",
+      "holdout": true,
+      "lang": "en",
+      "turns": [
+        "Our pupils want to measure CO2. Can we borrow a sensor?",
+        "For how many days can we borrow it?"
+      ],
+      "topic": "ressourcen",
+      "source": "services/ressourcen",
+      "facts": [
+        "loan period",
+        "no|not"
+      ],
+      "unknown": "No exact return deadline or loan period is given.",
+      "answers": [
+        {
+          "mode": "library",
+          "topic": "ressourcen",
+          "answer": "Schools and research teams can ask ForJu to find space or measuring equipment through its partners. ForJu helps coordinate supervision and liability. A particular device, date or price needs confirmation. Use the resources form to describe the space or instrument you need and how you would use it.",
+          "sources": [
+            {
+              "title": "Rooms and equipment",
+              "url": "https://forju.at/en/services/ressourcen"
+            },
+            {
+              "title": "Enquire with ForJu",
+              "url": "https://forju.at/en/kontakt?intent=service&thema=ressourcen"
+            }
+          ]
+        },
+        {
+          "mode": "library",
+          "topic": "ressourcen",
+          "answer": "The resources page does not give a fixed loan period. In the equipment enquiry, say which device you need and the dates you would like to use it. Ask the team to confirm the loan period.",
+          "sources": [
+            {
+              "title": "Rooms and equipment",
+              "url": "https://forju.at/en/services/ressourcen"
+            },
+            {
+              "title": "Enquire with ForJu",
+              "url": "https://forju.at/en/kontakt?intent=service&thema=ressourcen"
+            }
+          ]
+        }
+      ],
+      "checks": {
+        "topic": true,
+        "source": true,
+        "facts": true,
+        "noFabrication": true
+      },
+      "pass": true
+    },
+    {
+      "id": "hold-topic-switch",
+      "holdout": true,
+      "lang": "de",
+      "turns": [
+        "Ich möchte einen Workshop für unsere Schule.",
+        "Wir brauchen jetzt stattdessen ein Messgerät.",
+        "Wie lange können wir das ausleihen?"
+      ],
+      "topic": "ressourcen",
+      "source": "services/ressourcen",
+      "facts": [
+        "Leihdauer"
+      ],
+      "forbid": [
+        "anja.hofer"
+      ],
+      "unknown": "The new equipment subject takes precedence over workshops.",
+      "answers": [
+        {
+          "mode": "library",
+          "topic": "workshops",
+          "answer": "Für deine Klasse in Wien kannst du Workshops zu Klima, Konflikten im Team, Medienkompetenz oder Rollenbildern anfragen. Weitere Themen sind Ethik, Stressbewältigung, Selbstmanagement und Zukunftsplanung. Junge Trainer:innen arbeiten dabei mit den Lehrkräften zusammen.\n\nSchreib Anja Hofer (anja.hofer@forju.at), welches Thema euch interessiert. Frag sie nach einem Termin und den Kosten für eure Klasse. Im November 2024 waren die Seminare für die Schulstufen 1–9 über die Wiener Bildungschancen vollständig gefördert.",
+          "sources": [
+            {
+              "title": "Schulworkshops in Wien",
+              "url": "https://forju.at/de/projects/schulworkshops"
+            }
+          ]
+        },
+        {
+          "mode": "library",
+          "topic": "ressourcen",
+          "answer": "Schulen und Forschungsteams können über ForJu bei Partnern Räume und Messgeräte anfragen. ForJu hilft bei der Organisation und klärt Fragen zu Aufsicht und Haftung. Ob ein bestimmtes Gerät zu eurem Termin verfügbar ist und was die Nutzung kostet, müsst ihr anfragen. Beschreibt im Ressourcenformular, welchen Raum oder welches Gerät ihr braucht und wofür.",
+          "sources": [
+            {
+              "title": "Ressourcen",
+              "url": "https://forju.at/de/services/ressourcen"
+            },
+            {
+              "title": "Bei ForJu anfragen",
+              "url": "https://forju.at/de/kontakt?intent=service&thema=ressourcen"
+            }
+          ]
+        },
+        {
+          "mode": "library",
+          "topic": "ressourcen",
+          "answer": "Die Ressourcenseite nennt keine feste Leihdauer. Gebt in der Ressourcenanfrage an, welches Gerät ihr braucht und von wann bis wann ihr es nutzen möchtet. Lasst euch den Zeitraum vom Team bestätigen.",
+          "sources": [
+            {
+              "title": "Ressourcen",
+              "url": "https://forju.at/de/services/ressourcen"
+            },
+            {
+              "title": "Bei ForJu anfragen",
+              "url": "https://forju.at/de/kontakt?intent=service&thema=ressourcen"
+            }
+          ]
+        }
+      ],
+      "checks": {
+        "topic": true,
+        "source": true,
+        "facts": true,
+        "noFabrication": true
+      },
+      "pass": true
+    },
+    {
+      "id": "hold-membership-price",
+      "holdout": true,
+      "lang": "en",
+      "turns": [
+        "I want to join ForJu as a member.",
+        "Is there a minimum age?",
+        "How much would it cost?"
+      ],
+      "topic": "mitglied",
+      "source": "kontakt?intent=mitglied",
+      "facts": [
+        "fee",
+        "no|not"
+      ],
+      "unknown": "The membership form gives no fee; it must not borrow the workshop or equipment answer.",
+      "answers": [
+        {
+          "mode": "library",
+          "topic": "mitglied",
+          "answer": "To join ForJu, use the membership form. Introduce yourself and say how you would like to get involved. The enquiry goes to the ForJu team; you can also write to office@forju.at.",
+          "sources": [
+            {
+              "title": "Join ForJu",
+              "url": "https://forju.at/en/kontakt?intent=mitglied"
+            }
+          ]
+        },
+        {
+          "mode": "library",
+          "topic": "mitglied",
+          "answer": "The public membership form gives no minimum age or membership fee. Use it to introduce yourself and ask about age requirements or the current fee before deciding whether to join.",
+          "sources": [
+            {
+              "title": "Join ForJu",
+              "url": "https://forju.at/en/kontakt?intent=mitglied"
+            }
+          ]
+        },
+        {
+          "mode": "library",
+          "topic": "mitglied",
+          "answer": "The public membership form gives no minimum age or membership fee. Use it to introduce yourself and ask about age requirements or the current fee before deciding whether to join.",
+          "sources": [
+            {
+              "title": "Join ForJu",
+              "url": "https://forju.at/en/kontakt?intent=mitglied"
+            }
+          ]
+        }
+      ],
+      "checks": {
+        "topic": true,
+        "source": true,
+        "facts": true,
+        "noFabrication": true
+      },
+      "pass": true
+    }
+  ]
+}

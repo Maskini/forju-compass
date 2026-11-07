@@ -380,7 +380,8 @@
     "httpStatus": 200,
     "reviewedAt": "2026-11-07",
     "recordHashes": {
-      "workshop-stress": "be8f08129abe4f580962c3cd97fc32fde19f188ee7c95a63bdadbc366de25eb3"
+      "workshop-stress": "be8f08129abe4f580962c3cd97fc32fde19f188ee7c95a63bdadbc366de25eb3",
+      "workshops": "be8f08129abe4f580962c3cd97fc32fde19f188ee7c95a63bdadbc366de25eb3"
     }
   },
   "https://forju.at/en/projects/schulworkshops": {
@@ -476,7 +477,8 @@
     "httpStatus": 200,
     "reviewedAt": "2026-11-07",
     "recordHashes": {
-      "workshop-stress": "7ddb402e635e7ff2a3ef097ab41167076a134b6b41e58492ddfad451a1373408"
+      "workshop-stress": "7ddb402e635e7ff2a3ef097ab41167076a134b6b41e58492ddfad451a1373408",
+      "workshops": "7ddb402e635e7ff2a3ef097ab41167076a134b6b41e58492ddfad451a1373408"
     }
   },
   "https://forju.at/de/projects/seminare": {

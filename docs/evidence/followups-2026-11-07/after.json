@@ -1,0 +1,777 @@
+{
+  "phase": "after",
+  "commit": "3241a6fd665ef6793e3dfa5b0473ba2e1dbe43e0",
+  "catalogSha256": "e4dceba347cd912887b1c62670f4bd2b6ebcafded894fbd9a81e1cd448e163d0",
+  "mode": "production local-only; synthetic; loopback only; independent quota per scenario",
+  "startupMs": 473,
+  "peakRssBytes": 167723008,
+  "catalogBytes": 79950,
+  "requests": 32,
+  "p95Ms": 8.030333000000041,
+  "passed": 14,
+  "total": 14,
+  "results": [
+    {
+      "id": "duration-de",
+      "lang": "de",
+      "turns": [
+        "Ich möchte einen Workshop für unsere Schule.",
+        "Wie lange dauert der?"
+      ],
+      "topic": "workshops",
+      "source": "projects/schulworkshops",
+      "facts": [
+        "Dauer",
+        "keine|nicht",
+        "anja.hofer@forju.at"
+      ],
+      "forbid": [
+        "dauert (?:genau )?\\d"
+      ],
+      "unknown": "The workshop article gives no duration. It names Anja Hofer as the booking contact.",
+      "answers": [
+        {
+          "mode": "library",
+          "topic": "workshops",
+          "answer": "Für deine Klasse in Wien kannst du Workshops zu Klima, Konflikten im Team, Medienkompetenz oder Rollenbildern anfragen. Weitere Themen sind Ethik, Stressbewältigung, Selbstmanagement und Zukunftsplanung. Junge Trainer:innen arbeiten dabei mit den Lehrkräften zusammen.\n\nSchreib Anja Hofer (anja.hofer@forju.at), welches Thema euch interessiert. Frag sie nach einem Termin und den Kosten für eure Klasse. Im November 2024 waren die Seminare für die Schulstufen 1–9 über die Wiener Bildungschancen vollständig gefördert.",
+          "sources": [
+            {
+              "title": "Schulworkshops in Wien",
+              "url": "https://forju.at/de/projects/schulworkshops"
+            }
+          ]
+        },
+        {
+          "mode": "library",
+          "topic": "workshops",
+          "answer": "Die Schulworkshop-Seite nennt keine Dauer. Frag Anja Hofer unter anja.hofer@forju.at, wie viel Zeit ihr für euren gewünschten Workshop einplanen solltet.",
+          "sources": [
+            {
+              "title": "Schulworkshops in Wien",
+              "url": "https://forju.at/de/projects/schulworkshops"
+            }
+          ]
+        }
+      ],
+      "checks": {
+        "topic": true,
+        "source": true,
+        "facts": true,
+        "noFabrication": true
+      },
+      "pass": true
+    },
+    {
+      "id": "duration-en",
+      "lang": "en",
+      "turns": [
+        "Which workshops do you offer for schools?",
+        "How long does it last?"
+      ],
+      "topic": "workshops",
+      "source": "projects/schulworkshops",
+      "facts": [
+        "duration",
+        "no|not",
+        "anja.hofer@forju.at"
+      ],
+      "unknown": "No duration is published.",
+      "answers": [
+        {
+          "mode": "library",
+          "topic": "workshops",
+          "answer": "For your class in Vienna, you can ask about workshops on climate, team conflict, media literacy or gender roles. Other topics include ethics, managing stress, self-management and planning for the future. Young trainers work with teachers.\n\nEmail Anja Hofer (anja.hofer@forju.at) with the topic your class wants to explore. Ask her about dates and costs. In November 2024, Wiener Bildungschancen covered the full cost for grades 1–9.",
+          "sources": [
+            {
+              "title": "Vienna school workshops",
+              "url": "https://forju.at/en/projects/schulworkshops"
+            }
+          ]
+        },
+        {
+          "mode": "library",
+          "topic": "workshops",
+          "answer": "The school-workshop page does not give a duration. Ask Anja Hofer at anja.hofer@forju.at how much time to allow for the workshop you want.",
+          "sources": [
+            {
+              "title": "Vienna school workshops",
+              "url": "https://forju.at/en/projects/schulworkshops"
+            }
+          ]
+        }
+      ],
+      "checks": {
+        "topic": true,
+        "source": true,
+        "facts": true,
+        "noFabrication": true
+      },
+      "pass": true
+    },
+    {
+      "id": "class-size-de",
+      "lang": "de",
+      "turns": [
+        "Ich möchte einen Workshop für unsere Schule.",
+        "Wie lange dauert der?",
+        "Wie viele Kinder dürfen teilnehmen?"
+      ],
+      "topic": "workshops",
+      "source": "projects/schulworkshops",
+      "facts": [
+        "Gruppengröße|Teilnehmendenzahl",
+        "keine|nicht",
+        "anja.hofer@forju.at"
+      ],
+      "unknown": "No minimum or maximum group size is published.",
+      "answers": [
+        {
+          "mode": "library",
+          "topic": "workshops",
+          "answer": "Für deine Klasse in Wien kannst du Workshops zu Klima, Konflikten im Team, Medienkompetenz oder Rollenbildern anfragen. Weitere Themen sind Ethik, Stressbewältigung, Selbstmanagement und Zukunftsplanung. Junge Trainer:innen arbeiten dabei mit den Lehrkräften zusammen.\n\nSchreib Anja Hofer (anja.hofer@forju.at), welches Thema euch interessiert. Frag sie nach einem Termin und den Kosten für eure Klasse. Im November 2024 waren die Seminare für die Schulstufen 1–9 über die Wiener Bildungschancen vollständig gefördert.",
+          "sources": [
+            {
+              "title": "Schulworkshops in Wien",
+              "url": "https://forju.at/de/projects/schulworkshops"
+            }
+          ]
+        },
+        {
+          "mode": "library",
+          "topic": "workshops",
+          "answer": "Die Schulworkshop-Seite nennt keine Dauer. Frag Anja Hofer unter anja.hofer@forju.at, wie viel Zeit ihr für euren gewünschten Workshop einplanen solltet.",
+          "sources": [
+            {
+              "title": "Schulworkshops in Wien",
+              "url": "https://forju.at/de/projects/schulworkshops"
+            }
+          ]
+        },
+        {
+          "mode": "library",
+          "topic": "workshops",
+          "answer": "Die Schulworkshop-Seite nennt keine minimale oder maximale Gruppengröße. Schreib Anja Hofer an anja.hofer@forju.at, wie viele Kinder teilnehmen würden, und lass dir bestätigen, ob das für euren Workshop passt.",
+          "sources": [
+            {
+              "title": "Schulworkshops in Wien",
+              "url": "https://forju.at/de/projects/schulworkshops"
+            }
+          ]
+        }
+      ],
+      "checks": {
+        "topic": true,
+        "source": true,
+        "facts": true,
+        "noFabrication": true
+      },
+      "pass": true
+    },
+    {
+      "id": "class-size-en",
+      "lang": "en",
+      "turns": [
+        "We want a workshop for our school.",
+        "How many pupils can take part?"
+      ],
+      "topic": "workshops",
+      "source": "projects/schulworkshops",
+      "facts": [
+        "group size",
+        "no|not",
+        "anja.hofer@forju.at"
+      ],
+      "unknown": "No minimum or maximum group size is published.",
+      "answers": [
+        {
+          "mode": "library",
+          "topic": "workshops",
+          "answer": "For your class in Vienna, you can ask about workshops on climate, team conflict, media literacy or gender roles. Other topics include ethics, managing stress, self-management and planning for the future. Young trainers work with teachers.\n\nEmail Anja Hofer (anja.hofer@forju.at) with the topic your class wants to explore. Ask her about dates and costs. In November 2024, Wiener Bildungschancen covered the full cost for grades 1–9.",
+          "sources": [
+            {
+              "title": "Vienna school workshops",
+              "url": "https://forju.at/en/projects/schulworkshops"
+            }
+          ]
+        },
+        {
+          "mode": "library",
+          "topic": "workshops",
+          "answer": "The school-workshop page gives no minimum or maximum group size. Tell Anja Hofer at anja.hofer@forju.at how many pupils would attend and ask her to confirm whether that works for your workshop.",
+          "sources": [
+            {
+              "title": "Vienna school workshops",
+              "url": "https://forju.at/en/projects/schulworkshops"
+            }
+          ]
+        }
+      ],
+      "checks": {
+        "topic": true,
+        "source": true,
+        "facts": true,
+        "noFabrication": true
+      },
+      "pass": true
+    },
+    {
+      "id": "loan-period-en",
+      "lang": "en",
+      "turns": [
+        "Could our class borrow equipment for an air quality project?",
+        "Is it free?",
+        "How long can we keep it?"
+      ],
+      "topic": "ressourcen",
+      "source": "services/ressourcen",
+      "facts": [
+        "loan period",
+        "no|not",
+        "request|enquiry|ask"
+      ],
+      "forbid": [
+        "keep it for \\d"
+      ],
+      "unknown": "Equipment sharing exists through partners. No loan duration is published.",
+      "answers": [
+        {
+          "mode": "library",
+          "topic": "ressourcen",
+          "answer": "Schools and research teams can ask ForJu to find space or measuring equipment through its partners. ForJu helps coordinate supervision and liability. A particular device, date or price needs confirmation. Use the resources form to describe the space or instrument you need and how you would use it.",
+          "sources": [
+            {
+              "title": "Rooms and equipment",
+              "url": "https://forju.at/en/services/ressourcen"
+            },
+            {
+              "title": "Enquire with ForJu",
+              "url": "https://forju.at/en/kontakt?intent=service&thema=ressourcen"
+            }
+          ]
+        },
+        {
+          "mode": "library",
+          "topic": "ressourcen",
+          "answer": "ForJu’s resources page gives no loan price. Ask the team to confirm the cost for your device and dates.",
+          "sources": [
+            {
+              "title": "Rooms and equipment",
+              "url": "https://forju.at/en/services/ressourcen"
+            },
+            {
+              "title": "Enquire with ForJu",
+              "url": "https://forju.at/en/kontakt?intent=service&thema=ressourcen"
+            }
+          ]
+        },
+        {
+          "mode": "library",
+          "topic": "ressourcen",
+          "answer": "The resources page does not give a fixed loan period. In the equipment enquiry, say which device you need and the dates you would like to use it. Ask the team to confirm the loan period.",
+          "sources": [
+            {
+              "title": "Rooms and equipment",
+              "url": "https://forju.at/en/services/ressourcen"
+            },
+            {
+              "title": "Enquire with ForJu",
+              "url": "https://forju.at/en/kontakt?intent=service&thema=ressourcen"
+            }
+          ]
+        }
+      ],
+      "checks": {
+        "topic": true,
+        "source": true,
+        "facts": true,
+        "noFabrication": true
+      },
+      "pass": true
+    },
+    {
+      "id": "loan-period-de",
+      "lang": "de",
+      "turns": [
+        "Wir brauchen ein Messgerät für ein Schulprojekt.",
+        "Wie lange dürfen wir es behalten?"
+      ],
+      "topic": "ressourcen",
+      "source": "services/ressourcen",
+      "facts": [
+        "Leihdauer",
+        "keine|nicht",
+        "anfrag|Anfrage"
+      ],
+      "unknown": "No loan duration is published.",
+      "answers": [
+        {
+          "mode": "library",
+          "topic": "ressourcen",
+          "answer": "Schulen und Forschungsteams können über ForJu bei Partnern Räume und Messgeräte anfragen. ForJu hilft bei der Organisation und klärt Fragen zu Aufsicht und Haftung. Ob ein bestimmtes Gerät zu eurem Termin verfügbar ist und was die Nutzung kostet, müsst ihr anfragen. Beschreibt im Ressourcenformular, welchen Raum oder welches Gerät ihr braucht und wofür.",
+          "sources": [
+            {
+              "title": "Ressourcen",
+              "url": "https://forju.at/de/services/ressourcen"
+            },
+            {
+              "title": "Bei ForJu anfragen",
+              "url": "https://forju.at/de/kontakt?intent=service&thema=ressourcen"
+            }
+          ]
+        },
+        {
+          "mode": "library",
+          "topic": "ressourcen",
+          "answer": "Die Ressourcenseite nennt keine feste Leihdauer. Gebt in der Ressourcenanfrage an, welches Gerät ihr braucht und von wann bis wann ihr es nutzen möchtet. Lasst euch den Zeitraum vom Team bestätigen.",
+          "sources": [
+            {
+              "title": "Ressourcen",
+              "url": "https://forju.at/de/services/ressourcen"
+            },
+            {
+              "title": "Bei ForJu anfragen",
+              "url": "https://forju.at/de/kontakt?intent=service&thema=ressourcen"
+            }
+          ]
+        }
+      ],
+      "checks": {
+        "topic": true,
+        "source": true,
+        "facts": true,
+        "noFabrication": true
+      },
+      "pass": true
+    },
+    {
+      "id": "school-price-de",
+      "lang": "de",
+      "turns": [
+        "Ich unterrichte eine 7. Klasse in Graz. Wir möchten etwas zum Thema Klimaschutz machen.",
+        "Geht das auch bei uns?",
+        "Was kostet uns das?"
+      ],
+      "topic": "workshops",
+      "source": "projects/schulworkshops",
+      "facts": [
+        "Kosten|Preis",
+        "bestätig|klär|anfrag"
+      ],
+      "forbid": [
+        "ist kostenlos|ist gratis"
+      ],
+      "unknown": "Published funding relates to Vienna and the dated article; no current price for Graz is confirmed.",
+      "answers": [
+        {
+          "mode": "library",
+          "topic": "workshop-klima",
+          "answer": "Klimadetektiv:innen – unser Planet & wir\n\nDas beschriebene Seminar behandelt Ursachen und Folgen des Klimawandels sowie konkrete Handlungsmöglichkeiten. Interaktive Übungen greifen ökologischen Fußabdruck, erneuerbare Energien und nachhaltige Mobilität auf. Ziel sind Wissen, kritisches Denken und Engagement. Aktuelle Termine und Durchführung sind im Artikel nicht bestätigt.",
+          "sources": [
+            {
+              "title": "Schulworkshops bei ForJu",
+              "url": "https://forju.at/de/projects/schulworkshops"
+            }
+          ],
+          "suggestions": [
+            "Wie melde ich meine Klasse dafür an?",
+            "Einfacher erklären"
+          ]
+        },
+        {
+          "mode": "library",
+          "topic": "workshops",
+          "answer": "ForJu beschreibt Workshops für Wiener Schulen. Ob ein Workshop an eurer Schule möglich ist, geht daraus nicht hervor. Frag beim Workshopteam nach, ob es zu euch kommen kann.",
+          "sources": [
+            {
+              "title": "Schulworkshops in Wien",
+              "url": "https://forju.at/de/projects/schulworkshops"
+            }
+          ],
+          "suggestions": [
+            "E-Mail formulieren"
+          ]
+        },
+        {
+          "mode": "library",
+          "topic": "workshops",
+          "answer": "Der Artikel von 2024 beschreibt eine Förderung für Wiener Schulen der Schulstufen 1 bis 9. Einen aktuellen Preis pro Kind nennt er nicht. Anja Hofer kann euch die Kosten für eure Klasse bestätigen.",
+          "sources": [
+            {
+              "title": "Schulworkshops in Wien",
+              "url": "https://forju.at/de/projects/schulworkshops"
+            }
+          ]
+        }
+      ],
+      "checks": {
+        "topic": true,
+        "source": true,
+        "facts": true,
+        "noFabrication": true
+      },
+      "pass": true
+    },
+    {
+      "id": "member-age-de",
+      "lang": "de",
+      "turns": [
+        "Ich möchte bei euch Mitglied werden.",
+        "Ich bin erst 15. Geht das?"
+      ],
+      "topic": "mitglied",
+      "source": "kontakt?intent=mitglied",
+      "facts": [
+        "Mindestalter|Altersgrenze",
+        "nennt weder|nicht|kein"
+      ],
+      "forbid": [
+        "du darfst|ab 14|ab 16|ab 18"
+      ],
+      "unknown": "The membership form publishes neither minimum age nor fee.",
+      "answers": [
+        {
+          "mode": "library",
+          "topic": "mitglied",
+          "answer": "Wenn du Mitglied werden möchtest, nutze das Mitgliedsformular. Stell dich kurz vor und beschreibe, wie du mitwirken möchtest. Die Anfrage geht an das ForJu-Team; du kannst auch an office@forju.at schreiben.",
+          "sources": [
+            {
+              "title": "Mitglied werden",
+              "url": "https://forju.at/de/kontakt?intent=mitglied"
+            }
+          ]
+        },
+        {
+          "mode": "library",
+          "topic": "mitglied",
+          "answer": "Das öffentliche Mitgliedsformular nennt weder ein Mindestalter noch einen Mitgliedsbeitrag. Stell dich dort kurz vor und frag nach der Altersgrenze oder dem aktuellen Beitrag, bevor du dich entscheidest.",
+          "sources": [
+            {
+              "title": "Mitglied werden",
+              "url": "https://forju.at/de/kontakt?intent=mitglied"
+            }
+          ]
+        }
+      ],
+      "checks": {
+        "topic": true,
+        "source": true,
+        "facts": true,
+        "noFabrication": true
+      },
+      "pass": true
+    },
+    {
+      "id": "member-age-en",
+      "lang": "en",
+      "turns": [
+        "How do I become a member?",
+        "I'm only 15. Is that okay?"
+      ],
+      "topic": "mitglied",
+      "source": "kontakt?intent=mitglied",
+      "facts": [
+        "minimum age|age requirements",
+        "no|not"
+      ],
+      "forbid": [
+        "you are eligible|you can join at 15"
+      ],
+      "unknown": "No age requirement is published.",
+      "answers": [
+        {
+          "mode": "library",
+          "topic": "mitglied",
+          "answer": "To join ForJu, use the membership form. Introduce yourself and say how you would like to get involved. The enquiry goes to the ForJu team; you can also write to office@forju.at.",
+          "sources": [
+            {
+              "title": "Join ForJu",
+              "url": "https://forju.at/en/kontakt?intent=mitglied"
+            }
+          ]
+        },
+        {
+          "mode": "library",
+          "topic": "mitglied",
+          "answer": "The public membership form gives no minimum age or membership fee. Use it to introduce yourself and ask about age requirements or the current fee before deciding whether to join.",
+          "sources": [
+            {
+              "title": "Join ForJu",
+              "url": "https://forju.at/en/kontakt?intent=mitglied"
+            }
+          ]
+        }
+      ],
+      "checks": {
+        "topic": true,
+        "source": true,
+        "facts": true,
+        "noFabrication": true
+      },
+      "pass": true
+    },
+    {
+      "id": "member-age-price-de",
+      "lang": "de",
+      "turns": [
+        "Ich möchte bei euch Mitglied werden.",
+        "Ich bin erst 15. Geht das?",
+        "Was kostet das?"
+      ],
+      "topic": "mitglied",
+      "source": "kontakt?intent=mitglied",
+      "facts": [
+        "Mitgliedsbeitrag|Beitrag",
+        "weder|nicht|kein"
+      ],
+      "unknown": "An unanswerable age detail must not erase the membership topic before a fee question.",
+      "answers": [
+        {
+          "mode": "library",
+          "topic": "mitglied",
+          "answer": "Wenn du Mitglied werden möchtest, nutze das Mitgliedsformular. Stell dich kurz vor und beschreibe, wie du mitwirken möchtest. Die Anfrage geht an das ForJu-Team; du kannst auch an office@forju.at schreiben.",
+          "sources": [
+            {
+              "title": "Mitglied werden",
+              "url": "https://forju.at/de/kontakt?intent=mitglied"
+            }
+          ]
+        },
+        {
+          "mode": "library",
+          "topic": "mitglied",
+          "answer": "Das öffentliche Mitgliedsformular nennt weder ein Mindestalter noch einen Mitgliedsbeitrag. Stell dich dort kurz vor und frag nach der Altersgrenze oder dem aktuellen Beitrag, bevor du dich entscheidest.",
+          "sources": [
+            {
+              "title": "Mitglied werden",
+              "url": "https://forju.at/de/kontakt?intent=mitglied"
+            }
+          ]
+        },
+        {
+          "mode": "library",
+          "topic": "mitglied",
+          "answer": "Das öffentliche Mitgliedsformular nennt weder ein Mindestalter noch einen Mitgliedsbeitrag. Stell dich dort kurz vor und frag nach der Altersgrenze oder dem aktuellen Beitrag, bevor du dich entscheidest.",
+          "sources": [
+            {
+              "title": "Mitglied werden",
+              "url": "https://forju.at/de/kontakt?intent=mitglied"
+            }
+          ]
+        }
+      ],
+      "checks": {
+        "topic": true,
+        "source": true,
+        "facts": true,
+        "noFabrication": true
+      },
+      "pass": true
+    },
+    {
+      "id": "funding-age-de",
+      "lang": "de",
+      "turns": [
+        "Ich brauche Geld für ein Schulprojekt.",
+        "Gibt es dafür eine Altersgrenze?"
+      ],
+      "topic": "finanzierung",
+      "source": "services/finanziell",
+      "facts": [
+        "Alter",
+        "nicht bestätigt",
+        "Partner"
+      ],
+      "unknown": "The funding service brokers support, with no blanket age eligibility.",
+      "answers": [
+        {
+          "mode": "library",
+          "topic": "finanzierung",
+          "answer": "Beim Finanzierungsservice hilft ForJu euch, Kosten abzuschätzen, die Machbarkeit zu prüfen und mögliche Förderpartner zu finden. Der Service beschreibt Vermittlung statt direktem Sponsoring. Beschreibt in der Finanzierungsanfrage, wofür ihr Unterstützung braucht. Eine Zusage oder Fördersumme müsst ihr mit ForJu klären.",
+          "sources": [
+            {
+              "title": "Finanzielle Unterstützung",
+              "url": "https://forju.at/de/services/finanziell"
+            },
+            {
+              "title": "Bei ForJu anfragen",
+              "url": "https://forju.at/de/kontakt?intent=service&thema=finanziell"
+            }
+          ]
+        },
+        {
+          "mode": "library",
+          "topic": "finanzierung",
+          "answer": "Eine allgemeine Förderberechtigung nach Alter oder Wohnort ist auf der Finanzierungsseite nicht bestätigt. ForJu sponsert Projekte nicht selbst. Beschreibe dein Vorhaben, damit das Team passende Partner und deren Kriterien mit dir klären kann.",
+          "sources": [
+            {
+              "title": "Finanzielle Unterstützung",
+              "url": "https://forju.at/de/services/finanziell"
+            },
+            {
+              "title": "Bei ForJu anfragen",
+              "url": "https://forju.at/de/kontakt?intent=service&thema=finanziell"
+            }
+          ]
+        }
+      ],
+      "checks": {
+        "topic": true,
+        "source": true,
+        "facts": true,
+        "noFabrication": true
+      },
+      "pass": true
+    },
+    {
+      "id": "funding-preparation-de",
+      "lang": "de",
+      "turns": [
+        "Ich brauche Geld für ein Schulprojekt.",
+        "Gibt es dafür eine Altersgrenze?",
+        "Was muss ich dafür vorbereiten?"
+      ],
+      "topic": "finanzierung",
+      "source": "services/finanziell",
+      "facts": [
+        "Idee|Projekt",
+        "Kosten|Geld",
+        "Vorschlag|Empfehlung"
+      ],
+      "unknown": "The service describes costing and partner introductions, not a mandatory document checklist. Preparation advice must be labelled a suggestion.",
+      "answers": [
+        {
+          "mode": "library",
+          "topic": "finanzierung",
+          "answer": "Beim Finanzierungsservice hilft ForJu euch, Kosten abzuschätzen, die Machbarkeit zu prüfen und mögliche Förderpartner zu finden. Der Service beschreibt Vermittlung statt direktem Sponsoring. Beschreibt in der Finanzierungsanfrage, wofür ihr Unterstützung braucht. Eine Zusage oder Fördersumme müsst ihr mit ForJu klären.",
+          "sources": [
+            {
+              "title": "Finanzielle Unterstützung",
+              "url": "https://forju.at/de/services/finanziell"
+            },
+            {
+              "title": "Bei ForJu anfragen",
+              "url": "https://forju.at/de/kontakt?intent=service&thema=finanziell"
+            }
+          ]
+        },
+        {
+          "mode": "library",
+          "topic": "finanzierung",
+          "answer": "Eine allgemeine Förderberechtigung nach Alter oder Wohnort ist auf der Finanzierungsseite nicht bestätigt. ForJu sponsert Projekte nicht selbst. Beschreibe dein Vorhaben, damit das Team passende Partner und deren Kriterien mit dir klären kann.",
+          "sources": [
+            {
+              "title": "Finanzielle Unterstützung",
+              "url": "https://forju.at/de/services/finanziell"
+            },
+            {
+              "title": "Bei ForJu anfragen",
+              "url": "https://forju.at/de/kontakt?intent=service&thema=finanziell"
+            }
+          ]
+        },
+        {
+          "mode": "library",
+          "topic": "finanzierung",
+          "answer": "Als Vorbereitung empfehle ich eine kurze Beschreibung eurer Idee und der Dinge, für die Geld fehlt. Falls ihr schon eine Kostenschätzung habt, könnt ihr sie nennen. Das ist ein Vorschlag für eure Anfrage, keine veröffentlichte Pflichtliste. ForJu hilft bei der Kostenschätzung und der Suche nach Förderpartnern. Nutzt dafür die Finanzierungsanfrage.",
+          "sources": [
+            {
+              "title": "Finanzielle Unterstützung",
+              "url": "https://forju.at/de/services/finanziell"
+            },
+            {
+              "title": "Bei ForJu anfragen",
+              "url": "https://forju.at/de/kontakt?intent=service&thema=finanziell"
+            }
+          ]
+        }
+      ],
+      "checks": {
+        "topic": true,
+        "source": true,
+        "facts": true,
+        "noFabrication": true
+      },
+      "pass": true
+    },
+    {
+      "id": "new-subject-reject",
+      "lang": "en",
+      "turns": [
+        "Could we borrow equipment for our class?",
+        "How long can we keep the rental car?"
+      ],
+      "topic": null,
+      "source": null,
+      "facts": [
+        "verified|match"
+      ],
+      "unknown": "ForJu's equipment page cannot answer a rental-car question.",
+      "answers": [
+        {
+          "mode": "library",
+          "topic": "ressourcen",
+          "answer": "Schools and research teams can ask ForJu to find space or measuring equipment through its partners. ForJu helps coordinate supervision and liability. A particular device, date or price needs confirmation. Use the resources form to describe the space or instrument you need and how you would use it.",
+          "sources": [
+            {
+              "title": "Rooms and equipment",
+              "url": "https://forju.at/en/services/ressourcen"
+            },
+            {
+              "title": "Enquire with ForJu",
+              "url": "https://forju.at/en/kontakt?intent=service&thema=ressourcen"
+            }
+          ]
+        },
+        {
+          "mode": "library",
+          "answer": "I don't have verified information about that. Which ForJu service or project do you mean?",
+          "sources": [],
+          "suggestions": [
+            "School workshops",
+            "Borrow equipment",
+            "Project funding"
+          ]
+        }
+      ],
+      "checks": {
+        "topic": true,
+        "source": true,
+        "facts": true,
+        "noFabrication": true
+      },
+      "pass": true
+    },
+    {
+      "id": "no-subject-duration",
+      "lang": "de",
+      "turns": [
+        "Wie lange dauert das?"
+      ],
+      "topic": null,
+      "source": null,
+      "facts": [
+        "Welch|Was"
+      ],
+      "unknown": "Without a prior subject Compass must ask rather than select a random offer.",
+      "answers": [
+        {
+          "mode": "library",
+          "answer": "Dazu habe ich keine gesicherte Information. Welchen ForJu-Service oder welches Projekt meinst du?",
+          "sources": [],
+          "suggestions": [
+            "Schulworkshops",
+            "Messgeräte ausleihen",
+            "Projektfinanzierung"
+          ]
+        }
+      ],
+      "checks": {
+        "topic": true,
+        "source": true,
+        "facts": true,
+        "noFabrication": true
+      },
+      "pass": true
+    }
+  ]
+}

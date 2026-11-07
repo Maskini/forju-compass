@@ -61,13 +61,13 @@
     "sourceTitle": "ForJu – öffentliche Website",
     "sourceUrl": "https://forju.at/de/services/finanziell",
     "sourceYear": 2026,
-    "sourceSha256": "043fe3b133b2d5343e88b03e7e486581e122d6a32bd15665c0d7fb2ba6fe95ee",
+    "sourceSha256": "deba613ac8e68e828f0da79d152af50d101e67685a7dd3fd29e967e17259ab36",
     "reviewStatus": "public-website-summary",
     "owner": null,
     "lastReviewedAt": "2026-11-07",
     "nextReviewAt": "2026-12-07",
     "active": true,
-    "indexTitle": "forju-public:finanzierung:043fe3b133b2",
+    "indexTitle": "forju-public:finanzierung:deba613ac8e6",
     "sourceUpdatedAt": null,
     "titleEn": "Project funding",
     "contentEn": "ForJu’s funding service helps you estimate project costs, assess feasibility and find funding partners. The service says it does not directly sponsor projects. Describe what you need in the funding enquiry so the team can check which options apply.",
@@ -87,6 +87,10 @@
       "eligibility": {
         "de": "Eine allgemeine Förderberechtigung nach Alter oder Wohnort ist auf der Finanzierungsseite nicht bestätigt. ForJu sponsert Projekte nicht selbst. Beschreibe dein Vorhaben, damit das Team passende Partner und deren Kriterien mit dir klären kann.",
         "en": "The funding page does not confirm eligibility based on age or location. ForJu does not directly sponsor projects. Describe your idea so the team can help you find partners and check their criteria."
+      },
+      "preparation": {
+        "de": "Als Vorbereitung empfehle ich eine kurze Beschreibung eurer Idee und der Dinge, für die Geld fehlt. Falls ihr schon eine Kostenschätzung habt, könnt ihr sie nennen. Das ist ein Vorschlag für eure Anfrage, keine veröffentlichte Pflichtliste. ForJu hilft bei der Kostenschätzung und der Suche nach Förderpartnern. Nutzt dafür die Finanzierungsanfrage.",
+        "en": "To prepare, I suggest a short description of your idea and what you need money for. Include a cost estimate if you already have one. This is a suggestion for your enquiry, not a published list of required documents. ForJu helps estimate costs and find funding partners. Use the funding enquiry to get started."
       }
     },
     "sourcePublishedAt": "2024-05-18T21:53:05.000+02:00",
@@ -105,20 +109,30 @@
     "sourceTitle": "ForJu – öffentliche Website",
     "sourceUrl": "https://forju.at/de/services/ressourcen",
     "sourceYear": 2026,
-    "sourceSha256": "a29dd0249183e6faca07b496ce22a13ad0b3a1770c49ffbca2d84312e4db38d6",
+    "sourceSha256": "df03e94bbb15ee6b08703eb04ca928378a9528cafee9a4958300509ed3141186",
     "reviewStatus": "public-website-summary",
     "owner": null,
     "lastReviewedAt": "2026-11-07",
     "nextReviewAt": "2026-12-07",
     "active": true,
-    "indexTitle": "forju-public:ressourcen:a29dd0249183",
+    "indexTitle": "forju-public:ressourcen:df03e94bbb15",
     "sourceUpdatedAt": null,
     "titleEn": "Rooms and equipment",
     "contentEn": "Schools and research teams can ask ForJu to find space or measuring equipment through its partners. ForJu helps coordinate supervision and liability. A particular device, date or price needs confirmation. Use the resources form to describe the space or instrument you need and how you would use it.",
     "requestUrl": "https://forju.at/de/kontakt?intent=service&thema=ressourcen",
     "sourcePublishedAt": "2024-05-18T22:15:24.000+02:00",
     "sourceContentHash": "90e82feca95d5b16583bb10443656082ed157fcaa587c21b773eadb69e5ea6fd",
-    "contentVersion": 2
+    "contentVersion": 2,
+    "visitorAnswers": {
+      "loanPeriod": {
+        "de": "Die Ressourcenseite nennt keine feste Leihdauer. Gebt in der Ressourcenanfrage an, welches Gerät ihr braucht und von wann bis wann ihr es nutzen möchtet. Lasst euch den Zeitraum vom Team bestätigen.",
+        "en": "The resources page does not give a fixed loan period. In the equipment enquiry, say which device you need and the dates you would like to use it. Ask the team to confirm the loan period."
+      },
+      "price": {
+        "de": "ForJus Ressourcenseite nennt keinen Leihpreis. Frag das Team nach den Kosten für euer Gerät und euren Zeitraum.",
+        "en": "ForJu’s resources page gives no loan price. Ask the team to confirm the cost for your device and dates."
+      }
+    }
   },
   {
     "id": "connections",
@@ -584,16 +598,16 @@
     "sourceUrl": "https://forju.at/de/projects/schulworkshops",
     "sourceTitle": "Schulworkshops",
     "sourceYear": 2024,
-    "sourceSha256": "433da5ef751ba0b0f367e7ffba2a0be46fbacd36e7fbcb0658b2e894979b800e",
-    "sourceUpdatedAt": "2024-11-04T10:00:13.000+01:00",
-    "lastReviewedAt": "2026-11-06",
-    "nextReviewAt": "2026-12-06",
+    "sourceSha256": "d9cd4c84a3c7d7f835ef9b5a689d23b4c92695b4b3cb31fc78ca722b0c20abb9",
+    "sourceUpdatedAt": null,
+    "lastReviewedAt": "2026-11-07",
+    "nextReviewAt": "2026-12-07",
     "reviewStatus": "reviewed-public-summary",
     "owner": null,
     "page": 0,
     "section": "Schulworkshops in Wien",
     "active": true,
-    "indexTitle": "forju-public:workshops:433da5ef751b",
+    "indexTitle": "forju-public:workshops:d9cd4c84a3c7",
     "titleEn": "Vienna school workshops",
     "pricing": {
       "de": "Der Artikel von 2024 beschreibt eine Förderung für Wiener Schulen der Schulstufen 1 bis 9. Einen aktuellen Preis pro Kind nennt er nicht. Anja Hofer kann euch die Kosten für eure Klasse bestätigen.",
@@ -611,7 +625,20 @@
       "de": "Um einen Schulworkshop zu vereinbaren, schreib Anja Hofer an anja.hofer@forju.at und frag nach einem Termin für deine Klasse.",
       "en": "To arrange a school workshop, email Anja Hofer at anja.hofer@forju.at and ask about a date for your class."
     },
-    "contentEn": "For your class in Vienna, you can ask about workshops on climate, team conflict, media literacy or gender roles. Other topics include ethics, managing stress, self-management and planning for the future. Young trainers work with teachers.\n\nEmail Anja Hofer (anja.hofer@forju.at) with the topic your class wants to explore. Ask her about dates and costs. In November 2024, Wiener Bildungschancen covered the full cost for grades 1–9."
+    "contentEn": "For your class in Vienna, you can ask about workshops on climate, team conflict, media literacy or gender roles. Other topics include ethics, managing stress, self-management and planning for the future. Young trainers work with teachers.\n\nEmail Anja Hofer (anja.hofer@forju.at) with the topic your class wants to explore. Ask her about dates and costs. In November 2024, Wiener Bildungschancen covered the full cost for grades 1–9.",
+    "visitorAnswers": {
+      "duration": {
+        "de": "Die Schulworkshop-Seite nennt keine Dauer. Frag Anja Hofer unter anja.hofer@forju.at, wie viel Zeit ihr für euren gewünschten Workshop einplanen solltet.",
+        "en": "The school-workshop page does not give a duration. Ask Anja Hofer at anja.hofer@forju.at how much time to allow for the workshop you want."
+      },
+      "groupSize": {
+        "de": "Die Schulworkshop-Seite nennt keine minimale oder maximale Gruppengröße. Schreib Anja Hofer an anja.hofer@forju.at, wie viele Kinder teilnehmen würden, und lass dir bestätigen, ob das für euren Workshop passt.",
+        "en": "The school-workshop page gives no minimum or maximum group size. Tell Anja Hofer at anja.hofer@forju.at how many pupils would attend and ask her to confirm whether that works for your workshop."
+      }
+    },
+    "sourcePublishedAt": "2024-04-24T13:35:06.000+02:00",
+    "sourceContentHash": "be8f08129abe4f580962c3cd97fc32fde19f188ee7c95a63bdadbc366de25eb3",
+    "contentVersion": 2
   },
   {
     "id": "workshop-konflikte",

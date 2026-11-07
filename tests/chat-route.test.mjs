@@ -11,6 +11,7 @@ import {visitorEnquiry} from '../lib/visitor-enquiry.ts';
 import * as visitorGuidance from '../lib/visitor-guidance.ts';
 import * as workshopGuide from '../lib/workshop-guide.ts';
 import * as conversation from '../lib/conversation.ts';
+import * as offerFollowUp from '../lib/offer-follow-up.ts';
 
 const catalog = JSON.parse(readFileSync(new URL('../knowledge/catalog.json',import.meta.url),'utf8'));
 const knowledgeModule = {};
@@ -26,7 +27,7 @@ function setup({matches=[],searchError=null,answer=JSON.stringify({paragraphs:[{
   }
   const modules={"@/lib/server/request-body.mjs":requestBody,"@/lib/visitor-guidance":visitorGuidance,"@/lib/workshop-guide":workshopGuide,"@/lib/visitor-enquiry":{visitorEnquiry},"@/lib/dialogue":{guidedReply,isGuidedPrompt},"@/lib/conversation":conversation,"@/lib/server/ai-limit":{takeAiRequest:()=>0},openai:{default:OpenAI},'next/server':{NextResponse:Response},'@/lib/chat':chat,'@/lib/knowledge':knowledgeModule,'@/lib/server/public-retrieval':{retrievePublicKnowledge:async()=>{if(searchError)throw Error('Search failed');return matches;}}};
   const exports={};
-  new Function('require','exports',compiled)((id)=>modules[id],exports);
+  new Function('require','exports',compiled)((id)=>id==='@/lib/offer-follow-up'?offerFollowUp:modules[id],exports);
   return {POST:exports.POST,calls};
 }
 const request=(body)=>new Request('http://localhost/api/chat',{method:'POST',body:JSON.stringify(body)});
@@ -571,4 +572,24 @@ test('a specific device-availability follow-up never turns into a dated seminar 
  const a=await v.ask('Can you guarantee a sensor is available next Friday?');
  assert.equal(a.topic,'ressourcen');assert.ok(a.sources.some(s=>s.url==='https://forju.at/en/services/ressourcen'));
  assert.match(a.answer,/confirm|ask|not/i);assert.doesNotMatch(a.answer,/guaranteed available|confirmed available|reserved for you/);
+});
+
+test('logistical follow-ups keep their offer and distinguish published facts from missing details',async()=>{
+ const cases=JSON.parse(readFileSync(new URL('../tools/knowledge-checks/followup-cases.json',import.meta.url),'utf8'));
+ for(const c of cases.filter(c=>!c.holdout)) {
+  const v=visitor(c.lang);let a;
+  for(const q of c.turns)a=await v.ask(q);
+  assert.equal(a.topic??null,c.topic,c.id);
+  if(c.source)assert.ok(a.sources.some(s=>s.url==='https://forju.at/'+c.lang+'/'+c.source),c.id);
+  else assert.deepEqual(a.sources,[],c.id);
+  for(const p of c.facts)assert.match(a.answer,new RegExp(p,'iu'),c.id);
+  for(const p of c.forbid||[])assert.doesNotMatch(a.answer,new RegExp(p,'iu'),c.id);
+ }
+});
+
+test('a logistical resolver does not reuse an old offer for named unrelated subjects',()=>{
+ for(const q of ['How much does Netflix cost?','Wie lange dauert die Zugfahrt?','How long can we keep the rental car?','I am 15 and want a driving licence.','How many people can join the gym?']) {
+  assert.equal(offerFollowUp.offerDetail(q),undefined,q);
+ }
+ assert.equal(offerFollowUp.offerFollowUp('How long does it last?',undefined,true,catalog,s=>s),null);
 });

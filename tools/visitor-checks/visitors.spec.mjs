@@ -43,6 +43,37 @@ async function checkAccessibility(page, info) {
   expect(violations.filter(v => ['serious', 'critical'].includes(v.impact))).toEqual([]);
 }
 
+for(const s of [{lang:'de',widget:true,width:390},{lang:'en',widget:false,width:1280},
+ {lang:'de',widget:false,width:390},{lang:'en',widget:true,width:1280}]) {
+ test(`Unpublished details retain context / ${s.lang} / ${s.widget?'widget':'standalone'}`,async({page,context,baseURL},info)=>{
+  await page.setViewportSize({width:s.width,height:844});let panel=page,host;
+  if(s.widget){
+   const origin='https://compass.example.test',hostURL='https://www.forju.at/followup-preview';
+   await context.route(origin+'/**',async route=>{
+    const url=new URL(route.request().url());
+    if(route.request().method()!=='GET' && !(route.request().method()==='POST' && url.pathname==='/api/chat'))return route.abort();
+    const response=await route.fetch({url:baseURL+url.pathname+url.search,maxRedirects:0});await route.fulfill({response});
+   });
+   await context.route(hostURL,route=>route.fulfill({contentType:'text/html',body:`<!doctype html><html lang="${s.lang}"><title>Website-Vorschau</title><h1>Website-Vorschau</h1><script defer src="${origin}/compass-widget.js" data-lang="${s.lang}"></script></html>`}));
+   await page.goto(hostURL);host=page.locator('forju-compass-widget');await host.locator('.launcher').click();await host.locator('.welcome .start').click();panel=host.frameLocator('iframe');
+  }else await page.goto('/embed?lang='+s.lang);
+  const en=s.lang==='en';
+  await ask(panel,en?'Could our class borrow an air-quality sensor?':'Können wir für unsere Klasse einen CO2-Sensor ausleihen?');
+  const period=await ask(panel,en?'How long can we keep it?':'Wie lange dürfen wir es behalten?');
+  await expect(period).toContainText(en?'does not give a fixed loan period':'keine feste Leihdauer');
+  await expect(period.locator('.read-more a').first()).toHaveAttribute('href',`https://forju.at/${s.lang}/services/ressourcen`);
+  // A new subject must replace the equipment topic, including after close/reopen.
+  if(host){await host.locator('.close').click();await host.locator('.launcher').click();}
+  await ask(panel,en?'Which workshops do you offer for schools?':'Welche Workshops bietet ihr für Schulen an?');
+  const duration=await ask(panel,en?'How long does it last?':'Wie lange dauert der?');
+  await expect(duration).toContainText(en?'does not give a duration':'keine Dauer');
+  await expect(duration).toContainText('anja.hofer@forju.at');
+  await expect(duration.locator('.read-more a').first()).toHaveAttribute('href',`https://forju.at/${s.lang}/projects/schulworkshops`);
+  await expect(panel.getByRole('textbox',{name:en?'Your question':'Deine Frage',exact:true})).toBeInViewport();
+  await info.attach('followup.png',{body:await page.screenshot(),contentType:'image/png'});
+ });
+}
+
 for(const scenario of [
   {lang:'de',widget:true,width:1280}, {lang:'en',widget:true,width:390},
   {lang:'en',widget:false,width:1280}, {lang:'de',widget:false,width:390},

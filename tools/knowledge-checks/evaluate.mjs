@@ -8,7 +8,8 @@ import {performance} from 'node:perf_hooks';
 const root=resolve(import.meta.dirname,'../..'), phase=process.argv[2]||'after';
 if(!['before','after','holdout'].includes(phase))throw Error('Use before, after or holdout');
 const out=resolve(process.argv[3]||join(root,'work/knowledge-release',phase+'.json'));
-const cases=JSON.parse(readFileSync(join(import.meta.dirname,'release-cases.json'))).filter(c=>phase==='holdout'?c.holdout:!c.holdout);
+const casesPath=process.env.COMPASS_EVAL_CASES ? resolve(process.env.COMPASS_EVAL_CASES) : join(import.meta.dirname,'release-cases.json');
+const cases=JSON.parse(readFileSync(casesPath)).filter(c=>phase==='holdout'?c.holdout:!c.holdout);
 const scratch=mkdtempSync(join(tmpdir(),'compass-eval-')), quota=join(scratch,'quota.sqlite');
 const started=performance.now(),samples=[],latencies=[],results=[];let readyMs;
 const server=spawn(process.execPath,['--require',join(import.meta.dirname,'offline.cjs'),'node_modules/next/dist/bin/next','start','-H','127.0.0.1','-p','4327'],{cwd:root,

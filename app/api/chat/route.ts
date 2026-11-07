@@ -1,6 +1,7 @@
 import {BodyError, readBody} from "@/lib/server/request-body.mjs";
 import { offersPartnership, publicGuidance } from "@/lib/visitor-guidance";
 import { createWorkshopGuide } from "@/lib/workshop-guide";
+import { offerFollowUp } from "@/lib/offer-follow-up";
 import { visitorEnquiry } from "@/lib/visitor-enquiry";
 import {guidedReply,isGuidedPrompt} from "@/lib/dialogue";
 import {affirmedRequest, repairRequest, wantsTeam, conversationalReply, questionAfterGreeting, topicHistory, selfIntroduction, nameRecall, recentVisitorName, namePrompts} from "@/lib/conversation";
@@ -88,6 +89,8 @@ export async function POST(request: Request) {
       : guidedReply("yes",en,history,knowledgeCatalog) ?? guidedReply(en ? "Where do I start?" : "Wo fange ich an?",en,[],knowledgeCatalog);
     return reply({...next, mode:next?.mode ?? "conversation",answer:acknowledgment+"\n\n"+(next?.answer ?? (en ? "What would you like help with?" : "Wobei kann ich dir helfen?")),sources:next?.sources ?? []});
   }
+  const followUp = offerFollowUp(message, parsed.topic, en, knowledgeCatalog, readerUrl);
+  if (followUp) return reply(followUp);
   const enquiry = visitorEnquiry(raw, en, relevantHistory, parsed.topic, knowledgeCatalog, readerUrl, enquiryTopic, affirmedRequest);
   if (enquiry) return reply(enquiry);
   const lastAnswer = history.at(-1)?.content;

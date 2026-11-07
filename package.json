@@ -17,7 +17,8 @@
     "knowledge:review": "node tools/knowledge-checks/manage.mjs review",
     "knowledge:check": "node tools/knowledge-checks/manage.mjs check",
     "test:knowledge": "npm --prefix tools/knowledge-checks test",
-    "eval:knowledge": "node tools/knowledge-checks/evaluate.mjs after"
+    "eval:knowledge": "node tools/knowledge-checks/evaluate.mjs after",
+    "eval:followups": "COMPASS_EVAL_CASES=tools/knowledge-checks/followup-cases.json node tools/knowledge-checks/evaluate.mjs after work/followup-eval/after.json && COMPASS_EVAL_CASES=tools/knowledge-checks/followup-cases.json node tools/knowledge-checks/evaluate.mjs holdout work/followup-eval/holdout.json"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.116.0",
