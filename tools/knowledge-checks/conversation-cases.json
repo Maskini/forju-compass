@@ -1,0 +1,285 @@
+[
+  {
+    "id": "language-de",
+    "lang": "en",
+    "turns": [
+      "Which workshops do you offer for schools?",
+      "Could you answer in German please?"
+    ],
+    "topic": "workshops",
+    "source": "projects/schulworkshops",
+    "sourceLanguage": "de",
+    "facts": [
+      "Workshop",
+      "Schul|Wien"
+    ],
+    "forbid": [
+      "I don.t have"
+    ],
+    "unknown": "No fee, deadline, device availability, or general eligibility may be inferred. Role-specific remote work and hours apply only to the named Chief of Staff listing reviewed at /de/jobs."
+  },
+  {
+    "id": "language-en",
+    "lang": "de",
+    "turns": [
+      "Welche Workshops bietet ihr für Schulen an?",
+      "Please answer in English.",
+      "How do I register my class for it?"
+    ],
+    "topic": "workshops",
+    "source": "projects/schulworkshops",
+    "sourceLanguage": "en",
+    "facts": [
+      "Anja",
+      "anja.hofer@forju.at"
+    ],
+    "unknown": "No fee, deadline, device availability, or general eligibility may be inferred. Role-specific remote work and hours apply only to the named Chief of Staff listing reviewed at /de/jobs."
+  },
+  {
+    "id": "language-persistence",
+    "lang": "de",
+    "turns": [
+      "Welche Workshops bietet ihr für Schulen an?",
+      "Bitte auf Englisch antworten.",
+      "How long does it last?",
+      "Thanks",
+      "OK",
+      "Hi",
+      "Und wie melde ich meine Klasse dafür an?"
+    ],
+    "topic": "workshops",
+    "source": "projects/schulworkshops",
+    "sourceLanguage": "en",
+    "facts": [
+      "Anja",
+      "email|contact|write"
+    ],
+    "forbid": [
+      "Schreib|Anmeldung"
+    ],
+    "unknown": "No fee, deadline, device availability, or general eligibility may be inferred. Role-specific remote work and hours apply only to the named Chief of Staff listing reviewed at /de/jobs."
+  },
+  {
+    "id": "advice-correction",
+    "lang": "en",
+    "turns": [
+      "Could our class borrow equipment for an air quality project?",
+      "Actually, we need advice, not equipment."
+    ],
+    "topic": null,
+    "source": null,
+    "facts": [
+      "idea",
+      "expert|technical|specialist",
+      "\\?"
+    ],
+    "forbid": [
+      "can ask ForJu to find measuring"
+    ],
+    "unknown": "No fee, deadline, device availability, or general eligibility may be inferred. Role-specific remote work and hours apply only to the named Chief of Staff listing reviewed at /de/jobs."
+  },
+  {
+    "id": "advice-clarification",
+    "lang": "de",
+    "turns": [
+      "Wir brauchen ein Messgerät für unsere Schule",
+      "Eigentlich brauchen wir Beratung, nicht Geräte.",
+      "Das erste"
+    ],
+    "topic": "science-beratung",
+    "source": "projects/science-beratung",
+    "facts": [
+      "Idee",
+      "office@forju.at"
+    ],
+    "unknown": "No fee, deadline, device availability, or general eligibility may be inferred. Role-specific remote work and hours apply only to the named Chief of Staff listing reviewed at /de/jobs."
+  },
+  {
+    "id": "expertise-clarification",
+    "lang": "en",
+    "turns": [
+      "I need advice",
+      "The second one"
+    ],
+    "topic": "know-how",
+    "source": "services/know-how",
+    "facts": [
+      "expertise|specialist",
+      "problem"
+    ],
+    "unknown": "No fee, deadline, device availability, or general eligibility may be inferred. Role-specific remote work and hours apply only to the named Chief of Staff listing reviewed at /de/jobs."
+  },
+  {
+    "id": "remote-en",
+    "lang": "en",
+    "turns": [
+      "I want to volunteer with ForJu.",
+      "Can I do it remotely?"
+    ],
+    "topic": "ehrenamt",
+    "source": "jobs",
+    "facts": [
+      "remote",
+      "Chief of Staff",
+      "role|other"
+    ],
+    "forbid": [
+      "all roles|every role"
+    ],
+    "unknown": "No fee, deadline, device availability, or general eligibility may be inferred. Role-specific remote work and hours apply only to the named Chief of Staff listing reviewed at /de/jobs."
+  },
+  {
+    "id": "remote-de",
+    "lang": "de",
+    "turns": [
+      "Ich möchte ehrenamtlich mithelfen.",
+      "Geht das auch von zu Hause?"
+    ],
+    "topic": "ehrenamt",
+    "source": "jobs",
+    "facts": [
+      "remote",
+      "Chief of Staff",
+      "Rolle|andere"
+    ],
+    "unknown": "No fee, deadline, device availability, or general eligibility may be inferred. Role-specific remote work and hours apply only to the named Chief of Staff listing reviewed at /de/jobs."
+  },
+  {
+    "id": "hours-en",
+    "lang": "en",
+    "turns": [
+      "I want to volunteer with ForJu.",
+      "How much time do I need?"
+    ],
+    "topic": "ehrenamt",
+    "source": "jobs",
+    "facts": [
+      "2.?5",
+      "Chief of Staff",
+      "week"
+    ],
+    "unknown": "No fee, deadline, device availability, or general eligibility may be inferred. Role-specific remote work and hours apply only to the named Chief of Staff listing reviewed at /de/jobs."
+  },
+  {
+    "id": "experience-de",
+    "lang": "de",
+    "turns": [
+      "Ich möchte ehrenamtlich mithelfen",
+      "Brauche ich Erfahrung?"
+    ],
+    "topic": "ehrenamt",
+    "source": "jobs",
+    "facts": [
+      "Chief of Staff",
+      "keine Voraussetzung|nicht vorausgesetzt",
+      "Rolle"
+    ],
+    "unknown": "No fee, deadline, device availability, or general eligibility may be inferred. Role-specific remote work and hours apply only to the named Chief of Staff listing reviewed at /de/jobs."
+  },
+  {
+    "id": "unknown-device-after-correction",
+    "lang": "en",
+    "turns": [
+      "We need money for our project",
+      "Actually, we need a microscope, not funding.",
+      "Is it free?"
+    ],
+    "topic": "ressourcen",
+    "source": "services/ressourcen",
+    "facts": [
+      "no|not",
+      "price|cost"
+    ],
+    "forbid": [
+      "is free|guaranteed"
+    ],
+    "unknown": "No fee, deadline, device availability, or general eligibility may be inferred. Role-specific remote work and hours apply only to the named Chief of Staff listing reviewed at /de/jobs."
+  },
+  {
+    "id": "unrelated-remote",
+    "lang": "en",
+    "turns": [
+      "I want to volunteer",
+      "Can I do my driving test remotely?"
+    ],
+    "topic": null,
+    "source": null,
+    "facts": [
+      "verified|match|Which"
+    ],
+    "forbid": [
+      "Chief of Staff"
+    ],
+    "unknown": "No fee, deadline, device availability, or general eligibility may be inferred. Role-specific remote work and hours apply only to the named Chief of Staff listing reviewed at /de/jobs."
+  },
+  {
+    "id": "holdout-switch-facet",
+    "lang": "en",
+    "turns": [
+      "Could our class borrow equipment?",
+      "How long can we keep it?",
+      "Auf Deutsch bitte."
+    ],
+    "topic": "ressourcen",
+    "source": "services/ressourcen",
+    "sourceLanguage": "de",
+    "facts": [
+      "Leihdauer",
+      "keine|nicht"
+    ],
+    "holdout": true,
+    "unknown": "No fee, deadline, device availability, or general eligibility may be inferred. Role-specific remote work and hours apply only to the named Chief of Staff listing reviewed at /de/jobs."
+  },
+  {
+    "id": "holdout-language-menu",
+    "lang": "en",
+    "turns": [
+      "I need advice",
+      "Kannst du auf Deutsch antworten?",
+      "Das zweite"
+    ],
+    "topic": "know-how",
+    "source": "services/know-how",
+    "sourceLanguage": "de",
+    "facts": [
+      "Expertise|fachlich"
+    ],
+    "holdout": true,
+    "unknown": "No fee, deadline, device availability, or general eligibility may be inferred. Role-specific remote work and hours apply only to the named Chief of Staff listing reviewed at /de/jobs."
+  },
+  {
+    "id": "holdout-reverse-edit",
+    "lang": "de",
+    "turns": [
+      "Wir suchen einen Workshop",
+      "Nein, wir brauchen Geld, nicht Workshops."
+    ],
+    "topic": "finanzierung",
+    "source": "services/finanziell",
+    "facts": [
+      "Kosten|Finanzierung|Förder"
+    ],
+    "holdout": true,
+    "unknown": "No fee, deadline, device availability, or general eligibility may be inferred. Role-specific remote work and hours apply only to the named Chief of Staff listing reviewed at /de/jobs."
+  },
+  {
+    "id": "holdout-unknown-hours",
+    "lang": "en",
+    "turns": [
+      "Which workshops do you offer for schools?",
+      "How long does it last?",
+      "Is it exactly 90 minutes?"
+    ],
+    "topic": "workshops",
+    "source": "projects/schulworkshops",
+    "facts": [
+      "no|not|confirm",
+      "duration|length|minutes"
+    ],
+    "forbid": [
+      "lasts 90|exactly 90 minutes long"
+    ],
+    "holdout": true,
+    "unknown": "No fee, deadline, device availability, or general eligibility may be inferred. Role-specific remote work and hours apply only to the named Chief of Staff listing reviewed at /de/jobs."
+  }
+]

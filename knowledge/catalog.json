@@ -1293,5 +1293,45 @@
     "sourcePublishedAt": null,
     "sourceContentHash": "9c0e7b9aafcbfe729d16b5305d547fbf218c4a5d46e1a428c4ba663dc134a7f2",
     "contentVersion": 2
+  },
+  {
+    "id": "jobs-working-conditions",
+    "title": "Ehrenamt: Arbeitsweise und Anforderungen",
+    "content": "Die öffentlich ausgeschriebene Rolle Chief of Staff | Strategy & Operations nennt vollständig remote Mitarbeit und ungefähr 2–5 Stunden pro Woche. Erfahrung im Projektmanagement oder Vereinswesen ist von Vorteil, aber keine Voraussetzung. Das gilt für diese Rolle, nicht automatisch für alle Positionen. Prüfe die Anforderungen und aktuelle Verfügbarkeit der gewünschten Rolle auf der Jobs-Seite. Bewerbungen: bewerbung@forju.at.",
+    "keywords": "ehrenamt remote von zu Hause freiwillig Zeitaufwand Stunden Erfahrung volunteering remote work from home time commitment weekly hours experience Chief of Staff",
+    "kind": "public-website",
+    "sourceId": "https://forju.at/de/jobs",
+    "sourceUrl": "https://forju.at/de/jobs",
+    "sourceTitle": "Offene Positionen bei ForJu",
+    "sourceYear": 2026,
+    "sourceSha256": "1c4347025d3a3748e9c0b9e4ef7a981e330f5e10b97c1f2e1344d9bf0eae93dd",
+    "sourceUpdatedAt": null,
+    "lastReviewedAt": "2026-11-07",
+    "nextReviewAt": "2026-12-07",
+    "reviewStatus": "reviewed-public-summary",
+    "owner": null,
+    "page": 0,
+    "section": "Rahmenbedingungen – Chief of Staff",
+    "active": true,
+    "indexTitle": "forju-public:jobs-working-conditions:1c4347025d3a",
+    "titleEn": "Volunteering: working arrangements and requirements",
+    "contentEn": "The published Chief of Staff | Strategy & Operations role describes fully remote volunteering for about 2–5 hours per week. Project-management or association experience is helpful but not required for that role. These conditions do not automatically apply to every position. Check the requirements and current availability of your chosen role on the jobs page. Applications: bewerbung@forju.at.",
+    "visitorAnswers": {
+      "remote": {
+        "de": "Die Ausschreibung für Chief of Staff | Strategy & Operations nennt vollständig remote Mitarbeit. Für andere Rollen prüfst du am besten die jeweilige Ausschreibung. Frag bei bewerbung@forju.at nach, ob deine gewünschte Rolle von zu Hause möglich und aktuell offen ist.",
+        "en": "The Chief of Staff | Strategy & Operations listing explicitly offers fully remote volunteering. For other roles, check the individual listing. Ask bewerbung@forju.at whether your preferred role can be done from home and is currently open."
+      },
+      "hours": {
+        "de": "Für Chief of Staff | Strategy & Operations nennt die Jobs-Seite ungefähr 2–5 Stunden pro Woche und flexible Zeiteinteilung. Das ist keine allgemeine Stundenangabe für alle Rollen. Prüfe die gewünschte Ausschreibung oder frag bei bewerbung@forju.at nach.",
+        "en": "For Chief of Staff | Strategy & Operations, the jobs page says about 2–5 hours per week with flexible scheduling. That is not a general commitment for every role. Check your preferred listing or ask bewerbung@forju.at."
+      },
+      "experience": {
+        "de": "Bei Chief of Staff | Strategy & Operations ist Erfahrung im Projektmanagement oder Vereinswesen von Vorteil, aber keine Voraussetzung. Die Rolle verlangt unter anderem strukturiertes, eigenständiges Arbeiten und gute Kommunikation. Für andere Rollen gelten deren jeweilige Anforderungen; prüfe sie auf der Jobs-Seite.",
+        "en": "For Chief of Staff | Strategy & Operations, project-management or association experience is helpful but not required. The role does ask for structured, independent work and good communication. Other roles have their own requirements; check the relevant listing on the jobs page."
+      }
+    },
+    "sourcePublishedAt": null,
+    "sourceContentHash": "6fa4bd73957ef189535f520e8f0788d01f7f7f9bbce3e4c9f8146e71a96fc75e",
+    "contentVersion": 2
   }
 ]

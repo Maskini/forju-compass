@@ -87,3 +87,15 @@ npm run preview:forju
 The command builds Compass, starts a temporary local-only server on loopback port 4262, and opens the public German school-workshop article in a fresh Chrome window. Only that window loads the local widget. Open **ForJu Compass** at the bottom right. Follow ForJu links within this window to view other pages. The preview prevents external writes and project or report deliveries. Close the window to stop the preview. For the phone layout run `npm run preview:forju -- --phone`.
 
 For paired screenshots, run `npm run preview:forju -- before` against the baseline and `npm run preview:forju -- after` against the candidate; use this version of the two preview scripts with both builds. Alternatively point `COMPASS_DESIGN_ORIGIN` at a known local-only build and run `node tools/visitor-checks/design-preview.mjs after`. The screenshots and interaction checks go in `work/design-review/`. Phone checks keep the screen size constant and emulate a reduced viewport. Verify the operating system's keyboard on a physical phone before a public install.
+
+
+### Session conversation preferences
+
+Compass retains an explicitly supplied name and requested answer language in the
+current chat component, alongside the current topic. These small values accompany
+requests to the existing Compass server; they are not authentication or verified
+identity. Chat history remains bounded to the last four exchanges per request.
+The trash/clear action and a page reload remove these values. They are not written
+to cookies, browser storage, the host page, or a server conversation database.
+In local-only mode there are no inference-provider calls. Hosting still receives
+the normal HTTP requests; its infrastructure logging is separate from app memory.

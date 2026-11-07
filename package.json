@@ -18,7 +18,10 @@
     "knowledge:check": "node tools/knowledge-checks/manage.mjs check",
     "test:knowledge": "npm --prefix tools/knowledge-checks test",
     "eval:knowledge": "node tools/knowledge-checks/evaluate.mjs after",
-    "eval:followups": "COMPASS_EVAL_CASES=tools/knowledge-checks/followup-cases.json node tools/knowledge-checks/evaluate.mjs after work/followup-eval/after.json && COMPASS_EVAL_CASES=tools/knowledge-checks/followup-cases.json node tools/knowledge-checks/evaluate.mjs holdout work/followup-eval/holdout.json"
+    "eval:followups": "COMPASS_EVAL_CASES=tools/knowledge-checks/followup-cases.json node tools/knowledge-checks/evaluate.mjs after work/followup-eval/after.json && COMPASS_EVAL_CASES=tools/knowledge-checks/followup-cases.json node tools/knowledge-checks/evaluate.mjs holdout work/followup-eval/holdout.json",
+    "eval:conversation": "COMPASS_EVAL_CASES=tools/knowledge-checks/conversation-cases.json node tools/knowledge-checks/evaluate.mjs after work/conversation-upgrade/after.json && COMPASS_EVAL_CASES=tools/knowledge-checks/conversation-cases.json node tools/knowledge-checks/evaluate.mjs holdout work/conversation-upgrade/holdout.json",
+    "check:responses": "npm run lint && npm test && npm run build && npm run eval:conversation && npm run eval:followups && npm run eval:knowledge && npm run test:visitors",
+    "benchmark:local": "node tools/local-model-checks/benchmark.mjs"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.116.0",

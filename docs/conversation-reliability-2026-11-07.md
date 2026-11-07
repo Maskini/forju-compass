@@ -44,7 +44,7 @@ The evaluator runs the production server locally with `COMPASS_LOCAL_ONLY=true`,
 
 ## Remaining release work
 
-The initial exploratory conversations also exposed language-switch requests, generic volunteering-experience/remote-work follow-ups, and a correction from equipment to advice. Those were not part of this fix and remain open. Free-form understanding is still bounded by the local retrieval and conversation rules. Passing this set must not be described as understanding every question.
+The initial exploratory conversations also exposed language-switch requests, generic volunteering-experience/remote-work follow-ups, and a correction from equipment to advice. These were addressed in the subsequent [conversation upgrade](conversation-upgrade-2026-11-07.md). Free-form understanding is still bounded by the local retrieval and conversation rules. Passing this set must not be described as understanding every question.
 
 Project-email delivery still needs an authorized sender and a separately approved live delivery check. The actual ForJu installation and physical-phone keyboard behavior need deployment-specific verification. The public site and its DNS were not modified.
 

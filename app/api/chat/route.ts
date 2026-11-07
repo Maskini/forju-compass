@@ -4,7 +4,7 @@ import { createWorkshopGuide } from "@/lib/workshop-guide";
 import { offerFollowUp } from "@/lib/offer-follow-up";
 import { visitorEnquiry } from "@/lib/visitor-enquiry";
 import {guidedReply,isGuidedPrompt} from "@/lib/dialogue";
-import {affirmedRequest, repairRequest, wantsTeam, conversationalReply, questionAfterGreeting, topicHistory, selfIntroduction, nameRecall, recentVisitorName, namePrompts} from "@/lib/conversation";
+import {languageRequest, languageReplay, affirmedRequest, repairRequest, wantsTeam, conversationalReply, questionAfterGreeting, topicHistory, selfIntroduction, nameRecall, recentVisitorName, namePrompts} from "@/lib/conversation";
 import { takeAiRequest } from "@/lib/server/ai-limit";
 import OpenAI from "openai";
 import { NextResponse } from "next/server";
@@ -23,11 +23,19 @@ export async function POST(request: Request) {
     if (error instanceof BodyError) return NextResponse.json({error:error.status===413 ? "Anfrage zu groß." : "Ungültige Anfrage."},{status:error.status});
     return NextResponse.json({ error: error instanceof SyntaxError ? "Ungültiges JSON." : error instanceof Error ? error.message : "Ungültige Anfrage." }, { status: 400 });
   }
+  const requestedLanguage = languageRequest(parsed.message);
+  const preferredLanguage = requestedLanguage ?? parsed.preferredLanguage;
+  // Re-answer the last substantive question in the selected language. Replaying
+  // only validated user text preserves the question's facet and pending choices.
+  if (requestedLanguage) {
+    const replay = languageReplay(parsed.history,isGuidedPrompt);
+    parsed = {...parsed, ...(replay ?? {message:requestedLanguage === "en" ? "Hello" : "Hallo"})};
+  }
   const introduction = selfIntroduction(parsed.message, parsed.history.at(-1)?.content);
   const raw = questionAfterGreeting(introduction?.rest || parsed.message);
   const message = affirmedRequest(raw);
   const englishUI = request.headers.get("accept-language")?.toLowerCase().startsWith("en") ?? false;
-  const en = introduction && !introduction.rest ? introduction.en
+  const en = preferredLanguage ? preferredLanguage === "en" : introduction && !introduction.rest ? introduction.en
     : /^(what|where|when|how|who|can|could|do you|is there|by what|i|we|for my|for our|not sure|explain|give me|help with)\b/i.test(message) ? true
     : /^(was|wo|wann|wie|wer|gibt|bietet|kann|bis wann|und wie|ich|wir|für|kannst|einfacher|hilfe bei)\b/i.test(message) ? false
     : request.headers.get("accept-language")?.toLowerCase().startsWith("en") ?? false;
@@ -38,14 +46,14 @@ export async function POST(request: Request) {
   const prior = knowledgeCatalog.find(r=>r.id===parsed.topic);
   const school = knowledgeCatalog.find(r=>r.id==="workshops");
   const lang = en ? "en" : "de";
-  const previousName = recentVisitorName(parsed.history);
+  const previousName = recentVisitorName(parsed.history) ?? parsed.visitorName;
   const acknowledgment = introduction ? previousName && previousName !== introduction.name
     ? (en ? `Thanks for the correction, ${introduction.name}.` : `Danke für die Korrektur, ${introduction.name}.`)
     : (en ? `Nice to meet you, ${introduction.name}!` : `Schön, dich kennenzulernen, ${introduction.name}!`) : "";
   function reply(body: {answer:string; [key:string]:unknown}) {
     // Keep the substantive request after an introduction, including its sources.
     // An editable email draft must remain transferable without a chat preamble.
-    return NextResponse.json(introduction?.rest && body.mode !== "draft" ? {...body, answer:acknowledgment+"\n\n"+body.answer} : body);
+    return NextResponse.json({...body, ...((introduction?.name ?? previousName) ? {visitorName:introduction?.name ?? previousName} : {}), ...(preferredLanguage ? {preferredLanguage} : {}), ...(introduction?.rest && body.mode !== "draft" ? {answer:acknowledgment+"\n\n"+body.answer} : {})});
   }
   const team = en ? "Contact the ForJu team" : "Mit ForJu sprechen";
   const repair = repairRequest(raw);
@@ -100,7 +108,7 @@ export async function POST(request: Request) {
   if (workshop) return reply(workshop);
   const guided = guidedReply(message,en,history,knowledgeCatalog,parsed.topic);
   if (guided) return reply(guided);
-  const social = conversationalReply(parsed.message, englishUI);
+  const social = conversationalReply(parsed.message, englishUI, preferredLanguage);
   if (social) return reply({mode:"conversation",answer:social,sources:[],topic:parsed.topic});
   const previous = history.filter(m => m.role === "user").at(-1)?.content;
   const deadline = /deadline|cut[ -]?off|by (what|which) date|last day|how late|\bfrist|anmeldefrist|bewerbungsfrist|bis wann|spätestens/i.test(message);

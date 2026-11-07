@@ -3,9 +3,9 @@ export const MAX_HISTORY_MESSAGES = 8;
 export type ChatMessage = { role: "user" | "assistant"; content: string };
 export type Source = { title: string; url: string };
 
-export function parseChatRequest(body: unknown): { message: string; history: ChatMessage[]; topic?: string } {
+export function parseChatRequest(body: unknown): { message: string; history: ChatMessage[]; topic?: string; preferredLanguage?: "de"|"en"; visitorName?:string } {
   if (!body || typeof body !== "object") throw new Error("Ungültige Anfrage.");
-  const { message, history = [], topic } = body as Record<string, unknown>;
+  const { message, history = [], topic, preferredLanguage, visitorName } = body as Record<string, unknown>;
   if (typeof message !== "string" || !message.trim()) throw new Error("Eine Nachricht ist erforderlich.");
   if (message.length > MAX_MESSAGE_LENGTH) throw new Error("Bitte beschränke deine Frage auf 2000 Zeichen.");
   if (!Array.isArray(history) || history.length > MAX_HISTORY_MESSAGES) throw new Error("Der Gesprächsverlauf ist zu lang.");
@@ -18,7 +18,8 @@ export function parseChatRequest(body: unknown): { message: string; history: Cha
     return { role, content: content.trim() } as ChatMessage;
   });
   if (validated.length % 2 !== 0) throw new Error("Unvollständiger Gesprächsverlauf.");
-  return { message: message.trim(), history: validated, ...(validated.length && typeof topic === "string" && /^[a-z0-9-]{1,48}$/.test(topic) ? {topic} : {}) };
+  const name = typeof visitorName === "string" && visitorName.length <= 80 && /^[\p{L}\p{M}]+(?:[ '’‐-][\p{L}\p{M}]+){0,7}$/u.test(visitorName) ? visitorName : undefined;
+  return { message: message.trim(), history: validated, ...(name ? {visitorName:name} : {}), ...(preferredLanguage === "de" || preferredLanguage === "en" ? {preferredLanguage} : {}), ...(validated.length && typeof topic === "string" && /^[a-z0-9-]{1,48}$/.test(topic) ? {topic} : {}) };
 }
 
 export function safeSourceUrl(value: unknown): string | null {

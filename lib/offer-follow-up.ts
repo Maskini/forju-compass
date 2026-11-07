@@ -3,11 +3,15 @@
 // must not silently inherit an earlier ForJu topic. Facts live in reviewed cards.
 type Passage = {de:string; en:string};
 type Card = {id:string; title:string; titleEn:string; sourceUrl:string; requestUrl?:string; pricing?:Passage; visitorAnswers?:Partial<Record<string,Passage>>};
-type Detail = "price" | "duration" | "groupSize" | "loanPeriod" | "eligibility" | "preparation";
+type Detail = "price" | "duration" | "groupSize" | "loanPeriod" | "eligibility" | "preparation" | "remote" | "hours" | "experience";
 export function offerDetail(message:string):Detail|undefined {
   const q=message.toLowerCase().normalize("NFKD").replace(/\p{M}/gu, "").replace(/ß/g,"ss")
     .replace(/[’']/g,"'").replace(/[?.!,]+/g," ").replace(/\s+/g," ").trim()
     .replace(/^(?:und|and) /, "").replace(/^(?:bitte|please) /, "").replace(/ (?:bitte|please)$/, "");
+  if (/^(?:can (?:i|we) (?:do (?:it|that)|volunteer|help) (?:remotely|from home)|is (?:it|that) remote|geht das (?:auch )?(?:remote|von (?:zu )?hause)|kann ich (?:auch )?(?:von (?:zu )?hause|remote) (?:mithelfen|mitmachen))$/.test(q)) return "remote";
+  if (/^(?:how (?:much time do i need|many hours (?:a week )?(?:do i need|is it))|wie viel zeit (?:brauche ich|muss ich einplanen)|wie viele stunden (?:pro woche )?(?:sind das|brauche ich))$/.test(q)) return "hours";
+  if (/^(?:do i need (?:any |prior )?experience|is experience required|brauche ich (?:schon |dafur )?erfahrung|ist erfahrung (?:notig|erforderlich))$/.test(q)) return "experience";
+  if (/^(?:is it exactly \d{1,3} (?:minutes|hours)|dauert das genau \d{1,3} (?:minuten|stunden))$/.test(q)) return "duration";
   if (/^(?:was (?:kostet|kosten) (?:uns |mich |das |es )?(?:das|es)|was kostet (?:das|es)|wie (?:teuer ist|viel kostet) (?:das|es)|wie viel (?:mussen|sollen) wir (?:dafur )?(?:zahlen|bezahlen)|ist (?:das|es) (?:kostenlos|gratis)|how much (?:(?:does|would) (?:it|that|this) cost|is (?:it|that))|what (?:does|would) (?:it|that) cost|is (?:it|that) free)$/.test(q)) return "price";
   if (/^(?:wie lange (?:dauert|geht) (?:das|es|der|die|der workshop)|wie viel zeit (?:sollen|mussen) wir (?:dafur )?einplanen|how long (?:does|would) (?:it|that|this) (?:last|take)|how long is (?:it|the workshop))$/.test(q)) return "duration";
   if (/^(?:wie viele (?:kinder|schuler|schulerinnen|personen|teilnehmende) (?:durfen|konnen) (?:daran |dabei )?(?:teilnehmen|mitmachen)|wie gro[ss]+ (?:darf|kann) (?:die|unsere) gruppe sein|how many (?:pupils|students|children|people) can (?:take part|participate|join)|what is the (?:maximum |minimum )?group size)$/.test(q)) return "groupSize";
@@ -19,7 +23,8 @@ export function offerFollowUp(message:string, topic:string|undefined, en:boolean
   const detail=offerDetail(message);
   if (!detail || !topic) return null;
   const selected=records.find(r=>r.id===topic);
-  const card=topic.startsWith("workshop-") ? records.find(r=>r.id==="workshops") : selected;
+  const volunteer = ["ehrenamt","jobs-tech","jobs-working-conditions"].includes(topic) && ["remote","hours","experience"].includes(detail);
+  const card=volunteer ? records.find(r=>r.id==="jobs-working-conditions") : topic.startsWith("workshop-") ? records.find(r=>r.id==="workshops") : selected;
   if (!card || !selected) return null;
   const key=card.id==="mitglied" && (detail==="eligibility" || detail==="price") ? "terms" : detail;
   const passage=detail==="price" && card.pricing ? card.pricing : card.visitorAnswers?.[key];

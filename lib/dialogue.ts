@@ -2,19 +2,21 @@ import MiniSearch from "minisearch";
 import type { ChatMessage } from "./chat";
 
 type Pair = [string, string];
-type Menu = "start" | "class" | "project" | "contribute";
-type Topic = "workshops" | "ressourcen" | "finanzierung" | "science-beratung" | "connections" | "ehrenamt";
+type Menu = "start" | "class" | "project" | "contribute" | "advice";
+type Topic = "workshops" | "ressourcen" | "finanzierung" | "science-beratung" | "connections" | "ehrenamt" | "know-how";
 type Intent = Menu | Topic | "partnerpool" | "spenden" | "short" | "next";
 type Card = {title:string; titleEn:string; id:string; content:string; contentEn:string; sourceUrl:string; requestUrl?:string; plainLanguage?:{de:string;en:string}; visitorAnswers?:{offer?:{de:string;en:string}}; booking?:{de:string;en:string}};
 type Reply = {mode:"conversation"|"library"; answer:string; sources:{title:string;url:string}[]; suggestions?:string[]; topic?:string};
 
 const menus:Record<Menu,{ask:Pair; options:Intent[]}> = {
+  advice:{ask:["Geht es darum, eure Forschungsidee auszuarbeiten, oder braucht ihr fachliche Hilfe bei der Umsetzung?","Do you want to develop your research idea, or do you need specialist help implementing it?"],options:["science-beratung","know-how"]},
   contribute:{ask:["Wie möchtest du ForJu unterstützen: mit deiner Zeit, mit Ressourcen deiner Organisation oder mit einer Geldspende?","How would you like to help ForJu: volunteer your time, offer resources through an organisation, or donate money?"],options:["ehrenamt","partnerpool","spenden"]},
   start:{ask:["Was führt dich zu ForJu: Suchst du etwas für deine Klasse, arbeitest du an einem eigenen Projekt oder möchtest du mithelfen?","What brings you to ForJu: are you looking for something for your class, working on your own project, or hoping to volunteer?"],options:["class","project","ehrenamt"]},
   class:{ask:["Was würde eurer Klasse helfen: ein Workshop, ein Gerät zum Messen oder Hilfe bei der Finanzierung?","What would help your class: a workshop, equipment to take measurements, or help finding funding?"],options:["workshops","ressourcen","finanzierung"]},
   project:{ask:["Wobei brauchst du für dein Projekt gerade Hilfe: die Idee ausarbeiten, Geräte finden, die Finanzierung klären oder jemanden aus der Forschung kennenlernen?","Where do you need help with your project: shaping the idea, finding equipment, finding funding, or meeting someone in research?"],options:["science-beratung","ressourcen","finanzierung","connections"]}
 };
 const labels:Record<Intent,Pair> = {
+  advice:["Beratung finden","Find advice"],"know-how":["Fachliche Hilfe bei der Umsetzung","Specialist help implementing it"],
   contribute:["ForJu unterstützen","Support ForJu"],partnerpool:["Als Organisation etwas anbieten","Offer resources as an organisation"],spenden:["Geld spenden","Donate money"],
   start:["Wo fange ich an?","Where do I start?"],class:["Für meine Klasse","For my class"],project:["Für mein Projekt","For my project"],
   ehrenamt:["Ehrenamtlich Zeit einbringen","Volunteer my time"],workshops:["Einen Workshop","A workshop"],ressourcen:["Ein Messgerät","Measuring equipment"],
@@ -24,6 +26,7 @@ const labels:Record<Intent,Pair> = {
 // Each example is indexed separately. A visitor's entire meaningful phrase must
 // fit one example; a single shared word must not override a substantive question.
 const phrases:Record<Intent,string[]> = {
+  advice:["Ich brauche Beratung","Wir brauchen Beratung","Ich möchte Beratung","Wir suchen Rat","I need advice","We need advice","I need a consultation","Can I get some advice"],"know-how":["Fachliche Unterstützung","Technische Hilfe","technical help","specialist advice","expertise implementing a project"],
   contribute:["Wie können wir euch unterstützen","Wie helfe ich ForJu","Ich möchte ForJu unterstützen","Ich möchte euch helfen","How can I support you","How can we help your organisation","I want to give back","I want to help ForJu"],
   partnerpool:["Als Betrieb helfen","Als Partner unterstützen","Räume anbieten","Wir können ein Labor zur Verfügung stellen","Our university could help","offer our space","Our organisation","as a company"],
   spenden:["Geld geben","Finanziell mithelfen","Etwas spenden","donate money","a financial gift","give money","make a donation"],
@@ -56,6 +59,7 @@ function recognize(s:string, allowed?:Intent[]):Intent|undefined {
   return candidates[0]?.intent;
 }
 const brief:Record<Topic,Pair>={
+  "know-how":["Wenn ihr bei der Umsetzung feststeckt, beschreibt ForJu das Problem. Das Team sucht passende Fachleute aus Wissenschaft oder Wirtschaft.","If you are stuck implementing a project, explain the problem to ForJu. The team looks for suitable expertise from academia or industry."],
   ressourcen:["Ihr könnt über ForJu bei Partnern nach einem Messgerät fragen. Schreibt ins Formular, was ihr messen wollt und wann. Ob es das Gerät gibt und was es kostet, muss das Team erst klären.","You can ask ForJu to find measuring equipment through its partners. Tell them what you want to measure and when. The team needs to check whether a device is available and what it costs."],
   workshops:["ForJu beschreibt Workshops für Wiener Schulen, etwa zu Klima, Stress oder Medien. Wenn euch ein Thema interessiert, fragt Anja Hofer nach einem Termin für eure Klasse.","ForJu describes workshops for schools in Vienna on topics like climate, stress and media. If a topic interests your class, ask Anja Hofer about a date."],
   finanzierung:["Beim Finanzierungsservice hilft euch ForJu, die Kosten abzuschätzen und mögliche Förderpartner zu finden. Beschreibt dazu eure Idee im Formular.","ForJu’s funding service helps you estimate costs and find possible funding partners. Tell the team about your idea in the enquiry form."],
@@ -66,6 +70,7 @@ const brief:Record<Topic,Pair>={
 // Keep explanations and actions distinct: “what next?” must not repeat the
 // answer the visitor has just read. All links are supplied by the public card.
 const action:Partial<Record<Topic,Pair>>={
+  "know-how":["Öffne die Beratungsanfrage unten. Beschreibe das Problem und welche fachliche Unterstützung ihr braucht.","Open the consultation form below. Describe the problem and the specialist help you need."],
   ressourcen:["Öffne das Ressourcenformular unten. Schreib hinein, was ihr messen möchtet und für welchen Zeitraum ihr das Gerät braucht. Bitte das Team, Verfügbarkeit und Preis zu bestätigen.","Open the equipment enquiry form below. Say what you want to measure and when you need the device. Ask the team to confirm availability and cost."],
   finanzierung:["Öffne die Finanzierungsanfrage. Beschreibe die Idee und wofür Geld fehlt. Bitte ForJu um Hilfe bei der Kostenschätzung oder bei der Suche nach Förderpartnern.","Open the funding enquiry. Describe your idea and what you need money for. Ask ForJu for help estimating costs or finding funding partners."],
   "science-beratung":["Schreib an office@forju.at, was dich interessiert, und bitte um einen Gesprächstermin. Du kannst dafür auch das Projektformular unten nutzen.","Email office@forju.at with the question you want to explore and ask for a meeting. You can also use the project enquiry form below."],

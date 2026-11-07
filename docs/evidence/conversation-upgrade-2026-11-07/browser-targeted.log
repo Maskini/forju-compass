@@ -1,0 +1,17 @@
+
+Running 12 tests using 1 worker
+
+  ✓   1 [firefox] › visitors.spec.mjs:489:1 › German desktop: keep the project in the form while offline, then send when delivery recovers (4.3s)
+  ✓   2 [firefox] › visitors.spec.mjs:588:2 › Conversation repairs and session preferences / de / widget (2.6s)
+  ✓   3 [firefox] › visitors.spec.mjs:588:2 › Conversation repairs and session preferences / en / standalone (1.3s)
+  ✓   4 [firefox] › visitors.spec.mjs:489:1 › German desktop: keep the project in the form while offline, then send when delivery recovers (3.7s)
+  ✓   5 [firefox] › visitors.spec.mjs:588:2 › Conversation repairs and session preferences / de / widget (2.9s)
+  ✓   6 [firefox] › visitors.spec.mjs:588:2 › Conversation repairs and session preferences / en / standalone (1.7s)
+  ✓   7 [webkit] › visitors.spec.mjs:489:1 › German desktop: keep the project in the form while offline, then send when delivery recovers (3.3s)
+  ✓   8 [webkit] › visitors.spec.mjs:588:2 › Conversation repairs and session preferences / de / widget (2.8s)
+  ✓   9 [webkit] › visitors.spec.mjs:588:2 › Conversation repairs and session preferences / en / standalone (1.6s)
+  ✓  10 [webkit] › visitors.spec.mjs:489:1 › German desktop: keep the project in the form while offline, then send when delivery recovers (2.9s)
+  ✓  11 [webkit] › visitors.spec.mjs:588:2 › Conversation repairs and session preferences / de / widget (2.8s)
+  ✓  12 [webkit] › visitors.spec.mjs:588:2 › Conversation repairs and session preferences / en / standalone (1.5s)
+
+  12 passed (35.4s)

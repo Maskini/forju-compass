@@ -1,0 +1,709 @@
+{
+  "phase": "after",
+  "commit": "d86fb3b14850d0bb1b20b126f1dacea79baf3e37",
+  "catalogSha256": "47e24753fba214ec9b5e658e2db1c0c11a6e4e4d4bf998061edadb4b7896d843",
+  "mode": "production local-only; synthetic; loopback only; independent quota per scenario",
+  "startupMs": 611,
+  "peakRssBytes": 160759808,
+  "catalogBytes": 83740,
+  "requests": 32,
+  "p95Ms": 13.326833999999963,
+  "passed": 12,
+  "total": 12,
+  "results": [
+    {
+      "id": "language-de",
+      "lang": "en",
+      "turns": [
+        "Which workshops do you offer for schools?",
+        "Could you answer in German please?"
+      ],
+      "topic": "workshops",
+      "source": "projects/schulworkshops",
+      "sourceLanguage": "de",
+      "facts": [
+        "Workshop",
+        "Schul|Wien"
+      ],
+      "forbid": [
+        "I don.t have"
+      ],
+      "unknown": "No fee, deadline, device availability, or general eligibility may be inferred. Role-specific remote work and hours apply only to the named Chief of Staff listing reviewed at /de/jobs.",
+      "answers": [
+        {
+          "mode": "library",
+          "topic": "workshops",
+          "answer": "For your class in Vienna, you can ask about workshops on climate, team conflict, media literacy or gender roles. Other topics include ethics, managing stress, self-management and planning for the future. Young trainers work with teachers.\n\nEmail Anja Hofer (anja.hofer@forju.at) with the topic your class wants to explore. Ask her about dates and costs. In November 2024, Wiener Bildungschancen covered the full cost for grades 1–9.",
+          "sources": [
+            {
+              "title": "Vienna school workshops",
+              "url": "https://forju.at/en/projects/schulworkshops"
+            }
+          ]
+        },
+        {
+          "mode": "library",
+          "topic": "workshops",
+          "answer": "Für deine Klasse in Wien kannst du Workshops zu Klima, Konflikten im Team, Medienkompetenz oder Rollenbildern anfragen. Weitere Themen sind Ethik, Stressbewältigung, Selbstmanagement und Zukunftsplanung. Junge Trainer:innen arbeiten dabei mit den Lehrkräften zusammen.\n\nSchreib Anja Hofer (anja.hofer@forju.at), welches Thema euch interessiert. Frag sie nach einem Termin und den Kosten für eure Klasse. Im November 2024 waren die Seminare für die Schulstufen 1–9 über die Wiener Bildungschancen vollständig gefördert.",
+          "sources": [
+            {
+              "title": "Schulworkshops in Wien",
+              "url": "https://forju.at/de/projects/schulworkshops"
+            }
+          ],
+          "preferredLanguage": "de"
+        }
+      ],
+      "checks": {
+        "topic": true,
+        "source": true,
+        "facts": true,
+        "noFabrication": true
+      },
+      "pass": true
+    },
+    {
+      "id": "language-en",
+      "lang": "de",
+      "turns": [
+        "Welche Workshops bietet ihr für Schulen an?",
+        "Please answer in English.",
+        "How do I register my class for it?"
+      ],
+      "topic": "workshops",
+      "source": "projects/schulworkshops",
+      "sourceLanguage": "en",
+      "facts": [
+        "Anja",
+        "anja.hofer@forju.at"
+      ],
+      "unknown": "No fee, deadline, device availability, or general eligibility may be inferred. Role-specific remote work and hours apply only to the named Chief of Staff listing reviewed at /de/jobs.",
+      "answers": [
+        {
+          "mode": "library",
+          "topic": "workshops",
+          "answer": "Für deine Klasse in Wien kannst du Workshops zu Klima, Konflikten im Team, Medienkompetenz oder Rollenbildern anfragen. Weitere Themen sind Ethik, Stressbewältigung, Selbstmanagement und Zukunftsplanung. Junge Trainer:innen arbeiten dabei mit den Lehrkräften zusammen.\n\nSchreib Anja Hofer (anja.hofer@forju.at), welches Thema euch interessiert. Frag sie nach einem Termin und den Kosten für eure Klasse. Im November 2024 waren die Seminare für die Schulstufen 1–9 über die Wiener Bildungschancen vollständig gefördert.",
+          "sources": [
+            {
+              "title": "Schulworkshops in Wien",
+              "url": "https://forju.at/de/projects/schulworkshops"
+            }
+          ]
+        },
+        {
+          "mode": "library",
+          "topic": "workshops",
+          "answer": "For your class in Vienna, you can ask about workshops on climate, team conflict, media literacy or gender roles. Other topics include ethics, managing stress, self-management and planning for the future. Young trainers work with teachers.\n\nEmail Anja Hofer (anja.hofer@forju.at) with the topic your class wants to explore. Ask her about dates and costs. In November 2024, Wiener Bildungschancen covered the full cost for grades 1–9.",
+          "sources": [
+            {
+              "title": "Vienna school workshops",
+              "url": "https://forju.at/en/projects/schulworkshops"
+            }
+          ],
+          "preferredLanguage": "en"
+        },
+        {
+          "mode": "library",
+          "topic": "workshops",
+          "answer": "To arrange a school workshop, email Anja Hofer at anja.hofer@forju.at and ask about a date for your class.",
+          "sources": [
+            {
+              "title": "Vienna school workshops",
+              "url": "https://forju.at/en/projects/schulworkshops"
+            }
+          ],
+          "preferredLanguage": "en"
+        }
+      ],
+      "checks": {
+        "topic": true,
+        "source": true,
+        "facts": true,
+        "noFabrication": true
+      },
+      "pass": true
+    },
+    {
+      "id": "language-persistence",
+      "lang": "de",
+      "turns": [
+        "Welche Workshops bietet ihr für Schulen an?",
+        "Bitte auf Englisch antworten.",
+        "How long does it last?",
+        "Thanks",
+        "OK",
+        "Hi",
+        "Und wie melde ich meine Klasse dafür an?"
+      ],
+      "topic": "workshops",
+      "source": "projects/schulworkshops",
+      "sourceLanguage": "en",
+      "facts": [
+        "Anja",
+        "email|contact|write"
+      ],
+      "forbid": [
+        "Schreib|Anmeldung"
+      ],
+      "unknown": "No fee, deadline, device availability, or general eligibility may be inferred. Role-specific remote work and hours apply only to the named Chief of Staff listing reviewed at /de/jobs.",
+      "answers": [
+        {
+          "mode": "library",
+          "topic": "workshops",
+          "answer": "Für deine Klasse in Wien kannst du Workshops zu Klima, Konflikten im Team, Medienkompetenz oder Rollenbildern anfragen. Weitere Themen sind Ethik, Stressbewältigung, Selbstmanagement und Zukunftsplanung. Junge Trainer:innen arbeiten dabei mit den Lehrkräften zusammen.\n\nSchreib Anja Hofer (anja.hofer@forju.at), welches Thema euch interessiert. Frag sie nach einem Termin und den Kosten für eure Klasse. Im November 2024 waren die Seminare für die Schulstufen 1–9 über die Wiener Bildungschancen vollständig gefördert.",
+          "sources": [
+            {
+              "title": "Schulworkshops in Wien",
+              "url": "https://forju.at/de/projects/schulworkshops"
+            }
+          ]
+        },
+        {
+          "mode": "library",
+          "topic": "workshops",
+          "answer": "For your class in Vienna, you can ask about workshops on climate, team conflict, media literacy or gender roles. Other topics include ethics, managing stress, self-management and planning for the future. Young trainers work with teachers.\n\nEmail Anja Hofer (anja.hofer@forju.at) with the topic your class wants to explore. Ask her about dates and costs. In November 2024, Wiener Bildungschancen covered the full cost for grades 1–9.",
+          "sources": [
+            {
+              "title": "Vienna school workshops",
+              "url": "https://forju.at/en/projects/schulworkshops"
+            }
+          ],
+          "preferredLanguage": "en"
+        },
+        {
+          "mode": "library",
+          "topic": "workshops",
+          "answer": "The school-workshop page does not give a duration. Ask Anja Hofer at anja.hofer@forju.at how much time to allow for the workshop you want.",
+          "sources": [
+            {
+              "title": "Vienna school workshops",
+              "url": "https://forju.at/en/projects/schulworkshops"
+            }
+          ],
+          "preferredLanguage": "en"
+        },
+        {
+          "mode": "conversation",
+          "answer": "You’re welcome! Feel free to ask if anything else comes up.",
+          "sources": [],
+          "topic": "workshops",
+          "preferredLanguage": "en"
+        },
+        {
+          "mode": "conversation",
+          "answer": "Got it. If anything else comes up, just ask.",
+          "sources": [],
+          "topic": "workshops",
+          "preferredLanguage": "en"
+        },
+        {
+          "mode": "conversation",
+          "answer": "Hi! 👋 What brings you to ForJu? Tell me about your idea or ask me a question.",
+          "sources": [],
+          "topic": "workshops",
+          "preferredLanguage": "en"
+        },
+        {
+          "mode": "library",
+          "topic": "workshops",
+          "answer": "To arrange a school workshop, email Anja Hofer at anja.hofer@forju.at and ask about a date for your class.",
+          "sources": [
+            {
+              "title": "Vienna school workshops",
+              "url": "https://forju.at/en/projects/schulworkshops"
+            }
+          ],
+          "preferredLanguage": "en"
+        }
+      ],
+      "checks": {
+        "topic": true,
+        "source": true,
+        "facts": true,
+        "noFabrication": true
+      },
+      "pass": true
+    },
+    {
+      "id": "advice-correction",
+      "lang": "en",
+      "turns": [
+        "Could our class borrow equipment for an air quality project?",
+        "Actually, we need advice, not equipment."
+      ],
+      "topic": null,
+      "source": null,
+      "facts": [
+        "idea",
+        "expert|technical|specialist",
+        "\\?"
+      ],
+      "forbid": [
+        "can ask ForJu to find measuring"
+      ],
+      "unknown": "No fee, deadline, device availability, or general eligibility may be inferred. Role-specific remote work and hours apply only to the named Chief of Staff listing reviewed at /de/jobs.",
+      "answers": [
+        {
+          "mode": "library",
+          "topic": "ressourcen",
+          "answer": "Schools and research teams can ask ForJu to find space or measuring equipment through its partners. ForJu helps coordinate supervision and liability. A particular device, date or price needs confirmation. Use the resources form to describe the space or instrument you need and how you would use it.",
+          "sources": [
+            {
+              "title": "Rooms and equipment",
+              "url": "https://forju.at/en/services/ressourcen"
+            },
+            {
+              "title": "Enquire with ForJu",
+              "url": "https://forju.at/en/kontakt?intent=service&thema=ressourcen"
+            }
+          ]
+        },
+        {
+          "mode": "conversation",
+          "answer": "Do you want to develop your research idea, or do you need specialist help implementing it?",
+          "sources": [],
+          "suggestions": [
+            "Shape my idea",
+            "Specialist help implementing it"
+          ]
+        }
+      ],
+      "checks": {
+        "topic": true,
+        "source": true,
+        "facts": true,
+        "noFabrication": true
+      },
+      "pass": true
+    },
+    {
+      "id": "advice-clarification",
+      "lang": "de",
+      "turns": [
+        "Wir brauchen ein Messgerät für unsere Schule",
+        "Eigentlich brauchen wir Beratung, nicht Geräte.",
+        "Das erste"
+      ],
+      "topic": "science-beratung",
+      "source": "projects/science-beratung",
+      "facts": [
+        "Idee",
+        "office@forju.at"
+      ],
+      "unknown": "No fee, deadline, device availability, or general eligibility may be inferred. Role-specific remote work and hours apply only to the named Chief of Staff listing reviewed at /de/jobs.",
+      "answers": [
+        {
+          "mode": "library",
+          "topic": "ressourcen",
+          "answer": "Schulen und Forschungsteams können über ForJu bei Partnern Räume und Messgeräte anfragen. ForJu hilft bei der Organisation und klärt Fragen zu Aufsicht und Haftung. Ob ein bestimmtes Gerät zu eurem Termin verfügbar ist und was die Nutzung kostet, müsst ihr anfragen. Beschreibt im Ressourcenformular, welchen Raum oder welches Gerät ihr braucht und wofür.",
+          "sources": [
+            {
+              "title": "Ressourcen",
+              "url": "https://forju.at/de/services/ressourcen"
+            },
+            {
+              "title": "Bei ForJu anfragen",
+              "url": "https://forju.at/de/kontakt?intent=service&thema=ressourcen"
+            }
+          ]
+        },
+        {
+          "mode": "conversation",
+          "answer": "Geht es darum, eure Forschungsidee auszuarbeiten, oder braucht ihr fachliche Hilfe bei der Umsetzung?",
+          "sources": [],
+          "suggestions": [
+            "Die Idee ausarbeiten",
+            "Fachliche Hilfe bei der Umsetzung"
+          ]
+        },
+        {
+          "mode": "library",
+          "answer": "Wenn du eine Forschungsidee hast und beim nächsten Schritt unsicher bist, kannst du per E-Mail an office@forju.at einen persönlichen Beratungstermin anfragen. Das Team kann mit dir die Idee weiterentwickeln und mögliche Förderwege besprechen.",
+          "sources": [
+            {
+              "title": "Individuelle Science-Beratung",
+              "url": "https://forju.at/de/projects/science-beratung"
+            },
+            {
+              "title": "Anfrageformular öffnen",
+              "url": "https://forju.at/de/kontakt?intent=projekt"
+            }
+          ],
+          "topic": "science-beratung",
+          "suggestions": [
+            "Was ist der nächste Schritt?"
+          ]
+        }
+      ],
+      "checks": {
+        "topic": true,
+        "source": true,
+        "facts": true,
+        "noFabrication": true
+      },
+      "pass": true
+    },
+    {
+      "id": "expertise-clarification",
+      "lang": "en",
+      "turns": [
+        "I need advice",
+        "The second one"
+      ],
+      "topic": "know-how",
+      "source": "services/know-how",
+      "facts": [
+        "expertise|specialist",
+        "problem"
+      ],
+      "unknown": "No fee, deadline, device availability, or general eligibility may be inferred. Role-specific remote work and hours apply only to the named Chief of Staff listing reviewed at /de/jobs.",
+      "answers": [
+        {
+          "mode": "conversation",
+          "answer": "Do you want to develop your research idea, or do you need specialist help implementing it?",
+          "sources": [],
+          "suggestions": [
+            "Shape my idea",
+            "Specialist help implementing it"
+          ]
+        },
+        {
+          "mode": "library",
+          "answer": "If you are stuck implementing a project, ForJu can connect you with practical expertise from academia or industry, including technology and business. Use the consultation form to explain the problem and the kind of specialist you need. ForJu can then check for a suitable match.",
+          "sources": [
+            {
+              "title": "Project expertise",
+              "url": "https://forju.at/en/services/know-how"
+            },
+            {
+              "title": "Open the enquiry form",
+              "url": "https://forju.at/en/kontakt?intent=service&thema=know-how"
+            }
+          ],
+          "topic": "know-how",
+          "suggestions": [
+            "What should I do next?"
+          ]
+        }
+      ],
+      "checks": {
+        "topic": true,
+        "source": true,
+        "facts": true,
+        "noFabrication": true
+      },
+      "pass": true
+    },
+    {
+      "id": "remote-en",
+      "lang": "en",
+      "turns": [
+        "I want to volunteer with ForJu.",
+        "Can I do it remotely?"
+      ],
+      "topic": "ehrenamt",
+      "source": "jobs",
+      "facts": [
+        "remote",
+        "Chief of Staff",
+        "role|other"
+      ],
+      "forbid": [
+        "all roles|every role"
+      ],
+      "unknown": "No fee, deadline, device availability, or general eligibility may be inferred. Role-specific remote work and hours apply only to the named Chief of Staff listing reviewed at /de/jobs.",
+      "answers": [
+        {
+          "mode": "library",
+          "topic": "ehrenamt",
+          "answer": "Volunteers can help with education, communications, editorial work, IT and operations. The jobs page describes individual roles.",
+          "sources": [
+            {
+              "title": "Volunteering",
+              "url": "https://forju.at/en/ueber-uns"
+            }
+          ]
+        },
+        {
+          "mode": "library",
+          "topic": "ehrenamt",
+          "answer": "The Chief of Staff | Strategy & Operations listing explicitly offers fully remote volunteering. For other roles, check the individual listing. Ask bewerbung@forju.at whether your preferred role can be done from home and is currently open.",
+          "sources": [
+            {
+              "title": "Volunteering: working arrangements and requirements",
+              "url": "https://forju.at/en/jobs"
+            }
+          ]
+        }
+      ],
+      "checks": {
+        "topic": true,
+        "source": true,
+        "facts": true,
+        "noFabrication": true
+      },
+      "pass": true
+    },
+    {
+      "id": "remote-de",
+      "lang": "de",
+      "turns": [
+        "Ich möchte ehrenamtlich mithelfen.",
+        "Geht das auch von zu Hause?"
+      ],
+      "topic": "ehrenamt",
+      "source": "jobs",
+      "facts": [
+        "remote",
+        "Chief of Staff",
+        "Rolle|andere"
+      ],
+      "unknown": "No fee, deadline, device availability, or general eligibility may be inferred. Role-specific remote work and hours apply only to the named Chief of Staff listing reviewed at /de/jobs.",
+      "answers": [
+        {
+          "mode": "library",
+          "topic": "ehrenamt",
+          "answer": "ForJu arbeitet ehrenamtlich. Die Website nennt Bildung, Öffentlichkeitsarbeit, Redaktion, IT und Operations als mögliche Bereiche zum Mithelfen. Interessierte sollen die offenen Positionen ansehen und sich per E-Mail bewerben. Welche Rollen gerade frei sind, muss auf der Jobs-Seite oder beim Team geprüft werden; aus älteren Ausschreibungen lässt sich keine aktuelle Stelle ableiten.",
+          "sources": [
+            {
+              "title": "Bei ForJu ehrenamtlich mitarbeiten",
+              "url": "https://forju.at/de/ueber-uns"
+            }
+          ]
+        },
+        {
+          "mode": "library",
+          "topic": "ehrenamt",
+          "answer": "Die Ausschreibung für Chief of Staff | Strategy & Operations nennt vollständig remote Mitarbeit. Für andere Rollen prüfst du am besten die jeweilige Ausschreibung. Frag bei bewerbung@forju.at nach, ob deine gewünschte Rolle von zu Hause möglich und aktuell offen ist.",
+          "sources": [
+            {
+              "title": "Ehrenamt: Arbeitsweise und Anforderungen",
+              "url": "https://forju.at/de/jobs"
+            }
+          ]
+        }
+      ],
+      "checks": {
+        "topic": true,
+        "source": true,
+        "facts": true,
+        "noFabrication": true
+      },
+      "pass": true
+    },
+    {
+      "id": "hours-en",
+      "lang": "en",
+      "turns": [
+        "I want to volunteer with ForJu.",
+        "How much time do I need?"
+      ],
+      "topic": "ehrenamt",
+      "source": "jobs",
+      "facts": [
+        "2.?5",
+        "Chief of Staff",
+        "week"
+      ],
+      "unknown": "No fee, deadline, device availability, or general eligibility may be inferred. Role-specific remote work and hours apply only to the named Chief of Staff listing reviewed at /de/jobs.",
+      "answers": [
+        {
+          "mode": "library",
+          "topic": "ehrenamt",
+          "answer": "Volunteers can help with education, communications, editorial work, IT and operations. The jobs page describes individual roles.",
+          "sources": [
+            {
+              "title": "Volunteering",
+              "url": "https://forju.at/en/ueber-uns"
+            }
+          ]
+        },
+        {
+          "mode": "library",
+          "topic": "ehrenamt",
+          "answer": "For Chief of Staff | Strategy & Operations, the jobs page says about 2–5 hours per week with flexible scheduling. That is not a general commitment for every role. Check your preferred listing or ask bewerbung@forju.at.",
+          "sources": [
+            {
+              "title": "Volunteering: working arrangements and requirements",
+              "url": "https://forju.at/en/jobs"
+            }
+          ]
+        }
+      ],
+      "checks": {
+        "topic": true,
+        "source": true,
+        "facts": true,
+        "noFabrication": true
+      },
+      "pass": true
+    },
+    {
+      "id": "experience-de",
+      "lang": "de",
+      "turns": [
+        "Ich möchte ehrenamtlich mithelfen",
+        "Brauche ich Erfahrung?"
+      ],
+      "topic": "ehrenamt",
+      "source": "jobs",
+      "facts": [
+        "Chief of Staff",
+        "keine Voraussetzung|nicht vorausgesetzt",
+        "Rolle"
+      ],
+      "unknown": "No fee, deadline, device availability, or general eligibility may be inferred. Role-specific remote work and hours apply only to the named Chief of Staff listing reviewed at /de/jobs.",
+      "answers": [
+        {
+          "mode": "library",
+          "topic": "ehrenamt",
+          "answer": "ForJu arbeitet ehrenamtlich. Die Website nennt Bildung, Öffentlichkeitsarbeit, Redaktion, IT und Operations als mögliche Bereiche zum Mithelfen. Interessierte sollen die offenen Positionen ansehen und sich per E-Mail bewerben. Welche Rollen gerade frei sind, muss auf der Jobs-Seite oder beim Team geprüft werden; aus älteren Ausschreibungen lässt sich keine aktuelle Stelle ableiten.",
+          "sources": [
+            {
+              "title": "Bei ForJu ehrenamtlich mitarbeiten",
+              "url": "https://forju.at/de/ueber-uns"
+            }
+          ]
+        },
+        {
+          "mode": "library",
+          "topic": "ehrenamt",
+          "answer": "Bei Chief of Staff | Strategy & Operations ist Erfahrung im Projektmanagement oder Vereinswesen von Vorteil, aber keine Voraussetzung. Die Rolle verlangt unter anderem strukturiertes, eigenständiges Arbeiten und gute Kommunikation. Für andere Rollen gelten deren jeweilige Anforderungen; prüfe sie auf der Jobs-Seite.",
+          "sources": [
+            {
+              "title": "Ehrenamt: Arbeitsweise und Anforderungen",
+              "url": "https://forju.at/de/jobs"
+            }
+          ]
+        }
+      ],
+      "checks": {
+        "topic": true,
+        "source": true,
+        "facts": true,
+        "noFabrication": true
+      },
+      "pass": true
+    },
+    {
+      "id": "unknown-device-after-correction",
+      "lang": "en",
+      "turns": [
+        "We need money for our project",
+        "Actually, we need a microscope, not funding.",
+        "Is it free?"
+      ],
+      "topic": "ressourcen",
+      "source": "services/ressourcen",
+      "facts": [
+        "no|not",
+        "price|cost"
+      ],
+      "forbid": [
+        "is free|guaranteed"
+      ],
+      "unknown": "No fee, deadline, device availability, or general eligibility may be inferred. Role-specific remote work and hours apply only to the named Chief of Staff listing reviewed at /de/jobs.",
+      "answers": [
+        {
+          "mode": "library",
+          "topic": "finanzierung",
+          "answer": "ForJu’s funding service helps you estimate project costs, assess feasibility and find funding partners. The service says it does not directly sponsor projects. Describe what you need in the funding enquiry so the team can check which options apply.",
+          "sources": [
+            {
+              "title": "Project funding",
+              "url": "https://forju.at/en/services/finanziell"
+            },
+            {
+              "title": "Enquire with ForJu",
+              "url": "https://forju.at/en/kontakt?intent=service&thema=finanziell"
+            }
+          ]
+        },
+        {
+          "mode": "library",
+          "topic": "ressourcen",
+          "answer": "Schools and research teams can ask ForJu to find space or measuring equipment through its partners. ForJu helps coordinate supervision and liability. A particular device, date or price needs confirmation. Use the resources form to describe the space or instrument you need and how you would use it.",
+          "sources": [
+            {
+              "title": "Rooms and equipment",
+              "url": "https://forju.at/en/services/ressourcen"
+            },
+            {
+              "title": "Enquire with ForJu",
+              "url": "https://forju.at/en/kontakt?intent=service&thema=ressourcen"
+            }
+          ]
+        },
+        {
+          "mode": "library",
+          "topic": "ressourcen",
+          "answer": "ForJu’s resources page gives no loan price. Ask the team to confirm the cost for your device and dates.",
+          "sources": [
+            {
+              "title": "Rooms and equipment",
+              "url": "https://forju.at/en/services/ressourcen"
+            },
+            {
+              "title": "Enquire with ForJu",
+              "url": "https://forju.at/en/kontakt?intent=service&thema=ressourcen"
+            }
+          ]
+        }
+      ],
+      "checks": {
+        "topic": true,
+        "source": true,
+        "facts": true,
+        "noFabrication": true
+      },
+      "pass": true
+    },
+    {
+      "id": "unrelated-remote",
+      "lang": "en",
+      "turns": [
+        "I want to volunteer",
+        "Can I do my driving test remotely?"
+      ],
+      "topic": null,
+      "source": null,
+      "facts": [
+        "verified|match|Which"
+      ],
+      "forbid": [
+        "Chief of Staff"
+      ],
+      "unknown": "No fee, deadline, device availability, or general eligibility may be inferred. Role-specific remote work and hours apply only to the named Chief of Staff listing reviewed at /de/jobs.",
+      "answers": [
+        {
+          "mode": "library",
+          "topic": "ehrenamt",
+          "answer": "Volunteers can help with education, communications, editorial work, IT and operations. The jobs page describes individual roles.",
+          "sources": [
+            {
+              "title": "Volunteering",
+              "url": "https://forju.at/en/ueber-uns"
+            }
+          ]
+        },
+        {
+          "mode": "library",
+          "answer": "I don't have verified information about that. Which ForJu service or project do you mean?",
+          "sources": [],
+          "suggestions": [
+            "School workshops",
+            "Borrow equipment",
+            "Project funding"
+          ]
+        }
+      ],
+      "checks": {
+        "topic": true,
+        "source": true,
+        "facts": true,
+        "noFabrication": true
+      },
+      "pass": true
+    }
+  ]
+}

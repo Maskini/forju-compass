@@ -1,0 +1,28 @@
+{
+  "mode": "synthetic local-only, Docker network none",
+  "firstAudit": "113 browser checks passed, 3 failed (Firefox 5s response wait, WebKit streamed-HTML wait, WebKit launcher encoding). Raw status retained.",
+  "browserFinal": {
+    "startTime": "2026-11-07T14:10:32.199Z",
+    "duration": 286385.419,
+    "expected": 116,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "browserTargeted": {
+    "startTime": "2026-11-07T14:09:56.329Z",
+    "duration": 35389.094,
+    "expected": 12,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "promptfoo": {
+    "passed": 42,
+    "failed": 0
+  },
+  "serverEgress": "No unintended outbound requests recorded in isolated audit",
+  "inbox": "Local fixture only; no live email delivered",
+  "load": "See load-final.json; repeated after removing an audit snapshot pause that delayed the first recovery request",
+  "source": "ForJu jobs pages reviewed in a live browser; tests use only public content and synthetic visitors"
+}

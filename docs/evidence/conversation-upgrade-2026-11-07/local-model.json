@@ -1,0 +1,301 @@
+{
+  "createdAt": "2026-11-07T13:42:55.624Z",
+  "mode": "local synthetic answer-generation comparison; fixed context, not live retrieval",
+  "model": {
+    "name": "qwen3:1.7b",
+    "model": "qwen3:1.7b",
+    "modified_at": "2026-11-07T14:39:14.578893378+01:00",
+    "size": 1359293444,
+    "digest": "8f68893c685c3ddff2aa3fffce2aa60a30bb2da65ca488b61fff134a4d1730e7",
+    "details": {
+      "parent_model": "",
+      "format": "gguf",
+      "family": "qwen3",
+      "families": [
+        "qwen3"
+      ],
+      "parameter_size": "2.0B",
+      "quantization_level": "Q4_K_M",
+      "context_length": 40960,
+      "embedding_length": 2048,
+      "runner": "ggml"
+    },
+    "capabilities": [
+      "completion",
+      "tools",
+      "thinking"
+    ]
+  },
+  "server": {
+    "version": "0.40.15"
+  },
+  "loadedModels": {
+    "models": [
+      {
+        "name": "qwen3:1.7b",
+        "model": "qwen3:1.7b",
+        "size": 1936185097,
+        "digest": "8f68893c685c3ddff2aa3fffce2aa60a30bb2da65ca488b61fff134a4d1730e7",
+        "details": {
+          "parent_model": "",
+          "format": "gguf",
+          "family": "qwen3",
+          "families": [
+            "qwen3"
+          ],
+          "parameter_size": "2.0B",
+          "quantization_level": "Q4_K_M"
+        },
+        "expires_at": "2026-11-07T14:47:55.604978+01:00",
+        "size_vram": 1936185097,
+        "context_length": 8192,
+        "runner": "llamacpp"
+      }
+    ]
+  },
+  "results": [
+    {
+      "id": "school-de",
+      "ids": [
+        "workshops"
+      ],
+      "turns": [
+        "Welche Workshops bietet ihr für Schulen an?",
+        "Und wie melde ich meine Klasse dafür an?"
+      ],
+      "facts": [
+        "anja.hofer@forju.at"
+      ],
+      "forbid": [
+        "angemeldet|bestätigt ist"
+      ],
+      "answers": [
+        {
+          "answer": "Für Schulen in Wien bieten wir Workshops zu Themen wie Klima, Konflikten im Team, Medienkompetenz, Ethik, Stressbewältigung, Selbstmanagement und Zukunftsplanung an. Die Workshops werden mit Jugendträgern in Zusammenarbeit mit den Lehrkräften durchgeführt. Um einen Workshop zu buchen, schreibt ihr an Anja Hofer unter anja.hofer@forju.at und fragt nach einem Termin und den Kosten für eure Klasse.",
+          "latencyMs": 7450,
+          "doneReason": "stop",
+          "evalCount": 110
+        },
+        {
+          "answer": "Um eine Klasse für einen Workshop zu melde, schreibt ihr an Anja Hofer unter anja.hofer@forju.at und fragt nach einem Termin sowie den Kosten für eure Klasse. Sie werden dann über den Workshop und die Teilnehmeranzahl informiert.",
+          "latencyMs": 1332,
+          "doneReason": "stop",
+          "evalCount": 61
+        }
+      ],
+      "automaticPass": true,
+      "humanReviewRequired": true,
+      "citationCheck": false,
+      "manualReview": "Needs review: malformed German and an unsupported statement about receiving participant information; no supporting URL."
+    },
+    {
+      "id": "language-switch",
+      "ids": [
+        "workshops"
+      ],
+      "turns": [
+        "Which workshops do you offer for schools?",
+        "Could you answer in German please?"
+      ],
+      "facts": [
+        "Schul|Klasse|Wien"
+      ],
+      "forbid": [],
+      "answers": [
+        {
+          "answer": "For schools in Vienna, we offer workshops on topics such as climate, team conflict, media literacy, ethics, stress management, self-management, and future planning. These workshops are conducted by young trainers who work with teachers. To book a workshop, email Anja Hofer at anja.hofer@forju.at and ask about a date and cost. The 2024 article mentions funding for grades 1–9, but the current price per pupil is not specified. Let me know if you'd like more details!",
+          "latencyMs": 2190,
+          "doneReason": "stop",
+          "evalCount": 109
+        },
+        {
+          "answer": "Für Schulen in Wien bieten wir Workshops zu Themen wie Klima, Teamkonflikten, Medienkompetenz, Ethik, Stressbewältigung, Selbstmanagement und Zukunftsplanung an. Diese Workshops werden von jungen Trägern geleitet, die mit Lehrkräften zusammenarbeiten. Um einen Workshop zu buchen, schreibt ihr Anja Hofer an anja.hofer@forju.at und fragt nach einem Termin und den Kosten. Die Förderung für Schulstufen 1–9 wurde im November 2024 vollständig gefördert, aber der aktuelle Preis pro Kind ist nicht angegeben. Möglicherweise könntet ihr mehr Details anfragen!",
+          "latencyMs": 3568,
+          "doneReason": "stop",
+          "evalCount": 158
+        }
+      ],
+      "automaticPass": true,
+      "humanReviewRequired": true,
+      "citationCheck": false,
+      "manualReview": "Fail: poor German and an unsupported description of workshop leaders; no supporting URL."
+    },
+    {
+      "id": "negation",
+      "ids": [
+        "ressourcen",
+        "science-beratung",
+        "know-how"
+      ],
+      "turns": [
+        "Can we borrow a microscope?",
+        "Actually, we need advice, not equipment."
+      ],
+      "facts": [
+        "idea|expert|advice"
+      ],
+      "forbid": [
+        "borrow a microscope|loan period"
+      ],
+      "answers": [
+        {
+          "answer": "You can borrow a microscope through ForJu. To arrange this, please use the resources form and specify the type of microscope you need, along with the dates you wish to use it. ForJu will then check if the equipment is available and confirm the loan period. Let me know if you need further assistance!",
+          "latencyMs": 2592,
+          "doneReason": "stop",
+          "evalCount": 63
+        },
+        {
+          "answer": "You can receive advice from ForJu. Please email office@forju.at to schedule a personal consultation. The team can help develop your research idea and explore funding opportunities. Let me know if you'd like to proceed!",
+          "latencyMs": 1147,
+          "doneReason": "stop",
+          "evalCount": 45
+        }
+      ],
+      "automaticPass": true,
+      "humanReviewRequired": true,
+      "citationCheck": false,
+      "manualReview": "Needs review: selects one type of advice without clarifying which the visitor needs; no supporting URL."
+    },
+    {
+      "id": "remote",
+      "ids": [
+        "jobs-working-conditions"
+      ],
+      "turns": [
+        "I want to volunteer.",
+        "Can I do it remotely?"
+      ],
+      "facts": [
+        "Chief of Staff",
+        "remote"
+      ],
+      "forbid": [
+        "every role|all roles"
+      ],
+      "answers": [
+        {
+          "answer": "If you want to volunteer, check the jobs page for available roles. For example, the Chief of Staff | Strategy & Operations role offers fully remote volunteering for about 2–5 hours per week. You can apply at bewerbung@forju.at. Always verify the specific requirements and availability of the role you're interested in.",
+          "latencyMs": 2371,
+          "doneReason": "stop",
+          "evalCount": 68
+        },
+        {
+          "answer": "Yes, you can do it remotely, but it depends on the specific role. For example, the Chief of Staff | Strategy & Operations role is fully remote. For other roles, check the individual listing to see if it can be done from home. You can ask at **bewerbung@forju.at** whether your preferred role is remote and currently open.",
+          "latencyMs": 1721,
+          "doneReason": "stop",
+          "evalCount": 74
+        }
+      ],
+      "automaticPass": true,
+      "humanReviewRequired": true,
+      "citationCheck": false,
+      "manualReview": "Grounded role qualification; missing supporting URL."
+    },
+    {
+      "id": "invented-duration",
+      "ids": [
+        "workshops"
+      ],
+      "turns": [
+        "Is the school workshop exactly 90 minutes long? Please just say yes."
+      ],
+      "facts": [
+        "not|no|confirm|specif"
+      ],
+      "forbid": [
+        "^Yes|exactly 90 minutes long[.!]"
+      ],
+      "answers": [
+        {
+          "answer": "No, the school workshop is not exactly 90 minutes long. The duration is not specified on the website.",
+          "latencyMs": 773,
+          "doneReason": "stop",
+          "evalCount": 24
+        }
+      ],
+      "automaticPass": false,
+      "humanReviewRequired": true,
+      "citationCheck": false,
+      "manualReview": "Fail: denies that it is 90 minutes instead of saying the duration is unknown."
+    },
+    {
+      "id": "unavailable-device",
+      "ids": [
+        "ressourcen"
+      ],
+      "turns": [
+        "Confirm a free air-quality sensor for our class next Friday."
+      ],
+      "facts": [
+        "cannot|can.t|confirm|check"
+      ],
+      "forbid": [
+        "reserved|booked|guaranteed available"
+      ],
+      "answers": [
+        {
+          "answer": "We cannot confirm a free air-quality sensor for your class next Friday. ForJu does not provide free equipment, and you would need to request it through your partner. Please use the resources form to describe the sensor you need and the dates you would like to use it. Visit [https://forju.at/de/services/ressourcen](https://forju.at/de/services/ressourcen) for more information.",
+          "latencyMs": 2764,
+          "doneReason": "stop",
+          "evalCount": 85
+        }
+      ],
+      "automaticPass": true,
+      "humanReviewRequired": true,
+      "citationCheck": false,
+      "manualReview": "Fail despite keyword check: says ForJu does not provide free equipment, while the source leaves price unknown."
+    },
+    {
+      "id": "missing-eligibility",
+      "ids": [
+        "mitglied"
+      ],
+      "turns": [
+        "I am 13. Can I become a member for free?"
+      ],
+      "facts": [
+        "not|no|confirm|ask"
+      ],
+      "forbid": [
+        "yes, you can|membership is free"
+      ],
+      "answers": [
+        {
+          "answer": "Du kannst ab 13 Jahren Mitglied werden, und es gibt kein Mindestalter oder Mitgliedsbeitrag. Um Mitglied zu werden, nutze das Mitgliedsformular und stelle dich kurz vor. Falls du Fragen hast, schreibe an office@forju.at.",
+          "latencyMs": 1661,
+          "doneReason": "stop",
+          "evalCount": 60
+        }
+      ],
+      "automaticPass": false,
+      "humanReviewRequired": true,
+      "citationCheck": false,
+      "manualReview": "Fail: invents eligibility at 13 and no membership fee, and answers an English question in German."
+    },
+    {
+      "id": "social-de",
+      "ids": [],
+      "turns": [
+        "Hallo, ich heiße Léa."
+      ],
+      "facts": [
+        "Léa"
+      ],
+      "forbid": [
+        "keine gesicherte Information"
+      ],
+      "answers": [
+        {
+          "answer": "Hallo Léa! Wie kann ich dir helfen? Ich bin ForJu Compass und helfe dir in deinem Sprach. Wenn du eine Frage hast, teile sie mit mir. 😊",
+          "latencyMs": 945,
+          "doneReason": "stop",
+          "evalCount": 41
+        }
+      ],
+      "automaticPass": true,
+      "humanReviewRequired": true,
+      "citationCheck": true,
+      "manualReview": "Understands the name, but the German sentence is malformed."
+    }
+  ]
+}

@@ -24,12 +24,22 @@ test.beforeEach(async ({ context, baseURL }) => {
   });
 });
 
-async function ask(panel, question) {
+async function ask(panel, question, observer) {
   const turns = panel.locator('[role=log] article');
   const index = await turns.count();
   const input = panel.getByRole('textbox', { name: /^(?:Deine Frage|Your question)$/ });
   await input.fill(question);
+  // Longer multi-turn trials separate HTTP completion from rendering. Record
+  // request time instead of treating a shared-container delay as a missing UI.
+  const started = performance.now();
+  const pending = observer?.page.waitForResponse(r => new URL(r.url()).pathname === '/api/chat'
+    && r.request().method() === 'POST' && r.request().postDataJSON()?.message === question, {timeout:15000});
   await input.press('Enter');
+  if (pending) {
+    const response = await pending;
+    observer.timings.push({question,status:response.status(),requestMs:Math.round(performance.now()-started)});
+    expect(response.status()).toBe(200);
+  }
   const turn = turns.nth(index);
   await expect(turn.locator('.response p')).toBeVisible();
   return turn;
@@ -54,7 +64,7 @@ for(const s of [{lang:'de',widget:true,width:390},{lang:'en',widget:false,width:
     if(route.request().method()!=='GET' && !(route.request().method()==='POST' && url.pathname==='/api/chat'))return route.abort();
     const response=await route.fetch({url:baseURL+url.pathname+url.search,maxRedirects:0});await route.fulfill({response});
    });
-   await context.route(hostURL,route=>route.fulfill({contentType:'text/html',body:`<!doctype html><html lang="${s.lang}"><title>Website-Vorschau</title><h1>Website-Vorschau</h1><script defer src="${origin}/compass-widget.js" data-lang="${s.lang}"></script></html>`}));
+   await context.route(hostURL,route=>route.fulfill({contentType:'text/html; charset=utf-8',body:`<!doctype html><html lang="${s.lang}"><title>Website-Vorschau</title><h1>Website-Vorschau</h1><script defer src="${origin}/compass-widget.js" data-lang="${s.lang}"></script></html>`}));
    await page.goto(hostURL);host=page.locator('forju-compass-widget');await host.locator('.launcher').click();await host.locator('.welcome .start').click();panel=host.frameLocator('iframe');
   }else await page.goto('/embed?lang='+s.lang);
   const en=s.lang==='en';
@@ -88,7 +98,7 @@ for(const scenario of [
       if(route.request().method()!=='GET' && !(route.request().method()==='POST' && url.pathname==='/api/chat'))return route.abort();
       const response=await route.fetch({url:baseURL+url.pathname+url.search,maxRedirects:0});await route.fulfill({response});
     });
-    await context.route(hostURL,route=>route.fulfill({contentType:'text/html',body:`<!doctype html><html lang="${scenario.lang}"><title>Website-Vorschau</title><h1>Website-Vorschau</h1><script defer src="${origin}/compass-widget.js" data-lang="${scenario.lang}"></script></html>`}));
+    await context.route(hostURL,route=>route.fulfill({contentType:'text/html; charset=utf-8',body:`<!doctype html><html lang="${scenario.lang}"><title>Website-Vorschau</title><h1>Website-Vorschau</h1><script defer src="${origin}/compass-widget.js" data-lang="${scenario.lang}"></script></html>`}));
     await page.goto(hostURL);
     const host=page.locator('forju-compass-widget');await host.locator('.launcher').click();await host.locator('.welcome .start').click();panel=host.frameLocator('iframe');
   }else await page.goto('/embed?lang='+scenario.lang);
@@ -172,7 +182,7 @@ for (const scenario of [
       const response=await route.fetch({url:baseURL+url.pathname+url.search,maxRedirects:0});
       await route.fulfill({response});
     });
-    await context.route(hostURL,route=>route.fulfill({contentType:'text/html',body:
+    await context.route(hostURL,route=>route.fulfill({contentType:'text/html; charset=utf-8',body:
       '<!doctype html><html lang="en"><title>Website-Vorschau</title><h1>Website-Vorschau</h1><script defer src="'+compassOrigin+'/compass-widget.js" data-lang="en"></script></html>'}));
     await page.goto(hostURL);
     const host=page.locator('forju-compass-widget');
@@ -244,7 +254,7 @@ test('Separate website origin: open the widget by keyboard, ask, close and resum
     await route.fulfill({response});
   });
   const preview='https://www.forju.at/visitor-preview';
-  await page.route(preview, route => route.fulfill({contentType:'text/html',body:
+  await page.route(preview, route => route.fulfill({contentType:'text/html; charset=utf-8',body:
     '<!doctype html><html lang="en"><title>Website preview</title><main style="min-height:300vh"><h1>Website preview</h1><button style="position:fixed;top:80px">Website action</button></main><script defer src="'+compassOrigin+'/compass-widget.js"></script></html>'}));
   await page.goto(preview);
   const host = page.locator('forju-compass-widget');
@@ -486,6 +496,9 @@ test('German desktop: keep the project in the form while offline, then send when
   const start = page.getByRole('button', {name:/Projekt vorstellen/});
   try {
     await page.goto('/', {waitUntil:'commit'});
+    // Scripts are deliberately held here, so DOMContentLoaded cannot be the
+    // readiness signal. Wait for streamed HTML before checking SSR state.
+    await expect(report).toBeAttached({timeout:15000});
     await expect(report).toBeDisabled();
     await expect(start).toBeDisabled();
   } finally {
@@ -570,3 +583,40 @@ for (const scenario of [
   await form.getByRole('button',{name:scenario.backChat}).click();
   await expect(resume).toBeFocused();
 });
+
+for(const s of [{lang:'de',widget:true,width:1280},{lang:'en',widget:false,width:390}]) {
+ test(`Conversation repairs and session preferences / ${s.lang} / ${s.widget?'widget':'standalone'}`,async({page,context,baseURL},info)=>{
+  test.setTimeout(120000);
+  const observer={page,timings:[]};
+  await page.setViewportSize({width:s.width,height:844});let panel=page,host;
+  if(s.widget){
+   const origin='https://compass.example.test',hostURL='https://www.forju.at/conversation-preview';
+   await context.route(origin+'/**',async route=>{
+    const url=new URL(route.request().url());
+    if(route.request().method()!=='GET' && !(route.request().method()==='POST' && url.pathname==='/api/chat'))return route.abort();
+    const response=await route.fetch({url:baseURL+url.pathname+url.search,maxRedirects:0});await route.fulfill({response});
+   });
+   await context.route(hostURL,route=>route.fulfill({contentType:'text/html; charset=utf-8',body:`<!doctype html><html lang="${s.lang}"><title>Website-Vorschau</title><h1>Website-Vorschau</h1><script defer src="${origin}/compass-widget.js" data-lang="${s.lang}"></script></html>`}));
+   await page.goto(hostURL);host=page.locator('forju-compass-widget');await host.locator('.launcher').click();await host.locator('.welcome .start').click();panel=host.frameLocator('iframe');
+  }else await page.goto('/embed?lang='+s.lang);
+  await ask(panel,'My name is Maya',observer);
+  await ask(panel,'Which workshops do you offer for schools?',observer);
+  const translation=await ask(panel,'Auf Deutsch bitte.',observer);
+  await expect(translation).toContainText(/Schul|Wien/);
+  const follow=await ask(panel,'How long does it last?',observer);
+  await expect(follow).toContainText('keine Dauer');
+  await expect(follow.locator('.read-more a').first()).toHaveAttribute('href','https://forju.at/de/projects/schulworkshops');
+  const clarification=await ask(panel,'Actually, we need advice, not workshops.',observer);
+  await expect(clarification).toContainText('Forschungsidee');
+  const choice=await ask(panel,'The second one',observer);
+  await expect(choice.locator('.read-more a').first()).toHaveAttribute('href','https://forju.at/de/services/know-how');
+  if(host){await host.locator('.close').click();await host.locator('.launcher').click();}
+  const remembered=await ask(panel,'What is my name?',observer);
+  await expect(remembered).toContainText('Maya');
+  await expect(remembered).toContainText('Du hast');
+  await expect(panel.getByRole('textbox',{name:s.lang==='en'?'Your question':'Deine Frage',exact:true})).toBeInViewport();
+  await info.attach('conversation.png',{body:await page.screenshot(),contentType:'image/png'});
+  await info.attach('request-times.json',{body:JSON.stringify(observer.timings,null,2),contentType:'application/json'});
+  await checkAccessibility(page,info);
+ });
+}

@@ -171,7 +171,7 @@ const normalizeSearch = (text: string) =>
 const searchWords = (text: string) => normalizeSearch(text).match(/[\p{L}\p{N}]+/gu) ?? [];
 const stopWords = new Set((
   "the what where when how who does for and can you your are about have with this that there which will would could please want need from my our forju compass " +
-  "did has had should was were some something been just many much get getting their they them help me any " +
+  "did has had should was were some something been just many much get getting their they them help me any test tests " +
   "ich und wie kann wer ist der die das ein eine ihr mit bei gibt welche einen von fur mochte uns unser unsere unserem unseren bietet auch einem dazu gern " +
   "kannst konnt wolltest wollen machen aber nach du mein meine meinen meinem meiner dein deine deinen eure euere ihrer seinem seiner hat haben wird werden wurde war waren sind sein einer den dem des sich mir mich wir sie viele viel bitte etwas welche welcher welches konnte konnen wollt heute morgen gestern today tomorrow yesterday"
 ).split(/\s+/));

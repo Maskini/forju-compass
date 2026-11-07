@@ -64,7 +64,8 @@ export function affirmedRequest(text: string) {
   if (contrast) return contrast[1].trim();
   // Also accept the reverse order in short edits. Questions and additive
   // comparisons ("not only … but also …") must keep their original meaning.
-  const reverse = text.match(/^([^,;.!?]{1,85}?)(?:,\s*(?:not|nicht|kein(?:e[nrms]?)?)\s+|\s+(?:instead of|anstatt|statt)\s+)([^,;.!?]{1,60})[.!]?$/iu);
+  const correction = text.replace(/^(?:(?:no|nein|actually|correction|korrektur|eigentlich)[\s,:.!–—-]+)+/iu, "");
+  const reverse = correction.match(/^([^,;.!?]{1,85}?)(?:,\s*(?:not|nicht|kein(?:e[nrms]?)?)\s+|\s+(?:instead of|anstatt|statt)\s+)([^,;.!?]{1,60})[.!]?$/iu);
   if (reverse && !/^(?:only|just|nur)\b/i.test(reverse[2]) && !/\b(?:can|kann|could|should|soll|would|why|warum|wenn|if)\b/i.test(reverse[1])) return reverse[1].trim();
   return text;
 }
@@ -79,10 +80,10 @@ export function wantsTeam(text:string) {
   const s=normalizeTurn(text);
   return /^(?:contact the forju team|mit forju sprechen|(?:can|could|may) i (?:please )?(?:talk|speak|chat) (?:to|with) (?:a (?:real person|human|person)|the (?:forju )?team|someone (?:at|from) forju)(?: (?:about (?:this|that)|instead|please))?|(?:ich (?:möchte|will|würde gern)|kann ich) (?:bitte )?mit (?:einem (?:echten )?menschen|jemandem(?: (?:bei|von) forju)?|dem (?:forju )?team) (?:sprechen|reden|schreiben)(?: bitte)?)$/.test(s);
 }
-export function conversationalReply(text: string, englishUI: boolean) {
+export function conversationalReply(text: string, englishUI: boolean, preferredLanguage?:"de"|"en") {
   const kind = intent(text) ?? intent(questionAfterGreeting(text));
   if (!kind) return null;
-  const en = /\b(?:hello|thanks|thank|good|goodbye|bye|are|help|you)\b/i.test(text) ? true
+  const en = preferredLanguage ? preferredLanguage === "en" : /\b(?:hello|thanks|thank|good|goodbye|bye|are|help|you)\b/i.test(text) ? true
     : /\b(?:hallo|servus|moin|guten|danke|dank|hilfe|du|dir|auf wiedersehen|bis bald)\b|tschüss|dankeschön|grüß/i.test(text) ? false : englishUI;
   const replies: Record<Intent,[string,string]> = {
     hello:["Hallo! 👋 Was führt dich zu ForJu? Erzähl mir gern von deiner Idee oder stell mir eine Frage.","Hi! 👋 What brings you to ForJu? Tell me about your idea or ask me a question."],
@@ -90,7 +91,7 @@ export function conversationalReply(text: string, englishUI: boolean) {
     clarify:["Welcher Teil ist unklar? Geht es um ein Wort in meiner Antwort oder darum, was du als Nächstes tun kannst?","Which part was unclear: a term I used, or what you can do next?"],
     thanks:["Gerne! Wenn du noch eine Frage hast, frag einfach.","You’re welcome! Feel free to ask if anything else comes up."],
     bye:["Bis bald! Viel Erfolg mit deinem Vorhaben.","Bye! Good luck with your project."],
-    help:["Ich bin ForJu Compass. Ich kann dir zum Beispiel helfen, einen Workshop für deine Klasse zu finden oder aus einer Projektidee einen Entwurf zu machen. Was möchtest du tun?","I’m ForJu Compass. I can help you find a workshop for your class or turn a project idea into a draft. What would you like to do?"],
+    help:["Ich bin ForJu Compass. Ich kann dir zum Beispiel helfen, einen Workshop für deine Klasse zu finden oder eine Projektanfrage vorzubereiten. Was möchtest du tun?","I’m ForJu Compass. I can help you find a workshop for your class or prepare a project enquiry. What would you like to do?"],
     checkIn:["Danke der Nachfrage! Ich bin bereit. Wobei kann ich dir helfen?","Thanks for asking! I’m ready to help. What are you working on?"]
   };
   return replies[kind][en?1:0];
@@ -99,10 +100,27 @@ export function topicHistory(history: ChatMessage[], keepPrompt?:(answer:string)
   // A polite aside is not a new subject for “How do I sign up for it?”.
   return history.flatMap((turn,i) => {
     const question = history[i-i%2].content;
+    if (languageRequest(question) && !keepPrompt?.(history[i-i%2+1].content)) return [];
     const intro = selfIntroduction(question, history[i-i%2-1]?.content);
     if ((intro && !intro.rest) || nameRecall(question)) return [];
     if (intro) return [{...turn, content:turn.role === "user" ? intro.rest
       : turn.content.replace(/^(?:Nice to meet you|Thanks for the correction|Schön, dich kennenzulernen|Danke für die Korrektur), [^\n]+\n\n/u, "")}];
     return keepPrompt?.(history[i-i%2+1].content) || !conversationalReply(question,false) ? [turn] : [];
   });
+}
+
+// A language preference is a small session value, never a source or a prompt.
+// Match requests to the assistant, not “English workshops” or German classes.
+export function languageRequest(text:string):"de"|"en"|undefined {
+  const s=text.toLowerCase().replace(/[?.!,]/g," ").replace(/\s+/g," ").trim();
+  const match=s.match(/^(?:(?:(?:could|can|would) you )?(?:please )?(?:answer|reply|respond|continue|speak)(?: to me)? in |(?:bitte )?(?:(?:kannst|könntest) du )?(?:auf )?)(german|deutsch|english|englisch)(?: (?:antworten|weitermachen|sprechen))?(?: please| bitte)?$/);
+  return match ? /^(german|deutsch)$/.test(match[1]) ? "de" : "en" : undefined;
+}
+export function languageReplay(history:ChatMessage[], keepPrompt?:(answer:string)=>boolean) {
+  for(let i=history.length-2;i>=0;i-=2) {
+    const question=history[i].content;
+    if(languageRequest(question) || (conversationalReply(question,false) && !keepPrompt?.(history[i+1].content))) continue;
+    return {message:question,history:history.slice(0,i)};
+  }
+  return null;
 }

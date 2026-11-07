@@ -12,6 +12,9 @@ export function useCompassChat(language:"en"|"de") {
   const [conversationId, setConversationId] = useState(0);
 
   const [turns, setTurns] = useState<{ question: string; answer: string; sources: Source[]; draft: boolean; recipient?:string; suggestions:string[]; topic?:string; answeredAt:number }[]>([]);
+  const preferredLanguage = useRef<"de"|"en"|undefined>(undefined);
+  const visitorName = useRef<string|undefined>(undefined);
+  const uiLanguage = useRef(language);
   const inFlight = useRef(false);
   const requestVersion = useRef(0);
   const requestController = useRef<AbortController | null>(null);
@@ -30,6 +33,8 @@ export function useCompassChat(language:"en"|"de") {
     requestController.current?.abort();
     requestController.current = null;
     inFlight.current = false;
+    preferredLanguage.current = undefined;
+    visitorName.current = undefined;
     setTurns([]); setQuestion(""); setSubmittedQuestion(""); setError(""); setLoading(false);
     setConversationId(id => id + 1);
     transcript.current?.scrollTo(0, 0);
@@ -55,6 +60,7 @@ export function useCompassChat(language:"en"|"de") {
       return;
     }
 
+    if (uiLanguage.current !== replyLanguage) {preferredLanguage.current = undefined; uiLanguage.current = replyLanguage;}
     inFlight.current = true;
     const version = ++requestVersion.current;
     const controller = new AbortController();
@@ -72,7 +78,7 @@ export function useCompassChat(language:"en"|"de") {
         },
         signal: AbortSignal.any([controller.signal, AbortSignal.timeout(60000)]),
         body: JSON.stringify({
-          message: next, topic: turns.at(-1)?.topic,
+          message: next, topic: turns.at(-1)?.topic, preferredLanguage:preferredLanguage.current, visitorName:visitorName.current,
           history: turns.slice(-MAX_HISTORY_MESSAGES / 2).flatMap((turn): ChatMessage[] => [
             { role: "user", content: turn.question },
             { role: "assistant", content: turn.answer.slice(0, 4000) },
@@ -93,6 +99,8 @@ export function useCompassChat(language:"en"|"de") {
       if (typeof data.answer !== "string" || !data.answer.trim()) {
         throw new Error("Die Antwort war leer. Bitte versuche es erneut.");
       }
+      if (typeof data.visitorName === "string" && data.visitorName.length <= 80) visitorName.current = data.visitorName;
+      if (data.preferredLanguage === "de" || data.preferredLanguage === "en") preferredLanguage.current = data.preferredLanguage;
       const sources: Source[] = Array.isArray(data.sources) ? data.sources.filter(
         (source: Source) => source && typeof source.title === "string" && safeSourceUrl(source.url)
       ) : [];

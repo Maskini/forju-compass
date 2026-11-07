@@ -24,13 +24,13 @@ try{
  for(const c of cases){
   // Independent synthetic trial; reset only this disposable database. k6 tests real limits separately.
   if(results.length){const db=new DatabaseSync(quota);try{db.exec('DELETE FROM counts')}finally{db.close()}}
-  const history=[],answers=[];let topic;
+  const history=[],answers=[];let topic,preferredLanguage;
   for(const message of c.turns){
-   const start=performance.now();const res=await fetch('http://127.0.0.1:4327/api/chat',{method:'POST',headers:{'content-type':'application/json','accept-language':c.lang},body:JSON.stringify({message,history,topic}),signal:AbortSignal.timeout(15000)});
+   const start=performance.now();const res=await fetch('http://127.0.0.1:4327/api/chat',{method:'POST',headers:{'content-type':'application/json','accept-language':c.lang},body:JSON.stringify({message,history:history.slice(-8),topic,preferredLanguage}),signal:AbortSignal.timeout(15000)});
    latencies.push(performance.now()-start);if(!res.ok)throw Error('Unexpected HTTP '+res.status);
-   const a=await res.json();answers.push(a);topic=a.topic;history.push({role:'user',content:message},{role:'assistant',content:a.answer});sample();
+   const a=await res.json();answers.push(a);topic=a.topic;preferredLanguage=a.preferredLanguage;history.push({role:'user',content:message},{role:'assistant',content:a.answer});sample();
   }
-  const a=answers.at(-1),sources=a.sources||[],url=c.source?'https://forju.at/'+c.lang+'/'+c.source:null;
+  const a=answers.at(-1),sources=a.sources||[],url=c.source?'https://forju.at/'+(c.sourceLanguage||c.lang)+'/'+c.source:null;
   const checks={topic:(a.topic??null)===c.topic,source:url?sources.some(s=>s.url===url):sources.length===0,facts:c.facts.every(p=>new RegExp(p,'iu').test(a.answer)),noFabrication:!(c.forbid||[]).some(p=>new RegExp(p,'iu').test(a.answer))};
   results.push({...c,answers,checks,pass:Object.values(checks).every(Boolean)});
  }
