@@ -43,6 +43,47 @@ async function checkAccessibility(page, info) {
   expect(violations.filter(v => ['serious', 'critical'].includes(v.impact))).toEqual([]);
 }
 
+for (const scenario of [
+  {label:'German standalone desktop',lang:'de',widget:false,width:1280,height:850,
+    first:'Welche Workshops bietet ihr für Schulen an?',intro:'Mein Name ist Léa',greeting:/Léa/,correction:'Nein, mein Name ist Noor',recall:'Wie heiße ich?',follow:'Und wie melde ich meine Klasse dafür an?'},
+  {label:'English widget phone',lang:'en',widget:true,width:390,height:844,
+    first:'Which workshops are available for schools?',intro:'my nam e is maya',greeting:/Nice to meet you, Maya/,correction:'Actually, call me Noor',recall:'What is my name?',follow:'How do I register my class for it?'},
+]) test('Personal introduction / '+scenario.label,async({page,context,baseURL})=>{
+  await page.setViewportSize({width:scenario.width,height:scenario.height});
+  let panel=page;
+  if(scenario.widget){
+    // Real separate origin; all assets and answers stay on local Compass.
+    const hostURL='https://www.forju.at/name-preview';
+    const compassOrigin='https://compass.example.test';
+    await context.route(compassOrigin+'/**',async route=>{
+      const url=new URL(route.request().url());
+      if(route.request().method()!=='GET' && !(route.request().method()==='POST' && url.pathname==='/api/chat')) return route.abort();
+      const response=await route.fetch({url:baseURL+url.pathname+url.search,maxRedirects:0});
+      await route.fulfill({response});
+    });
+    await context.route(hostURL,route=>route.fulfill({contentType:'text/html',body:
+      '<!doctype html><html lang="en"><title>Website-Vorschau</title><h1>Website-Vorschau</h1><script defer src="'+compassOrigin+'/compass-widget.js" data-lang="en"></script></html>'}));
+    await page.goto(hostURL);
+    const host=page.locator('forju-compass-widget');
+    await host.locator('.launcher').click();await host.locator('.welcome .start').click();
+    panel=host.frameLocator('iframe');
+  }else await page.goto('/embed?lang='+scenario.lang);
+  await ask(panel,scenario.first);
+  const intro=await ask(panel,scenario.intro);
+  await expect(intro.locator('.response p')).toContainText(scenario.greeting);
+  await expect(intro.locator('.response p')).toContainText('anja.hofer@forju.at');
+  await ask(panel,scenario.correction);
+  await expect((await ask(panel,scenario.recall)).locator('.response p')).toContainText('Noor');
+  const next=await ask(panel,scenario.follow);
+  await expect(next.locator('.response p')).toContainText('anja.hofer@forju.at');
+  await expect(next.locator('.read-more a').first()).toHaveAttribute('href','https://forju.at/'+scenario.lang+'/projects/schulworkshops');
+  if(scenario.widget){
+    const host=page.locator('forju-compass-widget');
+    await host.locator('.close').click();await host.locator('.launcher').click();
+    await expect(panel.locator('[role=log] article')).toHaveCount(5);
+  }
+});
+
 test('German on mobile: answer whether a Vienna workshop is available in Graz', async ({page}) => {
   await page.setViewportSize({width:390,height:844});
   await page.goto('/embed?lang=de');

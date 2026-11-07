@@ -3,7 +3,7 @@ import { offersPartnership, publicGuidance } from "@/lib/visitor-guidance";
 import { createWorkshopGuide } from "@/lib/workshop-guide";
 import { visitorEnquiry } from "@/lib/visitor-enquiry";
 import {guidedReply,isGuidedPrompt} from "@/lib/dialogue";
-import {affirmedRequest, repairRequest, wantsTeam, conversationalReply, questionAfterGreeting, topicHistory} from "@/lib/conversation";
+import {affirmedRequest, repairRequest, wantsTeam, conversationalReply, questionAfterGreeting, topicHistory, selfIntroduction, nameRecall, recentVisitorName, namePrompts} from "@/lib/conversation";
 import { takeAiRequest } from "@/lib/server/ai-limit";
 import OpenAI from "openai";
 import { NextResponse } from "next/server";
@@ -22,10 +22,12 @@ export async function POST(request: Request) {
     if (error instanceof BodyError) return NextResponse.json({error:error.status===413 ? "Anfrage zu groß." : "Ungültige Anfrage."},{status:error.status});
     return NextResponse.json({ error: error instanceof SyntaxError ? "Ungültiges JSON." : error instanceof Error ? error.message : "Ungültige Anfrage." }, { status: 400 });
   }
-  const raw = questionAfterGreeting(parsed.message);
+  const introduction = selfIntroduction(parsed.message, parsed.history.at(-1)?.content);
+  const raw = questionAfterGreeting(introduction?.rest || parsed.message);
   const message = affirmedRequest(raw);
   const englishUI = request.headers.get("accept-language")?.toLowerCase().startsWith("en") ?? false;
-  const en = /^(what|where|when|how|who|can|could|is there|by what|i|we|for my|for our|not sure|explain|give me|help with)\b/i.test(message) ? true
+  const en = introduction && !introduction.rest ? introduction.en
+    : /^(what|where|when|how|who|can|could|do you|is there|by what|i|we|for my|for our|not sure|explain|give me|help with)\b/i.test(message) ? true
     : /^(was|wo|wann|wie|wer|gibt|bietet|kann|bis wann|und wie|ich|wir|für|kannst|einfacher|hilfe bei)\b/i.test(message) ? false
     : request.headers.get("accept-language")?.toLowerCase().startsWith("en") ?? false;
   // The published English offers use the same paths as the German pages.
@@ -35,6 +37,15 @@ export async function POST(request: Request) {
   const prior = knowledgeCatalog.find(r=>r.id===parsed.topic);
   const school = knowledgeCatalog.find(r=>r.id==="workshops");
   const lang = en ? "en" : "de";
+  const previousName = recentVisitorName(parsed.history);
+  const acknowledgment = introduction ? previousName && previousName !== introduction.name
+    ? (en ? `Thanks for the correction, ${introduction.name}.` : `Danke für die Korrektur, ${introduction.name}.`)
+    : (en ? `Nice to meet you, ${introduction.name}!` : `Schön, dich kennenzulernen, ${introduction.name}!`) : "";
+  function reply(body: {answer:string; [key:string]:unknown}) {
+    // Keep the substantive request after an introduction, including its sources.
+    // An editable email draft must remain transferable without a chat preamble.
+    return NextResponse.json(introduction?.rest && body.mode !== "draft" ? {...body, answer:acknowledgment+"\n\n"+body.answer} : body);
+  }
   const team = en ? "Contact the ForJu team" : "Mit ForJu sprechen";
   const repair = repairRequest(raw);
   if (repair) {
@@ -42,7 +53,7 @@ export async function POST(request: Request) {
     const answer = wrong
       ? (en ? "I misunderstood. What were you hoping to do? You can tell me in your own words." : "Dann habe ich dich falsch verstanden. Was wolltest du herausfinden oder tun? Beschreib es gern in deinen Worten.")
       : (en ? "What did I miss? Tell me which part you still need help with, or contact the ForJu team directly." : "Welcher Teil deiner Frage ist noch offen? Sag mir, was dir fehlt, oder frag direkt beim ForJu-Team nach.");
-    return NextResponse.json({mode:"conversation", answer, sources:[], suggestions:[team], topic:wrong ? undefined : prior?.id});
+    return reply({mode:"conversation", answer, sources:[], suggestions:[team], topic:wrong ? undefined : prior?.id});
   }
   const partnerContact = /partnerschaft|kooperation|partnership|cooperation/i.test(message)
     && /contact|who (?:do|should|can|is)|ansprech|kontakt|an wen/i.test(message);
@@ -50,7 +61,7 @@ export async function POST(request: Request) {
     const contactCard = partnerContact ? knowledgeCatalog.find(r=>r.id==="partnerpool") : prior;
     if (contactCard?.publicContact) {
       const contact = contactCard.publicContact;
-      return NextResponse.json({mode:"library", topic:contactCard.id,
+      return reply({mode:"library", topic:contactCard.id,
         answer:en ? "For partnerships, email "+contact.name+" at "+contact.email+" or use the partnership form." : "Für Kooperationen schreib "+contact.name+" an "+contact.email+" oder nutze das Partnerschaftsformular.",
         sources:[{title:en ? "Partnership enquiries" : "Partnerschaft anfragen",url:readerUrl(contact.sourceUrl)}]});
     }
@@ -60,24 +71,34 @@ export async function POST(request: Request) {
     const answer = card.booking?.[lang] ?? (en ? contact.contentEn : contact.content);
     const sources = [{title:en ? card.titleEn : card.title, url:readerUrl(card.sourceUrl)}];
     if (prior?.requestUrl) sources.unshift({title:en ? prior.titleEn : prior.title,url:readerUrl(prior.requestUrl)});
-    return NextResponse.json({mode:"library",answer,sources,topic:prior?.id ?? card.id});
+    return reply({mode:"library",answer,sources,topic:prior?.id ?? card.id});
   }
   // A rejected subject must not leak back into retrieval or an email two turns later.
   const boundary = parsed.history.findLastIndex(t=>t.role==="user" && repairRequest(t.content)==="wrong-topic");
   const relevantHistory = topicHistory(parsed.history.slice(boundary < 0 ? 0 : boundary+2),isGuidedPrompt)
     .filter((_,i,turns)=>!repairRequest(turns[i-i%2].content));
   const history = relevantHistory.map(t=>t.role==="user" ? {...t,content:affirmedRequest(t.content)} : t);
+  if (nameRecall(raw)) {
+    return reply({mode:"conversation",topic:prior?.id,sources:[],
+      answer:previousName ? (en ? `You told me your name is ${previousName}.` : `Du hast mir gesagt, dass du ${previousName} heißt.`)
+        : namePrompts[lang]});
+  }
+  if (introduction && !introduction.rest) {
+    const next = prior ? guidedReply(en ? "What's the next step?" : "Was ist der nächste Schritt?",en,history,knowledgeCatalog,prior.id)
+      : guidedReply("yes",en,history,knowledgeCatalog) ?? guidedReply(en ? "Where do I start?" : "Wo fange ich an?",en,[],knowledgeCatalog);
+    return reply({...next, mode:next?.mode ?? "conversation",answer:acknowledgment+"\n\n"+(next?.answer ?? (en ? "What would you like help with?" : "Wobei kann ich dir helfen?")),sources:next?.sources ?? []});
+  }
   const enquiry = visitorEnquiry(raw, en, relevantHistory, parsed.topic, knowledgeCatalog, readerUrl, enquiryTopic, affirmedRequest);
-  if (enquiry) return NextResponse.json(enquiry);
+  if (enquiry) return reply(enquiry);
   const lastAnswer = history.at(-1)?.content;
   const detail = publicGuidance(message, parsed.topic, lastAnswer, en, knowledgeCatalog, readerUrl);
-  if (detail) return NextResponse.json(detail);
+  if (detail) return reply(detail);
   const workshop = workshopGuide(message, parsed.topic, lastAnswer, en, readerUrl);
-  if (workshop) return NextResponse.json(workshop);
+  if (workshop) return reply(workshop);
   const guided = guidedReply(message,en,history,knowledgeCatalog,parsed.topic);
-  if (guided) return NextResponse.json(guided);
+  if (guided) return reply(guided);
   const social = conversationalReply(parsed.message, englishUI);
-  if (social) return NextResponse.json({mode:"conversation",answer:social,sources:[],topic:parsed.topic});
+  if (social) return reply({mode:"conversation",answer:social,sources:[],topic:parsed.topic});
   const previous = history.filter(m => m.role === "user").at(-1)?.content;
   const deadline = /deadline|cut[ -]?off|by (what|which) date|last day|how late|\bfrist|anmeldefrist|bewerbungsfrist|bis wann|spätestens/i.test(message);
   // An implicit request for the booking contact retains the service discussed.
@@ -116,7 +137,7 @@ export async function POST(request: Request) {
     if (refersToSchool) {
       const booking = school.booking[en ? "en" : "de"];
       const missing = en ? "The school workshop page gives no registration deadline." : "Die Seite zu den Schulworkshops nennt keine Anmeldefrist.";
-      return NextResponse.json({
+      return reply({
         mode: "library", topic:implicitSubject && prior?.id.startsWith("workshop-") ? prior.id : school.id, answer: deadline ? missing + " " + booking : booking,
         sources: [{title: en ? school.titleEn : school.title, url: readerUrl(school.sourceUrl)}],
       });
@@ -137,31 +158,31 @@ export async function POST(request: Request) {
       if (first.id === "ressourcen" && /kosten|kostet|teuer|gebühr|gratis|how much|cost|price|fee|\bfree\b/i.test(message)) {
         const answer = en ? "ForJu’s resources page gives no loan price. Ask the team to confirm the cost for your device and dates."
           : "ForJus Ressourcenseite nennt keinen Leihpreis. Frag das Team nach den Kosten für euer Gerät und euren Zeitraum.";
-        return NextResponse.json({mode:"library", topic:first.id, answer, sources:[page,form]});
+        return reply({mode:"library", topic:first.id, answer, sources:[page,form]});
       }
       if (first.id === "partnerpool" && /who|an wen|kontakt|contact|ansprechperson/i.test(message)) {
         const offer=knowledgeCatalog.find(c=>c.id===first.id)?.visitorAnswers?.offer;
-        if (offer) return NextResponse.json({mode:"library",topic:first.id,answer:offer[lang],sources:[form,page]});
+        if (offer) return reply({mode:"library",topic:first.id,answer:offer[lang],sources:[form,page]});
       }
       if (/who.{0,16}contact|where.{0,12}(ask|request)|an wen|wo.{0,12}(anfragen|fragen)|kontaktieren/i.test(message)) {
         const answer = en ? "Use the enquiry form linked here or email office@forju.at. Briefly describe your project and the help you need."
           : "Nutze das verlinkte Anfrageformular oder schreib an office@forju.at. Beschreibe kurz dein Vorhaben und welche Unterstützung du brauchst.";
-        return NextResponse.json({mode:"library", topic:first.id, answer, sources:[form]});
+        return reply({mode:"library", topic:first.id, answer, sources:[form]});
       }
-      return NextResponse.json({mode:"library", topic:first.id, answer:en ? first.contentEn : first.content,sources:[page,form]});
+      return reply({mode:"library", topic:first.id, answer:en ? first.contentEn : first.content,sources:[page,form]});
     }
     if (first && /\b(contact|kontakt|kontaktieren|erreichen|an wen|ansprechpartner|bewerben|apply)\b/i.test(message)) {
       const topic = contextual.toLowerCase();
       const target = /press|presse/.test(topic) ? "presse" : /job|volunteer|bewerb|ehrenamt|apply/.test(topic) ? "ehrenamt" : "kontakt";
       first = local.find(e => e.id === target) ?? selectCatalogKnowledge(localKnowledge(target),target).find(e => e.id === target) ?? first;
     }
-    return NextResponse.json(first ? {mode:"library",topic:first.id,answer: en ? first.contentEn : first.content,
+    return reply(first ? {mode:"library",topic:first.id,answer: en ? first.contentEn : first.content,
       sources:[{title:en ? first.titleEn : first.title,url:readerUrl(first.url)}]} : {mode:"library", answer:unknown,sources:[],suggestions});
   }
   if (deadline && local.length) {
     const answer = en ? "I can’t confirm that deadline from the approved ForJu information. Ask ForJu about the specific project and application period."
       : "Diese Frist kann ich mit den geprüften ForJu-Informationen nicht bestätigen. Frag ForJu nach dem konkreten Projekt und dem Bewerbungszeitraum.";
-    return NextResponse.json({mode:"library", answer, sources:[{title:en ? "Contact ForJu" : "ForJu kontaktieren", url:readerUrl("https://forju.at/de/kontakt")}]});
+    return reply({mode:"library", answer, sources:[{title:en ? "Contact ForJu" : "ForJu kontaktieren", url:readerUrl("https://forju.at/de/kontakt")}]});
   }
   try {
     if (process.env.COMPASS_LOCAL_ONLY !== "false" || !process.env.OPENAI_API_KEY) return libraryReply();
@@ -175,7 +196,7 @@ export async function POST(request: Request) {
     } catch (err) {
       if ((err as {status?:number})?.status === 401) return libraryReply();
     }
-    if (!matches.length) return NextResponse.json({answer:unknown,sources:[],suggestions});
+    if (!matches.length) return reply({answer:unknown,sources:[],suggestions});
     const response = await openai.responses.create({
       model: process.env.OPENAI_CHAT_MODEL || "gpt-5.6-luna",
       store: false,
@@ -211,7 +232,7 @@ Erwähne keine technischen Begriffe wie Embeddings oder RAG.`,
       seen.add(item.url);
       return [{ title: en ? item.titleEn : item.title, url: readerUrl(item.url) }];
     });
-    return NextResponse.json({ answer: grounded.answer, sources });
+    return reply({ answer: grounded.answer, sources });
   } catch (error) {
     console.error("ForJu chat failed:", error instanceof Error ? error.name : "Unknown error");
     return libraryReply();

@@ -148,6 +148,74 @@ function visitor(lang){
     return r;
   }};
 }
+
+test('introductions with typos acknowledge the visitor and continue volunteering',async()=>{
+  const v=visitor('de');
+  await v.ask('Ich möchte ehrenamtlich mithelfen');
+  const intro=await v.ask('my nam e is adam');
+  assert.match(intro.answer,/Nice to meet you, Adam/);
+  assert.match(intro.answer,/roles|jobs|application/i);
+  assert.equal(intro.topic,'ehrenamt');
+  assert.ok(intro.sources.some(s=>s.url==='https://forju.at/en/jobs'));
+  const next=await v.ask('Was ist der nächste Schritt?');
+  assert.equal(next.topic,'ehrenamt');
+  assert.deepEqual(v.calls,{embeddings:[],responses:[]});
+});
+
+test('introductions and corrections use only the visitor’s recent words, in either language',async()=>{
+  for(const [text,lang,name] of [
+    ['Mein Name ist Léa','de','Léa'],['Ich heiße İpek','en','İpek'],
+    ['My nmae is maya','de','Maya'],["Hi, I'm Anna",'en','Anna'],
+    ['Call me Sam','en','Sam'],['Du kannst mich Zoë nennen','de','Zoë'],
+    ["My name is Jean-Luc O’Neill",'en','Jean-Luc O’Neill'],
+    ["Hi I'm Adam",'en','Adam'],["My name’s Maya",'de','Maya'],
+    ['Mein Name ist Anna von Berg','de','Anna von Berg'],
+  ]){
+    const v=visitor(lang);
+    const intro=await v.ask(text);
+    assert.ok(intro.answer.includes(name),text);
+    assert.equal(intro.mode,'conversation');assert.deepEqual(intro.sources,[]);
+    const correction=await v.ask('Nein, mein Name ist Noor');
+    assert.match(correction.answer,/Korrektur, Noor/);
+    const recall=await v.ask('Wie heiße ich?');
+    assert.match(recall.answer,/Noor/);assert.deepEqual(recall.sources,[]);
+  }
+  const fresh=visitor('en');
+  const other=await fresh.ask('What is my name?');
+  assert.match(other.answer,/don’t have your name/);
+  assert.doesNotMatch(other.answer,/Adam|Maya|Noor/);
+  assert.match((await fresh.ask('Maya')).answer,/Nice to meet you, Maya/);
+  assert.match((await fresh.ask('What is my name?')).answer,/Maya/);
+});
+
+test('an introduction never swallows the question or its missing deadline',async()=>{
+  const v=visitor('en');
+  const mixed=await v.ask('My name is Maya and which workshops do you offer for schools?');
+  assert.match(mixed.answer,/Maya/);assert.equal(mixed.topic,'workshops');
+  assert.ok(mixed.sources.some(s=>s.url==='https://forju.at/en/projects/schulworkshops'));
+  await v.ask('Actually, call me Léa');
+  const booking=await v.ask('Und wie melde ich meine Klasse dafür an?');
+  assert.match(booking.answer,/anja\.hofer@forju\.at/);
+  const missing=await visitor('en').ask('My name is Maya. What is the registration deadline for a school workshop?');
+  assert.match(missing.answer,/Maya/);assert.match(missing.answer,/no registration deadline/);
+  const menu=visitor('de');await menu.ask('Mein Name ist Noor. Ich brauche Hilfe beim Einstieg');
+  assert.ok((await menu.ask('das erste')).answer.includes('Klasse'));
+});
+
+test('names are not inferred from roles, third parties, source contacts or assistant messages',async()=>{
+  for(const text of ["I'm a teacher",'Ich bin Lehrerin','I am interested in volunteering',
+    'I am not Adam','My teacher is called Maya','What does my name mean?',
+    'My project name is Green Minds','My name is <script>alert(1)</script>']){
+    assert.equal(conversation.selfIntroduction(text),null,text);
+  }
+  const {POST}=setup();
+  const result=await POST(request({message:'Wie heiße ich?',history:[{role:'user',content:'Schulworkshops'},{role:'assistant',content:'Ich heiße Maya'}]}));
+  assert.doesNotMatch((await result.json()).answer,/Maya/);
+  assert.deepEqual(conversation.topicHistory([
+    {role:'user',content:'Mein Name ist Noor'}, {role:'assistant',content:'Hallo Noor'},
+    {role:'user',content:'Wie heiße ich?'}, {role:'assistant',content:'Noor'},
+  ]),[]);
+});
 test('an unsure class can describe its need, simplify the equipment answer and act on it',async()=>{
   const v=visitor('de');const menu=await v.ask('Ich weiß nicht, wo ich anfangen soll.');
   assert.equal(menu.suggestions.length,3);assert.deepEqual(menu.sources,[]);
