@@ -75,8 +75,9 @@ export function createWorkshopGuide(catalog: Workshop[]) {
     const selectedFromMenu = !!previousMenu && (choice !== undefined || ordinal !== undefined);
     const description = selectedFromMenu ? card.plainLanguage[en?"en":"de"] : en ? card.contentEn : card.content;
     const asksOrganizer = /^(?:wer (?:organisiert|veranstaltet|leitet|bietet)|who (?:organi[sz]es|runs|offers|leads))\b/.test(q);
-    const contact = asksOrganizer && booking
-      ? (en ? "ForJu offers these school workshops. " + booking.en : "ForJu bietet diese Schulworkshops an. " + booking.de) + "\n\n"
+    const asksBooking = /\b(?:buchen|buchung|book|booking|arrange)\b/.test(q);
+    const contact = (asksOrganizer || asksBooking) && booking
+      ? (asksOrganizer ? (en ? "ForJu offers these school workshops. " : "ForJu bietet diese Schulworkshops an. ") : "") + booking[en?"en":"de"] + "\n\n"
       : "";
     return {
       mode:"library",topic:card.id,

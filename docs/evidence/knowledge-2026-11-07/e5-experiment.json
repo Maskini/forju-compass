@@ -1,0 +1,96 @@
+{
+  "scope": "local CPU; no network; nearest neighbour only, not answer generation; no calibrated abstention",
+  "loadMs": 577.4457082152367,
+  "indexMs": 1784.998374991119,
+  "p95QueryMs": 9.658316033892332,
+  "peakRssBytes": 590888960,
+  "modelBytes": 135390915,
+  "passed": 9,
+  "total": 12,
+  "results": [
+    {
+      "id": "devices-de",
+      "expected": "ressourcen",
+      "e5Topic": "ressourcen",
+      "cosine": 0.8398322531602657,
+      "pass": true
+    },
+    {
+      "id": "equipment-typo-en",
+      "expected": "ressourcen",
+      "e5Topic": "mission",
+      "cosine": 0.8223018059552077,
+      "pass": false
+    },
+    {
+      "id": "devices-typo-de",
+      "expected": "ressourcen",
+      "e5Topic": "ressourcen",
+      "cosine": 0.8329849776365801,
+      "pass": true
+    },
+    {
+      "id": "expert-en",
+      "expected": "know-how",
+      "e5Topic": "know-how",
+      "cosine": 0.8363972700394282,
+      "pass": true
+    },
+    {
+      "id": "expert-de",
+      "expected": "know-how",
+      "e5Topic": "know-how",
+      "cosine": 0.8408824625174411,
+      "pass": true
+    },
+    {
+      "id": "seminar-en",
+      "expected": "seminare",
+      "e5Topic": "seminare",
+      "cosine": 0.8783154059571564,
+      "pass": true
+    },
+    {
+      "id": "seminar-typo-de",
+      "expected": "seminare",
+      "e5Topic": "seminare",
+      "cosine": 0.8542038721161472,
+      "pass": true
+    },
+    {
+      "id": "podcast-en",
+      "expected": "podcast",
+      "e5Topic": "podcast",
+      "cosine": 0.8244925122803475,
+      "pass": true
+    },
+    {
+      "id": "funding-budget-en",
+      "expected": "finanzierung",
+      "e5Topic": "science-beratung",
+      "cosine": 0.8657490782620961,
+      "pass": false
+    },
+    {
+      "id": "form-fields-de",
+      "expected": "einreichen",
+      "e5Topic": "einreichen",
+      "cosine": 0.8750248925989399,
+      "pass": true
+    },
+    {
+      "id": "unknown-fee-en",
+      "expected": "ressourcen",
+      "e5Topic": "ressourcen",
+      "cosine": 0.7977533411138309,
+      "pass": true
+    },
+    {
+      "id": "unrelated-en",
+      "expected": null,
+      "e5Topic": "spenden-bestaetigung",
+      "cosine": 0.7897671446480778,
+      "pass": false
+    }
+  ]
+}

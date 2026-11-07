@@ -1,0 +1,80 @@
+[
+  {
+    "lang": "de",
+    "width": 1280,
+    "questions": [
+      "Wir brauchen Messgeräte für unser Schulprojekt.",
+      "Und was kostet das pro Woche?"
+    ],
+    "answers": [
+      {
+        "mode": "library",
+        "topic": "ressourcen",
+        "answer": "Schulen und Forschungsteams können über ForJu bei Partnern Räume und Messgeräte anfragen. ForJu hilft bei der Organisation und klärt Fragen zu Aufsicht und Haftung. Ob ein bestimmtes Gerät zu eurem Termin verfügbar ist und was die Nutzung kostet, müsst ihr anfragen. Beschreibt im Ressourcenformular, welchen Raum oder welches Gerät ihr braucht und wofür.",
+        "sources": [
+          {
+            "title": "Ressourcen",
+            "url": "https://forju.at/de/services/ressourcen"
+          },
+          {
+            "title": "Bei ForJu anfragen",
+            "url": "https://forju.at/de/kontakt?intent=service&thema=ressourcen"
+          }
+        ]
+      },
+      {
+        "mode": "library",
+        "topic": "ressourcen",
+        "answer": "ForJus Ressourcenseite nennt keinen Leihpreis. Frag das Team nach den Kosten für euer Gerät und euren Zeitraum.",
+        "sources": [
+          {
+            "title": "Ressourcen",
+            "url": "https://forju.at/de/services/ressourcen"
+          },
+          {
+            "title": "Bei ForJu anfragen",
+            "url": "https://forju.at/de/kontakt?intent=service&thema=ressourcen"
+          }
+        ]
+      }
+    ],
+    "external": []
+  },
+  {
+    "lang": "en",
+    "width": 390,
+    "questions": [
+      "My pupils feel overwhelmed before exams. Is there a workshop that could help?",
+      "How can I arrange it for my class?"
+    ],
+    "answers": [
+      {
+        "mode": "library",
+        "topic": "workshop-stress",
+        "answer": "School stress\n\nStudents explore breathing exercises, mindfulness and concentration strategies for school.",
+        "sources": [
+          {
+            "title": "School workshops at ForJu",
+            "url": "https://forju.at/en/projects/schulworkshops"
+          }
+        ],
+        "suggestions": [
+          "How do we sign up?",
+          "Explain more simply"
+        ]
+      },
+      {
+        "mode": "library",
+        "topic": "workshop-stress",
+        "answer": "To arrange a school workshop, email Anja Hofer at anja.hofer@forju.at and ask about a date for your class.",
+        "sources": [
+          {
+            "title": "Vienna school workshops",
+            "url": "https://forju.at/en/projects/schulworkshops"
+          }
+        ]
+      }
+    ],
+    "external": []
+  }
+]

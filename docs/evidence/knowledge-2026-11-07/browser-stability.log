@@ -1,0 +1,11 @@
+
+Running 6 tests using 1 worker
+
+  ✓  1 [firefox] › visitors.spec.mjs:124:1 › Separate website origin: open the widget by keyboard, ask, close and resume (5.2s)
+  ✓  2 [firefox] › visitors.spec.mjs:419:4 › Project form: prefill, edit, resume and review / de (9.6s)
+  ✓  3 [firefox] › visitors.spec.mjs:124:1 › Separate website origin: open the widget by keyboard, ask, close and resume (12.5s)
+  ✓  4 [firefox] › visitors.spec.mjs:419:4 › Project form: prefill, edit, resume and review / de (13.1s)
+  ✓  5 [firefox] › visitors.spec.mjs:124:1 › Separate website origin: open the widget by keyboard, ask, close and resume (5.4s)
+  ✓  6 [firefox] › visitors.spec.mjs:419:4 › Project form: prefill, edit, resume and review / de (11.4s)
+
+  6 passed (1.1m)

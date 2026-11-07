@@ -6,7 +6,7 @@ const eslintConfig = defineConfig([
   ...nextVitals,
   ...nextTs,
   // Promptfoo plugins and the Node preload use the CommonJS loader.
-  {files:["tools/release/**/*.cjs"],rules:{"@typescript-eslint/no-require-imports":"off"}},
+  {files:["tools/release/**/*.cjs","tools/knowledge-checks/*.cjs"],rules:{"@typescript-eslint/no-require-imports":"off"}},
   // Override default ignores of eslint-config-next.
   globalIgnores([
     // Default ignores of eslint-config-next:

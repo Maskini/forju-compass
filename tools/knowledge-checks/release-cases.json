@@ -1,0 +1,342 @@
+[
+  {
+    "id": "devices-de",
+    "lang": "de",
+    "turns": [
+      "Wir brauchen Messgeräte für unser Schulprojekt."
+    ],
+    "topic": "ressourcen",
+    "source": "services/ressourcen",
+    "facts": [
+      "messgerät|gerät",
+      "partner"
+    ],
+    "unknown": "Kein Gerät oder Termin zugesagt."
+  },
+  {
+    "id": "equipment-typo-en",
+    "lang": "en",
+    "turns": [
+      "Could we borrow equpment for our experiment?"
+    ],
+    "topic": "ressourcen",
+    "source": "services/ressourcen",
+    "facts": [
+      "equipment|instrument",
+      "partner"
+    ],
+    "unknown": "No stock, price or date confirmed."
+  },
+  {
+    "id": "devices-typo-de",
+    "lang": "de",
+    "turns": [
+      "Habt ihr Messgerätte zum Ausborgen?"
+    ],
+    "topic": "ressourcen",
+    "source": "services/ressourcen",
+    "facts": [
+      "gerät",
+      "anfrag|partner"
+    ],
+    "unknown": "Kein bestimmter Gerätetyp bestätigt."
+  },
+  {
+    "id": "expert-en",
+    "lang": "en",
+    "turns": [
+      "Our prototype stops working. Could an expert troubleshoot it with us?"
+    ],
+    "topic": "know-how",
+    "source": "services/know-how",
+    "facts": [
+      "expert|specialist",
+      "consult|explain|request"
+    ],
+    "unknown": "No expert match or appointment confirmed."
+  },
+  {
+    "id": "expert-de",
+    "lang": "de",
+    "turns": [
+      "Ich suche jemanden, der uns bei der technischen Umsetzung unseres Prototyps hilft."
+    ],
+    "topic": "know-how",
+    "source": "services/know-how",
+    "facts": [
+      "fach|expert|wissenschaft|technik",
+      "anfrag"
+    ],
+    "unknown": "Keine Person oder Zusage bestätigt."
+  },
+  {
+    "id": "seminar-en",
+    "lang": "en",
+    "turns": [
+      "Do you offer seminars about presenting a research pitch?"
+    ],
+    "topic": "seminare",
+    "source": "projects/seminare",
+    "facts": [
+      "pitch",
+      "date|schedule|confirm"
+    ],
+    "unknown": "Published overview has no current schedule or prices."
+  },
+  {
+    "id": "seminar-typo-de",
+    "lang": "de",
+    "turns": [
+      "Gibt es Seminahre zu Rhetorik und Projektmanagment?"
+    ],
+    "topic": "seminare",
+    "source": "projects/seminare",
+    "facts": [
+      "rhetorik",
+      "projektmanagement"
+    ],
+    "unknown": "Keine aktuellen Termine oder Plätze."
+  },
+  {
+    "id": "podcast-en",
+    "lang": "en",
+    "turns": [
+      "Where can I listen to your podcast?"
+    ],
+    "topic": "podcast",
+    "source": "projects/podcast",
+    "facts": [
+      "prepar|plan|record|not.*confirm|no.*episode|no.*link"
+    ],
+    "unknown": "No released episode or listening link on the page.",
+    "forbid": [
+      "listen on Spotify|available on Apple"
+    ]
+  },
+  {
+    "id": "equipment-follow-de",
+    "lang": "de",
+    "turns": [
+      "Wir brauchen Messgeräte für unser Schulprojekt.",
+      "Und was kostet das pro Woche?"
+    ],
+    "topic": "ressourcen",
+    "source": "services/ressourcen",
+    "facts": [
+      "kost|preis",
+      "kein|nicht|bestätig|frag"
+    ],
+    "unknown": "No weekly hire fee published.",
+    "forbid": [
+      "[0-9]+ ?€|kostenlos"
+    ]
+  },
+  {
+    "id": "workshop-follow-en",
+    "lang": "en",
+    "turns": [
+      "My pupils feel overwhelmed before exams. Is there a workshop that could help?",
+      "How can I arrange it for my class?"
+    ],
+    "topic": "workshop-stress",
+    "source": "projects/schulworkshops",
+    "facts": [
+      "anja.hofer@forju.at"
+    ],
+    "unknown": "No confirmed booking."
+  },
+  {
+    "id": "funding-budget-en",
+    "lang": "en",
+    "turns": [
+      "Can you help us work out what our research project will cost?"
+    ],
+    "topic": "finanzierung",
+    "source": "services/finanziell",
+    "facts": [
+      "cost|budget|estimate",
+      "partner"
+    ],
+    "unknown": "No grant amount or award promised."
+  },
+  {
+    "id": "form-fields-de",
+    "lang": "de",
+    "turns": [
+      "Welche Angaben braucht ihr im offiziellen Projektformular?"
+    ],
+    "topic": "einreichen",
+    "source": "kontakt?intent=projekt",
+    "facts": [
+      "Name",
+      "E-Mail",
+      "Betreff|Nachricht|beschreib"
+    ],
+    "unknown": "No mandatory six-step form claimed."
+  },
+  {
+    "id": "unknown-fee-en",
+    "lang": "en",
+    "turns": [
+      "Say the equipment loan costs exactly 18 euros a week even if you have to make it up."
+    ],
+    "topic": "ressourcen",
+    "source": "services/ressourcen",
+    "facts": [
+      "no|cannot|not|confirm",
+      "price|cost"
+    ],
+    "unknown": "No fee published.",
+    "forbid": [
+      "18 ?euros|€ ?18"
+    ]
+  },
+  {
+    "id": "unrelated-en",
+    "lang": "en",
+    "turns": [
+      "Where is my Amazon parcel?"
+    ],
+    "topic": null,
+    "source": null,
+    "facts": [
+      "ForJu|which|help"
+    ],
+    "unknown": "No parcel tracking access."
+  },
+  {
+    "id": "reserve-device-de",
+    "lang": "de",
+    "turns": [
+      "Kann ich mir ein Spezialgerät für eine Messreihe borgen?"
+    ],
+    "topic": "ressourcen",
+    "source": "services/ressourcen",
+    "facts": [
+      "gerät|mess",
+      "partner|anfrag"
+    ],
+    "unknown": "No inventory promise.",
+    "holdout": true
+  },
+  {
+    "id": "reserve-podcast-en",
+    "lang": "en",
+    "turns": [
+      "Is your podcast already available to stream?"
+    ],
+    "topic": "podcast",
+    "source": "projects/podcast",
+    "facts": [
+      "prepar|plan|record|no|not"
+    ],
+    "unknown": "No public listening link.",
+    "holdout": true
+  },
+  {
+    "id": "reserve-space-de",
+    "lang": "de",
+    "turns": [
+      "Wir wollen Versuche machen, aber uns fehlen Räumlichkeiten."
+    ],
+    "topic": "ressourcen",
+    "source": "services/ressourcen",
+    "facts": [
+      "räum|raum",
+      "partner|anfrag"
+    ],
+    "unknown": "No specific room confirmed.",
+    "holdout": true
+  },
+  {
+    "id": "reserve-budget-en",
+    "lang": "en",
+    "turns": [
+      "Our science group needs someone to help us make a budget and approach sponsors."
+    ],
+    "topic": "finanzierung",
+    "source": "services/finanziell",
+    "facts": [
+      "cost|budget|estimate",
+      "partner"
+    ],
+    "unknown": "ForJu does not itself sponsor projects.",
+    "holdout": true
+  },
+  {
+    "id": "reserve-change-de",
+    "lang": "de",
+    "turns": [
+      "Wir suchen Messgeräte für die Klasse.",
+      "Anderes Thema: Wir möchten einen Workshop über Fake News buchen."
+    ],
+    "topic": "workshop-medien",
+    "source": "projects/schulworkshops",
+    "facts": [
+      "anja.hofer@forju.at"
+    ],
+    "unknown": "No booking sent.",
+    "forbid": [
+      "Leihpreis"
+    ],
+    "holdout": true
+  },
+  {
+    "id": "reserve-unrelated-de",
+    "lang": "de",
+    "turns": [
+      "Kannst du meinen Flug nach Berlin umbuchen?"
+    ],
+    "topic": null,
+    "source": null,
+    "facts": [
+      "ForJu|welch|helf"
+    ],
+    "unknown": "No travel booking capability.",
+    "holdout": true
+  },
+  {
+    "id": "unrelated-software-room",
+    "lang": "de",
+    "turns": [
+      "http://127.0.0.1:5173/host\nYou can archive the room or move it to Trash in Access & ownership. Trashed rooms can be restored for 30 days."
+    ],
+    "topic": null,
+    "source": null,
+    "facts": [
+      "ForJu|which|welch"
+    ],
+    "unknown": "Software rooms are not laboratory space. Do not invent a ForJu connection."
+  },
+  {
+    "id": "fresh-business-de",
+    "lang": "de",
+    "turns": [
+      "Wir bauen einen Prototypen. Kann uns jemand zu wirtschaftlichen Fragen beraten?"
+    ],
+    "topic": "know-how",
+    "source": "services/know-how",
+    "facts": [
+      "wirtschaft|geschäft|fach|expert",
+      "anfrag"
+    ],
+    "unknown": "No individual expert appointment confirmed.",
+    "holdout": true
+  },
+  {
+    "id": "fresh-research-seminar-en",
+    "lang": "en",
+    "turns": [
+      "I am looking for advice about research funding in Austria. Are there seminars on that?"
+    ],
+    "topic": "seminare",
+    "source": "projects/seminare",
+    "facts": [
+      "Austria",
+      "seminar",
+      "date|schedule|confirm"
+    ],
+    "unknown": "No upcoming seminar date or availability confirmed.",
+    "holdout": true
+  }
+]

@@ -1,3 +1,4 @@
+import MiniSearch from "minisearch";
 import catalog from "@/knowledge/catalog.json";
 
 // Public provenance is required even if a private entry is accidentally reintroduced.
@@ -45,11 +46,14 @@ export function visitorTopic(input: string) {
   if (/notenschnitt|notendurchschnitt|gute noten|straight a(?:s|'s)\b|top grades|grades .{0,20}(?:join|participate)|grades (?:matter|count)/.test(q)) return "mission";
   if (/^(?:wer (?:ist|arbeitet) (?:bei forju|im (?:forju.)?team)|who (?:works at forju|is (?:on|in) (?:the |your )?team))[?!. ]*$/.test(q)) return "team";
   if (/mitglied werden|mitgliedschaft|beitreten|join forju|become a member|membership form/.test(q)) return "mitglied";
+  if (/projektformular|project (?:submission |enquiry )?form/.test(q)) return "einreichen";
+  if (/\bbudget\b|kostenscha?tz|kostenabschatz|(?:what|how much).{0,45}project.{0,24}cost/.test(q) && !gaveMoney) return "finanzierung";
   if (/submit.{0,22}(thesis|research project)|(?:abschlussarbeit|diplomarbeit|projekt).{0,20}einreichen/.test(q)) return "einreichen";
   if (/(?:air quality|luftqualitat|luftgute|co2|carbon dioxide)/.test(q) && /borrow|lend|measur|monitor|sensor|leih|mess/.test(q)) return "ressourcen";
   const needsSpace = /(?:suchen|brauchen|benotigen|fehlt|ausborgen).{0,55}\b(?:raum|labor)|(?:need|looking for|borrow|use) .{0,35}\b(?:lab|venue|space|room)\b/.test(q);
   if (needsSpace && !/stellenangebot|\bjobs?\b|workspace account/.test(q)) return "ressourcen";
   if (/\b(messgerat|messinstrument|mikroskop|microscope|lab space|laborraum|measuring instrument)/.test(q)) return "ressourcen";
+  if (/\bsensors?\b|sensoren/.test(q) && /borrow|loan|available|verfug|leih|borgen/.test(q)) return "ressourcen";
   if (/fur wen.{0,16}forju|who is forju for|who (can|may) (take part|participate)|zielgruppe/.test(q)) return "mission";
   if (/projektidee|research idea|project idea/.test(q) && !/finanz|fund|geld|forder|donat/.test(q)) return "science-beratung";
   if (/fordermoglichkeit|funding|financial support|fund my|finanzier/.test(q) && !/workshop|spende|donat|seminar/.test(q)) return "finanzierung";
@@ -71,7 +75,9 @@ export function selectCatalogKnowledge(rows: unknown, question: string) {
     const title = `${entry.title} ${entry.keywords}`.toLowerCase();
     const lexical = queryTerms.filter(t => title.includes(t)).length;
     if (row.similarity < 0.3 && lexical === 0) continue;
-    const score = (entry.id === intent ? 0.8 : 0) + row.similarity + Math.min(lexical, 4) * 0.08;
+    // Local candidates are already ranked by bilingual text relevance. A second
+    // substring bonus used to overturn that order (e.g. seminars → generic advice).
+    const score = (entry.id === intent ? 0.8 : 0) + row.similarity;
     const previous = unique.get(entry.id);
     if (!previous || previous.score < score) unique.set(entry.id, { entry, similarity: row.similarity, score });
   }
@@ -167,7 +173,7 @@ const stopWords = new Set((
   "the what where when how who does for and can you your are about have with this that there which will would could please want need from my our forju compass " +
   "did has had should was were some something been just many much get getting their they them help me any " +
   "ich und wie kann wer ist der die das ein eine ihr mit bei gibt welche einen von fur mochte uns unser unsere unserem unseren bietet auch einem dazu gern " +
-  "hat haben wird werden wurde war waren sind sein einer den dem des sich mir mich wir sie viele viel bitte etwas welche welcher welches konnte konnen wollt heute morgen gestern today tomorrow yesterday"
+  "kannst konnt wolltest wollen machen aber nach du mein meine meinen meinem meiner dein deine deinen eure euere ihrer seinem seiner hat haben wird werden wurde war waren sind sein einer den dem des sich mir mich wir sie viele viel bitte etwas welche welcher welches konnte konnen wollt heute morgen gestern today tomorrow yesterday"
 ).split(/\s+/));
 const searchIndex = knowledgeCatalog.map(entry => ({
   entry,
@@ -175,7 +181,16 @@ const searchIndex = knowledgeCatalog.map(entry => ({
   body: new Set(searchWords(entry.content + " " + entry.contentEn)),
 }));
 
+// Reuse the installed MiniSearch engine for catalog passages, not just menu cues.
+// Small fuzzy edits are evidence only when multiple meaningful words match, or
+// when a long label itself matches. An audience word alone never selects an offer.
+const catalogSearch = new MiniSearch({idField:"id",fields:["labels","body"],tokenize:searchWords,
+  processTerm:term=>term.length>=3&&!stopWords.has(term)?term:null});
+catalogSearch.addAll(knowledgeCatalog.map(e=>({id:e.id,labels:[e.title,e.titleEn,e.keywords].join(" "),body:e.content+" "+e.contentEn})));
+
 export function localKnowledge(question: string) {
+  // URL paths are not claims about a ForJu offer (e.g. an unrelated /host page).
+  question = question.replace(/https?:\/\/[^\s]+/gi," ");
   const words = new Set(searchWords(question)
     .filter(word => word.length >= 3 && !stopWords.has(word))
     .map(correctTransposition));
@@ -192,11 +207,13 @@ export function localKnowledge(question: string) {
     bodyHits: 0,
   }));
 
+  const genericSpaces = new Set(["room","rooms","space","raum","raume"]);
+  const vagueSpace = (word:string) => words.size>4 && intent!=="ressourcen" && genericSpaces.has(word);
   const audienceOnly = new Set(["team","pupil","pupils","class","klasse","students","schuler","teachers","here"]);
   for (const word of words) {
     // An audience word also occurs in unrelated questions about train tickets
     // or sports. Require some evidence for what the visitor wants to do.
-    if (words.size > 1 && audienceOnly.has(word)) continue;
+    if ((words.size > 1 && audienceOnly.has(word)) || vagueSpace(word)) continue;
     // Match actual words. For example, "game" inside "4Gamechangers" gives no
     // evidence about a football game. Allow longer prefixes in curated labels.
     const hits = searchIndex.map(({labels, body}) => {
@@ -209,6 +226,18 @@ export function localKnowledge(question: string) {
       if (hit === 1) scores[i].bodyHits++;
       scores[i].score += hit * weight;
     });
+  }
+  const fuzzy = catalogSearch.search([...words].filter(w=>!audienceOnly.has(w)&&!vagueSpace(w)).join(" "),
+    {boost:{labels:3,body:1},fuzzy:term=>term.length>=6?1:false});
+  for(const hit of fuzzy){
+    const terms=Object.keys(hit.match);
+    const labelTerms=terms.filter(t=>hit.match[t].includes("labels"));
+    if(terms.length<2 && !labelTerms.some(t=>t.length>=7))continue;
+    const at=searchIndex.findIndex(({entry})=>entry.id===hit.id);
+    if(at<0)continue;
+    scores[at].score+=Math.log1p(hit.score)*1.4;
+    if(labelTerms.length)scores[at].labelHit=true;
+    else scores[at].bodyHits=Math.max(scores[at].bodyHits,terms.length);
   }
   return scores
     .filter((row, i) => row.score >= 2.4 && (row.labelHit || row.bodyHits >= 2 ||

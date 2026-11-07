@@ -1,5 +1,7 @@
 # Local quality checks
 
+For the current source refresh, reviewed catalog versioning, and real HTTP evaluation, follow [knowledge maintenance](../../docs/knowledge-maintenance.md). Install this directory’s locked Node tools with `npm --prefix tools/knowledge-checks ci --ignore-scripts`. They are maintainer-only and are not installed by the production deployment.
+
 Use Node 24 for the app and Python 3.12 for the optional tools. Run commands from the repository root. The local tools use synthetic questions and approved public pages. They do not send emails or update the catalog.
 
 ## Conversation tests

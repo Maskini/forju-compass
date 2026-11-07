@@ -1,0 +1,872 @@
+{
+  "https://forju.at/de/services/know-how": {
+    "url": "https://forju.at/de/services/know-how",
+    "language": "de",
+    "title": "Know-How",
+    "dates": {
+      "published": "2024-05-18T23:25:18.000+02:00",
+      "modified": null
+    },
+    "passages": [
+      {
+        "heading": "Know-How",
+        "text": "ForJu hat einen Expert:innenpool, der dich bei deinen Projekten unterstützt. Außerdem greifen wir als eine der wenigen Organisationen auch auf Know-How aus der Privatwirtschaft zurück. ForJu verfügt über einen umfassenden Expert:innenpool, der dir bei der Umsetzung deiner Projekte zur Seite steht. Unsere Expertise reicht weit und wir sind eine der wenigen Organisationen, die gezielt auf das wertvolle Know-how der Privatwirtschaft zurückgreifen."
+      },
+      {
+        "heading": "Know-How",
+        "text": "Unser Expert:innenpool setzt sich aus führenden Fachkräften verschiedenster Disziplinen zusammen. Diese bieten dir nicht nur theoretisches Wissen, sondern auch praxisnahe Unterstützung, um dein Projekt erfolgreich zu realisieren. Ob es um technologische Innovationen, wirtschaftliche Strategien oder rechtliche Fragestellungen geht – bei ForJu findest du die richtigen Ansprechpartner:innen."
+      },
+      {
+        "heading": "Know-How",
+        "text": "Dank unserer starken Verbindungen zur Privatwirtschaft können wir dir einzigartige Einblicke und Ressourcen bieten, die sonst schwer zugänglich sind. Unternehmen aus verschiedensten Branchen teilen ihr Wissen und ihre Erfahrungen mit uns, was dir ermöglicht, von den Besten zu lernen und innovative Lösungen zu entwickeln."
+      },
+      {
+        "heading": "Know-How",
+        "text": "ForJu steht für eine Brücke zwischen akademischer Forschung und praktischer Anwendung. Wir helfen dir, deine Ideen aus dem Labor in die reale Welt zu bringen und dabei wertvolle Synergien zwischen Wissenschaft und Wirtschaft zu nutzen. Durch unsere Unterstützung und das fundierte Wissen unseres Expert:innenpools bist du bestens gerüstet, um deine Projekte erfolgreich voranzutreiben und nachhaltige Erfolge zu erzielen."
+      },
+      {
+        "heading": "Know-How",
+        "text": "Schließe dich ForJu an und profitiere von einer einzigartigen Kombination aus theoretischer Exzellenz und praktischer Erfahrung. Lass uns gemeinsam die Zukunft gestalten und deine visionären Ideen verwirklichen!"
+      }
+    ],
+    "forms": [],
+    "links": [
+      {
+        "url": "https://forju.at/de/ueber-uns?person=avid-vormann",
+        "label": ""
+      },
+      {
+        "url": "https://forju.at/de/kontakt?intent=service&thema=know-how",
+        "label": "Beratung anfragen"
+      },
+      {
+        "url": "https://forju.at/de/services",
+        "label": "Zurück zu Service"
+      }
+    ],
+    "contentHash": "d1c9e677f7f99160877cd8a9684da0c2e5aa2e284a3cb439efbe7e18ee51635e",
+    "extractor": "mozilla-readability",
+    "reviewStatus": "pending-human-review",
+    "resolvedUrl": "https://forju.at/de/services/know-how",
+    "status": "reviewed",
+    "httpStatus": 200,
+    "reviewedAt": "2026-11-07",
+    "recordHashes": {
+      "know-how": "d1c9e677f7f99160877cd8a9684da0c2e5aa2e284a3cb439efbe7e18ee51635e"
+    }
+  },
+  "https://forju.at/en/services/know-how": {
+    "url": "https://forju.at/en/services/know-how",
+    "language": "en",
+    "title": "Know-How",
+    "dates": {
+      "published": "2024-05-18T23:25:18.000+02:00",
+      "modified": null
+    },
+    "passages": [
+      {
+        "heading": "Know-How",
+        "text": "ForJu has a pool of experts who can support you with your projects. Furthermore, we are one of the few organisations to draw on expertise from the private sector. ForJu has a comprehensive pool of experts who are on hand to assist you with the implementation of your projects. Our expertise is wide-ranging, and we are one of the few organisations that specifically draw on the valuable know-how of the private sector."
+      },
+      {
+        "heading": "Know-How",
+        "text": "Our pool of experts comprises leading specialists from a wide range of disciplines. They offer you not only theoretical knowledge but also practical support to help you successfully bring your project to fruition. Whether it’s technological innovations, business strategies or legal issues – at ForJu, you’ll find the right people to talk to."
+      },
+      {
+        "heading": "Know-How",
+        "text": "Thanks to our strong links with the private sector, we can offer you unique insights and resources that would otherwise be difficult to access. Companies from a wide range of industries share their knowledge and experience with us, enabling you to learn from the best and develop innovative solutions."
+      },
+      {
+        "heading": "Know-How",
+        "text": "ForJu acts as a bridge between academic research and practical application. We help you take your ideas from the laboratory into the real world, whilst harnessing valuable synergies between science and industry. With our support and the in-depth knowledge of our pool of experts, you’ll be ideally equipped to drive your projects forward successfully and achieve lasting success."
+      },
+      {
+        "heading": "Know-How",
+        "text": "Join ForJu and benefit from a unique combination of academic excellence and practical experience. Let’s shape the future together and bring your visionary ideas to life!"
+      }
+    ],
+    "forms": [],
+    "links": [
+      {
+        "url": "https://forju.at/en/ueber-uns?person=avid-vormann",
+        "label": ""
+      },
+      {
+        "url": "https://forju.at/en/kontakt?intent=service&thema=know-how",
+        "label": "Request consultation"
+      },
+      {
+        "url": "https://forju.at/en/services",
+        "label": "Back to services"
+      }
+    ],
+    "contentHash": "1adb08a4d5a36ad0b973cd56cd0b0cb7c7b5d7146f474dc4b95e045c7c6dfccc",
+    "extractor": "mozilla-readability",
+    "reviewStatus": "pending-human-review",
+    "resolvedUrl": "https://forju.at/en/services/know-how",
+    "status": "reviewed",
+    "httpStatus": 200,
+    "reviewedAt": "2026-11-07",
+    "recordHashes": {
+      "know-how": "1adb08a4d5a36ad0b973cd56cd0b0cb7c7b5d7146f474dc4b95e045c7c6dfccc"
+    }
+  },
+  "https://forju.at/de/services/finanziell": {
+    "url": "https://forju.at/de/services/finanziell",
+    "language": "de",
+    "title": "Finanzielle Unterstützung",
+    "dates": {
+      "published": "2024-05-18T21:53:05.000+02:00",
+      "modified": null
+    },
+    "passages": [
+      {
+        "heading": "Finanzielle Unterstützung",
+        "text": "Du hast ein innovatives Projekt und benötigst finanzielle Unterstützung? Als gemeinnütziger Verein sponsern wir selbst keine Projekte, aber wir öffnen dir die Tür zu unserem umfangreichen Partnernetzwerk! Unternehmen haben die Möglichkeit, sich finanziell an wegweisenden Forschungsarbeiten zu beteiligen, während interdisziplinäre Kooperationen zwischen Hochschulen und der Privatwirtschaft neue Chancen schaffen, um nationale und internationale Fördermittel zu erhalten."
+      },
+      {
+        "heading": "Finanzielle Unterstützung",
+        "text": "Bei ForJu unterstützen wir dich umfassend: Von der ersten Kalkulation über die Machbarkeitsanalyse bis hin zur Vermittlung an unsere Partner, die für eine nachhaltige Zusammenarbeit bereitstehen. Wir bleiben bis zum Abschluss des Projekts dein zuverlässiger Ansprechpartner und Ideengeber, um sicherzustellen, dass dein Vorhaben erfolgreich umgesetzt wird."
+      },
+      {
+        "heading": "Finanzielle Unterstützung",
+        "text": "Nutze die Chance, dein Projekt mit unserer Hilfe und dem Engagement unserer Partner auf das nächste Level zu bringen!"
+      }
+    ],
+    "forms": [],
+    "links": [
+      {
+        "url": "https://forju.at/de/ueber-uns?person=avid-vormann",
+        "label": ""
+      },
+      {
+        "url": "https://forju.at/de/kontakt?intent=service&thema=finanziell",
+        "label": "Förderung anfragen"
+      },
+      {
+        "url": "https://forju.at/de/services",
+        "label": "Zurück zu Service"
+      }
+    ],
+    "contentHash": "59bf5858cea5ed0002e0daa401d3c6d069b757c5d8db02c3716a7aff3f1ac1dd",
+    "extractor": "mozilla-readability",
+    "reviewStatus": "pending-human-review",
+    "resolvedUrl": "https://forju.at/de/services/finanziell",
+    "status": "reviewed",
+    "httpStatus": 200,
+    "reviewedAt": "2026-11-07",
+    "recordHashes": {
+      "finanzierung": "59bf5858cea5ed0002e0daa401d3c6d069b757c5d8db02c3716a7aff3f1ac1dd"
+    }
+  },
+  "https://forju.at/en/services/finanziell": {
+    "url": "https://forju.at/en/services/finanziell",
+    "language": "en",
+    "title": "Financial support",
+    "dates": {
+      "published": "2024-05-18T21:53:05.000+02:00",
+      "modified": null
+    },
+    "passages": [
+      {
+        "heading": "Financial support",
+        "text": "Do you have an innovative project and need financial support? As a not-for-profit organisation, we do not sponsor projects ourselves, but we can open the door to our extensive network of partners! Companies have the opportunity to contribute financially to pioneering research, whilst interdisciplinary collaborations between universities and the private sector create new opportunities to secure national and international funding."
+      },
+      {
+        "heading": "Financial support",
+        "text": "At ForJu, we provide you with comprehensive support: from the initial cost estimate and feasibility analysis right through to putting you in touch with our partners, who are ready to establish a long-term working relationship. We remain your reliable point of contact and source of ideas right through to the completion of the project, to ensure that your project is successfully implemented."
+      },
+      {
+        "heading": "Financial support",
+        "text": "Seize this opportunity to take your project to the next level with our help and the support of our partners!"
+      }
+    ],
+    "forms": [],
+    "links": [
+      {
+        "url": "https://forju.at/en/ueber-uns?person=avid-vormann",
+        "label": ""
+      },
+      {
+        "url": "https://forju.at/en/kontakt?intent=service&thema=finanziell",
+        "label": "Request funding support"
+      },
+      {
+        "url": "https://forju.at/en/services",
+        "label": "Back to services"
+      }
+    ],
+    "contentHash": "5880b593c49cf7c3f406684cf4d06e61d1fd3fcf3a0c6a8b3e6fee8716c85898",
+    "extractor": "mozilla-readability",
+    "reviewStatus": "pending-human-review",
+    "resolvedUrl": "https://forju.at/en/services/finanziell",
+    "status": "reviewed",
+    "httpStatus": 200,
+    "reviewedAt": "2026-11-07",
+    "recordHashes": {
+      "finanzierung": "5880b593c49cf7c3f406684cf4d06e61d1fd3fcf3a0c6a8b3e6fee8716c85898"
+    }
+  },
+  "https://forju.at/de/projects/networking-events": {
+    "url": "https://forju.at/de/projects/networking-events",
+    "language": "de",
+    "title": "Networking Events",
+    "dates": {
+      "published": "2024-04-24T13:39:28.000+02:00",
+      "modified": null
+    },
+    "passages": [
+      {
+        "heading": "Networking Events",
+        "text": "Unsere Events bieten mehr als nur Gelegenheiten zum Kontakteknüpfen – sie sind authentische Erlebnisse. Wir sind überzeugt, dass Networking nicht nur den Austausch von Visitenkarten bedeutet, sondern den Aufbau einer Gemeinschaft, die sich gegenseitig unterstützt und inspiriert. Bei unseren Networking-Events hast du die Möglichkeit, dich mit Gleichgesinnten auszutauschen und wertvolle Kontakte nicht nur in der Privatwirtschaft, sondern auch in anderen Schulen, Universitäten und Forschungseinrichtungen zu knüpfen!"
+      }
+    ],
+    "forms": [],
+    "links": [
+      {
+        "url": "https://forju.at/de/ueber-uns?person=laura-scholz",
+        "label": ""
+      },
+      {
+        "url": "https://forju.at/de/kontakt?intent=projekt",
+        "label": "Projekt einreichen"
+      },
+      {
+        "url": "https://forju.at/de/projects",
+        "label": "Zurück zu Projekte"
+      }
+    ],
+    "contentHash": "3bce267e030cdcd3b9c5d8d0e6d4eb737f5a53fc3f274547443a7549fecfb3e9",
+    "extractor": "mozilla-readability",
+    "reviewStatus": "pending-human-review",
+    "resolvedUrl": "https://forju.at/de/projects/networking-events",
+    "status": "reviewed",
+    "httpStatus": 200,
+    "reviewedAt": "2026-11-07",
+    "recordHashes": {
+      "networking": "3bce267e030cdcd3b9c5d8d0e6d4eb737f5a53fc3f274547443a7549fecfb3e9"
+    }
+  },
+  "https://forju.at/en/projects/networking-events": {
+    "url": "https://forju.at/en/projects/networking-events",
+    "language": "en",
+    "title": "Networking Events",
+    "dates": {
+      "published": "2024-04-24T13:39:28.000+02:00",
+      "modified": null
+    },
+    "passages": [
+      {
+        "heading": "Networking Events",
+        "text": "Our events offer more than just opportunities to make contacts – they are authentic experiences. We firmly believe that networking is not just about exchanging business cards, but about building a community that supports and inspires one another. At our networking events, you’ll have the chance to exchange ideas with like-minded people and forge valuable contacts not only in the private sector, but also at other schools, universities and research institutions!"
+      }
+    ],
+    "forms": [],
+    "links": [
+      {
+        "url": "https://forju.at/en/ueber-uns?person=laura-scholz",
+        "label": ""
+      },
+      {
+        "url": "https://forju.at/en/kontakt?intent=projekt",
+        "label": "Submit a project"
+      },
+      {
+        "url": "https://forju.at/en/projects",
+        "label": "Back to projects"
+      }
+    ],
+    "contentHash": "b586ec7187d94b10388a4149ad7b1b2b4d249ab86a37d6e5ba2e6a3542e70789",
+    "extractor": "mozilla-readability",
+    "reviewStatus": "pending-human-review",
+    "resolvedUrl": "https://forju.at/en/projects/networking-events",
+    "status": "reviewed",
+    "httpStatus": 200,
+    "reviewedAt": "2026-11-07",
+    "recordHashes": {
+      "networking": "b586ec7187d94b10388a4149ad7b1b2b4d249ab86a37d6e5ba2e6a3542e70789"
+    }
+  },
+  "https://forju.at/de/projects/schulworkshops": {
+    "url": "https://forju.at/de/projects/schulworkshops",
+    "language": "de",
+    "title": "Schulworkshops",
+    "dates": {
+      "published": "2024-04-24T13:35:06.000+02:00",
+      "modified": null
+    },
+    "passages": [
+      {
+        "heading": "Schulworkshops",
+        "text": "Wir bieten Workshops an, die Schüler:innen in die Welt von Konfliktmanagement, Umweltschutz, Zukunftsplanung und mehr Bereichen einführen und die Begeisterung für Bildung, Innovation und Reflexion wecken."
+      },
+      {
+        "heading": "Schulworkshops",
+        "text": "Unsere Workshops für Wiener Schulen bieten den Schüler:innen die Möglichkeit sich unterschiedlichsten Themen zu widmen und dabei von jungen Trainer:innen begleitet zu werden, die mit den Lehrkräften im engen Kontakt stehen und die Diversität im Klassenraum widerspiegeln. Ziel ist es junge Menschen für Bildung, Wissenschaft und den Transfer in die Praxis zu begeistern. Dabei streben wir an, Schüler:innen in die Themen einzuführen, sie zu motivieren und nachhaltig zu unterstützen."
+      },
+      {
+        "heading": "Schulworkshops",
+        "text": "Good to know: Wir arbeiten in Zusammenarbeit mit den Wiener Bildungschancen, die zu 100% die Seminare für die 1-9 Schulstufe fördern."
+      },
+      {
+        "heading": "Schulworkshops",
+        "text": "Besteht Interesse? Dann schreibe Anja Hofer unter anja. hofer@forju. at und mach einen Termin aus!"
+      },
+      {
+        "heading": "Schulworkshops",
+        "text": "Unsere Workshops:"
+      },
+      {
+        "heading": "Schulworkshops",
+        "text": "Gemeinsam stark – Konflikte im Team bewältigenDas Seminar vermittelt Schüler:innen Werkzeuge zur konstruktiven Konfliktlösung. Sie lernen, Konflikte zu erkennen, ruhig zu bleiben und gemeinsame Lösungen zu entwickeln. Teamarbeit wird gestärkt, und Reflexion eigener Verhaltensweisen fördert Selbstwahrnehmung und Empathie. Durch Rollenspiele und Gruppenübungen wird das Gelernte praxisnah umgesetzt. So gewinnen die Schüler:innen an Selbstbewusstsein und sozialen Kompetenzen und sind besser auf schulische und berufliche Herausforderungen vorbereitet."
+      },
+      {
+        "heading": "Schulworkshops",
+        "text": "Klimadetektiv:innen – unser Planet & wirDieses Seminar vermittelt Wissen über den Klimawandel und wie Schüler:innen aktiv zum Klimaschutz beitragen können. Durch interaktive Aktivitäten, Diskussionen und praktische Übungen erkunden die Teilnehmer:innen die Ursachen und Folgen des Klimawandels und lernen, ihren ökologischen Fußabdruck zu reduzieren. Sie entwickeln konkrete Maßnahmen, entdecken erneuerbare Energien und nachhaltige Mobilität und teilen ihre Erkenntnisse für eine nachhaltigere Zukunft. Das Seminar fördert Wissen, kritisches Denken und soziales Engagement."
+      },
+      {
+        "heading": "Schulworkshops",
+        "text": "Selbstmanagement: Erfolgreich durch den AlltagDas Seminar vermittelt Schüler:innen Techniken des Zeitmanagements und der Selbstorganisation, um Aufgaben effizient zu bewältigen und Raum für Erholung zu schaffen. Sie lernen, Prioritäten zu setzen, Zeitpläne zu erstellen und Stress durch Strukturierung zu vermeiden. Durch Selbstreflexion erkennen sie persönliche Hindernisse und verbessern ihre Gewohnheiten. Praktische Übungen wie die „Eisenhower-Matrix“ oder die „Pomodoro-Technik“ unterstützen sie dabei, ihre Aufgaben besser zu organisieren. Das Seminar bietet so eine fundierte Grundlage für einen stressfreien Schulalltag."
+      },
+      {
+        "heading": "Schulworkshops",
+        "text": "Entdecken & Diskutieren: Wissenschaft & EthikDer interaktive Workshop bietet Schüler:innen die Möglichkeit, die Verbindung zwischen Wissenschaft und Ethik zu erkunden und moralische Fragen zu diskutieren. Durch Gruppenarbeit, Rollenspiele und Diskussionen stärken sie ihre Denk- und Kommunikationsfähigkeiten. In realistischen Szenarien lernen sie, ethische Dilemmata zu analysieren und verantwortungsbewusste Entscheidungen zu treffen. Der Kurs fördert nicht nur das Verständnis für Wissenschaft und Ethik, sondern auch wichtige soziale Kompetenzen und eine reflektierte Haltung."
+      },
+      {
+        "heading": "Schulworkshops",
+        "text": "Stressbewältigung: Relaxed in der SchuleDas Seminar vermittelt Schüler:innen Techniken zur Stressbewältigung und Achtsamkeit, um im Schulalltag Ruhe und Gelassenheit zu finden. Sie lernen, ihre Gedanken zu steuern, die Konzentration zu stärken und eine positive innere Haltung zu entwickeln. Achtsamkeitsübungen, wie Atemtechniken und Meditationen, helfen ihnen, sich auf den Moment zu konzentrieren und innere Ruhe zu finden. Praktische Übungen und Gruppenaustausch schaffen ein unterstützendes Umfeld, in dem sie herausfinden können, welche Techniken für sie am besten funktionieren. So werden sie auf die Herausforderungen des Schulalltags vorbereitet und lernen, Stress ausgeglichen zu begegnen."
+      },
+      {
+        "heading": "Schulworkshops",
+        "text": "Zukunftsplanung: Heute an morgen denkenDer Workshop unterstützt Schüler:innen bei der Berufsorientierung, indem es ihnen hilft, ihre Interessen und Stärken mit möglichen Berufsfeldern zu verbinden. Sie erhalten Einblicke in verschiedene Berufe und Ausbildungswege und reflektieren ihre eigenen Fähigkeiten und Werte. Durch praxisnahe Übungen und Gruppenarbeit entwickeln sie ein klareres Bild ihrer beruflichen Zukunft und stärken dabei soziale Kompetenzen und Selbstbewusstsein."
+      },
+      {
+        "heading": "Schulworkshops",
+        "text": "Medienkompetenz: TikTok und Co sinnvoll nutzenDieses Seminar vermittelt einen reflektierten Umgang mit sozialen Medien wie TikTok und Instagram. Die Schüler:innen lernen, ihre Mediennutzung kritisch zu hinterfragen und Risiken wie Privatsphärenverlust, Cybermobbing und Fake News zu erkennen. Ein Fokus liegt auf der kreativen und positiven Nutzung sozialer Medien, um eigene Inhalte authentisch und ohne Überexposition zu gestalten. Mit theoretischen Inputs, praktischen Übungen und interaktiven Workshops werden die Schüler:innen zu verantwortungsvollen, aktiven Gestalter:innen ihrer digitalen Präsenz."
+      },
+      {
+        "heading": "Schulworkshops",
+        "text": "Rollenbilder im WandelDer Workshop fördert die Reflexion über eigene, mediale und familiäre Rollenbilder. Die Teilnehmenden werden angeregt, ihre Prägungen bewusst zu erkennen und kritisch zu hinterfragen, wobei die Vielfalt ihrer Lebensrealitäten aktiv einbezogen wird. Ein Schwerpunkt liegt auf der Wirkung von Sprache, insbesondere durch die Diskussion gegenderter Berufsbezeichnungen, um das Bewusstsein dafür zu schärfen, wie Sprache Rollenbilder beeinflusst."
+      }
+    ],
+    "forms": [],
+    "links": [
+      {
+        "url": "https://forju.at/de/ueber-uns?person=anja-hofer",
+        "label": ""
+      },
+      {
+        "url": "https://forju.at/de/projects/schulworkshops#article-body",
+        "label": "Artikeltext"
+      },
+      {
+        "url": "https://forju.at/de/projects/schulworkshops#article-related",
+        "label": "Empfohlene Artikel"
+      },
+      {
+        "url": "https://forju.at/de/kontakt?intent=projekt",
+        "label": "Projekt einreichen"
+      },
+      {
+        "url": "https://forju.at/de/projects",
+        "label": "Zurück zu Projekte"
+      }
+    ],
+    "contentHash": "be8f08129abe4f580962c3cd97fc32fde19f188ee7c95a63bdadbc366de25eb3",
+    "extractor": "mozilla-readability",
+    "reviewStatus": "pending-human-review",
+    "resolvedUrl": "https://forju.at/de/projects/schulworkshops",
+    "status": "reviewed",
+    "httpStatus": 200,
+    "reviewedAt": "2026-11-07",
+    "recordHashes": {
+      "workshop-stress": "be8f08129abe4f580962c3cd97fc32fde19f188ee7c95a63bdadbc366de25eb3"
+    }
+  },
+  "https://forju.at/en/projects/schulworkshops": {
+    "url": "https://forju.at/en/projects/schulworkshops",
+    "language": "en",
+    "title": "School Workshops",
+    "dates": {
+      "published": "2024-04-24T13:35:06.000+02:00",
+      "modified": null
+    },
+    "passages": [
+      {
+        "heading": "School Workshops",
+        "text": "We offer workshops that introduce pupils to the world of conflict management, environmental protection, planning for the future and other areas, and that inspire a passion for learning, innovation and reflection."
+      },
+      {
+        "heading": "School Workshops",
+        "text": "Our workshops for Viennese schools offer pupils the opportunity to explore a wide variety of topics, guided by young trainers who work closely with the teaching staff and reflect the diversity found in the classroom. The aim is to inspire young people to take an interest in education, science and the application of knowledge in practice. In doing so, we strive to introduce pupils to these topics, motivate them and provide them with long-term support."
+      },
+      {
+        "heading": "School Workshops",
+        "text": "Good to know: We work in partnership with Wiener Bildungschancen, which funds 100 per cent of the seminars for Years 1–9."
+      },
+      {
+        "heading": "School Workshops",
+        "text": "Are you interested? If so, please email Anja Hofer at anja. hofer@forju. at and arrange an appointment!"
+      },
+      {
+        "heading": "School Workshops",
+        "text": "Our workshops:"
+      },
+      {
+        "heading": "School Workshops",
+        "text": "Stronger Together – Managing Conflicts within a Team This workshop equips pupils with tools for constructive conflict resolution. They learn to recognise conflicts, stay calm and develop joint solutions. Teamwork is strengthened, and reflecting on their own behaviour promotes self-awareness and empathy. Through role-plays and group exercises, what they have learnt is put into practice. In this way, pupils gain self-confidence and social skills and are better prepared for challenges at school and in their careers."
+      },
+      {
+        "heading": "School Workshops",
+        "text": "Climate Detectives – Our Planet & UsThis seminar provides an understanding of climate change and how pupils can actively contribute to climate protection. Through interactive activities, discussions and practical exercises, participants explore the causes and consequences of climate change and learn how to reduce their ecological footprint. They develop concrete measures, discover renewable energy sources and sustainable transport options, and share their insights to help build a more sustainable future. The seminar promotes knowledge, critical thinking and social engagement."
+      },
+      {
+        "heading": "School Workshops",
+        "text": "Self-management: Succeeding in everyday life. This workshop teaches pupils time-management and self-organisation techniques to help them tackle tasks efficiently and make time for relaxation. They learn to set priorities, draw up timetables and avoid stress by organising their time effectively. Through self-reflection, they identify personal obstacles and improve their habits. Practical exercises such as the ‘Eisenhower Matrix’ or the ‘Pomodoro Technique’ help them to organise their tasks more effectively. The seminar thus provides a solid foundation for a stress-free school life."
+      },
+      {
+        "heading": "School Workshops",
+        "text": "Discover & Discuss: Science & EthicsThis interactive workshop offers pupils the opportunity to explore the link between science and ethics and to discuss moral issues. Through group work, role-plays and discussions, they develop their critical thinking and communication skills. In realistic scenarios, they learn to analyse ethical dilemmas and make responsible decisions. The course not only promotes an understanding of science and ethics, but also fosters important social skills and a reflective mindset."
+      },
+      {
+        "heading": "School Workshops",
+        "text": "Stress Management: Staying Relaxed at SchoolThe workshop teaches pupils stress management and mindfulness techniques to help them find calm and composure in their everyday school life. They learn to manage their thoughts, improve their concentration and develop a positive inner attitude. Mindfulness exercises, such as breathing techniques and meditation, help them to focus on the present moment and find inner peace. Practical exercises and group discussions create a supportive environment in which they can discover which techniques work best for them. This prepares them for the challenges of everyday school life and teaches them to deal with stress in a balanced way."
+      },
+      {
+        "heading": "School Workshops",
+        "text": "Planning for the Future: Thinking about tomorrow today. The workshop supports pupils in their career guidance by helping them to link their interests and strengths with potential career paths. They gain insights into various professions and training pathways and reflect on their own skills and values. Through practical exercises and group work, they develop a clearer picture of their future careers, whilst strengthening their social skills and self-confidence."
+      },
+      {
+        "heading": "School Workshops",
+        "text": "Media literacy: Making sensible use of TikTok and similar platforms This seminar teaches pupils how to engage with social media platforms such as TikTok and Instagram in a reflective manner. Pupils learn to critically examine their own media use and to recognise risks such as loss of privacy, cyberbullying and fake news. There is a focus on the creative and positive use of social media to create their own content authentically and without overexposure. Through theoretical input, practical exercises and interactive workshops, pupils become responsible, active shapers of their digital presence."
+      },
+      {
+        "heading": "School Workshops",
+        "text": "Changing Role Models: The workshop encourages participants to reflect on their own role models, as well as those presented in the media and within their families. Participants are encouraged to consciously recognise the influences that have shaped them and to critically examine these, whilst actively taking into account the diversity of their lived experiences. A key focus is on the impact of language, particularly through discussion of gendered job titles, in order to raise awareness of how language influences role models."
+      }
+    ],
+    "forms": [],
+    "links": [
+      {
+        "url": "https://forju.at/en/ueber-uns?person=anja-hofer",
+        "label": ""
+      },
+      {
+        "url": "https://forju.at/en/projects/schulworkshops#article-body",
+        "label": "Article text"
+      },
+      {
+        "url": "https://forju.at/en/projects/schulworkshops#article-related",
+        "label": "Recommended articles"
+      },
+      {
+        "url": "https://forju.at/en/kontakt?intent=projekt",
+        "label": "Submit a project"
+      },
+      {
+        "url": "https://forju.at/en/projects",
+        "label": "Back to projects"
+      }
+    ],
+    "contentHash": "7ddb402e635e7ff2a3ef097ab41167076a134b6b41e58492ddfad451a1373408",
+    "extractor": "mozilla-readability",
+    "reviewStatus": "pending-human-review",
+    "resolvedUrl": "https://forju.at/en/projects/schulworkshops",
+    "status": "reviewed",
+    "httpStatus": 200,
+    "reviewedAt": "2026-11-07",
+    "recordHashes": {
+      "workshop-stress": "7ddb402e635e7ff2a3ef097ab41167076a134b6b41e58492ddfad451a1373408"
+    }
+  },
+  "https://forju.at/de/projects/seminare": {
+    "url": "https://forju.at/de/projects/seminare",
+    "language": "de",
+    "title": "ForJu Seminare",
+    "dates": {
+      "published": "2024-04-23T18:12:39.000+02:00",
+      "modified": null
+    },
+    "passages": [
+      {
+        "heading": "ForJu Seminare",
+        "text": "Seminare, die nicht nur Wissen vermitteln, sondern auch Emotionen wecken – ein Erfahrungsfeld in einer inspirierenden Location. Ein Zusammenkommen mit Expert:innen und Interessierten, um in die Tiefen diverser Themen wie \"Pitchdeck-Erstellung für Forschungsarbeiten\" oder \"Forschungsförderungen in Österreich\" einzutauchen. Aber auch Themen wie Rhetorik, Projektmanagement oder Leadership komme nicht zu kurz! Ein Ort des Austauschs und des Lernens, um unsere Fähigkeiten zu erweitern und unseren Horizont zu erweitern. Es wird eine Gelegenheit sein, gemeinsam neue Perspektiven zu entdecken und Forschungsbemühungen neu zu denken."
+      }
+    ],
+    "forms": [],
+    "links": [
+      {
+        "url": "https://forju.at/de/ueber-uns?person=",
+        "label": ""
+      },
+      {
+        "url": "https://forju.at/de/kontakt?intent=projekt",
+        "label": "Projekt einreichen"
+      },
+      {
+        "url": "https://forju.at/de/projects",
+        "label": "Zurück zu Projekte"
+      }
+    ],
+    "contentHash": "3b710ec5e730b15e75492b0c3892677f2922fb5b39247b13dec23cea3cea0e07",
+    "extractor": "mozilla-readability",
+    "reviewStatus": "pending-human-review",
+    "resolvedUrl": "https://forju.at/de/projects/seminare",
+    "status": "reviewed",
+    "httpStatus": 200,
+    "reviewedAt": "2026-11-07",
+    "recordHashes": {
+      "seminare": "3b710ec5e730b15e75492b0c3892677f2922fb5b39247b13dec23cea3cea0e07"
+    }
+  },
+  "https://forju.at/en/projects/seminare": {
+    "url": "https://forju.at/en/projects/seminare",
+    "language": "en",
+    "title": "ForJu Seminars",
+    "dates": {
+      "published": "2024-04-23T18:12:39.000+02:00",
+      "modified": null
+    },
+    "passages": [
+      {
+        "heading": "ForJu Seminars",
+        "text": "Seminars that not only impart knowledge but also stir emotions – a space for learning in an inspiring setting. A gathering of experts and interested participants to delve into the depths of diverse topics such as ‘Creating pitch decks for research projects’ or ‘Research funding in Austria’. But topics such as public speaking, project management and leadership will also be covered! A place for exchange and learning, where we can develop our skills and broaden our horizons. It will be an opportunity to discover new perspectives together and rethink our approach to research."
+      }
+    ],
+    "forms": [],
+    "links": [
+      {
+        "url": "https://forju.at/en/ueber-uns?person=",
+        "label": ""
+      },
+      {
+        "url": "https://forju.at/en/kontakt?intent=projekt",
+        "label": "Submit a project"
+      },
+      {
+        "url": "https://forju.at/en/projects",
+        "label": "Back to projects"
+      }
+    ],
+    "contentHash": "9308423852a40ba7456a052c7c365bc05b5806655c6a4f98b781838cb93ecfcc",
+    "extractor": "mozilla-readability",
+    "reviewStatus": "pending-human-review",
+    "resolvedUrl": "https://forju.at/en/projects/seminare",
+    "status": "reviewed",
+    "httpStatus": 200,
+    "reviewedAt": "2026-11-07",
+    "recordHashes": {
+      "seminare": "9308423852a40ba7456a052c7c365bc05b5806655c6a4f98b781838cb93ecfcc"
+    }
+  },
+  "https://forju.at/de/kontakt?intent=projekt": {
+    "url": "https://forju.at/de/kontakt?intent=projekt",
+    "language": "de",
+    "title": "Kontakt",
+    "dates": {
+      "published": null,
+      "modified": null
+    },
+    "passages": [
+      {
+        "heading": "Kontakt",
+        "text": "Hey"
+      },
+      {
+        "heading": "Kontakt",
+        "text": "Kontakt"
+      },
+      {
+        "heading": "Kontakt",
+        "text": "Wähle dein Anliegen — wir leiten dich zum richtigen Formular und der passenden Adresse."
+      },
+      {
+        "heading": "Kontakt",
+        "text": "Erzähl uns kurz von deiner Diplom-, Bachelor- oder Masterarbeit bzw. deinem Forschungsprojekt — wir melden uns."
+      },
+      {
+        "heading": "Kontakt",
+        "text": "Mit dem Absenden wird deine Nachricht per E-Mail an das zuständige ForJu-Team weitergeleitet. Details in der Datenschutzerklärung."
+      },
+      {
+        "heading": "Kontakt",
+        "text": "Direkt per E-Mail schreiben"
+      },
+      {
+        "heading": "Kontakt › Unser Präsidium",
+        "text": "Unser Präsidium"
+      },
+      {
+        "heading": "Kontakt › Unser Präsidium",
+        "text": "Avid Vormann und Laura Scholz leiten unsere Organisation. Sie repräsentieren ForJu und sind die strategische Führung."
+      }
+    ],
+    "forms": [
+      [
+        {
+          "label": "Name",
+          "name": "name",
+          "type": "text",
+          "required": true
+        },
+        {
+          "label": "E-Mail",
+          "name": "email",
+          "type": "email",
+          "required": true
+        },
+        {
+          "label": "Betreff (optional)",
+          "name": "subject",
+          "type": "text",
+          "required": false
+        },
+        {
+          "label": "Nachricht",
+          "name": "message",
+          "type": "textarea",
+          "required": true
+        }
+      ]
+    ],
+    "links": [
+      {
+        "url": "https://forju.at/de/datenschutz",
+        "label": "Datenschutzerklärung"
+      },
+      {
+        "url": "mailto:office@forju.at",
+        "label": "Direkt per E-Mail schreiben"
+      },
+      {
+        "url": "https://forju.at/de/ueber-uns?person=avid-vormann",
+        "label": "Avid Vormann"
+      },
+      {
+        "url": "mailto:avid.vormann@forju.at",
+        "label": ""
+      },
+      {
+        "url": "https://forju.at/de/ueber-uns?person=laura-scholz",
+        "label": "Laura Scholz"
+      },
+      {
+        "url": "mailto:laura.scholz@forju.at",
+        "label": ""
+      }
+    ],
+    "contentHash": "9c0e7b9aafcbfe729d16b5305d547fbf218c4a5d46e1a428c4ba663dc134a7f2",
+    "extractor": "structured-main-fallback",
+    "reviewStatus": "pending-human-review",
+    "resolvedUrl": "https://forju.at/de/kontakt?intent=projekt",
+    "status": "reviewed",
+    "httpStatus": 200,
+    "reviewedAt": "2026-11-07",
+    "recordHashes": {
+      "einreichen": "9c0e7b9aafcbfe729d16b5305d547fbf218c4a5d46e1a428c4ba663dc134a7f2"
+    }
+  },
+  "https://forju.at/en/kontakt?intent=projekt": {
+    "url": "https://forju.at/en/kontakt?intent=projekt",
+    "language": "en",
+    "title": "Contact",
+    "dates": {
+      "published": null,
+      "modified": null
+    },
+    "passages": [
+      {
+        "heading": "Contact",
+        "text": "Hey"
+      },
+      {
+        "heading": "Contact",
+        "text": "Contact"
+      },
+      {
+        "heading": "Contact",
+        "text": "Choose what you need — we’ll route you to the right form and address."
+      },
+      {
+        "heading": "Contact",
+        "text": "Tell us briefly about your thesis or research project — we’ll get back to you."
+      },
+      {
+        "heading": "Contact",
+        "text": "Submitting forwards your message by email to the responsible ForJu team. Details in our privacy policy."
+      },
+      {
+        "heading": "Contact",
+        "text": "Email us directly"
+      },
+      {
+        "heading": "Contact › Our presidium",
+        "text": "Our presidium"
+      },
+      {
+        "heading": "Contact › Our presidium",
+        "text": "Avid Vormann and Laura Scholz lead our organisation. They represent ForJu and provide strategic leadership."
+      }
+    ],
+    "forms": [
+      [
+        {
+          "label": "Name",
+          "name": "name",
+          "type": "text",
+          "required": true
+        },
+        {
+          "label": "Email",
+          "name": "email",
+          "type": "email",
+          "required": true
+        },
+        {
+          "label": "Subject (optional)",
+          "name": "subject",
+          "type": "text",
+          "required": false
+        },
+        {
+          "label": "Message",
+          "name": "message",
+          "type": "textarea",
+          "required": true
+        }
+      ]
+    ],
+    "links": [
+      {
+        "url": "https://forju.at/en/datenschutz",
+        "label": "privacy policy"
+      },
+      {
+        "url": "mailto:office@forju.at",
+        "label": "Email us directly"
+      },
+      {
+        "url": "https://forju.at/en/ueber-uns?person=avid-vormann",
+        "label": "Avid Vormann"
+      },
+      {
+        "url": "mailto:avid.vormann@forju.at",
+        "label": ""
+      },
+      {
+        "url": "https://forju.at/en/ueber-uns?person=laura-scholz",
+        "label": "Laura Scholz"
+      },
+      {
+        "url": "mailto:laura.scholz@forju.at",
+        "label": ""
+      }
+    ],
+    "contentHash": "37f5612899e899148d5d1a4f7d19d125087c82083a1275e2e33bd6059f2fe85f",
+    "extractor": "structured-main-fallback",
+    "reviewStatus": "pending-human-review",
+    "resolvedUrl": "https://forju.at/en/kontakt?intent=projekt",
+    "status": "reviewed",
+    "httpStatus": 200,
+    "reviewedAt": "2026-11-07",
+    "recordHashes": {
+      "einreichen": "37f5612899e899148d5d1a4f7d19d125087c82083a1275e2e33bd6059f2fe85f"
+    }
+  },
+  "https://forju.at/de/services/ressourcen": {
+    "url": "https://forju.at/de/services/ressourcen",
+    "language": "de",
+    "title": "Ressourcen",
+    "dates": {
+      "published": "2024-05-18T22:15:24.000+02:00",
+      "modified": null
+    },
+    "passages": [
+      {
+        "heading": "Ressourcen",
+        "text": "Du hast eine innovative Idee, aber dir fehlt die nötige Infrastruktur? Wir haben die perfekte Lösung für dich! Unsere maßgeschneiderten Angebote helfen dir, fehlende Ressourcen zu überwinden. In unserem exklusiven Partnernetzwerk findest du Unternehmen und Institute, die nicht nur Räumlichkeiten bereitstellen, sondern auch innovative Sharing-Programme für Messgeräte und Spezial-Equipment anbieten, ideal für Schulen und Forschungseinrichtungen."
+      },
+      {
+        "heading": "Ressourcen",
+        "text": "Wir übernehmen sämtliche organisatorischen Aufgaben für dich und sorgen dafür, dass Haftungs- und Aufsichtsfragen sowie rechtliche Belange vollständig geklärt sind. So kannst du dich voll und ganz auf deine Idee konzentrieren, während wir die bürokratischen Hürden nehmen."
+      },
+      {
+        "heading": "Ressourcen",
+        "text": "Gemeinsam mit unseren Partnern schaffen wir ein unterstützendes Netzwerk, das jungen Talenten mit visionären Ideen den Rücken stärkt."
+      }
+    ],
+    "forms": [],
+    "links": [
+      {
+        "url": "https://forju.at/de/ueber-uns?person=avid-vormann",
+        "label": ""
+      },
+      {
+        "url": "https://forju.at/de/kontakt?intent=service&thema=ressourcen",
+        "label": "Ressourcen anfragen"
+      },
+      {
+        "url": "https://forju.at/de/services",
+        "label": "Zurück zu Service"
+      }
+    ],
+    "contentHash": "90e82feca95d5b16583bb10443656082ed157fcaa587c21b773eadb69e5ea6fd",
+    "extractor": "mozilla-readability",
+    "reviewStatus": "pending-human-review",
+    "resolvedUrl": "https://forju.at/de/services/ressourcen",
+    "status": "reviewed",
+    "httpStatus": 200,
+    "reviewedAt": "2026-11-07",
+    "recordHashes": {
+      "ressourcen": "90e82feca95d5b16583bb10443656082ed157fcaa587c21b773eadb69e5ea6fd"
+    }
+  },
+  "https://forju.at/en/services/ressourcen": {
+    "url": "https://forju.at/en/services/ressourcen",
+    "language": "en",
+    "title": "Resources",
+    "dates": {
+      "published": "2024-05-18T22:15:24.000+02:00",
+      "modified": null
+    },
+    "passages": [
+      {
+        "heading": "Resources",
+        "text": "Do you have an innovative idea but lack the necessary infrastructure? We have the perfect solution for you! Our bespoke packages help you overcome any resource gaps. Within our exclusive partner network, you’ll find companies and institutions that not only provide premises but also offer innovative sharing programmes for measuring instruments and specialist equipment – ideal for schools and research organisations."
+      },
+      {
+        "heading": "Resources",
+        "text": "We’ll take care of all the organisational tasks for you and ensure that issues relating to liability, supervision and legal matters are fully resolved. This means you can focus entirely on your idea, whilst we sort out the red tape."
+      },
+      {
+        "heading": "Resources",
+        "text": "Together with our partners, we are building a supportive network that backs young talent with visionary ideas."
+      }
+    ],
+    "forms": [],
+    "links": [
+      {
+        "url": "https://forju.at/en/ueber-uns?person=avid-vormann",
+        "label": ""
+      },
+      {
+        "url": "https://forju.at/en/kontakt?intent=service&thema=ressourcen",
+        "label": "Request resources"
+      },
+      {
+        "url": "https://forju.at/en/services",
+        "label": "Back to services"
+      }
+    ],
+    "contentHash": "8ddd31c3a0cc06687369f68fde6ed5007a6800c82f9598018f1722927bf72c56",
+    "extractor": "mozilla-readability",
+    "reviewStatus": "pending-human-review",
+    "resolvedUrl": "https://forju.at/en/services/ressourcen",
+    "status": "reviewed",
+    "httpStatus": 200,
+    "reviewedAt": "2026-11-07",
+    "recordHashes": {
+      "ressourcen": "8ddd31c3a0cc06687369f68fde6ed5007a6800c82f9598018f1722927bf72c56"
+    }
+  }
+}

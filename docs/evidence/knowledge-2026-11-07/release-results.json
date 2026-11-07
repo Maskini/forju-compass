@@ -1,0 +1,132 @@
+{
+  "run": "20261107T085919Z-final-88307",
+  "scope": "local production build, COMPASS_LOCAL_ONLY=true, synthetic data, network-isolated Docker; no real emails",
+  "stages": {
+    "unit": "PASS",
+    "source-tools": "PASS",
+    "catalog": "PASS",
+    "lint": "PASS",
+    "build": "PASS",
+    "browser-stability": "PASS",
+    "quality": "PASS",
+    "project-inbox": "PASS",
+    "security": "PASS",
+    "browser": "PASS",
+    "load": "PASS",
+    "zap": "PASS",
+    "zap-findings": "PASS",
+    "server-egress": "PASS"
+  },
+  "unit": {
+    "passed": 78,
+    "failed": 0
+  },
+  "sourceReviewTests": {
+    "passed": 10,
+    "failed": 0
+  },
+  "answerCases": {
+    "passed": 42,
+    "total": 42
+  },
+  "browser": {
+    "startTime": "2026-11-07T09:05:04.682Z",
+    "duration": 199223.218,
+    "expected": 80,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "repeatedFirefoxJourneys": {
+    "passed": 6,
+    "failed": 0,
+    "retries": 0
+  },
+  "load": {
+    "normal_ms": {
+      "avg": 35.1670164,
+      "max": 93.491083,
+      "p(95)": 80.24264959999998,
+      "thresholds": {
+        "p(95)<1500": false
+      }
+    },
+    "burst_ms": {
+      "max": 133.826459,
+      "p(95)": 132.2555542,
+      "avg": 75.2475335,
+      "thresholds": {
+        "p(95)<2500": false
+      }
+    },
+    "burst_accepted_ms": {
+      "avg": 52.78300014285715,
+      "max": 105.991667,
+      "p(95)": 95.49126679999999
+    },
+    "burst_limited_ms": {
+      "max": 133.826459,
+      "p(95)": 132.8343086,
+      "avg": 87.3438206923077
+    },
+    "accepted": {
+      "count": 13,
+      "rate": 0.3612001251796604
+    },
+    "expected_429": {
+      "count": 14,
+      "rate": 0.3889847501934804,
+      "thresholds": {
+        "count>0": false
+      }
+    },
+    "unexpected_errors": {
+      "rate": 0,
+      "count": 0,
+      "thresholds": {
+        "count==0": false
+      }
+    },
+    "recovery_ms": {
+      "avg": 53.464708,
+      "max": 53.464708,
+      "p(95)": 53.464708
+    }
+  },
+  "zap": [
+    {
+      "name": "Absence of Anti-CSRF Tokens",
+      "riskdesc": "Medium (Low)",
+      "count": "3"
+    },
+    {
+      "name": "CSP: style-src unsafe-inline",
+      "riskdesc": "Medium (High)",
+      "count": "5"
+    },
+    {
+      "name": "Information Disclosure - Suspicious Comments",
+      "riskdesc": "Informational (Medium)",
+      "count": "1"
+    },
+    {
+      "name": "Modern Web Application",
+      "riskdesc": "Informational (Medium)",
+      "count": "3"
+    },
+    {
+      "name": "User Controllable HTML Element Attribute (Potential XSS)",
+      "riskdesc": "Informational (Low)",
+      "count": "2"
+    }
+  ],
+  "lint": {
+    "errors": 0,
+    "existingWarnings": 10
+  },
+  "visitorDataEgressObserved": false,
+  "liveMailDelivery": "not tested",
+  "aiBackedAnswers": "stub tests only; live mode not tested",
+  "physicalPhoneKeyboard": "not tested",
+  "actualForJuInstallation": "not changed or tested in this pass"
+}

@@ -1,5 +1,7 @@
 # Public knowledge maintenance
 
+**Current workflow (7 November 2026):** use the [structured, bilingual source review and rollback guide](knowledge-maintenance.md). The older collection notes below describe the previous pass.
+
 On 6 November 2026 the 24 German sitemap pages were collected again and compared
 with the earlier snapshots. Partner, team and contact information was reviewed.
 The catalog now has 45 bilingual entries: 37 website topic summaries, five job

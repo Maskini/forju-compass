@@ -1,0 +1,29 @@
+
+Running 3 tests using 1 worker
+
+  ✓  1 [firefox] › visitors.spec.mjs:419:4 › Project form: prefill, edit, resume and review / de (6.0s)
+  ✓  2 [firefox] › visitors.spec.mjs:419:4 › Project form: prefill, edit, resume and review / de (5.0s)
+  ✘  3 [firefox] › visitors.spec.mjs:419:4 › Project form: prefill, edit, resume and review / de (3.4s)
+
+
+  1) [firefox] › visitors.spec.mjs:419:4 › Project form: prefill, edit, resume and review / de ─────
+
+    Error: frame.evaluate: Page crashed
+
+      36 | }
+      37 | async function checkAccessibility(page, info) {
+    > 38 |   const scan = await new AxeBuilder({page}).withTags(['wcag2a','wcag2aa','wcag21a','wcag21aa']).analyze();
+         |                ^
+      39 |   const violations = scan.violations.map(rule => ({
+      40 |     id: rule.id, impact: rule.impact, help: rule.help, nodes: rule.nodes.map(node => node.target),
+      41 |   }));
+        at AxeBuilder.runPartialRecursive (/app/tools/visitor-checks/node_modules/@axe-core/playwright/dist/index.mjs:285:34)
+        at AxeBuilder.analyze (/app/tools/visitor-checks/node_modules/@axe-core/playwright/dist/index.mjs:211:28)
+        at checkAccessibility (/app/tools/visitor-checks/visitors.spec.mjs:38:16)
+        at /app/tools/visitor-checks/visitors.spec.mjs:458:3
+
+    Error Context: ../../../out/firefox-recheck/visitors-Project-form-prefill-edit-resume-and-review-de-firefox-repeat2/error-context.md
+
+  1 failed
+    [firefox] › visitors.spec.mjs:419:4 › Project form: prefill, edit, resume and review / de ──────
+  2 passed (18.6s)

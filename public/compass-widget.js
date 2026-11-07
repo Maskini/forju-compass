@@ -199,6 +199,12 @@
     event.preventDefault();
     if (!dialog.hasAttribute("data-draft")) closeChat();
   });
+  // Restore the host control after the browser completes closing the iframe's
+  // dialog. Immediate focus alone can be lost during Firefox's close handling.
+  // A layout change closes and reopens the dialog; do not steal focus then.
+  dialog.addEventListener("close", () => {
+    if (!dialog.open) launcher.focus({preventScroll:true});
+  });
   function closeChat() {
     if (!dialog.open) return;
     dialog.close();

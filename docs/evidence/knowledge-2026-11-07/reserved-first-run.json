@@ -1,0 +1,247 @@
+{
+  "phase": "holdout",
+  "commit": "621456f06b8516da135e51cab365905c19bf8e5f",
+  "catalogSha256": "469e5f3f6682f14d28a0a60f2fd84becc0cbbacdc1c08989f2bc594357d89073",
+  "mode": "production local-only; synthetic; loopback only; independent quota per scenario",
+  "startupMs": 445,
+  "peakRssBytes": 156712960,
+  "catalogBytes": 77183,
+  "requests": 7,
+  "p95Ms": 72.66066700000005,
+  "passed": 2,
+  "total": 6,
+  "results": [
+    {
+      "id": "reserve-device-de",
+      "lang": "de",
+      "turns": [
+        "Kann ich mir ein Spezialgerät für eine Messreihe borgen?"
+      ],
+      "topic": "ressourcen",
+      "source": "services/ressourcen",
+      "facts": [
+        "gerät|mess",
+        "partner|anfrag"
+      ],
+      "unknown": "No inventory promise.",
+      "holdout": true,
+      "answers": [
+        {
+          "mode": "library",
+          "answer": "Dazu habe ich keine gesicherte Information. Welchen ForJu-Service oder welches Projekt meinst du?",
+          "sources": [],
+          "suggestions": [
+            "Schulworkshops",
+            "Messgeräte ausleihen",
+            "Projektfinanzierung"
+          ]
+        }
+      ],
+      "checks": {
+        "topic": false,
+        "source": false,
+        "facts": false,
+        "noFabrication": true
+      },
+      "pass": false
+    },
+    {
+      "id": "reserve-podcast-en",
+      "lang": "en",
+      "turns": [
+        "Is your podcast already available to stream?"
+      ],
+      "topic": "podcast",
+      "source": "projects/podcast",
+      "facts": [
+        "prepar|plan|record|no|not"
+      ],
+      "unknown": "No public listening link.",
+      "holdout": true,
+      "answers": [
+        {
+          "mode": "library",
+          "topic": "podcast",
+          "answer": "ForJu announced a podcast in 2024. That article does not confirm released episodes or a streaming link.",
+          "sources": [
+            {
+              "title": "Podcast announcement",
+              "url": "https://forju.at/en/projects/podcast"
+            }
+          ]
+        }
+      ],
+      "checks": {
+        "topic": true,
+        "source": true,
+        "facts": true,
+        "noFabrication": true
+      },
+      "pass": true
+    },
+    {
+      "id": "reserve-space-de",
+      "lang": "de",
+      "turns": [
+        "Wir wollen Versuche machen, aber uns fehlen Räumlichkeiten."
+      ],
+      "topic": "ressourcen",
+      "source": "services/ressourcen",
+      "facts": [
+        "räum|raum",
+        "partner|anfrag"
+      ],
+      "unknown": "No specific room confirmed.",
+      "holdout": true,
+      "answers": [
+        {
+          "mode": "library",
+          "answer": "Dazu habe ich keine gesicherte Information. Welchen ForJu-Service oder welches Projekt meinst du?",
+          "sources": [],
+          "suggestions": [
+            "Schulworkshops",
+            "Messgeräte ausleihen",
+            "Projektfinanzierung"
+          ]
+        }
+      ],
+      "checks": {
+        "topic": false,
+        "source": false,
+        "facts": false,
+        "noFabrication": true
+      },
+      "pass": false
+    },
+    {
+      "id": "reserve-budget-en",
+      "lang": "en",
+      "turns": [
+        "Our science group needs someone to help us make a budget and approach sponsors."
+      ],
+      "topic": "finanzierung",
+      "source": "services/finanziell",
+      "facts": [
+        "cost|budget|estimate",
+        "partner"
+      ],
+      "unknown": "ForJu does not itself sponsor projects.",
+      "holdout": true,
+      "answers": [
+        {
+          "mode": "library",
+          "topic": "finanzierung",
+          "answer": "ForJu’s funding service helps you estimate project costs, assess feasibility and find funding partners. The service says it does not directly sponsor projects. Describe what you need in the funding enquiry so the team can check which options apply.",
+          "sources": [
+            {
+              "title": "Project funding",
+              "url": "https://forju.at/en/services/finanziell"
+            },
+            {
+              "title": "Enquire with ForJu",
+              "url": "https://forju.at/en/kontakt?intent=service&thema=finanziell"
+            }
+          ]
+        }
+      ],
+      "checks": {
+        "topic": true,
+        "source": true,
+        "facts": true,
+        "noFabrication": true
+      },
+      "pass": true
+    },
+    {
+      "id": "reserve-change-de",
+      "lang": "de",
+      "turns": [
+        "Wir suchen Messgeräte für die Klasse.",
+        "Anderes Thema: Wir möchten einen Workshop über Fake News buchen."
+      ],
+      "topic": "workshop-medien",
+      "source": "projects/schulworkshops",
+      "facts": [
+        "anja.hofer@forju.at"
+      ],
+      "unknown": "No booking sent.",
+      "forbid": [
+        "Leihpreis"
+      ],
+      "holdout": true,
+      "answers": [
+        {
+          "mode": "library",
+          "topic": "ressourcen",
+          "answer": "Schulen und Forschungsteams können über ForJu bei Partnern Räume und Messgeräte anfragen. ForJu hilft bei der Organisation und klärt Fragen zu Aufsicht und Haftung. Ob ein bestimmtes Gerät zu eurem Termin verfügbar ist und was die Nutzung kostet, müsst ihr anfragen. Beschreibt im Ressourcenformular, welchen Raum oder welches Gerät ihr braucht und wofür.",
+          "sources": [
+            {
+              "title": "Ressourcen",
+              "url": "https://forju.at/de/services/ressourcen"
+            },
+            {
+              "title": "Bei ForJu anfragen",
+              "url": "https://forju.at/de/kontakt?intent=service&thema=ressourcen"
+            }
+          ]
+        },
+        {
+          "mode": "library",
+          "topic": "workshop-medien",
+          "answer": "Medienkompetenz: TikTok und Co sinnvoll nutzen\n\nDer Workshop behandelt reflektierte Nutzung sozialer Medien, insbesondere TikTok und Instagram. Themen sind Privatsphäre, Cybermobbing, Falschinformationen und kreative authentische Inhalte ohne übermäßige Selbstdarstellung. Theorie und praktische Übungen sollen einen verantwortlichen Umgang mit digitalen Medien unterstützen.",
+          "sources": [
+            {
+              "title": "Schulworkshops bei ForJu",
+              "url": "https://forju.at/de/projects/schulworkshops"
+            }
+          ],
+          "suggestions": [
+            "Wie melde ich meine Klasse dafür an?",
+            "Einfacher erklären"
+          ]
+        }
+      ],
+      "checks": {
+        "topic": true,
+        "source": true,
+        "facts": false,
+        "noFabrication": true
+      },
+      "pass": false
+    },
+    {
+      "id": "reserve-unrelated-de",
+      "lang": "de",
+      "turns": [
+        "Kannst du meinen Flug nach Berlin umbuchen?"
+      ],
+      "topic": null,
+      "source": null,
+      "facts": [
+        "ForJu|welch|helf"
+      ],
+      "unknown": "No travel booking capability.",
+      "holdout": true,
+      "answers": [
+        {
+          "mode": "library",
+          "topic": "einreichen",
+          "answer": "Über das offizielle Projektformular kannst du deine Diplom-, Bachelor- oder Masterarbeit bzw. dein Forschungsprojekt vorstellen. Es fragt nach Name, E-Mail und Nachricht; der Betreff ist optional. Beschreibe dein Vorhaben kurz, damit sich das ForJu-Team bei dir melden kann. Das Formular bestätigt keine Förderung oder Annahme des Projekts.",
+          "sources": [
+            {
+              "title": "Forschungsprojekt einreichen",
+              "url": "https://forju.at/de/kontakt?intent=projekt"
+            }
+          ]
+        }
+      ],
+      "checks": {
+        "topic": false,
+        "source": false,
+        "facts": true,
+        "noFabrication": true
+      },
+      "pass": false
+    }
+  ]
+}

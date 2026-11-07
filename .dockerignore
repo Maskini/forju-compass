@@ -1,0 +1,13 @@
+# Release-tool bootstrap needs dependency manifests only. No work data or secrets.
+**
+!package.json
+!package-lock.json
+!tools/
+!tools/release/
+!tools/release/Dockerfile
+!tools/visitor-checks/
+!tools/visitor-checks/package.json
+!tools/visitor-checks/package-lock.json
+!tools/knowledge-checks/
+!tools/knowledge-checks/package.json
+!tools/knowledge-checks/package-lock.json

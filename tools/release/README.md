@@ -4,6 +4,15 @@ From the repository root, run `npm run test:release` with a **local Docker Engin
 
 The preparation phase downloads pinned public images and npm lockfile dependencies. Tests run with Docker networking disabled (`--network none`). ZAP, k6 and Promptfoo share that container's loopback namespace. No host ports, Docker socket, production env files or production database are mounted. Source and approved public assets are copied from the current checkout, including pending source edits. Keep the checkout/commit alongside the report to reproduce it. The QA HTTPS parent is added at **test build time only**. Do not deploy this build or its fixture settings to Render.
 
+Playwright and its browser image are pinned together at **1.64.1**. Version 1.65.0
+triggered a Firefox renderer crash when role/label locators and axe-core read ARIA
+references in different JavaScript worlds. This matches the independently
+reproduced [upstream regression #43967](https://github.com/microsoft/playwright/issues/43967).
+No accessibility rules or visitor assertions are disabled. The affected German
+project-form journey and the separate-origin keyboard close/resume journey each
+run three times with retries disabled before the full browser suite. Revisit this temporary test-tool pin after the upstream browser
+fix is published; it changes no production dependency.
+
 ## What is real and what is simulated
 
 * **Answers:** Promptfoo calls the real `/api/chat`, carrying prior user and assistant messages and the returned topic. The reference in [sources.md](sources.md) comes from the published articles. [Case definitions](quality/cases.cjs) are separate from implementation. An assertion checks both content and the supporting URL. No LLM judge is used. `final-answers.jsonl` preserves all turns for reviewing incidental claims and tone. `AUDIT_PHASE=baseline` runs the development questions only. The default full run includes the reserved questions. Once examined, those questions become regression cases, not fresh holdouts for future releases.
@@ -13,4 +22,6 @@ The preparation phase downloads pinned public images and npm lockfile dependenci
 * **Load:** k6 uses distinct synthetic client identifiers and the same production SQLite quota implementation. The disposable database is reset **before** the phase. Five spaced requests, one per-visitor quota check and a 20-request parallel burst exercise the shared minute limit. A final request waits out the real Retry-After window and must succeed without a reset or restart. Counts and normal/burst p95 are in `load.json`. Burst timing includes fast refusals. Results are for one local instance.
 * **Model boundary:** This is a catalog-only audit. A live AI-backed release needs a separate evaluation of retrieval, grounding, privacy and cost. The isolated suite never downloads a model or falls back to a remote judge.
 
-The deployment decision and smallest outstanding checks are in [the release report](../../docs/release-audit.md).
+The original deployment audit is in [the release report](../../docs/release-audit.md).
+The latest knowledge changes, before/after evidence and remaining live checks are
+in [the November 7 knowledge release report](../../docs/knowledge-release-2026-11-07.md).

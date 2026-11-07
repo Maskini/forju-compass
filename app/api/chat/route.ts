@@ -104,9 +104,12 @@ export async function POST(request: Request) {
   // An implicit request for the booking contact retains the service discussed.
   // Only accept a complete contact question; an explicitly named new topic wins.
   const bookingContact = /^(?:(?:and|und) )?(?:who (?:do|should|can) (?:i|we) (?:write to|email|contact|ask)(?: (?:for|about|to (?:book|arrange)) (?:a |an |the )?(?:date|appointment|booking))?|(?:wem|an wen) (?:schreib(?:e|en)|wende[n]?) (?:ich|wir)(?: (?:für|wegen) (?:eines? |einem? |den )?termin[s]?)?)[?.! ]*$/i.test(message);
-  const registration = bookingContact || /sign[ -]?up|register|registration|book(ing)?|anmeld|melde.{0,24}an|termin vereinbaren/i.test(message);
+  const referencesEarlierOffer = (question:string) => !visitorTopic(question) && /^(?:(?:und|and) )?(?:was kostet (?:das|es)(?: .{1,32})?|how (?:can|do) (?:i|we) (?:arrange|book|organise|organize) (?:it|that|this)(?: .{1,40})?)[?.! ]*$/i.test(question);
+  const referenceQuestion = referencesEarlierOffer(message);
+  const registration = /\b(?:arrange|book|organise|organize) (?:it|that|this)\b/i.test(message) || bookingContact || /sign[ -]?up|register|registration|book(ing)?|anmeld|melde.{0,24}an|termin vereinbaren/i.test(message);
   function needsContext(question: string) {
     if (visitorTopic(question)) return false;
+    if (referencesEarlierOffer(question)) return true;
     // A conjunction alone also introduces a new subject ("And who won the game?").
     // Carry earlier words only when the visitor actually refers back.
     return /\b(dafür|dazu|hierfür|for (it|that|this))\b/i.test(question) ||
@@ -125,20 +128,20 @@ export async function POST(request: Request) {
   // Bare price, contact and booking questions can refer to a tap/ordinal as
   // easily as to a typed topic. Explicit new subjects still go to retrieval.
   const elliptical = bookingContact || /^(?:(?:und|and) )?(?:was kostet (?:es|das)|was würde das kosten|wie (?:teuer|viel) ist das|ist (?:es|das) (?:gratis|kostenlos|verfügbar)|an wen (?:wende ich mich|sollen wir uns wenden)|wo (?:frage ich|fragen wir) (?:an|nach)|wie melde ich (?:mich|meine klasse) (?:dafür )?an|how much (?:is it|does (?:it|that) cost)|what does (?:it|that) cost|would it be free(?: of charge)?|is (?:it|that) (?:free|available)|who should (?:i|we) contact|who do (?:i|we) contact|how do (?:i|we) (?:register|sign up)(?: for (?:it|that))?)[?.! ]*$/i.test(message);
-  const local = prior && elliptical ? selectCatalogKnowledge([{title:prior.indexTitle, similarity:1}], message) : selectCatalogKnowledge(localKnowledge(contextual), message);
+  const local = prior && (elliptical || referenceQuestion) ? selectCatalogKnowledge([{title:prior.indexTitle, similarity:1}], message) : selectCatalogKnowledge(localKnowledge(contextual), message);
   if ((registration || deadline) && school?.booking) {
     // Resolve an implicit subject from the last user question, never from assistant claims.
     const subject = message.replace(/\b(und|and|wie|melde|ich|mich|wir|uns|dafür|dazu|an|how|do|can|i|we|sign|up|register|registration|for|it|that|this|the|what|is|deadline)\b/gi, " ").trim();
     const direct = selectCatalogKnowledge(localKnowledge(subject), subject)[0];
     const implicitSubject = /dafür|dazu|for (it|that|this)|^(and |und )?(how (do|can) (i|we) (register|sign up)|wie melde)/i.test(message);
-    const refersToSchool = (elliptical && prior ? (prior.id==="workshops" || prior.id.startsWith("workshop-")) : direct?.url === school.sourceUrl ||
+    const refersToSchool = ((elliptical || referenceQuestion) && prior ? (prior.id==="workshops" || prior.id.startsWith("workshop-")) : direct?.url === school.sourceUrl ||
       (implicitSubject && !direct && previous &&
         selectCatalogKnowledge(localKnowledge(previous), previous)[0]?.url === school.sourceUrl));
     if (refersToSchool) {
       const booking = school.booking[en ? "en" : "de"];
       const missing = en ? "The school workshop page gives no registration deadline." : "Die Seite zu den Schulworkshops nennt keine Anmeldefrist.";
       return reply({
-        mode: "library", topic:implicitSubject && prior?.id.startsWith("workshop-") ? prior.id : school.id, answer: deadline ? missing + " " + booking : booking,
+        mode: "library", topic:(implicitSubject || referenceQuestion) && prior?.id.startsWith("workshop-") ? prior.id : school.id, answer: deadline ? missing + " " + booking : booking,
         sources: [{title: en ? school.titleEn : school.title, url: readerUrl(school.sourceUrl)}],
       });
     }

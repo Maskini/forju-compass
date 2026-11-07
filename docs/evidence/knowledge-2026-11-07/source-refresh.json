@@ -1,0 +1,26 @@
+{
+  "fetchedAt": "2026-11-07T08:03:32.671Z",
+  "urls": 60,
+  "extracted": 58,
+  "needsRenderedReview": [
+    {
+      "url": "https://forju.at/de/jobs",
+      "reason": "Insufficient public body text; inspect the rendered page before approving"
+    },
+    {
+      "url": "https://forju.at/en/jobs",
+      "reason": "Insufficient public body text; inspect the rendered page before approving"
+    }
+  ],
+  "reviewedCatalogIds": [
+    "know-how",
+    "finanzierung",
+    "ressourcen",
+    "networking",
+    "workshop-stress",
+    "seminare",
+    "einreichen"
+  ],
+  "reviewedSourcePages": 14,
+  "refreshPeakRssKiB": 370800
+}

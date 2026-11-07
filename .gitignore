@@ -45,3 +45,7 @@ next-env.d.ts
 
 # Safe template only; real environment files stay ignored.
 !.env.example
+
+# Maintainer-only source tools
+/tools/knowledge-checks/node_modules/
+/tools/knowledge-checks/__pycache__/

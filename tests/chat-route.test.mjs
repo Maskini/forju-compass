@@ -1,3 +1,4 @@
+import MiniSearch from 'minisearch';
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import fc from 'fast-check';
@@ -14,7 +15,7 @@ import * as conversation from '../lib/conversation.ts';
 const catalog = JSON.parse(readFileSync(new URL('../knowledge/catalog.json',import.meta.url),'utf8'));
 const knowledgeModule = {};
 const knowledgeCode = ts.transpileModule(readFileSync(new URL('../lib/knowledge.ts',import.meta.url),'utf8'), {compilerOptions:{module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2022,esModuleInterop:true}}).outputText;
-new Function('require','exports',knowledgeCode)(() => catalog,knowledgeModule);
+new Function('require','exports',knowledgeCode)(id=>id==='minisearch'?MiniSearch:catalog,knowledgeModule);
 
 const compiled = ts.transpileModule(readFileSync(new URL('../app/api/chat/route.ts',import.meta.url),'utf8'), {compilerOptions:{module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2022}}).outputText;
 function setup({matches=[],searchError=null,answer=JSON.stringify({paragraphs:[{text:'Antwort',sources:[1]}],readMore:[1]}),status='completed'}={}) {
@@ -549,4 +550,25 @@ test('a teacher can ask about both suggested workshops without being promised a 
   assert.equal(both.topic,'workshops');assert.match(both.answer,/Atemübungen/);
   assert.match(both.answer,/Streit/);assert.match(both.answer,/Frag das Workshopteam/);
   assert.ok(both.sources.every(s=>s.url.endsWith('/projects/schulworkshops')));
+});
+
+test('November 7 independent bilingual knowledge scenarios keep facts, topic and exact source',async()=>{
+  const cases=JSON.parse(readFileSync(new URL('../tools/knowledge-checks/release-cases.json',import.meta.url),'utf8'));
+  for(const c of cases){
+    const v=visitor(c.lang);let a;
+    for(const turn of c.turns)a=await v.ask(turn);
+    assert.equal(a.topic??null,c.topic,c.id);
+    if(c.source)assert.ok(a.sources.some(s=>s.url==='https://forju.at/'+c.lang+'/'+c.source),c.id);
+    else assert.deepEqual(a.sources,[],c.id);
+    for(const pattern of c.facts)assert.match(a.answer,new RegExp(pattern,'iu'),c.id);
+    for(const pattern of c.forbid||[])assert.doesNotMatch(a.answer,new RegExp(pattern,'iu'),c.id);
+  }
+});
+
+
+test('a specific device-availability follow-up never turns into a dated seminar offer',async()=>{
+ const v=visitor('en');await v.ask('Could our class borrow something to measure air quality?');
+ const a=await v.ask('Can you guarantee a sensor is available next Friday?');
+ assert.equal(a.topic,'ressourcen');assert.ok(a.sources.some(s=>s.url==='https://forju.at/en/services/ressourcen'));
+ assert.match(a.answer,/confirm|ask|not/i);assert.doesNotMatch(a.answer,/guaranteed available|confirmed available|reserved for you/);
 });

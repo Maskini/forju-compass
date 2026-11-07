@@ -1,0 +1,4 @@
+Playwright 1.65.0
+chromium PASS
+firefox FAIL locator.click: Page crashed
+webkit PASS

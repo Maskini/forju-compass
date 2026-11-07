@@ -1,3 +1,4 @@
+import MiniSearch from 'minisearch';
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
@@ -6,7 +7,7 @@ import {validateFeedback} from '../lib/feedback.ts';
 import {safeSourceUrl} from '../lib/chat.ts';
 const catalog=JSON.parse(readFileSync(new URL('../knowledge/catalog.json',import.meta.url),'utf8'));
 const code=ts.transpileModule(readFileSync(new URL('../lib/knowledge.ts',import.meta.url),'utf8'),{compilerOptions:{module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2022,esModuleInterop:true}}).outputText;
-const exports={};new Function('require','exports',code)(()=>catalog,exports);
+const exports={};new Function('require','exports',code)(id=>id==='minisearch'?MiniSearch:catalog,exports);
 const {selectCatalogKnowledge,hasValidCitations}=exports;
 test('unknown and superseded database rows cannot become knowledge',()=>{
  assert.deepEqual(selectCatalogKnowledge([{title:'ForJu Compass Testwissen',similarity:1},{title:'forju-kb:organisation:old',similarity:1}], 'ForJu'),[]);
@@ -47,7 +48,7 @@ test('read-more links are optional and must be supported by the answer',()=>{
 });
 test('public provenance gate rejects internal documents even when active',()=>{
  const isolated={};
- new Function('require','exports',code)(()=>[...catalog,{...catalog[0],id:'private',indexTitle:'private-title',kind:'organization',page:1,sourceUrl:'/internal.pdf'}],isolated);
+ new Function('require','exports',code)(id=>id==='minisearch'?MiniSearch:[...catalog,{...catalog[0],id:'private',indexTitle:'private-title',kind:'organization',page:1,sourceUrl:'/internal.pdf'}],isolated);
  assert.deepEqual(isolated.selectCatalogKnowledge([{title:'private-title',similarity:1}],'internal'),[]);
 });
 test('new topics are retrievable before vector import and planned work stays labelled',()=>{

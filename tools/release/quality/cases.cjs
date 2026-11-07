@@ -28,3 +28,7 @@ module.exports=[
  scenario('hold-de-room','de',['Wir suchen einen Raum für einen Versuch. Kann ForJu bei der Suche nach einem Labor helfen?'],equipment,'Räume über Partner anfragen.','Kein bestimmtes Labor zugesichert.',['raum|räume|labor','partner'],[],true),
  scenario('hold-en-finance','en',['Our science team needs cash for a prototype. Does ForJu pay us directly?'],funding,'ForJu does not itself sponsor projects, but connects visitors to partners.','No cash award guaranteed.',['partner','not|no direct|doesn.t'],[],true),
 ];
+
+// Additional reference cases were recorded before the November 7 fixes.
+const fresh = require("../../knowledge-checks/release-cases.json");
+module.exports.push(...fresh.map(c=>({...c,id:"knowledge-"+c.id,source:c.source?"https://forju.at/"+c.lang+"/"+c.source:null,fact:c.facts.join("; "),must:c.facts,forbid:c.forbid||[]})));

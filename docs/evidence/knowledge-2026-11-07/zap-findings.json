@@ -1,0 +1,27 @@
+[
+  {
+    "name": "Absence of Anti-CSRF Tokens",
+    "riskdesc": "Medium (Low)",
+    "count": "3"
+  },
+  {
+    "name": "CSP: style-src unsafe-inline",
+    "riskdesc": "Medium (High)",
+    "count": "5"
+  },
+  {
+    "name": "Information Disclosure - Suspicious Comments",
+    "riskdesc": "Informational (Medium)",
+    "count": "1"
+  },
+  {
+    "name": "Modern Web Application",
+    "riskdesc": "Informational (Medium)",
+    "count": "3"
+  },
+  {
+    "name": "User Controllable HTML Element Attribute (Potential XSS)",
+    "riskdesc": "Informational (Low)",
+    "count": "2"
+  }
+]
