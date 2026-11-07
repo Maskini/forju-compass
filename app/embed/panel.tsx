@@ -18,14 +18,13 @@ const prompts = {
 } as const;
 type Topic=keyof typeof prompts;
 function Icon({type}:{type:string}){
-  const paths:Record<string,string>={projects:"M9 18h6m-5 3h4M8 13a6 6 0 1 1 8 0c-1 .8-2 2-2 3h-4c0-1-1-2.2-2-3Z",volunteer:"M3 20v-2a5 5 0 0 1 10 0v2m2-7a5 5 0 0 1 6 5v2M8 4a3.5 3.5 0 1 0 .01 0m8 1a3 3 0 1 1 0 6",funding:"m2 9 10-5 10 5-10 5L2 9Zm4 2v5q6 5 12 0v-5m4-2v7",idea:"M6 3h8l4 4v14H6V3Zm8 0v5h4M9 12h6m-6 4h5",send:"m3 11 18-8-6 18-4-7-8-3Zm8 3L21 3",clip:"m8 14 6-7a2 2 0 0 1 3 3l-7 8a4 4 0 1 1-6-5l8-9a5 5 0 1 1 8 7l-8 9",user:"M12 3a4 4 0 1 0 .01 0M4 21a8 8 0 0 1 16 0",help:"M4 14v-3a8 8 0 0 1 16 0v6q0 4-5 4m-11-9h3v6H4Zm13 0h3v6h-3Z"};
+  const paths:Record<string,string>={projects:"M9 18h6m-5 3h4M8 13a6 6 0 1 1 8 0c-1 .8-2 2-2 3h-4c0-1-1-2.2-2-3Z",volunteer:"M3 20v-2a5 5 0 0 1 10 0v2m2-7a5 5 0 0 1 6 5v2M8 4a3.5 3.5 0 1 0 .01 0m8 1a3 3 0 1 1 0 6",funding:"m2 9 10-5 10 5-10 5L2 9Zm4 2v5q6 5 12 0v-5m4-2v7",idea:"M6 3h8l4 4v14H6V3Zm8 0v5h4M9 12h6m-6 4h5",send:"m3 11 18-8-6 18-4-7-8-3Zm8 3L21 3",user:"M12 3a4 4 0 1 0 .01 0M4 21a8 8 0 0 1 16 0",help:"M4 14v-3a8 8 0 0 1 16 0v6q0 4-5 4m-11-9h3v6H4Zm13 0h3v6h-3Z"};
   return <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d={paths[type]}/></svg>;
 }
 export default function CompassPanel({initialLanguage,widget=false}:{initialLanguage:"de"|"en";widget?:boolean}){
   const [lang,setLang]=useState(initialLanguage), en=lang==="en";
   const {ready,question,setQuestion,turns,transcript,loading,error,submittedQuestion,submit,conversationId,clearConversation}=useCompassChat(lang);
   const clearControl=useRef<ClearConversationControls>(null);
-  const [fileError,setFileError]=useState(""),file=useRef<HTMLInputElement>(null);
   const pending=useRef<{topic:Topic;lang:"en"|"de"}|null>(null);
   const handleMessage=useEffectEvent((e:MessageEvent)=>{
     if(!widget||e.source!==window.parent)return;
@@ -57,7 +56,7 @@ export default function CompassPanel({initialLanguage,widget=false}:{initialLang
   const suggestions:Topic[]=["projects","volunteer","funding","idea"];
   return <main lang={lang} className={"embed-panel"+(widget?" widget-mode":"")}>
     <header><img src="/forju/forju-compass-logo.png" alt="ForJu Compass"/>
-      <ClearConversation ref={clearControl} ready={ready} language={lang} widget={widget} onClear={()=>{pending.current=null;setFileError("");clearConversation();}}/>
+      <ClearConversation ref={clearControl} ready={ready} language={lang} widget={widget} onClear={()=>{pending.current=null;clearConversation();}}/>
       {!widget&&<button className="lang" onClick={()=>setLang(en?"de":"en")}>{en?"DE":"EN"}</button>}
     </header>
     <div data-read-latest="start" className="embed-log" ref={transcript} tabIndex={0} aria-label={en?"Conversation":"Gespräch"}>
@@ -95,17 +94,8 @@ export default function CompassPanel({initialLanguage,widget=false}:{initialLang
       <FeedbackWidget key={conversationId} ready={ready} ref={reports} inline language={lang}/>
     </div>
     <form onSubmit={e=>{e.preventDefault();void submit()}}><div className="composer fj-field">
-      <input ref={file} type="file" hidden accept=".txt,.md,text/plain,text/markdown" onChange={async e=>{
-        const f=e.target.files?.[0];e.target.value="";if(!f)return;
-        try{if(!/\.(txt|md)$/i.test(f.name)||f.size>MAX_MESSAGE_LENGTH*4)throw Error();
-          const next=[question,(await f.text()).trim()].filter(Boolean).join("\n");
-          if(next.length>MAX_MESSAGE_LENGTH)throw Error();setQuestion(next);setFileError("");
-        }catch{setFileError(en?"Choose a TXT or Markdown file that fits in the 2,000-character question.":"Bitte eine TXT- oder Markdown-Datei wählen, die in die Frage mit 2.000 Zeichen passt.");}
-      }}/>
-      <button type="button" title={en?"Insert text from a file":"Text aus Datei einfügen"} aria-label={en?"Insert text from a file":"Text aus Datei einfügen"} onClick={()=>file.current?.click()}><Icon type="clip"/></button>
       <input disabled={!ready} aria-label={en?"Your question":"Deine Frage"} type="text" maxLength={MAX_MESSAGE_LENGTH} value={question} onChange={e=>setQuestion(e.target.value)} placeholder={!ready?(en?"Opening Compass…":"Compass lädt …"):en?"Ask ForJu Compass…":"Stelle deine Frage an ForJu Compass …"}/>
       <button className="send fj-action" type="submit" disabled={!ready||loading||!question.trim()} aria-label={en?"Send question":"Frage senden"}><Icon type="send"/></button></div>
-      {fileError&&<span role="alert">{fileError}</span>}
       <small>{en?"ForJu Compass can make mistakes. Please check important information.":"ForJu Compass kann Fehler machen. Bitte prüfe wichtige Informationen."}</small>
     </form>
   </main>

@@ -64,7 +64,7 @@
 .embed-panel > form { padding: 0 var(--pad) max(10px,env(safe-area-inset-bottom)); }
 .composer { display: flex; align-items: center; padding: 3px; gap: 4px; }
 .composer:focus-within { outline: 2px solid #c12379; outline-offset: 2px; }
-.composer input[type=text] { min-width: 0; flex: 1; background: transparent; border: 0; font: inherit; padding: 7px 0; }
+.composer input[type=text] { min-width: 0; flex: 1; background: transparent; border: 0; font: inherit; padding: 7px 8px 7px 12px; }
 .composer input[type=text]:focus { outline: none; }
 .composer button { flex: none; display: grid; place-items: center; min-height: 42px; width: 42px; padding: 0; border-radius: 10px; }
 .embed-panel > form > small { display: block; margin-top: 6px; text-align: center; color: #6c5c5c; font-size: 11px; line-height: 15px; }

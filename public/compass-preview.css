@@ -37,4 +37,10 @@ a:focus-visible{outline:3px solid #992165;outline-offset:3px;border-radius:4px}
 .demo-main h2{font:650 clamp(1.5rem,3vw,2.1rem)/1.2 "Space Grotesk",sans-serif}
 .demo-try{padding:1.5rem;border-radius:1rem;background:#e6eee4}
 .demo-page :is(video,summary):focus-visible{outline:3px solid #992165;outline-offset:4px}
+.demo-chapters{display:flex;flex-wrap:wrap;gap:.5rem;margin:1rem 0 1.5rem}
+.demo-chapters button{border:1px solid #d4b6c4;background:#fffaf5;color:#86164f;border-radius:999px;padding:.65rem 1rem;min-height:44px;font:600 .9rem/1.3 "Public Sans",sans-serif;cursor:pointer;transition:background .15s,box-shadow .15s}
+.demo-chapters button[aria-pressed=true]{background:#f1ccdf;box-shadow:inset 0 1px 2px #fff9,0 1px 3px #49303b33}
+.demo-chapters button:focus-visible{outline:3px solid #992165;outline-offset:3px}
+@media(hover:hover){.demo-chapters button:hover{background:#f6dcea}}
+@media(prefers-reduced-motion:reduce){.demo-chapters button{transition:none}}
 @media(max-width:38rem){.demo-page header{align-items:flex-start;gap:1rem}.demo-page header>a{font-size:.85rem;text-align:right}.demo-film video{border-radius:.6rem}}
