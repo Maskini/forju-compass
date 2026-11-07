@@ -14,15 +14,19 @@ const language = {
     title:"Projekt einreichen",intro:"In wenigen Schritten von der Idee zum Projekt.",backChat:"Zurück zum Chat",
     local:"Kein Konto nötig. Du kannst deinen Entwurf bis zum Neuladen weiterbearbeiten.",tip:"Tipp von ForJu Compass",
     steps:["Idee & Zielsetzung","Zielgruppe","Umsetzung","Ressourcen","Wirkung","Überprüfen"],
+    shortSteps:["Idee","Zielgruppe","Umsetzung","Ressourcen","Wirkung","Prüfen"],
     captions:["Worum geht es?","Wer profitiert?","Wie soll es ablaufen?","Was wird benötigt?","Was soll sich ändern?","Alles bereit?"],
     lead:["Erzähle uns von deinem Projekt. Du musst noch nicht alles wissen.","Für wen ist das Projekt gedacht?","Wie möchtet ihr eure Idee ausprobieren?","Was habt ihr schon, und wobei braucht ihr Unterstützung?","Was soll nach dem Projekt anders sein?","Lies deinen Entwurf durch. Du kannst die Angaben hier direkt ändern."],
     tips:["Ein kurzer Titel reicht. Nenne das Thema und was ihr damit machen möchtet.","Zielgruppe meint die Menschen, für die ihr etwas macht – zum Beispiel eine Schulklasse.","Beschreibe den ersten Versuch. Wenn du noch keinen Termin hast, lass den Zeitraum offen.","Denke an Material, einen Raum oder eine Person mit Fachwissen. Eine Anfrage ist noch keine Zusage.","Woran würdet ihr merken, dass eure Idee etwas bewirkt hat? Ein Beispiel genügt.","Steht im Entwurf, wobei ihr euch Unterstützung von ForJu wünscht?"],
     labels:["Projekttitel","Kurze Beschreibung","Zielgruppe","Geplante Schritte","Zeitraum","Benötigte Ressourcen","Erwartete Wirkung"],
+    placeholders:["z. B. Wasserforscher am Schulteich","Was möchtet ihr untersuchen oder gestalten?","z. B. unsere Klasse und die Schulgemeinschaft","Was wäre euer erster Schritt?","Noch kein Termin? Lass das Feld einfach leer.","z. B. Messgeräte, ein Raum oder fachliche Begleitung","Was möchtet ihr mit dem Projekt verändern?"],
+    titleHint:"Ein kurzer, verständlicher Name für eure Idee.",descriptionHint:"Ein paar Sätze reichen. Du kannst später mehr ergänzen.",characters:"Zeichen",details:"Angaben vorhanden",
     goals:"Ziele des Projekts",options:["Wissen vermitteln","Kreativität stärken","Forschendes Lernen fördern","Vernetzung ermöglichen","Gesellschaftliche Wirkung erzielen","Sonstiges"],
     own:"Eigenes Ziel",many:"Mehrere Antworten möglich",from:"Aus deinem Chat übernommen – du kannst den Text bearbeiten.",other:"Weitere eigene Worte aus dem Chat",
     send:"Senden",sending:"Wird gesendet …",sent:"Gesendet",
     accepted:"Dein Projekt wurde zum Versand an ForJu angenommen.",
     unavailable:"Projekte können derzeit nicht gesendet werden.",
+    prepareOffline:"Du kannst deinen Entwurf vorbereiten. Senden ist derzeit nicht möglich.",
     unsent:"Dein Projekt wurde nicht gesendet. Lass diesen Tab offen und versuche es später erneut.",
     unconfirmed:"Der Versand wurde nicht bestätigt. Dein Entwurf ist noch da. Du kannst erneut auf Senden klicken.",
     tooLong:"Kürze deinen Entwurf vor dem Senden.",
@@ -33,15 +37,19 @@ const language = {
     title:"Prepare a project",intro:"From your first idea to a project inquiry.",backChat:"Back to chat",
     local:"No account needed. You can edit your draft here until you reload.",tip:"ForJu Compass tip",
     steps:["Idea & goals","Audience","Implementation","Resources","Impact","Review"],
+    shortSteps:["Idea","Audience","Plan","Resources","Impact","Review"],
     captions:["What is the idea?","Who benefits?","What is the plan?","What do you need?","What will change?","Ready to share?"],
     lead:["Tell us about your project. You don’t need all the answers yet.","Who is the project for?","How would you try out your idea?","What do you already have, and where could you use help?","What would you like to change?","Read through your draft. You can edit the details right here."],
     tips:["A short title is enough. Say what you want to explore or make.","Your audience means the people the project is for, such as a school class.","Describe your first experiment. Leave the timing blank if you don’t know yet.","Think about materials, space or someone with relevant expertise. A request does not confirm availability.","How would you know the project made a difference? One example is enough.","Does the draft say what you would like ForJu to help with?"],
     labels:["Project title","Short description","Audience","Planned steps","Timing","Resources needed","Expected impact"],
+    placeholders:["e.g. Exploring our school pond","What would you like to explore or create?","e.g. our class and the school community","What could you try first?","No date yet? You can leave this blank.","e.g. measuring equipment, a space or expert advice","What would you like the project to change?"],
+    titleHint:"A short, clear name for your idea.",descriptionHint:"A few sentences are enough. You can add more later.",characters:"characters",details:"Details added",
     goals:"Project goals",options:["Share knowledge","Encourage creativity","Support inquiry-based learning","Build connections","Make a social impact","Other"],
     own:"Your own goal",many:"Choose as many as apply",from:"Taken from your chat – you can edit these words.",other:"Add your own words from the chat",
     send:"Send",sending:"Sending…",sent:"Sent",
     accepted:"Your project has been accepted for delivery to ForJu.",
     unavailable:"Project sending is currently unavailable.",
+    prepareOffline:"You can prepare your draft. Sending is currently unavailable.",
     unsent:"Your project wasn’t sent. Keep this tab open and try again later.",
     unconfirmed:"Sending wasn’t confirmed. Your draft is still here. You can press Send again.",
     tooLong:"Shorten your draft before sending.",
@@ -87,16 +95,29 @@ export function ProjectDraft({lang,turns,ready,widget=false}:{lang:Language;turn
   function changeStep(next:number){setStep(next)}
   function edit(i:number,v:string){setFields(a=>a.map((x,n)=>n===i?v:x))}
   useLayoutEffect(()=>{if(step>=0 && dialog.current?.open){main.current?.scrollTo(0,0);stage.current?.focus({preventScroll:true})}},[step]);
-  const field=(i:number)=><label key={i} className="draft-field"><span>{ui.labels[i]}</span>
-    {i===0||i===4?<input className="fj-field" value={fields[i]} onChange={e=>edit(i,e.target.value)} placeholder={review?ui.blank:undefined}/>:<textarea className="fj-field" rows={review?2:i===1?3:4} value={fields[i]} onChange={e=>edit(i,e.target.value)} placeholder={review?ui.blank:undefined}/>}
-    {i===1&&seeded&&!review&&<small>{ui.from}</small>}</label>;
-  const goalFields=<fieldset className="draft-goals"><legend>{ui.goals}</legend><small>{ui.many}</small><div>{ui.options.map((s,i)=><label key={s}><input type="checkbox" checked={goals.includes(i)} onChange={e=>{setGoals(e.target.checked?[...goals,i]:goals.filter(x=>x!==i))}}/>{s}</label>)}</div>{goals.includes(5)&&<label className="draft-field">{ui.own}<input className="fj-field" value={custom} onChange={e=>{setCustom(e.target.value)}}/></label>}</fieldset>;
+  const field=(i:number)=>{
+    const inputId=id+"-field-"+i, hint=!review&&(i===0?ui.titleHint:i===1?(seeded?ui.from:ui.descriptionHint):"");
+    const props={id:inputId,className:"fj-field",value:fields[i],placeholder:review?ui.blank:ui.placeholders[i],"aria-describedby":hint?inputId+"-hint":undefined};
+    return <div key={i} className="draft-field"><label htmlFor={inputId}>{ui.labels[i]}</label>
+      {i===0||i===4?<input {...props} onChange={e=>edit(i,e.target.value)}/>:<textarea {...props} rows={review?2:4} onChange={e=>edit(i,e.target.value)}/>}
+      {(hint||i<2)&&<div className="draft-field-meta">{hint&&<small id={inputId+"-hint"}>{hint}</small>}{i<2&&<small className="draft-count" aria-hidden="true">{fields[i].length} {ui.characters}</small>}</div>}
+    </div>;
+  };
+  const goalFields=<fieldset className="draft-goals" aria-describedby={id+"-goals-hint"}><legend>{ui.goals}</legend><small id={id+"-goals-hint"}>{ui.many}</small><div>{ui.options.map((s,i)=><label key={s}><input type="checkbox" checked={goals.includes(i)} onChange={e=>{setGoals(e.target.checked?[...goals,i]:goals.filter(x=>x!==i))}}/><span>{s}</span></label>)}</div>{goals.includes(5)&&<label className="draft-field">{ui.own}<input className="fj-field" value={custom} onChange={e=>{setCustom(e.target.value)}}/></label>}</fieldset>;
   return <section className="project-draft">{ctx&&step<0&&<p>{language[lang].offer}</p>}<button ref={trigger} disabled={!ready} className="draft-launch fj-action" type="button" aria-haspopup="dialog" onClick={open}>{step<0?language[lang].launch:language[lang].resume} →</button>
-    <dialog ref={dialog} lang={draftLang} aria-labelledby={id} onClose={()=>{signal(false);trigger.current?.focus({preventScroll:true})}} onKeyDown={e=>{if(e.key==="Escape")e.stopPropagation()}}>
+    <dialog ref={dialog} lang={draftLang} aria-labelledby={id} onClose={()=>{
+      // A native close event can arrive after a fast reopen. Keep the current
+      // form modal in the host rather than collapsing its iframe underneath it.
+      if(dialog.current?.open)return;
+      signal(false);trigger.current?.focus({preventScroll:true})
+    }} onKeyDown={e=>{if(e.key==="Escape")e.stopPropagation()}}>
      {step>=0&&<div className="draft-sheet">
       <div className="draft-bar"><Image unoptimized width={1618} height={302} src="/forju/forju-compass-logo.png" alt="ForJu Compass"/><button type="button" className="draft-dismiss" onClick={()=>dialog.current?.close()}>← {ui.backChat}</button></div>
       <div className="draft-layout" ref={main}>
-       <div className="draft-rail"><h2 id={id}>{ui.title}</h2><p>{ui.intro}</p><ol>{ui.steps.map((name,i)=><li key={name}><button type="button" aria-current={step===i?"step":undefined} onClick={()=>changeStep(i)}><span>{i+1}</span><b>{name}<small>{ui.captions[i]}</small></b></button></li>)}</ol></div>
+       <div className="draft-rail"><h2 id={id}>{ui.title}</h2><p>{ui.intro}</p><nav aria-label={en?"Project steps":"Projektschritte"}><ol>{ui.steps.map((name,i)=>{
+         const filled=i<5 && (sections[i].some(n=>fields[n].trim()) || i===0 && !!goalText);
+         return <li key={name}><button type="button" aria-current={step===i?"step":undefined} data-filled={filled||undefined} onClick={()=>changeStep(i)}><span className="draft-step-dot">{filled&&step!==i?<><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="m5 12 4 4L19 6"/></svg><span className="draft-sr">{i+1}</span></>:i+1}</span><b><span className="draft-step-full">{name}</span><span className="draft-step-short">{ui.shortSteps[i]}</span><small>{ui.captions[i]}</small></b>{filled&&<span className="draft-sr"> · {ui.details}</span>}</button></li>;
+       })}</ol></nav></div>
        <div className="draft-center"><div className="draft-banner"><div><strong>{ui.step} {step+1} {ui.of} 6</strong><h3 ref={stage} tabIndex={-1}>{ui.steps[step]}</h3><p>{ui.lead[step]}</p></div><Bulb/></div>
         <div className="draft-inputs">{review ? <>{field(0)}{field(1)}{goalFields}{[2,3,4,5,6].map(field)}</>:<>{sections[step].map(field)}{step===0&&goalFields}</>}
         {review && message && <details className="draft-excerpts">
@@ -111,7 +132,7 @@ export function ProjectDraft({lang,turns,ready,widget=false}:{lang:Language;turn
         </label>}
         {step===0&&turns.some(t=>!fields[1].includes(t.question))&&<details className="draft-excerpts"><summary>{ui.other}</summary>{turns.filter(t=>!fields[1].includes(t.question)).map((t,i)=><button key={i} onClick={()=>edit(1,[fields[1],t.question].filter(Boolean).join("\n"))}>{t.question}</button>)}</details>}</div>
        </div>
-       <div className="draft-guide"><Image unoptimized width={1618} height={302} src="/forju/forju-compass-logo.png" alt="" className="draft-guide-logo"/><div className="draft-tip"><strong>{ui.tip}</strong><p>{ui.tips[step]}</p></div>{step<5&&<div className="draft-up"><strong>{ui.up}</strong><ol start={step+2}>{ui.steps.slice(step+1,step+4).map(x=><li key={x}>{x}</li>)}</ol></div>}<p className="draft-local">{ui.local}</p></div>
+       <aside className="draft-guide" aria-label={ui.tip}><div className="draft-tip"><div className="draft-tip-heading"><Image unoptimized width={40} height={40} src="/forju/compass-mark.webp" alt=""/><strong>{ui.tip}</strong></div><p>{ui.tips[step]}</p></div>{step<5&&<div className="draft-up"><strong>{ui.up}</strong><ol start={step+2}>{ui.steps.slice(step+1,step+4).map((x,i)=><li key={x}><span aria-hidden="true">{step+i+2}</span>{x}</li>)}</ol></div>}<p className="draft-local">{ui.local}</p></aside>
       </div>
       <div className="draft-footer"><div className="draft-actions">{step>0&&<button className="fj-action fj-secondary" type="button" onClick={()=>changeStep(step-1)}>← {ui.back}</button>}
        {review ? (
@@ -119,7 +140,7 @@ export function ProjectDraft({lang,turns,ready,widget=false}:{lang:Language;turn
        ) : (
          <button className="primary fj-action" type="button" onClick={()=>changeStep(step+1)}>{ui.next[step]} →</button>
        )}</div>
-       <div role="status" className="draft-status">{review ? deliveryNotice : step === 0 && mail.unavailable ? ui.unavailable : ""}</div>
+       <div role="status" className="draft-status" data-state={sent?"accepted":mail.result||mail.unavailable?"unavailable":undefined}>{review ? deliveryNotice : step === 0 && mail.unavailable ? ui.prepareOffline : ""}</div>
       </div>
      </div>}
     </dialog></section>

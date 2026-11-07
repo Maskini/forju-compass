@@ -53,10 +53,10 @@
 .embed-panel .report-answer { margin: 0; padding-inline: 0; }
 .next-step, .embed-log [role=alert] a { display: inline-block; margin: 8px 0; color: #861456; font-weight: 650; text-decoration: underline; text-underline-offset: .17em; }
 .embed-panel > aside { display: flex; align-items: center; gap: 10px; margin: 4px var(--pad) 0; padding: 8px 10px; background: #e7eee6; border-radius: 14px; }
-.embed-panel aside i { color: #286d46; }
-.embed-panel aside strong { display: block; font-size: 14px; line-height: 20px; }
-.embed-panel aside span { display: block; font-size: 13px; }
-.embed-panel aside a { flex: none; margin-left: auto; min-height: 36px; padding: 6px 12px; font-size: 14px; }
+.embed-panel > aside i { color: #286d46; }
+.embed-panel > aside strong { display: block; font-size: 14px; line-height: 20px; }
+.embed-panel > aside span { display: block; font-size: 13px; }
+.embed-panel > aside a { flex: none; margin-left: auto; min-height: 36px; padding: 6px 12px; font-size: 14px; }
 .panel-report { display: grid; justify-items: center; }
 .panel-report .report-inline { margin: 0; min-height: 36px; }
 .embed-panel > form { padding: 0 var(--pad) max(10px,env(safe-area-inset-bottom)); }
@@ -67,7 +67,7 @@
 .composer button { flex: none; display: grid; place-items: center; min-height: 42px; width: 42px; padding: 0; border-radius: 10px; }
 .embed-panel > form > small { display: block; margin-top: 6px; text-align: center; color: #6c5c5c; font-size: 11px; line-height: 15px; }
 @media(hover:hover) { .suggestions button:hover { color: #861456; } }
-@media(max-width:640px) { .embed-panel aside span { display: none; } }
+@media(max-width:640px) { .embed-panel > aside span { display: none; } }
 @media(max-height:500px) {
   .embed-panel { grid-template-rows: auto minmax(0,1fr) auto auto; }
   .embed-panel > aside { display: none; }

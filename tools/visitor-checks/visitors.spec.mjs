@@ -337,7 +337,7 @@ test('English phone widget: one Send, retained draft on failure, stable retry an
     const rect=b.getBoundingClientRect(), icon=b.querySelector('svg').getBoundingClientRect();
     return {size:icon.width,dx:Math.abs(icon.x+icon.width/2-rect.x-rect.width/2),dy:Math.abs(icon.y+icon.height/2-rect.y-rect.height/2)};
   });
-  expect(art.size).toBe(28);expect(art.dx).toBeLessThan(1);expect(art.dy).toBeLessThan(1);
+  expect(art.size).toBeCloseTo(28, 3);expect(art.dx).toBeLessThan(1);expect(art.dy).toBeLessThan(1);
   await panel.getByRole('button',{name:'Back to chat',exact:true}).click();
   await panel.getByRole('button',{name:/start a project draft/i}).click();
   const review=panel.getByRole('dialog');
@@ -384,7 +384,7 @@ test('German desktop: keep the project in the form while offline, then send when
   await expect(report.locator('svg')).toHaveCount(0);
   await start.click();
   const review = page.getByRole('dialog');
-  await expect(review.getByRole('status')).toContainText('derzeit nicht gesendet');
+  await expect(review.getByRole('status')).toContainText('Du kannst deinen Entwurf vorbereiten. Senden ist derzeit nicht möglich.');
   await review.getByLabel('Projekttitel', {exact:true}).fill('Luftqualität in der Klasse');
   for (let step = 0; step < 5; step++) await review.getByRole('button', {name:/^Weiter/}).click();
   await expect(review.getByRole('link')).toHaveCount(0);
@@ -407,4 +407,55 @@ test('German desktop: keep the project in the form while offline, then send when
   await expect(review.getByRole('button', {name:'Gesendet',exact:true})).toBeDisabled();
   expect(submissions).toHaveLength(1);
   expect(submissions[0].draft).toContain('Luftqualität in der Klasse');
+});
+
+for (const scenario of [
+  {lang:'de',widget:true,width:1440,height:1000,
+    idea:'Unsere Klasse möchte die Luftqualität im Klassenzimmer untersuchen.',title:'Luftforscher',description:'Kurze Beschreibung',titleLabel:'Projekttitel',
+    audience:'Zielgruppe',audienceText:'Klasse 7B',timing:'Zeitraum',goal:'Wissen vermitteln',next:/^Weiter/,backChat:/Zurück zum Chat/,resume:/Projektentwurf fortsetzen/,review:'Fertigen Text ansehen',finalText:'Projekttext auswählen und kopieren'},
+  {lang:'en',widget:false,width:390,height:844,
+    idea:'Our class wants to investigate air quality in our classroom.',title:'Classroom air study',description:'Short description',titleLabel:'Project title',
+    audience:'Audience',audienceText:'Class 7B',timing:'Timing',goal:'Share knowledge',next:/^Continue/,backChat:/Back to chat/,resume:/Continue project draft/,review:'View final text',finalText:'Select and copy your project'},
+]) test('Project form: prefill, edit, resume and review / '+scenario.lang,async({page},info)=>{
+  test.setTimeout(45000);
+  await page.setViewportSize({width:scenario.width,height:scenario.height});
+  await page.goto((scenario.widget?'/preview':'/embed')+'?lang='+scenario.lang);
+  let panel=page;
+  if(scenario.widget){
+    const host=page.locator('forju-compass-widget');
+    await host.locator('.launcher').click();await host.locator('.welcome .start').click();
+    panel=host.frameLocator('iframe');
+  }
+  await ask(panel,scenario.idea);
+  await panel.locator('.draft-launch').click();
+  const form=panel.getByRole('dialog');
+  await expect(form.getByLabel(scenario.description,{exact:true})).toHaveValue(scenario.idea);
+  await expect(form.getByLabel(scenario.titleLabel,{exact:true})).toHaveValue('');
+  await form.getByLabel(scenario.titleLabel,{exact:true}).fill(scenario.title);
+  await form.getByRole('checkbox',{name:scenario.goal,exact:true}).check();
+  await form.getByRole('button',{name:scenario.next}).click();
+  await form.getByLabel(scenario.audience,{exact:true}).fill(scenario.audienceText);
+  await form.getByRole('button',{name:scenario.backChat}).click();
+  await expect(form).not.toBeVisible();
+  await expect(panel.locator('[role=log] article')).toHaveCount(1);
+  const resume=panel.getByRole('button',{name:scenario.resume});
+  await expect(resume).toBeFocused();
+  await resume.press('Enter');
+  if(scenario.widget) await expect(page.locator('forju-compass-widget .drawer')).toHaveAttribute('data-draft','');
+  await expect(form.getByLabel(scenario.audience,{exact:true})).toHaveValue(scenario.audienceText);
+  await form.getByRole('button',{name:scenario.next}).click();
+  await expect(form.getByLabel(scenario.timing,{exact:true})).toHaveValue('');
+  // Leave timing, resources and impact unknown. Continue remains usable.
+  for(let i=0;i<3;i++) await form.getByRole('button',{name:scenario.next}).click();
+  await expect(form.getByLabel(scenario.titleLabel,{exact:true})).toHaveValue(scenario.title);
+  await expect(form.getByLabel(scenario.timing,{exact:true})).toHaveValue('');
+  await expect(form.locator('.draft-actions .primary')).toBeInViewport();
+  await form.getByText(scenario.review,{exact:true}).click();
+  const text=form.getByRole('textbox',{name:scenario.finalText});
+  const draft=await text.inputValue();
+  expect(draft).toContain(scenario.title);expect(draft).toContain(scenario.idea);expect(draft).toContain(scenario.audienceText);expect(draft).toContain(scenario.goal);
+  expect(draft).not.toContain(scenario.timing+':');
+  await checkAccessibility(page,info);
+  await form.getByRole('button',{name:scenario.backChat}).click();
+  await expect(resume).toBeFocused();
 });
