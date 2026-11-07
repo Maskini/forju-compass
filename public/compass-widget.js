@@ -16,6 +16,7 @@
   const paths={
     expand:"M14 4h6v6m0-6-7 7M10 20H4v-6m0 6 7-7",
     restore:"M20 4l-6 6m0-6v6h6M4 20l6-6m-6 0h6v6",
+    trash:"M3 6h18M9 6V4h6v2M5 6l1 14h12l1-14M10 10v6m4-6v6",
     bulb:"M9 18h6m-5 3h4m-5-6a6 6 0 1 1 6 0l-1 2h-4z",
     page:"M6 3h8l4 4v14H6z M14 3v5h4 M9 12h6m-6 4h5",
     people:"M3 20v-2a5 5 0 0 1 10 0v2m2-7a5 5 0 0 1 6 5v2M8 4a3.5 3.5 0 1 0 .01 0m8 1a3 3 0 1 1 0 6"
@@ -53,6 +54,10 @@
     applyLayout();
   });
   const resizeIcon = icon("expand", resize);
+  const clear = button("clear",dialog,()=>{
+    if(ready) frame.contentWindow.postMessage({type:"forju:clear-request"},origin);
+  });
+  icon("trash",clear);
   const close=button("close",dialog,closeChat);close.textContent="×";
   const frame=el("iframe","",dialog);frame.title="ForJu Compass";frame.allow="clipboard-write";frame.referrerPolicy="no-referrer";
   const recovery=el("section","recovery",dialog);
@@ -101,20 +106,23 @@
     startLabel.textContent=en?"Open chat":"Chat öffnen";
     updateControls();
     close.ariaLabel=en?"Close chat":"Chat schließen";dismiss.ariaLabel=en?"Dismiss welcome":"Begrüßung schließen";
+    clear.ariaLabel=en?"Clear conversation":"Gespräch löschen";clear.title=clear.ariaLabel;
   }
   function updateControls() {
     const en = language() === "en";
     const draft = dialog.hasAttribute("data-draft");
     const report = dialog.hasAttribute("data-report");
-    resize.hidden = phone.matches || draft || report;
-    close.hidden = draft || report;
+    const clearing = dialog.hasAttribute("data-clear");
+    resize.hidden = phone.matches || draft || report || clearing;
+    close.hidden = draft || report || clearing;
+    clear.hidden = !ready || draft || report || clearing;
     const resizeLabel = expanded
       ? (en ? "Restore compact chat" : "Chat verkleinern")
       : (en ? "Expand chat" : "Chat vergrößern");
     resize.setAttribute("aria-label", resizeLabel);
     resize.title = resizeLabel;
     resizeIcon.setAttribute("d", expanded ? paths.restore : paths.expand);
-    wrap.hidden = dialog.open && (phone.matches || expanded || draft);
+    wrap.hidden = dialog.open && (phone.matches || expanded || draft || clearing);
     launcher.setAttribute("aria-controls", started ? dialog.id : card.id);
     launcher.setAttribute("aria-expanded", String(dialog.open || !card.hidden));
     const launcherLabel = dialog.open ? (en ? "Minimize chat" : "Chat minimieren")
@@ -176,13 +184,18 @@
     }
   });
   dialog.addEventListener("keydown", event => {
-    if (event.key === "Escape" && !dialog.hasAttribute("data-draft")) {
+    if (event.key === "Escape" && !dialog.hasAttribute("data-draft") && !dialog.hasAttribute("data-clear")) {
       event.preventDefault();
       closeChat();
     }
   });
   window.addEventListener("message",event=>{
     if(event.origin!==origin||event.source!==frame.contentWindow)return;
+    if(event.data?.type==="forju:clear-dialog" && dialog.open && typeof event.data.open==="boolean"){
+      dialog.toggleAttribute("data-clear",event.data.open);
+      updateControls();
+      if(!event.data.open) clear.focus({preventScroll:true});
+    }
     if(event.data?.type==="forju:report" && dialog.open && typeof event.data.open==="boolean"){
       dialog.toggleAttribute("data-report",event.data.open);
       updateControls();
@@ -192,12 +205,12 @@
       applyLayout();
       frame.contentWindow.postMessage({type:"forju:draft-layout",open:event.data.open},origin);
     }
-    if(event.data?.type==="forju:ready"){ready=true;clearTimeout(waitTimer);recovery.hidden=true;frame.hidden=false;if(dialog.open)send();}
-    if(event.data?.type==="forju:close"&&dialog.open&&!dialog.hasAttribute("data-draft"))closeChat();
+    if(event.data?.type==="forju:ready"){ready=true;clearTimeout(waitTimer);recovery.hidden=true;frame.hidden=false;updateControls();if(dialog.open)send();}
+    if(event.data?.type==="forju:close"&&dialog.open&&!dialog.hasAttribute("data-draft")&&!dialog.hasAttribute("data-clear"))closeChat();
   });
   dialog.addEventListener("cancel", event => {
     event.preventDefault();
-    if (!dialog.hasAttribute("data-draft")) closeChat();
+    if (!dialog.hasAttribute("data-draft") && !dialog.hasAttribute("data-clear")) closeChat();
   });
   // Restore the host control after the browser completes closing the iframe's
   // dialog. Immediate focus alone can be lost during Firefox's close handling.

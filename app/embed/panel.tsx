@@ -4,6 +4,7 @@ import {ChatChoices} from "@/app/components/chat-choices";
 import {useEffect,useEffectEvent,useRef,useState} from "react";
 import FeedbackWidget, {type ReportControls} from "@/app/components/feedback/FeedbackWidget";
 import {ProjectDraft} from "@/app/components/project-draft";
+import {ClearConversation, type ClearConversationControls} from "@/app/components/clear-conversation";
 import {useCompassChat} from "@/lib/use-compass-chat";
 import {MAX_MESSAGE_LENGTH} from "@/lib/chat";
 import "./panel.css";
@@ -22,11 +23,14 @@ function Icon({type}:{type:string}){
 }
 export default function CompassPanel({initialLanguage,widget=false}:{initialLanguage:"de"|"en";widget?:boolean}){
   const [lang,setLang]=useState(initialLanguage), en=lang==="en";
-  const {ready,question,setQuestion,turns,transcript,loading,error,submittedQuestion,submit}=useCompassChat(lang);
+  const {ready,question,setQuestion,turns,transcript,loading,error,submittedQuestion,submit,conversationId,clearConversation}=useCompassChat(lang);
+  const clearControl=useRef<ClearConversationControls>(null);
   const [fileError,setFileError]=useState(""),file=useRef<HTMLInputElement>(null);
   const pending=useRef<{topic:Topic;lang:"en"|"de"}|null>(null);
   const handleMessage=useEffectEvent((e:MessageEvent)=>{
-    if(!widget||e.source!==window.parent||e.data?.type!=="forju:open")return;
+    if(!widget||e.source!==window.parent)return;
+    if(e.data?.type==="forju:clear-request"){clearControl.current?.open();return;}
+    if(e.data?.type!=="forju:open")return;
     const next=e.data.lang==="en"?"en":"de";
     setLang(next);
     if(typeof e.data.topic==="string"&&Object.hasOwn(prompts,e.data.topic)){
@@ -53,6 +57,7 @@ export default function CompassPanel({initialLanguage,widget=false}:{initialLang
   const suggestions:Topic[]=["projects","volunteer","funding","idea"];
   return <main lang={lang} className={"embed-panel"+(widget?" widget-mode":"")}>
     <header><img src="/forju/forju-compass-logo.png" alt="ForJu Compass"/>
+      <ClearConversation ref={clearControl} ready={ready} language={lang} widget={widget} onClear={()=>{pending.current=null;setFileError("");clearConversation();}}/>
       {!widget&&<button className="lang" onClick={()=>setLang(en?"de":"en")}>{en?"DE":"EN"}</button>}
     </header>
     <div data-read-latest="start" className="embed-log" ref={transcript} tabIndex={0} aria-label={en?"Conversation":"Gespräch"}>
@@ -83,13 +88,13 @@ export default function CompassPanel({initialLanguage,widget=false}:{initialLang
           : source.includes("schulworkshops") ? [en?"Enquire about a school workshop":"Schulworkshop anfragen","/kontakt?intent=service"] : null;
         return action && <a className="next-step" href={"https://forju.at/"+(source.startsWith("https://forju.at/en/")?"en":"de")+action[1]} target="_blank" rel="noopener noreferrer">{action[0]} →</a>
       })()}
-      <ProjectDraft ready={ready} lang={lang} turns={turns} widget={widget}/>
+      <ProjectDraft key={conversationId} ready={ready} lang={lang} turns={turns} widget={widget}/>
       {loading&&<div role="status"><div className="question-bubble"><p>{submittedQuestion}</p></div>{en?"Looking for an answer…":"Ich suche eine Antwort …"}</div>}
       {error&&<p role="alert">{en?"Your question could not be sent.":"Deine Frage konnte nicht gesendet werden."} <button onClick={()=>submit(submittedQuestion)}>{en?"Retry":"Erneut versuchen"}</button>{" · "}<a href={"https://forju.at/"+lang+"/kontakt"} target="_blank" rel="noopener noreferrer">{en?"Contact ForJu":"ForJu kontaktieren"}</a></p>}
     </div>
     <aside><i><Icon type="help"/></i><div><strong>{en?"Want to ask the team?":"Direkt mit ForJu sprechen?"}</strong><span>{en?"Our team can help you personally.":"Unser Team hilft dir gerne persönlich weiter."}</span></div><a className="fj-action" href={'https://forju.at/'+lang+'/kontakt'} target="_blank" rel="noopener noreferrer">{en?"Contact us":"Kontakt aufnehmen"} →</a></aside>
     <div className="panel-report">
-      <FeedbackWidget ready={ready} ref={reports} inline language={lang}/>
+      <FeedbackWidget key={conversationId} ready={ready} ref={reports} inline language={lang}/>
     </div>
     <form onSubmit={e=>{e.preventDefault();void submit()}}><div className="composer fj-field">
       <input ref={file} type="file" hidden accept=".txt,.md,text/plain,text/markdown" onChange={async e=>{

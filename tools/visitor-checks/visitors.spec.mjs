@@ -43,6 +43,86 @@ async function checkAccessibility(page, info) {
   expect(violations.filter(v => ['serious', 'critical'].includes(v.impact))).toEqual([]);
 }
 
+for(const scenario of [
+  {lang:'de',widget:true,width:1280}, {lang:'en',widget:true,width:390},
+  {lang:'en',widget:false,width:1280}, {lang:'de',widget:false,width:390},
+]) test(`Clear conversation / ${scenario.lang} / ${scenario.widget?'widget':'standalone'} / ${scenario.width}`,async({page,context,baseURL},info)=>{
+  await page.setViewportSize({width:scenario.width,height:844});
+  const en=scenario.lang==='en',label=en?'Clear conversation':'Gespräch löschen';
+  let panel=page;
+  if(scenario.widget){
+    const origin='https://compass.example.test',hostURL='https://www.forju.at/clear-preview';
+    await context.route(origin+'/**',async route=>{
+      const url=new URL(route.request().url());
+      if(route.request().method()!=='GET' && !(route.request().method()==='POST' && url.pathname==='/api/chat'))return route.abort();
+      const response=await route.fetch({url:baseURL+url.pathname+url.search,maxRedirects:0});await route.fulfill({response});
+    });
+    await context.route(hostURL,route=>route.fulfill({contentType:'text/html',body:`<!doctype html><html lang="${scenario.lang}"><title>Website-Vorschau</title><h1>Website-Vorschau</h1><script defer src="${origin}/compass-widget.js" data-lang="${scenario.lang}"></script></html>`}));
+    await page.goto(hostURL);
+    const host=page.locator('forju-compass-widget');await host.locator('.launcher').click();await host.locator('.welcome .start').click();panel=host.frameLocator('iframe');
+  }else await page.goto('/embed?lang='+scenario.lang);
+  const requests=[];page.on('request',r=>{if(r.method()==='POST'&&new URL(r.url()).pathname==='/api/chat')requests.push(r.postDataJSON())});
+  const idea=en?'Our class wants to measure air quality.':'Unsere Klasse möchte die Luftqualität messen.';
+  await ask(panel,idea);
+  await panel.locator('.draft-launch').click();
+  const form=panel.locator('.project-draft dialog');
+  await form.getByLabel(en?'Project title':'Projekttitel',{exact:true}).fill('Clear test project');
+  await form.getByRole('button',{name:en?'← Back to chat':'← Zurück zum Chat',exact:true}).click();
+  const input=panel.getByRole('textbox',{name:en?'Your question':'Deine Frage',exact:true});await input.fill('Unsent text');
+  const trigger=scenario.widget?page.locator('forju-compass-widget .clear'):panel.getByRole('button',{name:label,exact:true});
+  await expect(trigger).toBeInViewport();await trigger.focus();await trigger.press('Enter');
+  const dialog=panel.locator('.clear-chat-dialog');
+  const cancel=dialog.getByRole('button',{name:en?'Cancel':'Abbrechen',exact:true});
+  await expect(cancel).toBeFocused();await checkAccessibility(page,info);
+  await cancel.press('Escape');await expect(dialog).not.toBeVisible();await expect(trigger).toBeFocused();
+  await expect(panel.locator('[role=log] article')).toHaveCount(1);await expect(input).toHaveValue('Unsent text');
+  // Cancel leaves the edited project intact as well.
+  await panel.locator('.draft-launch').click();await expect(form.getByLabel(en?'Project title':'Projekttitel',{exact:true})).toHaveValue('Clear test project');
+  await form.getByRole('button',{name:en?'← Back to chat':'← Zurück zum Chat',exact:true}).click();
+  await trigger.click();await dialog.getByRole('button',{name:label,exact:true}).click();
+  await expect(dialog).not.toBeVisible();await expect(trigger).toBeFocused();
+  await expect(panel.locator('[role=log] article')).toHaveCount(0);await expect(input).toHaveValue('');
+  await panel.locator('.draft-launch').click();
+  await expect(form.getByLabel(en?'Project title':'Projekttitel',{exact:true})).toHaveValue('');
+  await expect(form.getByLabel(en?'Short description':'Kurze Beschreibung',{exact:true})).toHaveValue('');
+  await form.getByRole('button',{name:en?'← Back to chat':'← Zurück zum Chat',exact:true}).click();
+  await ask(panel,en?'Hello':'Hallo');
+  expect(requests.at(-1).history).toEqual([]);expect(requests.at(-1).topic).toBeUndefined();
+  if(scenario.widget){
+    const host=page.locator('forju-compass-widget');await host.locator('.close').click();await host.locator('.launcher').click();
+    await expect(panel.locator('[role=log] article')).toHaveCount(1);
+  }
+});
+
+test('Clear conversation cancels a pending answer without reviving old context',async({page})=>{
+  let releaseOld,releaseNew;const oldReady=new Promise(r=>releaseOld=r),newReady=new Promise(r=>releaseNew=r);const requests=[];
+  await page.route('**/api/chat',async route=>{
+    const body=route.request().postDataJSON();requests.push(body);
+    await (body.message==='Old question'?oldReady:newReady);
+    await route.fulfill({json:{answer:body.message==='Old question'?'Late old answer':'Fresh answer',sources:[],mode:'library'}}).catch(()=>{});
+  });
+  await page.goto('/embed?lang=en');const input=page.getByRole('textbox',{name:'Your question',exact:true});
+  await input.fill('Old question');await input.press('Enter');await expect.poll(()=>requests.length).toBe(1);
+  await page.getByRole('button',{name:'Clear conversation',exact:true}).click();
+  await page.locator('.clear-chat-dialog').getByRole('button',{name:'Clear conversation',exact:true}).click();
+  await expect(input).toHaveValue('');await expect(page.locator('main').getByRole('alert')).toHaveCount(0);
+  await input.fill('New question');await input.press('Enter');await expect.poll(()=>requests.length).toBe(2);
+  expect(requests[1].history).toEqual([]);expect(requests[1].topic).toBeUndefined();releaseOld();
+  await expect(page.getByRole('button',{name:'Send question',exact:true})).toBeDisabled();releaseNew();
+  await expect(page.locator('[role=log] article')).toHaveCount(1);await expect(page.locator('[role=log]')).toContainText('Fresh answer');
+  await expect(page.locator('[role=log]')).not.toContainText('Old question');await expect(page.locator('main').getByRole('alert')).toHaveCount(0);
+});
+
+test('Clear conversation on the homepage leaves another visitor untouched',async({page,context})=>{
+  await page.goto('/');const input=page.getByRole('textbox',{name:'Frage an ForJu Compass',exact:true});
+  await input.fill('Hallo');await input.press('Enter');await expect(page.locator('.chat-turn')).toHaveCount(1);
+  const other=await context.newPage();await other.goto('/embed?lang=de');await ask(other,'Mein Name ist Noor');
+  await page.getByRole('button',{name:'Gespräch löschen',exact:true}).click();
+  await page.locator('.clear-chat-dialog').getByRole('button',{name:'Gespräch löschen',exact:true}).click();
+  await expect(page.locator('.chat-turn')).toHaveCount(0);await expect(input).toHaveValue('');
+  await expect(other.locator('[role=log] article')).toHaveCount(1);await expect(other.locator('[role=log]')).toContainText('Noor');await other.close();
+});
+
 for (const scenario of [
   {label:'German standalone desktop',lang:'de',widget:false,width:1280,height:850,
     first:'Welche Workshops bietet ihr für Schulen an?',intro:'Mein Name ist Léa',greeting:/Léa/,correction:'Nein, mein Name ist Noor',recall:'Wie heiße ich?',follow:'Und wie melde ich meine Klasse dafür an?'},

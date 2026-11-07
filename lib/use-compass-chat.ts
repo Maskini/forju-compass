@@ -9,13 +9,31 @@ export function useCompassChat(language:"en"|"de") {
   const ready = useSyncExternalStore(subscribe,clientReady,serverReady);
   const [question, setQuestion] = useState("");
   const [submittedQuestion, setSubmittedQuestion] = useState("");
+  const [conversationId, setConversationId] = useState(0);
 
   const [turns, setTurns] = useState<{ question: string; answer: string; sources: Source[]; draft: boolean; recipient?:string; suggestions:string[]; topic?:string; answeredAt:number }[]>([]);
   const inFlight = useRef(false);
+  const requestVersion = useRef(0);
+  const requestController = useRef<AbortController | null>(null);
   const transcript = useRef<HTMLDivElement>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const latestSources = !loading && !error ? (turns.at(-1)?.sources ?? []) : [];
+
+  useEffect(() => () => {
+    requestVersion.current++;
+    requestController.current?.abort();
+  }, []);
+
+  function clearConversation() {
+    requestVersion.current++;
+    requestController.current?.abort();
+    requestController.current = null;
+    inFlight.current = false;
+    setTurns([]); setQuestion(""); setSubmittedQuestion(""); setError(""); setLoading(false);
+    setConversationId(id => id + 1);
+    transcript.current?.scrollTo(0, 0);
+  }
 
   useEffect(() => {
     const log = transcript.current;
@@ -38,6 +56,9 @@ export function useCompassChat(language:"en"|"de") {
     }
 
     inFlight.current = true;
+    const version = ++requestVersion.current;
+    const controller = new AbortController();
+    requestController.current = controller;
     setSubmittedQuestion(next);
     setQuestion("");
     setError("");
@@ -49,7 +70,7 @@ export function useCompassChat(language:"en"|"de") {
         headers: {
           "Content-Type": "application/json", "Accept-Language":replyLanguage,
         },
-        signal: AbortSignal.timeout(60000),
+        signal: AbortSignal.any([controller.signal, AbortSignal.timeout(60000)]),
         body: JSON.stringify({
           message: next, topic: turns.at(-1)?.topic,
           history: turns.slice(-MAX_HISTORY_MESSAGES / 2).flatMap((turn): ChatMessage[] => [
@@ -60,6 +81,7 @@ export function useCompassChat(language:"en"|"de") {
       });
 
       const data = await response.json();
+      if (version !== requestVersion.current) return;
 
       if (!response.ok) {
         throw new Error(
@@ -79,17 +101,19 @@ export function useCompassChat(language:"en"|"de") {
       setTurns((previous) => [...previous, { question: next, answer: data.answer, sources, suggestions, topic:typeof data.topic==="string"?data.topic:undefined, draft:data.mode === "draft", recipient: typeof data.recipient==="string" && /^[\w.+-]+@forju\.at$/i.test(data.recipient) ? data.recipient : undefined, answeredAt:Date.now() }]);
       setSubmittedQuestion("");
     } catch (err) {
-
-
+      if (version !== requestVersion.current) return;
       setQuestion(next);
       setError(err instanceof Error && err.name === "TimeoutError"
         ? "Die Anfrage hat zu lange gedauert. Bitte versuche es erneut."
         : err instanceof Error ? err.message : "Die Anfrage konnte nicht verarbeitet werden.");
     } finally {
-      inFlight.current = false;
-      setLoading(false);
+      if (version === requestVersion.current) {
+        inFlight.current = false;
+        requestController.current = null;
+        setLoading(false);
+      }
     }
   }
 
-  return {ready,question,setQuestion,submittedQuestion,turns,transcript,loading,error,latestSources,submit,setTurns,setSubmittedQuestion,setError};
+  return {ready,question,setQuestion,submittedQuestion,turns,transcript,loading,error,latestSources,submit,conversationId,clearConversation};
 }

@@ -14,6 +14,8 @@
   border-bottom: 1px solid #2d1e1e18; background: #fffcf7b3;
 }
 .embed-panel > header img { width: min(100%, 206px); height: auto; }
+.embed-panel.widget-mode > header { padding-right: 146px; }
+.embed-panel > header > .clear-chat-trigger { position: absolute; right: 54px; top: 8px; }
 .embed-panel .lang { position: absolute; right: 10px; top: 8px; width: 44px; height: 44px; color: #861456; font-weight: 700; }
 .embed-panel :focus-visible { outline: 3px solid #ff3aae; outline-offset: 2px; }
 .embed-panel button:disabled { opacity: .55; }

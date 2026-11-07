@@ -2,7 +2,7 @@
 
 import {EnquiryDraft} from "@/app/components/enquiry-draft";
 import {ChatChoices} from "@/app/components/chat-choices";
-import { useEffect, useState, useRef, type ReactNode } from "react";
+import { useEffect, useRef, type ReactNode } from "react";
 import { useAppLanguage, setAppLanguage } from "@/lib/language";
 import Script from "next/script";
 import FeedbackWidget, {type ReportControls} from "@/app/components/feedback/FeedbackWidget";
@@ -70,6 +70,7 @@ import KnowledgeFeedback from "@/app/components/KnowledgeFeedback";
 
 import {ProjectDraft} from "@/app/components/project-draft";
 import {useCompassChat} from "@/lib/use-compass-chat";
+import {ClearConversation} from "@/app/components/clear-conversation";
 
 const QUICK_QUESTIONS = [
   {
@@ -102,16 +103,15 @@ const QUICK_QUESTIONS = [
 export default function Home() {
   const reports = useRef<ReportControls>(null);
   const language = useAppLanguage();
-  const [conversationId, setConversationId] = useState(0);
   const t = (text: string) => language === "en" ? (EN[text] ?? text) : text;
   const official = (path = "") => `https://forju.at/${language}${path}`;
   useEffect(() => { document.documentElement.lang = language; }, [language]);
   const switchLanguage = setAppLanguage;
-  const {ready,question,setQuestion,submittedQuestion,turns,transcript,loading,error,latestSources,submit,setTurns,setSubmittedQuestion,setError} = useCompassChat(language);
+  const {ready,question,setQuestion,submittedQuestion,turns,transcript,loading,error,latestSources,submit,conversationId,clearConversation} = useCompassChat(language);
   return (
     <main className="compass-page">
       <Script src="/compass-widget.js" data-welcome="closed" strategy="afterInteractive" />
-      <FeedbackWidget ready={ready} language={language} ref={reports}/>
+      <FeedbackWidget key={conversationId} ready={ready} language={language} ref={reports}/>
       <FloatingOrigami />
       <section className="scene">
         <div
@@ -335,11 +335,7 @@ export default function Home() {
               </div>
               <ProjectDraft ready={ready} key={conversationId} lang={language} turns={turns}/>
               {turns.length === 0 && !loading && !error && <a className="answer-cta" href={official("/services")} target="_blank" rel="noopener noreferrer">{t("Mehr erfahren")} <ChevronIcon /></a>}
-              {(turns.length > 0 || error) && (
-                <button type="button" className="answer-cta" disabled={!ready || loading} onClick={() => {
-                  setConversationId(id => id + 1); setTurns([]); setQuestion(""); setSubmittedQuestion(""); setError("");
-                }}>{t("Neues Gespräch")}</button>
-              )}
+              <ClearConversation ready={ready} language={language} onClear={clearConversation} showLabel/>
 
               <div
                 className="boat-path"
