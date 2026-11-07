@@ -22,3 +22,19 @@ a:focus-visible{outline:3px solid #992165;outline-offset:3px;border-radius:4px}
 .preview-services ul{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,15rem),1fr));gap:.8rem;list-style:none;margin:0;padding:0}
 .preview-services a{display:flex;align-items:center;justify-content:space-between;gap:.5rem;padding:1.25rem;color:#573443;text-decoration:none;font-weight:600;background:#fffaf5;border:1px solid #dfcfc5;border-radius:1rem}
 @media(hover:hover) and (pointer:fine){.preview-services a:hover{color:#77174e;border-color:#a12968}}
+
+.demo-page header>a,.demo-main a{color:#86164f;text-underline-offset:.2em}
+.demo-main{padding:2rem 0 8rem}
+.demo-main h1{max-width:20ch;font-size:clamp(2rem,5vw,3.5rem)}
+.demo-main>p:not(.preview-label){max-width:60ch}
+.demo-film{margin:2rem 0 1rem}
+.demo-film video{display:block;width:100%;aspect-ratio:8/5;background:#251e1b;border:1px solid #dfcfc5;border-radius:1rem;box-shadow:0 8px 25px #3a28251a}
+.demo-film figcaption{margin-top:.8rem;color:#655752;font-size:.9rem;max-width:90ch}
+.demo-details{padding:1rem 1.25rem;border:1px solid #dfcfc5;border-radius:1rem;background:#fffaf5}
+.demo-details summary{cursor:pointer;font-weight:650;color:#86164f}
+.demo-details p{max-width:75ch}
+.demo-project,.demo-try{margin-top:3rem}
+.demo-main h2{font:650 clamp(1.5rem,3vw,2.1rem)/1.2 "Space Grotesk",sans-serif}
+.demo-try{padding:1.5rem;border-radius:1rem;background:#e6eee4}
+.demo-page :is(video,summary):focus-visible{outline:3px solid #992165;outline-offset:4px}
+@media(max-width:38rem){.demo-page header{align-items:flex-start;gap:1rem}.demo-page header>a{font-size:.85rem;text-align:right}.demo-film video{border-radius:.6rem}}

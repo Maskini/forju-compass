@@ -290,7 +290,7 @@ test('Accessibility: mobile project draft open', async ({page},info) => {
   await page.setViewportSize({width:390,height:844});
   await page.goto('/embed?lang=en');
   await page.locator('html[lang=en]').waitFor();
-  await page.getByRole('button',{name:/start a project draft/i}).click();
+  await page.getByRole('button',{name:/tell us about your project/i}).click();
   await expect(page.getByRole('dialog')).toBeVisible();
   await checkAccessibility(page,info);
 });
@@ -419,7 +419,7 @@ test('English phone widget: one Send, retained draft on failure, stable retry an
   });
   expect(art.size).toBeCloseTo(28, 3);expect(art.dx).toBeLessThan(1);expect(art.dy).toBeLessThan(1);
   await panel.getByRole('button',{name:'Back to chat',exact:true}).click();
-  await panel.getByRole('button',{name:/start a project draft/i}).click();
+  await panel.getByRole('button',{name:/tell us about your project/i}).click();
   const review=panel.getByRole('dialog');
   await review.getByLabel('Project title',{exact:true}).fill('Testing our school pond');
   for(let i=0;i<5;i++) {
@@ -452,7 +452,7 @@ test('German desktop: keep the project in the form while offline, then send when
     await route.fallback();
   });
   const report = page.getByRole('button', {name:'Problem melden', exact:true});
-  const start = page.getByRole('button', {name:/Projektentwurf starten/});
+  const start = page.getByRole('button', {name:/Projekt vorstellen/});
   try {
     await page.goto('/', {waitUntil:'commit'});
     await expect(report).toBeDisabled();
@@ -464,7 +464,7 @@ test('German desktop: keep the project in the form while offline, then send when
   await expect(report.locator('svg')).toHaveCount(0);
   await start.click();
   const review = page.getByRole('dialog');
-  await expect(review.getByRole('status')).toContainText('Du kannst deinen Entwurf vorbereiten. Senden ist derzeit nicht möglich.');
+  await expect(review.getByRole('status')).toContainText('Du kannst deine Projektangaben vorbereiten. Senden ist derzeit nicht möglich.');
   await review.getByLabel('Projekttitel', {exact:true}).fill('Luftqualität in der Klasse');
   for (let step = 0; step < 5; step++) await review.getByRole('button', {name:/^Weiter/}).click();
   await expect(review.getByRole('link')).toHaveCount(0);
@@ -492,10 +492,10 @@ test('German desktop: keep the project in the form while offline, then send when
 for (const scenario of [
   {lang:'de',widget:true,width:1440,height:1000,
     idea:'Unsere Klasse möchte die Luftqualität im Klassenzimmer untersuchen.',title:'Luftforscher',description:'Kurze Beschreibung',titleLabel:'Projekttitel',
-    audience:'Zielgruppe',audienceText:'Klasse 7B',timing:'Zeitraum',goal:'Wissen vermitteln',next:/^Weiter/,backChat:/Zurück zum Chat/,resume:/Projektentwurf fortsetzen/,review:'Fertigen Text ansehen',finalText:'Projekttext auswählen und kopieren'},
+    audience:'Zielgruppe',audienceText:'Klasse 7B',timing:'Zeitraum',goal:'Wissen vermitteln',next:/^Weiter/,backChat:/Zurück zum Chat/,resume:/Projektangaben fortsetzen/,review:'Fertigen Text ansehen',finalText:'Projekttext auswählen und kopieren'},
   {lang:'en',widget:false,width:390,height:844,
     idea:'Our class wants to investigate air quality in our classroom.',title:'Classroom air study',description:'Short description',titleLabel:'Project title',
-    audience:'Audience',audienceText:'Class 7B',timing:'Timing',goal:'Share knowledge',next:/^Continue/,backChat:/Back to chat/,resume:/Continue project draft/,review:'View final text',finalText:'Select and copy your project'},
+    audience:'Audience',audienceText:'Class 7B',timing:'Timing',goal:'Share knowledge',next:/^Continue/,backChat:/Back to chat/,resume:/Continue your project details/,review:'View final text',finalText:'Select and copy your project'},
 ]) test('Project form: prefill, edit, resume and review / '+scenario.lang,async({page},info)=>{
   test.setTimeout(45000);
   await page.setViewportSize({width:scenario.width,height:scenario.height});

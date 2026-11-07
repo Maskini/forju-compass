@@ -83,8 +83,6 @@ export default function CompassPanel({initialLanguage,widget=false}:{initialLang
           ? [en?"Ask about rooms or equipment":"Räume oder Geräte anfragen","/kontakt?intent=service&thema=ressourcen"]
           : source.includes("/services/finanziell")
           ? [en?"Request funding support":"Finanzierungshilfe anfragen","/kontakt?intent=service&thema=finanziell"]
-          : source.includes("science-beratung")
-          ? [en?"Tell ForJu about your project":"Projektidee einreichen","/kontakt?intent=projekt"]
           : source.includes("schulworkshops") ? [en?"Enquire about a school workshop":"Schulworkshop anfragen","/kontakt?intent=service"] : null;
         return action && <a className="next-step" href={"https://forju.at/"+(source.startsWith("https://forju.at/en/")?"en":"de")+action[1]} target="_blank" rel="noopener noreferrer">{action[0]} →</a>
       })()}

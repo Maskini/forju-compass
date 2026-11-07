@@ -71,7 +71,7 @@ for(const widget of [false,true]){
     const panel=await visit(page,widget,widget?'en':'de');
     const idea=widget?'Our class project measures the water in our pond.':'Unser Klassenprojekt untersucht das Wasser im Schulteich.';
     await ask(panel,widget,idea);
-    await panel.getByRole('button',{name:/Start a project draft|Projektentwurf starten/}).click();
+    await panel.getByRole('button',{name:/Tell us about your project|Projekt vorstellen/}).click();
     const form=panel.locator('.project-draft dialog');
     await expect(form.locator('h3[tabindex]')).toBeFocused();
     const description=form.getByLabel(widget?'Short description':'Kurze Beschreibung',{exact:false}).first();
@@ -81,7 +81,7 @@ for(const widget of [false,true]){
     await form.getByLabel(widget?'Project title':'Projekttitel',{exact:true}).fill('Pond study');
     const next=form.getByRole('button',{name:/^(Weiter|Continue)/});
     await next.click();await form.getByRole('button',{name:/Back to chat|Zurück zum Chat/}).click();
-    const resume=panel.getByRole('button',{name:/Continue project draft|Projektentwurf fortsetzen/});
+    const resume=panel.getByRole('button',{name:/Continue your project details|Projektangaben fortsetzen/});
     await expect(resume).toBeFocused();await resume.press('Enter');
     for(let step=1;step<5;step++)await next.click();
     await form.getByText(widget?'View final text':'Fertigen Text ansehen',{exact:true}).click();
@@ -97,7 +97,7 @@ for(const widget of [false,true]){
     await scan(page,info,'project');
     const other=await browser.newContext({ignoreHTTPSErrors:true,serviceWorkers:'block'});
     try{await guard(other);const otherPage=await other.newPage();await otherPage.goto(app);
-      await expect(otherPage.locator('.chat-turn')).toHaveCount(0);await otherPage.getByRole('button',{name:/Projektentwurf starten/}).click();
+      await expect(otherPage.locator('.chat-turn')).toHaveCount(0);await otherPage.getByRole('button',{name:/Projekt vorstellen/}).click();
       await expect(otherPage.getByLabel('Projekttitel',{exact:true})).toHaveValue('');
       await expect(otherPage.getByLabel('Kurze Beschreibung',{exact:true})).toHaveValue('');
       expect(external.get(other)).toEqual([]);
