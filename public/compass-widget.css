@@ -23,8 +23,16 @@ button:focus-visible, a:focus-visible { outline: 3px solid #ff3aae; outline-offs
   pointer-events: none;
 }
 .dock > * { pointer-events: auto; }
-.launcher { gap: 8px; padding: 8px 18px 8px 13px; min-height: 46px; }
-.seal, .star { display: block; width: 30px; height: 30px; object-fit: contain; }
+.launcher { position: relative; display: grid; place-items: center; width: 58px; height: 58px; padding: 0; border-radius: 50%; background: transparent; }
+.seal { position: relative; display: grid; place-items: center; width: 100%; height: 100%; border-radius: 50%; background: #fffaf7; border: 1px solid #e6dcd4; box-shadow: 0 3px 12px #32202138; }
+.star { display: block; width: 70%; height: 70%; object-fit: contain; }
+.seal::after { content: ''; position: absolute; right: 0; top: -2px; width: 12px; height: 12px; border-radius: 50%; background: #e95196; border: 2px solid white; }
+/* The hint sits outside the button so revealing it cannot move the click target. */
+.hint { position: absolute; right: calc(100% + 12px); width: 120px; padding: 7px 25px 7px 11px; border: 1px solid #e6dcd4; border-radius: 13px; background: #fffaf6 url('/forju/origami/pink-airplane.png') right 5px center / 18px auto no-repeat; box-shadow: 0 3px 12px #32202138; font-size: 12px; line-height: 1.45; font-weight: 600; text-align: left; pointer-events: none; }
+@media (hover: hover) and (pointer: fine) {
+  .launcher:not(:hover):not(:focus-visible) .hint { visibility: hidden; }
+  .launcher:hover .seal { box-shadow: 0 3px 12px #32202150; }
+}
 .welcome, .drawer {
   color: #2d1e1e;
   background: linear-gradient(#fffaf6d9,#fffaf6d9), #fcf8f2 url('/forju/paper-fiber-cream.webp') repeat 0 0 / 220px;
@@ -55,7 +63,7 @@ button:focus-visible, a:focus-visible { outline: 3px solid #ff3aae; outline-offs
 .arrow { margin-left: auto; }
 .start { width: 100%; margin-top: 14px; }
 .drawer {
-  position: fixed; inset: auto max(20px, env(safe-area-inset-right)) calc(max(20px, env(safe-area-inset-bottom)) + 58px) auto;
+  position: fixed; inset: auto max(20px, env(safe-area-inset-right)) calc(max(20px, env(safe-area-inset-bottom)) + 70px) auto;
   z-index: 31; margin: 0; padding: 0; width: min(430px, calc(100vw - 36px));
   height: min(730px, calc(100dvh - 100px)); max-width: none; max-height: none; overflow: hidden;
 }

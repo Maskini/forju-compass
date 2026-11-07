@@ -78,10 +78,11 @@ try {
         return {width:e.offsetWidth,radius:s.borderRadius,font:s.fontFamily,background:s.backgroundColor,shadow:s.boxShadow,transform:s.transform};
       });
       const rest=await style();
-      assert.equal(rest.radius,'16px');
-      await launcher.hover();await expect.poll(async()=>(await style()).background).toBe('rgb(255, 231, 245)');
+      assert.equal(rest.radius,'50%');
+      assert.equal(rest.width,58);
+      await launcher.hover();await expect(host.locator('.hint')).toBeVisible();
       const hover=await style();
-      await page.mouse.down();await expect.poll(async()=>(await style()).transform).toBe('matrix(1, 0, 0, 1, 0, 1)');
+      await page.mouse.down();
       const pressed=await style();
       await page.mouse.move(20,90);await page.mouse.up();
       assert(rest.width===hover.width && hover.width===pressed.width);log.launcher={rest,hover,pressed};

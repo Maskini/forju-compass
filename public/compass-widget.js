@@ -39,7 +39,7 @@
   const start=button("start fj-action",card,()=>open());
   const startLabel=el("span","",start);
   const go=el("span","",start);go.textContent="→";go.ariaHidden="true";
-  const launcher = button("launcher fj-action", wrap, () => {
+  const launcher = button("launcher", wrap, () => {
     if (dialog.open) closeChat();
     else if (started) open();
     else toggleWelcome(card.hidden);
@@ -120,7 +120,8 @@
     const launcherLabel = dialog.open ? (en ? "Minimize chat" : "Chat minimieren")
       : started ? (en ? "Resume chat" : "Chat fortsetzen")
       : (en ? "ForJu Compass: chat assistance" : "ForJu Compass: Chathilfe");
-    hint.textContent = dialog.open ? (en ? "Minimize" : "Minimieren") : "ForJu Compass";
+    hint.textContent = en ? "Questions? I’m here to help!" : "Fragen? Ich bin für dich da!";
+    hint.hidden = dialog.open || !card.hidden;
     launcher.setAttribute("aria-label", launcherLabel);
     launcher.title = launcherLabel;
   }
