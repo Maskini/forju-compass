@@ -81,6 +81,13 @@ test('configuration requires the fixed server receiver and a valid sender', () =
   for (const env of [{}, { RESEND_API_KEY: 'test' }, { RESEND_API_KEY: 'test', FEEDBACK_FROM_EMAIL: 'feedback@example.com', FEEDBACK_TO_EMAIL: 'wrong@example.com' }]) assert.throws(() => email.feedbackEmailConfig(env), email.FeedbackConfigurationError);
 });
 
+test('account-owner testing is explicit and never redirects reports to iCloud', () => {
+  const env = {NODE_ENV:'production',COMPASS_ACCOUNT_TEST_MODE:'true',RESEND_API_KEY:'fake',FEEDBACK_FROM_EMAIL:'onboarding@resend.dev',FEEDBACK_TO_EMAIL:'adam.maskini@forju.at'};
+  assert.equal(email.feedbackEmailConfig(env).to,'adam.maskini@forju.at');
+  assert.equal(email.feedbackEmailConfig({...env,FEEDBACK_DEMO_MODE:'true'}).to,'adam.maskini@forju.at');
+  for (const patch of [{COMPASS_ACCOUNT_TEST_MODE:'false'},{FEEDBACK_TO_EMAIL:'adam.maskini@icloud.com'},{FEEDBACK_TO_EMAIL:'other@example.org'},{FEEDBACK_FROM_EMAIL:'other@resend.dev'},{FEEDBACK_FROM_EMAIL:'team@example.org'}]) assert.throws(()=>email.feedbackEmailConfig({...env,...patch}),email.FeedbackConfigurationError);
+});
+
 test('SDK receives server sender/receiver, optional Reply-To and idempotency; rejection is surfaced', async () => {
   const names = ['RESEND_API_KEY', 'FEEDBACK_FROM_EMAIL', 'FEEDBACK_TO_EMAIL'];
   const original = Object.fromEntries(names.map(name => [name, process.env[name]]));
@@ -103,9 +110,9 @@ test('iCloud test delivery is explicitly enabled only in development', () => {
   for (const patch of [{ NODE_ENV: 'production' }, { FEEDBACK_LOCAL_TEST: '' }, { FEEDBACK_FROM_EMAIL: 'unverified@example.com' }, { FEEDBACK_TO_EMAIL: 'other@example.com' }]) assert.throws(() => email.feedbackEmailConfig({ ...env, ...patch }), email.FeedbackConfigurationError);
 });
 
-test('public demo delivery permits only the fixed account-owner recipient and test sender', () => {
+test('obsolete public demo settings cannot send visitor reports to iCloud', () => {
   const env = { NODE_ENV: 'production', FEEDBACK_DEMO_MODE: 'true', RESEND_API_KEY: 'test-key', FEEDBACK_FROM_EMAIL: 'onboarding@resend.dev', FEEDBACK_TO_EMAIL: 'adam.maskini@icloud.com' };
-  assert.equal(email.feedbackEmailConfig(env).to, 'adam.maskini@icloud.com');
+  assert.throws(() => email.feedbackEmailConfig(env), email.FeedbackConfigurationError);
   for (const patch of [{ FEEDBACK_DEMO_MODE: '' }, { FEEDBACK_FROM_EMAIL: 'other@example.com' }, { FEEDBACK_TO_EMAIL: 'other@example.com' }]) assert.throws(() => email.feedbackEmailConfig({ ...env, ...patch }), email.FeedbackConfigurationError);
 });
 

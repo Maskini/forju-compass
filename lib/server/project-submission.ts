@@ -6,11 +6,16 @@ import {PROJECT_MAX_LENGTH} from "../project-mail";
 import {BodyError,readBody} from "./request-body.mjs";
 
 const PROJECT_RECIPIENT = "adam.maskini@forju.at";
-const projectSubject = (lang:"de"|"en") => lang==="de" ? "[ForJu Compass] Projektentwurf" : "[ForJu Compass] Project draft";
+const projectSubject = (lang:"de"|"en") => lang==="de" ? "[ForJu Compass] Projektanfrage" : "[ForJu Compass] Project enquiry";
 
 export function projectMailConfig(env=process.env){
   const key=env.RESEND_API_KEY?.trim(),from=env.PROJECT_FROM_EMAIL?.trim() || env.FEEDBACK_FROM_EMAIL?.trim();
-  return key && from && z.email().safeParse(from).success && !/@(?:[^@]+\.)?resend\.dev$/i.test(from) ? {key,from} : null;
+  const sandboxSender=Boolean(from && /@(?:[^@]+\.)?resend\.dev$/i.test(from));
+  const accountTest=env.COMPASS_ACCOUNT_TEST_MODE === "true";
+  const permittedSender=accountTest
+    ? from === "onboarding@resend.dev" && env.FEEDBACK_TO_EMAIL?.trim() === PROJECT_RECIPIENT
+    : !sandboxSender;
+  return key && from && z.email().safeParse(from).success && permittedSender ? {key,from} : null;
 }
 const payload=z.strictObject({confirmed:z.literal(true),language:z.enum(["de","en"]),draft:z.string().trim().min(1).max(PROJECT_MAX_LENGTH),replyEmail:z.email().max(254).optional()});
 type Payload=z.infer<typeof payload>;

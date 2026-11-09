@@ -19,10 +19,12 @@ services:
       - key: COMPASS_EMBED_ORIGINS
         value: https://forju.at,https://www.forju.at
       - key: FEEDBACK_DEMO_MODE
-        value: "true"
+        value: "false"
       - key: FEEDBACK_TO_EMAIL
-        value: adam.maskini@icloud.com
+        value: adam.maskini@forju.at
       - key: FEEDBACK_FROM_EMAIL
-        value: onboarding@resend.dev
+        sync: false
+      - key: COMPASS_ACCOUNT_TEST_MODE
+        value: "false"
       - key: RESEND_API_KEY
         sync: false

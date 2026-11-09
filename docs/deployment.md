@@ -46,10 +46,28 @@ Optional server-only configuration:
 - FEEDBACK_IP_HEADER: only a header the hosting proxy reliably overwrites.
 - KNOWLEDGE_FEEDBACK_DIR: requires durable private storage; omit on free Render.
 
-FEEDBACK_LOCAL_TEST works only in development. Render explicitly enables
-FEEDBACK_DEMO_MODE=true, which permits only the fixed account-owner recipient
-adam.maskini@icloud.com and onboarding@resend.dev sender. Provider delivery
-must be verified from the deployed service. Do not change ForJu DNS.
+The Blueprint defaults to adam.maskini@forju.at with the old iCloud demo mode
+disabled. Existing Render environment values must also be updated; a Git push
+alone does not prove the dashboard settings changed. Do not change ForJu DNS.
+
+For a private account-owner test without a verified domain, first change and
+confirm the Resend account email to adam.maskini@forju.at. The user completes
+that login change and both confirmation links. Then configure the existing service:
+
+```dotenv
+FEEDBACK_TO_EMAIL=adam.maskini@forju.at
+FEEDBACK_FROM_EMAIL=onboarding@resend.dev
+PROJECT_FROM_EMAIL=onboarding@resend.dev
+FEEDBACK_DEMO_MODE=false
+COMPASS_ACCOUNT_TEST_MODE=true
+```
+
+This explicit mode permits only that recipient and exact sandbox sender for both
+forms. Resend still enforces its verified account-email restriction. A setting
+alone is not verification: submit one labelled report and one labelled project
+when authorized, check provider acceptance and delivery, then verify the intended
+mailbox. Never send to iCloud as a fallback. Before public production rollout,
+configure a verified domain sender and set COMPASS_ACCOUNT_TEST_MODE=false.
 
 NODE_ENV=production and NODE_VERSION are set by the Blueprint. Secret values
 must only be supplied through Render's private environment settings, never Git.
@@ -67,12 +85,14 @@ accepts a visitor-specified recipient or forwards the conversation.
 
 Set `PROJECT_FROM_EMAIL` on Render to a sender on a domain verified for the
 existing Resend key. A non-sandbox `FEEDBACK_FROM_EMAIL` can also serve as the
-sender if the project-specific setting is absent. The demo sender cannot send
-to the ForJu inbox. No changes to the official ForJu website are necessary.
+sender if the project-specific setting is absent. The sandbox sender only works
+in the explicit private account-owner test mode above after the account email is
+verified. No changes to the official ForJu website are necessary.
 
 After saving the setting and redeploying, GET `/api/project-submission` should
 return `{"direct":true}`. This checks configuration, not delivery. When the sender is unavailable, the form shows its status and keeps the draft
 in the current tab. Pressing Send rechecks availability. Failed sends
 retain the draft; retries use the same provider idempotency key for identical
 content. A provider ID confirms acceptance for delivery, not inbox receipt.
-Use mocked transport for tests; do not send test emails.
+Use mocked transport for automated tests. Real delivery checks require the user's
+explicit request and clearly labelled synthetic messages.
