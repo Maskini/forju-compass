@@ -1,0 +1,54 @@
+{
+  "baseCommit": "41b0180b0b88fae9a16e8bba85353b9c7ab381d5",
+  "deployment": "Local only; not pushed or deployed",
+  "mode": "Synthetic production HTTP /api/chat; COMPASS_LOCAL_ONLY=true; Docker network none; no real email",
+  "baselineHandler": {
+    "passed": 6,
+    "total": 13
+  },
+  "afterHandler": {
+    "passed": 13,
+    "total": 13
+  },
+  "unit": {
+    "passed": 107,
+    "failed": 0
+  },
+  "build": "passed",
+  "lint": {
+    "errors": 0,
+    "existingWarnings": 10
+  },
+  "firstPromptfoo": {
+    "passed": 69,
+    "total": 70,
+    "failure": "project-hold-history-project-en"
+  },
+  "finalPromptfoo": {
+    "passed": 72,
+    "total": 72,
+    "acceptedChatTurns": 100,
+    "newProjectScenarios": 17
+  },
+  "firstBrowser": {
+    "passed": 18,
+    "failed": 4,
+    "cause": "Standalone link accessible name includes a visible arrow; new test selector omitted it."
+  },
+  "finalBrowser": {
+    "startTime": "2026-11-09T22:14:41.981Z",
+    "duration": 35949.972,
+    "expected": 22,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "monitoredExternalRequests": 0,
+  "notRerun": [
+    "k6",
+    "ZAP",
+    "live email delivery",
+    "AI-backed answers",
+    "official website installation"
+  ]
+}

@@ -40,6 +40,7 @@ mkdir -p "$out/fixtures/knowledge-checks"
 docker cp "$box:/app/tools/release/quality" "$out/fixtures/quality"
 docker cp "$box:/app/tools/knowledge-checks/release-cases.json" "$out/fixtures/knowledge-checks/release-cases.json"
 docker cp "$box:/app/tools/knowledge-checks/final-visitor-cases.json" "$out/fixtures/knowledge-checks/final-visitor-cases.json"
+docker cp "$box:/app/tools/knowledge-checks/project-introduction-cases.json" "$out/fixtures/knowledge-checks/project-introduction-cases.json"
 docker cp "$box:/app/tools/release/load.js" "$out/fixtures/load.js"
 docker cp "$box:/app/tools/release/zap-hook.py" "$out/fixtures/zap-hook.py"
 inside(){ docker exec "$box" "$@"; }

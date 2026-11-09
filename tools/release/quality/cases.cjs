@@ -36,3 +36,5 @@ module.exports.push(...fresh.map(c=>({...c,id:"knowledge-"+c.id,source:c.source?
 // logistics. The held-out cases are included only in the final release run.
 const finalVisitors = require("../../knowledge-checks/final-visitor-cases.json");
 module.exports.push(...finalVisitors.map(c=>({...c,id:"visitor-"+c.id,source:c.source?"https://forju.at/"+c.lang+"/"+c.source:null,fact:c.facts.join("; "),must:c.facts,forbid:c.forbid||[]})));
+const projectIntroductions = require("../../knowledge-checks/project-introduction-cases.json");
+module.exports.push(...projectIntroductions.map(c=>({...c,id:"project-"+c.id,source:c.source?"https://forju.at/"+c.lang+"/"+c.source:null,fact:c.facts.join("; "),must:c.facts,forbid:c.forbid||[]})));

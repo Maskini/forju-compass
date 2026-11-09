@@ -1,0 +1,339 @@
+[
+  {
+    "id": "own-pond-de",
+    "lang": "de",
+    "turns": [
+      "Unser Klassenprojekt untersucht das Wasser im Schulteich."
+    ],
+    "topic": null,
+    "source": null,
+    "facts": [
+      "\\?",
+      "project|Projekt"
+    ],
+    "forbid": [
+      "keine gesicherte Information",
+      "don.t have verified information",
+      "submitted|eingereicht|approved|genehmigt"
+    ],
+    "unknown": "Visitor-owned idea; no feasibility, funding, equipment availability or delivery is confirmed.",
+    "holdout": false
+  },
+  {
+    "id": "own-pond-en",
+    "lang": "en",
+    "turns": [
+      "Our class project compares water quality in two ponds."
+    ],
+    "topic": null,
+    "source": null,
+    "facts": [
+      "\\?",
+      "project|Projekt"
+    ],
+    "forbid": [
+      "keine gesicherte Information",
+      "don.t have verified information",
+      "submitted|eingereicht|approved|genehmigt"
+    ],
+    "unknown": "Visitor-owned idea; no feasibility, funding, equipment availability or delivery is confirmed.",
+    "holdout": false
+  },
+  {
+    "id": "idea-garden-de",
+    "lang": "de",
+    "turns": [
+      "Ich habe eine Projektidee: ein Garten für unsere Schule."
+    ],
+    "topic": null,
+    "source": null,
+    "facts": [
+      "\\?",
+      "project|Projekt"
+    ],
+    "forbid": [
+      "keine gesicherte Information",
+      "don.t have verified information",
+      "submitted|eingereicht|approved|genehmigt"
+    ],
+    "unknown": "Visitor-owned idea; no feasibility, funding, equipment availability or delivery is confirmed.",
+    "holdout": false
+  },
+  {
+    "id": "working-bees-en",
+    "lang": "en",
+    "turns": [
+      "I am working on a science project about bees."
+    ],
+    "topic": null,
+    "source": null,
+    "facts": [
+      "\\?",
+      "project|Projekt"
+    ],
+    "forbid": [
+      "keine gesicherte Information",
+      "don.t have verified information",
+      "submitted|eingereicht|approved|genehmigt"
+    ],
+    "unknown": "Visitor-owned idea; no feasibility, funding, equipment availability or delivery is confirmed.",
+    "holdout": false
+  },
+  {
+    "id": "building-weather-de",
+    "lang": "de",
+    "turns": [
+      "Wir bauen für unser Schulprojekt eine Wetterstation."
+    ],
+    "topic": null,
+    "source": null,
+    "facts": [
+      "\\?",
+      "project|Projekt"
+    ],
+    "forbid": [
+      "keine gesicherte Information",
+      "don.t have verified information",
+      "submitted|eingereicht|approved|genehmigt"
+    ],
+    "unknown": "Visitor-owned idea; no feasibility, funding, equipment availability or delivery is confirmed.",
+    "holdout": false
+  },
+  {
+    "id": "project-typo-en",
+    "lang": "en",
+    "turns": [
+      "Our class projet compares water samples."
+    ],
+    "topic": null,
+    "source": null,
+    "facts": [
+      "\\?",
+      "project|Projekt"
+    ],
+    "forbid": [
+      "keine gesicherte Information",
+      "don.t have verified information",
+      "submitted|eingereicht|approved|genehmigt"
+    ],
+    "unknown": "Visitor-owned idea; no feasibility, funding, equipment availability or delivery is confirmed.",
+    "holdout": false
+  },
+  {
+    "id": "new-project-after-workshop-de",
+    "lang": "de",
+    "turns": [
+      "Welche Workshops bietet ihr für Schulen an?",
+      "Unser Klassenprojekt untersucht das Wasser im Schulteich."
+    ],
+    "topic": null,
+    "source": null,
+    "facts": [
+      "\\?",
+      "project|Projekt"
+    ],
+    "forbid": [
+      "keine gesicherte Information",
+      "don.t have verified information",
+      "submitted|eingereicht|approved|genehmigt"
+    ],
+    "unknown": "Visitor-owned idea; no feasibility, funding, equipment availability or delivery is confirmed.",
+    "holdout": false
+  },
+  {
+    "id": "project-to-equipment-en",
+    "lang": "en",
+    "turns": [
+      "Our class project compares water quality in two ponds.",
+      "Measuring equipment"
+    ],
+    "topic": "ressourcen",
+    "source": "services/ressourcen",
+    "facts": [
+      "equipment|instrument",
+      "confirm|ask|check"
+    ],
+    "forbid": [
+      "keine gesicherte Information",
+      "don.t have verified information",
+      "submitted|eingereicht|approved|genehmigt"
+    ],
+    "unknown": "Visitor-owned idea; no feasibility, funding, equipment availability or delivery is confirmed.",
+    "holdout": false
+  },
+  {
+    "id": "project-to-funding-de",
+    "lang": "de",
+    "turns": [
+      "Unser Klassenprojekt untersucht das Wasser im Schulteich.",
+      "Hilfe bei der Finanzierung"
+    ],
+    "topic": "finanzierung",
+    "source": "services/finanziell",
+    "facts": [
+      "Partner"
+    ],
+    "forbid": [
+      "keine gesicherte Information",
+      "don.t have verified information",
+      "submitted|eingereicht|approved|genehmigt"
+    ],
+    "unknown": "Visitor-owned idea; no feasibility, funding, equipment availability or delivery is confirmed.",
+    "holdout": false
+  },
+  {
+    "id": "project-correct-choice-en",
+    "lang": "en",
+    "turns": [
+      "Our class project compares water quality in two ponds.",
+      "Help with funding",
+      "No, I mean borrowing equipment, not money."
+    ],
+    "topic": "ressourcen",
+    "source": "services/ressourcen",
+    "facts": [
+      "equipment|instrument"
+    ],
+    "forbid": [
+      "keine gesicherte Information",
+      "don.t have verified information",
+      "submitted|eingereicht|approved|genehmigt"
+    ],
+    "unknown": "Visitor-owned idea; no feasibility, funding, equipment availability or delivery is confirmed.",
+    "holdout": false
+  },
+  {
+    "id": "specific-project-question-en",
+    "lang": "en",
+    "turns": [
+      "Our class project needs a sensor. Can ForJu guarantee one is available next Friday?"
+    ],
+    "topic": "ressourcen",
+    "source": "services/ressourcen",
+    "facts": [
+      "confirm|not|ask",
+      "sensor|equipment"
+    ],
+    "forbid": [
+      "guaranteed available|reserved for you"
+    ],
+    "unknown": "Visitor-owned idea; no feasibility, funding, equipment availability or delivery is confirmed.",
+    "holdout": false
+  },
+  {
+    "id": "forju-projects-question-de",
+    "lang": "de",
+    "turns": [
+      "Welche Projekte gibt es bei ForJu?"
+    ],
+    "topic": "projekte",
+    "source": "projects",
+    "facts": [
+      "ForJu"
+    ],
+    "forbid": [
+      "keine gesicherte Information",
+      "don.t have verified information",
+      "submitted|eingereicht|approved|genehmigt"
+    ],
+    "unknown": "Visitor-owned idea; no feasibility, funding, equipment availability or delivery is confirmed.",
+    "holdout": false
+  },
+  {
+    "id": "unrelated-room-text-en",
+    "lang": "en",
+    "turns": [
+      "You can archive the room or move it to Trash in Access & ownership. Trashed rooms may be restored for 30 days."
+    ],
+    "topic": null,
+    "source": null,
+    "facts": [
+      "ForJu"
+    ],
+    "forbid": [
+      "research project|Measuring equipment|resources form"
+    ],
+    "unknown": "Visitor-owned idea; no feasibility, funding, equipment availability or delivery is confirmed.",
+    "holdout": false
+  },
+  {
+    "id": "hold-prototype-de",
+    "lang": "de",
+    "turns": [
+      "Meine Projektidee ist ein Solarladegerät für den Schulhof."
+    ],
+    "topic": null,
+    "source": null,
+    "facts": [
+      "\\?",
+      "project|Projekt"
+    ],
+    "forbid": [
+      "keine gesicherte Information",
+      "don.t have verified information",
+      "submitted|eingereicht|approved|genehmigt"
+    ],
+    "unknown": "Visitor-owned idea; no feasibility, funding, equipment availability or delivery is confirmed.",
+    "holdout": true
+  },
+  {
+    "id": "hold-history-project-en",
+    "lang": "en",
+    "turns": [
+      "Our history project explores how our neighbourhood has changed."
+    ],
+    "topic": null,
+    "source": null,
+    "facts": [
+      "\\?",
+      "project|Projekt"
+    ],
+    "forbid": [
+      "keine gesicherte Information",
+      "don.t have verified information",
+      "submitted|eingereicht|approved|genehmigt"
+    ],
+    "unknown": "Visitor-owned idea; no feasibility, funding, equipment availability or delivery is confirmed.",
+    "holdout": true
+  },
+  {
+    "id": "fresh-relative-de",
+    "lang": "de",
+    "turns": [
+      "Unser Forschungsprojekt vergleicht, wie Pflanzen im Schatten und in der Sonne wachsen."
+    ],
+    "topic": null,
+    "source": null,
+    "facts": [
+      "\\?",
+      "project|Projekt"
+    ],
+    "forbid": [
+      "keine gesicherte Information",
+      "don.t have verified information",
+      "submitted|eingereicht|approved|genehmigt"
+    ],
+    "unknown": "Visitor-owned idea; no feasibility, funding, equipment availability or delivery is confirmed.",
+    "holdout": true
+  },
+  {
+    "id": "fresh-observation-en",
+    "lang": "en",
+    "turns": [
+      "My science project investigates why leaves change colour."
+    ],
+    "topic": null,
+    "source": null,
+    "facts": [
+      "\\?",
+      "project|Projekt"
+    ],
+    "forbid": [
+      "keine gesicherte Information",
+      "don.t have verified information",
+      "submitted|eingereicht|approved|genehmigt"
+    ],
+    "unknown": "Visitor-owned idea; no feasibility, funding, equipment availability or delivery is confirmed.",
+    "holdout": true
+  }
+]

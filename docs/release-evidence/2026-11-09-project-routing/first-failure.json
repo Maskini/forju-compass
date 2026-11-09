@@ -1,0 +1,19 @@
+{
+  "id": "project-hold-history-project-en",
+  "questions": [
+    "Our history project explores how our neighbourhood has changed."
+  ],
+  "answers": [
+    {
+      "mode": "library",
+      "topic": "einreichen",
+      "answer": "Use the official project form to introduce your diploma, bachelor’s or master’s thesis, or research project. It asks for your name, email and message; the subject is optional. Briefly describe your idea so the ForJu team can get back to you. The form does not confirm funding or acceptance of the project.",
+      "sources": [
+        {
+          "title": "Submit a research project",
+          "url": "https://forju.at/en/kontakt?intent=projekt"
+        }
+      ]
+    }
+  ]
+}

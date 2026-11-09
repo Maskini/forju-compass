@@ -54,6 +54,21 @@ async function scan(page,info,state){
 }
 for(const widget of [false,true]){
   const surface=widget?'embedded':'standalone';
+  test(surface+' / Project form: prefill from an understood project description',async({page})=>{
+    const panel=await visit(page,widget,'de');
+    const idea='Unser Klassenprojekt untersucht das Wasser im Schulteich.';
+    const first=await ask(panel,widget,idea);
+    await expect(first).toContainText('Wobei brauchst du für dein Projekt gerade Hilfe');
+    await expect(first).not.toContainText('keine gesicherte Information');
+    await panel.getByRole('button',{name:'Ein Messgerät',exact:true}).click();
+    await expect(panel.getByRole('link',{name:/^Ressourcen(?: ↗)?$/}).last()).toHaveAttribute('href','https://forju.at/de/services/ressourcen');
+    await panel.locator('.draft-launch').click();
+    const form=panel.locator('.project-draft dialog');
+    await expect(form.getByLabel('Kurze Beschreibung',{exact:true})).toHaveValue(idea);
+    await form.getByRole('button',{name:/Zurück zum Chat/}).click();
+    await expect(form).not.toBeVisible();
+    await expect(panel.getByRole('button',{name:'Ein Messgerät',exact:true})).toHaveCount(0);
+  });
   test(surface+' / teacher books with the published workshop contact',async({page,context})=>{
     const panel=await visit(page,widget,'de');
     await ask(panel,widget,'Wir suchen einen Schulworkshop zu Konflikten für unsere Klasse.');

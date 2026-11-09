@@ -43,6 +43,18 @@ const phrases:Record<Intent,string[]> = {
   next:["Wie geht es jetzt weiter","was mache ich jetzt","Und dann","was sollen wir als nächstes tun","what now","what's next","how do I get started with that","what do we do next","what's the next step","where do I send the details","where should I send that","wohin schicke ich die Angaben","an wen soll ich schreiben"]
 };
 function normalize(s:string) {return s.toLowerCase().normalize("NFKD").replace(/\p{M}/gu,"").replace(/ß/g,"ss").replace(/[’']/g,"").replace(/[^\p{L}\p{N}]+/gu," ").trim();}
+function describesOwnProject(message:string) {
+  // A visitor's idea is context, not a claim to look up in ForJu's catalog.
+  // Leave concrete questions and requests with the existing offer handlers.
+  if (message.includes("?")) return false;
+  const text=normalize(message);
+  if (/^(?:wer|was|wie|wo|wann|welche\w*|who|what|how|where|when|which)\b/.test(text)) return false;
+  if (/\b(?:can|could|need|brauche\w*|suchen|suche|ausleih\w*|borrow\w*|funding|finanzier\w*|forder\w*|kosten\w*|costs?|fees?|deadline|frist|einreich\w*|submit\w*|schreib\w*|write|draft|formular|form)\b/.test(text)) return false;
+  const project="(?:[\\p{L}]*projekt(?:idee)?|project(?: idea)?|projet)";
+  const owned=new RegExp("\\b(?:mein\\w*|unser\\w*|my|our) (?:[\\p{L}\\p{N}]+ ){0,3}"+project+"\\b", "u");
+  const developing=new RegExp("\\b(?:ich habe|wir haben|ich arbeite|wir arbeiten|i am working|im working|we are working|were working) (?:[\\p{L}\\p{N}]+ ){0,5}"+project+"\\b", "u");
+  return owned.test(text) || developing.test(text);
+}
 const filler = new Set("ich wir du das der die den dem ein einen einem etwas bitte denn mal und i im am we do can could you me my our a an the please that it to for fur meine mein unser unsere".split(" "));
 function tokens(s:string){return normalize(s).split(" ").filter(w=>w && !filler.has(w));}
 type Example = {id:number;intent:Intent;words:string[]};
@@ -90,6 +102,7 @@ export function guidedReply(message:string,en:boolean,history:ChatMessage[],reco
   const lang=en?1:0, last=history.filter(t=>t.role==="assistant").at(-1)?.content;
   const menu=(Object.values(menus)).find(m=>m.ask.some(s=>s===last));
   const offer=(id:Menu):Reply=>({mode:"conversation",answer:menus[id].ask[lang],sources:[],suggestions:menus[id].options.map(o=>labels[o][lang])});
+  if (describesOwnProject(message)) return offer("project");
   // A deictic request without an earlier subject needs the existing topic menu.
   if (!history.length && /^(?:can (?:you|forju) help(?: me| us)? with (?:that|this|it)|kannst du (?:mir|uns) (?:damit|dabei) helfen)[?!. ]*$/i.test(message)) {
     return offer("start");
