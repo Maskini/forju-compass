@@ -84,7 +84,7 @@ test('configuration requires the fixed server receiver and a valid sender', () =
 test('production feedback uses a domain sender and ForJu receiver independently of account login', () => {
   const env = {NODE_ENV:'production',RESEND_API_KEY:'fake',FEEDBACK_FROM_EMAIL:'compass@example.org',FEEDBACK_TO_EMAIL:'adam.maskini@forju.at'};
   assert.deepEqual(email.feedbackEmailConfig(env),{key:'fake',from:'compass@example.org',to:'adam.maskini@forju.at'});
-  for (const patch of [{FEEDBACK_TO_EMAIL:'adam.maskini@icloud.com'},{FEEDBACK_TO_EMAIL:'other@example.org'},{FEEDBACK_FROM_EMAIL:'onboarding@resend.dev'},{FEEDBACK_FROM_EMAIL:'other@resend.dev'}]) assert.throws(()=>email.feedbackEmailConfig({...env,...patch}),email.FeedbackConfigurationError);
+  for (const patch of [{FEEDBACK_TO_EMAIL:'other@example.org'},{FEEDBACK_FROM_EMAIL:'onboarding@resend.dev'},{FEEDBACK_FROM_EMAIL:'other@resend.dev'}]) assert.throws(()=>email.feedbackEmailConfig({...env,...patch}),email.FeedbackConfigurationError);
 });
 
 test('SDK receives server sender/receiver, optional Reply-To and idempotency; rejection is surfaced', async () => {
@@ -103,16 +103,19 @@ test('SDK receives server sender/receiver, optional Reply-To and idempotency; re
   } finally { for (const name of names) if (original[name] === undefined) delete process.env[name]; else process.env[name] = original[name]; }
 });
 
-test('iCloud test delivery is explicitly enabled only in development', () => {
-  const env = { NODE_ENV: 'development', FEEDBACK_LOCAL_TEST: 'true', RESEND_API_KEY: 'test-key', FEEDBACK_FROM_EMAIL: 'onboarding@resend.dev', FEEDBACK_TO_EMAIL: 'adam.maskini@icloud.com' };
-  assert.equal(email.feedbackEmailConfig(env).to, 'adam.maskini@icloud.com');
-  for (const patch of [{ NODE_ENV: 'production' }, { FEEDBACK_LOCAL_TEST: '' }, { FEEDBACK_FROM_EMAIL: 'unverified@example.com' }, { FEEDBACK_TO_EMAIL: 'other@example.com' }]) assert.throws(() => email.feedbackEmailConfig({ ...env, ...patch }), email.FeedbackConfigurationError);
+test('both environments can use the explicitly selected iCloud account inbox', () => {
+  for (const NODE_ENV of ['development','production']) {
+    const env = { NODE_ENV, RESEND_API_KEY:'test-key', FEEDBACK_FROM_EMAIL:'onboarding@resend.dev', FEEDBACK_TO_EMAIL:'adam.maskini@icloud.com' };
+    assert.equal(email.feedbackEmailConfig(env).to,'adam.maskini@icloud.com');
+    assert.equal(email.feedbackEmailConfig({...env,FEEDBACK_FROM_EMAIL:'team@example.org'}).to,'adam.maskini@icloud.com');
+    for (const patch of [{FEEDBACK_TO_EMAIL:'adam.maskini@forju.at'},{FEEDBACK_TO_EMAIL:'other@example.org'},{FEEDBACK_TO_EMAIL:''},{FEEDBACK_FROM_EMAIL:'other@resend.dev'}]) assert.throws(()=>email.feedbackEmailConfig({...env,...patch}),email.FeedbackConfigurationError);
+  }
 });
 
-test('obsolete public demo settings cannot send visitor reports to iCloud', () => {
-  const env = { NODE_ENV: 'production', FEEDBACK_DEMO_MODE: 'true', RESEND_API_KEY: 'test-key', FEEDBACK_FROM_EMAIL: 'onboarding@resend.dev', FEEDBACK_TO_EMAIL: 'adam.maskini@icloud.com' };
-  assert.throws(() => email.feedbackEmailConfig(env), email.FeedbackConfigurationError);
-  for (const patch of [{ FEEDBACK_DEMO_MODE: '' }, { FEEDBACK_FROM_EMAIL: 'other@example.com' }, { FEEDBACK_TO_EMAIL: 'other@example.com' }]) assert.throws(() => email.feedbackEmailConfig({ ...env, ...patch }), email.FeedbackConfigurationError);
+test('obsolete flags cannot override the configured recipient or enable a sandbox ForJu send', () => {
+  const env = { NODE_ENV:'production', FEEDBACK_DEMO_MODE:'true', FEEDBACK_LOCAL_TEST:'true', RESEND_API_KEY:'test-key', FEEDBACK_FROM_EMAIL:'onboarding@resend.dev', FEEDBACK_TO_EMAIL:'adam.maskini@forju.at' };
+  assert.throws(()=>email.feedbackEmailConfig(env),email.FeedbackConfigurationError);
+  assert.throws(()=>email.feedbackEmailConfig({...env,FEEDBACK_TO_EMAIL:undefined}),email.FeedbackConfigurationError);
 });
 
 test('embedded reports allow one selected exchange on the public origin',async()=>{

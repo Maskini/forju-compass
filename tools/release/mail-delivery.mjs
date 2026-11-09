@@ -9,14 +9,18 @@ import {tmpdir} from 'node:os';
 import {join} from 'node:path';
 import assert from 'node:assert/strict';
 
+const iCloud=process.argv.includes('--icloud');
+const recipient=iCloud?'adam.maskini@icloud.com':'adam.maskini@forju.at';
+const sender=iCloud?'onboarding@resend.dev':'compass@example.test';
+const outputPath=process.argv.slice(2).find(arg=>arg!=='--icloud');
 const inbox=new Map(),attempts=[],results=[];
 const receiver=http.createServer(async(req,res)=>{
   const json=(status,body)=>{res.writeHead(status,{'content-type':'application/json'});res.end(JSON.stringify(body))};
   if(req.url!=='/emails'||req.method!=='POST'||req.headers.authorization!=='Bearer re_local_fixture')return json(403,{message:'Not a fixture request'});
   let raw='';for await(const chunk of req)raw+=chunk;
   const mail=JSON.parse(raw),key=req.headers['idempotency-key'];
-  assert.deepEqual(mail.to,['adam.maskini@forju.at']);
-  assert.equal(mail.from,'compass@example.test');
+  assert.deepEqual(mail.to,[recipient]);
+  assert.equal(mail.from,sender);
   attempts.push(key);
   if(!inbox.has(key)){
     inbox.set(key,{id:crypto.randomUUID(),mail});
@@ -30,8 +34,8 @@ const temp=await mkdtemp(join(tmpdir(),'compass-mail-'));
 const origin='http://127.0.0.1:4273';
 const server=spawn(process.execPath,['node_modules/next/dist/bin/next','start','-H','127.0.0.1','-p','4273'],{
   env:{...process.env,NODE_ENV:'production',COMPASS_LOCAL_ONLY:'true',OPENAI_API_KEY:'',RESEND_API_KEY:'re_local_fixture',
-    RESEND_BASE_URL:provider,FEEDBACK_TO_EMAIL:'adam.maskini@forju.at',FEEDBACK_FROM_EMAIL:'compass@example.test',
-    PROJECT_FROM_EMAIL:'compass@example.test',FEEDBACK_DEMO_MODE:'false',FEEDBACK_LOCAL_TEST:'false',
+    RESEND_BASE_URL:provider,FEEDBACK_TO_EMAIL:recipient,FEEDBACK_FROM_EMAIL:sender,
+    PROJECT_FROM_EMAIL:sender,FEEDBACK_DEMO_MODE:'false',FEEDBACK_LOCAL_TEST:'false',
     COMPASS_QUOTA_DB:join(temp,'quota.sqlite'),RENDER_EXTERNAL_URL:origin},stdio:['ignore','pipe','pipe']
 });
 let logs='';server.stdout.on('data',x=>{logs+=x});server.stderr.on('data',x=>{logs+=x});
@@ -59,7 +63,7 @@ try{
   }
   assert.equal(inbox.size,4);assert.equal(attempts.length,8);
   const evidence={scope:'local production routes with simulated provider, no external email',results,messages:inbox.size,attempts:attempts.length};
-  if(process.argv[2])await writeFile(process.argv[2],JSON.stringify(evidence,null,2)+'\n');
+  if(outputPath)await writeFile(outputPath,JSON.stringify(evidence,null,2)+'\n');
   console.log(JSON.stringify(evidence,null,2));
 }finally{
   const closed=once(server,'exit');server.kill('SIGTERM');await closed;

@@ -10,12 +10,13 @@ export function feedbackEmailConfig(env = process.env) {
   const key = env.RESEND_API_KEY?.trim();
   const from = env.FEEDBACK_FROM_EMAIL?.trim();
   const to = env.FEEDBACK_TO_EMAIL?.trim();
-  // Never route a deployed visitor report to the former iCloud demo inbox.
-  const localTest = env.NODE_ENV === "development" && env.FEEDBACK_LOCAL_TEST === "true";
+  // The operator chooses one approved inbox on the server. Never fall back or
+  // accept a recipient supplied by a visitor. Resend's sandbox can send only to
+  // the existing account-owner inbox, which is iCloud for this deployment.
   const sandboxSender = Boolean(from && /@(?:[^@]+\.)?resend\.dev$/i.test(from));
-  const validRecipient = localTest
-    ? to === "adam.maskini@icloud.com" && from === "onboarding@resend.dev"
-    : to === "adam.maskini@forju.at" && !sandboxSender;
+  const approvedRecipient = to === "adam.maskini@icloud.com" || to === "adam.maskini@forju.at";
+  const validRecipient = approvedRecipient && (!sandboxSender ||
+    (to === "adam.maskini@icloud.com" && from === "onboarding@resend.dev"));
   if (!key || !from || !to || !z.email().safeParse(from).success || !validRecipient) {
     throw new FeedbackConfigurationError("Configure RESEND_API_KEY, FEEDBACK_FROM_EMAIL (verified sender) and FEEDBACK_TO_EMAIL in the server environment.");
   }

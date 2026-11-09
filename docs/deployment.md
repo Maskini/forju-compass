@@ -46,28 +46,27 @@ Optional server-only configuration:
 - FEEDBACK_IP_HEADER: only a header the hosting proxy reliably overwrites.
 - KNOWLEDGE_FEEDBACK_DIR: requires durable private storage; omit on free Render.
 
-The Blueprint defaults to adam.maskini@forju.at with the old iCloud demo mode
-disabled. Existing Render environment values must also be updated; a Git push
-alone does not prove the dashboard settings changed. Do not change ForJu DNS.
-
-The Resend login email is independent of the message recipient. Keep the account
-email unchanged. Configure both forms with a sender on a domain already verified
-in the existing Resend account; that sender domain need not be forju.at:
+Both forms currently deliver to **adam.maskini@icloud.com**, as requested on
+9 November 2026. This is the existing Resend account-owner inbox, so the existing
+sandbox sender works without changing the account email or ForJu DNS.
 
 ```dotenv
-FEEDBACK_TO_EMAIL=adam.maskini@forju.at
-FEEDBACK_FROM_EMAIL=your_verified_sender_address
-PROJECT_FROM_EMAIL=your_verified_sender_address
-FEEDBACK_DEMO_MODE=false
+FEEDBACK_TO_EMAIL=adam.maskini@icloud.com
+FEEDBACK_FROM_EMAIL=onboarding@resend.dev
+PROJECT_FROM_EMAIL=onboarding@resend.dev
 ```
 
-The sender entries above are placeholders, not usable sender addresses. Do not
-enable delivery until the provider has verified the actual sender domain. The
-onboarding@resend.dev sandbox sender is not suitable for this recipient setup.
-After configuration, submit one labelled report and one labelled project when
-authorized, check provider acceptance and delivery, then verify the intended
-mailbox. Never send to iCloud as a fallback or change the login email to work
-around sender verification.
+Keep the existing RESEND_API_KEY in Render's private environment settings.
+The legacy FEEDBACK_DEMO_MODE and FEEDBACK_LOCAL_TEST flags are ignored. The
+configured recipient applies equally to reporting and project inquiries.
+Existing Render environment values must also match; a Git push alone does not
+prove the dashboard settings changed. Changing these values requires a restart
+or redeploy. Missing or invalid recipient configuration fails closed.
+
+To switch to adam.maskini@forju.at later, first obtain an authorized sender on a
+Resend-verified domain, then set FEEDBACK_TO_EMAIL to that ForJu address and both
+FROM settings to the verified sender. Never silently fall back to another inbox.
+The recipient is independent of the Resend login email; keep that login unchanged.
 
 NODE_ENV=production and NODE_VERSION are set by the Blueprint. Secret values
 must only be supplied through Render's private environment settings, never Git.
@@ -80,13 +79,12 @@ feedback delivery separately with an authorized recipient if enabling email.
 
 ### Project draft email
 On Review, **Send / Senden** submits the edited draft and optional reply address to
-the server. The server sets the recipient to adam.maskini@forju.at; it never
+the server. The server uses the same FEEDBACK_TO_EMAIL as reporting; it never
 accepts a visitor-specified recipient or forwards the conversation.
 
-Set `PROJECT_FROM_EMAIL` on Render to a sender on a domain verified for the
-existing Resend key. A non-sandbox `FEEDBACK_FROM_EMAIL` can also serve as the
-sender if the project-specific setting is absent. Keep the existing Resend login
-unchanged. No changes to the official ForJu website are necessary.
+`PROJECT_FROM_EMAIL` can override the feedback sender; if absent, it reuses
+`FEEDBACK_FROM_EMAIL`. The sandbox sender is permitted only with the approved
+iCloud recipient. A ForJu recipient requires a verified domain sender.
 
 After saving the setting and redeploying, GET `/api/project-submission` should
 return `{"direct":true}`. This checks configuration, not delivery. When the sender is unavailable, the form shows its status and keeps the draft

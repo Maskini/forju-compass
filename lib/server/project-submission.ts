@@ -4,22 +4,25 @@ import {Resend} from "resend";
 import {z} from "zod";
 import {PROJECT_MAX_LENGTH} from "../project-mail";
 import {BodyError,readBody} from "./request-body.mjs";
+import {feedbackEmailConfig,FeedbackConfigurationError} from "./feedback-email";
 
-const PROJECT_RECIPIENT = "adam.maskini@forju.at";
 const projectSubject = (lang:"de"|"en") => lang==="de" ? "[ForJu Compass] Projektanfrage" : "[ForJu Compass] Project enquiry";
 
 export function projectMailConfig(env=process.env){
-  const key=env.RESEND_API_KEY?.trim(),from=env.PROJECT_FROM_EMAIL?.trim() || env.FEEDBACK_FROM_EMAIL?.trim();
-  const sandboxSender=Boolean(from && /@(?:[^@]+\.)?resend\.dev$/i.test(from));
-  return key && from && z.email().safeParse(from).success && !sandboxSender ? {key,from} : null;
+  try {
+    return feedbackEmailConfig({...env,FEEDBACK_FROM_EMAIL:env.PROJECT_FROM_EMAIL?.trim() || env.FEEDBACK_FROM_EMAIL});
+  } catch (error) {
+    if(error instanceof FeedbackConfigurationError)return null;
+    throw error;
+  }
 }
 const payload=z.strictObject({confirmed:z.literal(true),language:z.enum(["de","en"]),draft:z.string().trim().min(1).max(PROJECT_MAX_LENGTH),replyEmail:z.email().max(254).optional()});
 type Payload=z.infer<typeof payload>;
-export async function deliverProject(config:{from:string;key:string},p:Payload,key:string){
+export async function deliverProject(config:{from:string;key:string;to:string},p:Payload,key:string){
   let timer:ReturnType<typeof setTimeout>|undefined;
   try{
     const result=await Promise.race([
-      new Resend(config.key).emails.send({from:config.from,to:[PROJECT_RECIPIENT],subject:projectSubject(p.language),text:p.draft,...(p.replyEmail?{replyTo:p.replyEmail}:{})},{idempotencyKey:key}),
+      new Resend(config.key).emails.send({from:config.from,to:[config.to],subject:projectSubject(p.language),text:p.draft,...(p.replyEmail?{replyTo:p.replyEmail}:{})},{idempotencyKey:key}),
       new Promise<never>((_,reject)=>{timer=setTimeout(()=>reject(new Error("timeout")),15000)})
     ]);
     return !result.error && !!result.data?.id;
