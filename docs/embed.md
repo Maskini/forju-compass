@@ -17,6 +17,12 @@ The launcher follows the host document’s `lang`. It starts collapsed. Set
 `data-welcome="open"` to display the welcome card on load. Desktop chat opens
 as a compact floating panel, with controls to expand, restore or minimize it.
 Visitors can scroll and click the host page alongside either desktop size.
+On desktop, drag the compact chat by its logo/header to move it. The same
+handle supports arrow keys (Shift for larger steps), Home to reset, and a click
+menu with Left, Right and Reset position. The position is kept in this page's
+memory when minimized or expanded, and stays within the viewport after resizing.
+Project forms keep their centered dialog layout; closing them restores the chat
+position. Nothing about the position is stored or sent to the server.
 Phones use a full-screen chat. Reopening the launcher resumes the exchange. The conversation lasts until the host
 document reloads. The same panel is also available on its own at
 `/embed?lang=en` or `/embed?lang=de`; all surfaces use `/api/chat`.

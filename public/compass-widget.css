@@ -69,6 +69,22 @@ button:focus-visible, a:focus-visible { outline: 3px solid #ff3aae; outline-offs
 }
 .drawer::backdrop { background: #2d1e1e55; }
 .drawer iframe { display: block; width: 100%; height: 100%; border: 0; }
+.move {
+  position: absolute; z-index: 2; top: 8px; left: 8px; right: 144px; height: 44px;
+  padding: 0; border-radius: 12px; background: transparent; cursor: grab;
+  touch-action: none; user-select: none;
+}
+.move:focus-visible { outline-offset: -2px; }
+.drawer[data-dragging] .move { cursor: grabbing; }
+.drawer[data-dragging] iframe { pointer-events: none; }
+.positions {
+  position: absolute; z-index: 3; top: 60px; left: 12px; right: 12px;
+  display: flex; flex-wrap: wrap; gap: 6px; padding: 10px;
+  border: 1px solid #e6dcd4; border-radius: 16px; background: #fffaf6;
+  box-shadow: 0 3px 12px #32202138;
+}
+.position { min-height: 40px; padding: 7px 14px; border-radius: 999px; background: #f1cee2; color: #861456; font-size: 14px; }
+.position:hover { background: #ebbbd5; }
 .dismiss, .close, .resize, .clear {
   position: absolute; top: 8px; right: 8px; z-index: 2; display: grid; place-items: center; width: 44px; height: 44px;
   border-radius: 14px; background: transparent; color: #614b4b; font: 24px/1 Arial,sans-serif;

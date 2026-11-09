@@ -620,3 +620,63 @@ for(const s of [{lang:'de',widget:true,width:1280},{lang:'en',widget:false,width
   await checkAccessibility(page,info);
  });
 }
+
+test('Floating widget: drag, keyboard positions, page scroll and resume across layouts',async({page,context,baseURL},info)=>{
+  await page.setViewportSize({width:1440,height:960});
+  const origin='https://compass.example.test',hostURL='https://www.forju.at/moving-chat-preview';
+  await context.route(origin+'/**',async route=>{
+    const url=new URL(route.request().url());
+    if(route.request().method()!=='GET')return route.abort();
+    const response=await route.fetch({url:baseURL+url.pathname+url.search,maxRedirects:0});await route.fulfill({response});
+  });
+  await context.route(hostURL,route=>route.fulfill({contentType:'text/html; charset=utf-8',body:`<!doctype html><html lang="de"><title>Website-Vorschau</title><body style="margin:0;background:#fcf8f2"><main style="min-height:300vh;padding:40px"><h1>Website-Vorschau</h1><p>Eine separate Testseite für das verschiebbare Compass-Fenster.</p><button>Website-Aktion</button></main><script defer src="${origin}/compass-widget.js"></script></body></html>`}));
+  await page.goto(hostURL);
+  const host=page.locator('forju-compass-widget'),drawer=host.locator('.drawer'),handle=host.getByRole('button',{name:'Chat verschieben',exact:true});
+  await host.locator('.launcher').click();await host.locator('.welcome .start').click();
+  const panel=host.frameLocator('iframe'),input=panel.getByRole('textbox',{name:'Deine Frage',exact:true});
+  await input.fill('Noch nicht gesendete Schulworkshop-Frage');
+  const before=await drawer.boundingBox(),grip=await handle.boundingBox();
+  await page.mouse.move(grip.x+grip.width/2,grip.y+grip.height/2);await page.mouse.down();
+  await page.mouse.move(grip.x+grip.width/2-500,grip.y+grip.height/2+60,{steps:8});await page.mouse.up();
+  const moved=await drawer.boundingBox();expect(moved.x).toBeCloseTo(before.x-500,0);expect(moved.y).toBeCloseTo(before.y+60,0);
+  await page.screenshot({path:info.outputPath('moved-desktop.png')});
+  await expect(host.locator('.positions')).toBeHidden();
+  await expect(input).toHaveValue('Noch nicht gesendete Schulworkshop-Frage');
+  await page.mouse.move(100,450);await page.mouse.wheel(0,500);
+  await expect.poll(()=>page.evaluate(()=>scrollY)).toBeGreaterThan(0);
+  const afterScroll=await drawer.boundingBox();expect(afterScroll.x).toBeCloseTo(moved.x,0);expect(afterScroll.y).toBeCloseTo(moved.y,0);
+  await host.locator('.close').click();await host.locator('.launcher').click();
+  await expect.poll(async()=>(await drawer.boundingBox()).x).toBeCloseTo(moved.x,0);
+  await expect(input).toHaveValue('Noch nicht gesendete Schulworkshop-Frage');
+  await host.getByRole('button',{name:'Chat vergrößern',exact:true}).click();await expect(handle).toBeHidden();
+  await host.getByRole('button',{name:'Chat verkleinern',exact:true}).click();
+  await expect.poll(async()=>(await drawer.boundingBox()).x).toBeCloseTo(moved.x,0);
+  await handle.focus();await handle.press('ArrowLeft');await handle.press('ArrowUp');
+  const keyed=await drawer.boundingBox();expect(keyed.x).toBeCloseTo(moved.x-16,0);expect(keyed.y).toBeCloseTo(moved.y-16,0);
+  // A click alternative supports people who cannot drag.
+  await handle.click();await host.getByRole('button',{name:'Links',exact:true}).click();
+  expect((await drawer.boundingBox()).x).toBe(12);await expect(handle).toBeFocused();
+  await handle.click();await handle.press('Escape');await expect(drawer).toBeVisible();await expect(host.locator('.positions')).toBeHidden();
+  // Project dialogs keep their own centered layout; returning restores position.
+  await panel.getByRole('button',{name:'Projekt vorstellen →',exact:true}).click();
+  await expect(drawer).toHaveAttribute('data-draft','');await expect(handle).toBeHidden();
+  await panel.getByRole('button',{name:'← Zurück zum Chat',exact:true}).click();
+  await expect(drawer).not.toHaveAttribute('data-draft','');expect((await drawer.boundingBox()).x).toBe(12);
+  await expect(input).toHaveValue('Noch nicht gesendete Schulworkshop-Frage');
+  // Clamp a moved window after resizing, so close and input remain reachable.
+  await handle.click();await host.getByRole('button',{name:'Rechts',exact:true}).click();
+  await page.setViewportSize({width:800,height:650});
+  await expect.poll(async()=>{const b=await drawer.boundingBox();return b.x+b.width}).toBeLessThanOrEqual(800);
+  let bounds=await drawer.boundingBox();expect(bounds.x).toBeGreaterThanOrEqual(0);expect(bounds.y+bounds.height).toBeLessThanOrEqual(650);
+  await expect(host.locator('.close')).toBeInViewport();await expect(input).toBeInViewport();
+  await page.setViewportSize({width:390,height:844});await expect(handle).toBeHidden();
+  bounds=await drawer.boundingBox();expect(bounds.x).toBe(0);expect(bounds.width).toBe(390);
+  await expect(input).toHaveValue('Noch nicht gesendete Schulworkshop-Frage');await expect(input).toBeInViewport();
+  expect(await page.evaluate(()=>document.body.style.overflowY)).toBe('hidden');
+  await host.locator('.close').click();expect(await page.evaluate(()=>document.body.style.overflowY)).toBe('');
+  await page.setViewportSize({width:1440,height:960});await host.locator('.launcher').click();
+  await handle.focus();await handle.press('Home');
+  expect((await drawer.boundingBox()).x).toBeCloseTo(before.x,0);
+  await info.attach('movable-widget.png',{body:await page.screenshot(),contentType:'image/png'});
+  await checkAccessibility(page,info);
+});

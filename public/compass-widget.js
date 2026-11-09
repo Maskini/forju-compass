@@ -49,6 +49,20 @@
   image("compass-mark.webp","star",seal);
   const dialog=el("dialog","drawer",root);dialog.setAttribute("aria-label","ForJu Compass");
   dialog.id = "compass-conversation";
+  // A host-side handle covers only the iframe's non-interactive logo area.
+  // Pointer capture lets the drag continue across the cross-origin iframe.
+  const move = button("move",dialog,event=>{
+    if (suppressMoveClick && event.detail !== 0) { suppressMoveClick=false; return; }
+    togglePositions(positions.hidden);
+  });
+  const positions=el("div","positions",dialog);positions.hidden=true;positions.id="compass-positions";
+  positions.setAttribute("role","group");
+  move.setAttribute("aria-controls",positions.id);move.setAttribute("aria-expanded","false");
+  const positionButtons=["left","right","reset"].map(side=>button("position",positions,()=>{
+    const bounds=dialog.getBoundingClientRect();
+    position=side==="reset"?null:{x:side==="left"?12:window.innerWidth-bounds.width-12,y:bounds.top};
+    paintPosition();togglePositions(false);move.focus({preventScroll:true});
+  }));
   const resize = button("resize", dialog, () => {
     expanded = !expanded;
     applyLayout();
@@ -85,12 +99,75 @@
       dialog.style.top=viewport.offsetTop+"px";
     } else {
       dialog.style.removeProperty("height");
-      dialog.style.removeProperty("top");
+      if(!canMove() || !position)dialog.style.removeProperty("top");
     }
   }
   const phone = window.matchMedia("(max-width:640px)");
   let ready = false, queued = null, started = false, expanded = false;
   let savedOverflow = null;
+  let position=null, drag=null, suppressMoveClick=false;
+  function canMove(){
+    return dialog.open && !phone.matches && !expanded &&
+      !["data-draft","data-report","data-clear"].some(name=>dialog.hasAttribute(name));
+  }
+  function paintPosition(){
+    if(canMove() && position){
+      const bounds=dialog.getBoundingClientRect(),gap=12;
+      position.x=Math.max(gap,Math.min(position.x,window.innerWidth-bounds.width-gap));
+      position.y=Math.max(gap,Math.min(position.y,window.innerHeight-bounds.height-gap));
+      Object.assign(dialog.style,{left:position.x+"px",top:position.y+"px",right:"auto",bottom:"auto"});
+    } else {
+      for(const property of ["left","top","right","bottom"])dialog.style.removeProperty(property);
+    }
+  }
+  function togglePositions(show){
+    positions.hidden=!show || !canMove();
+    move.setAttribute("aria-expanded",String(!positions.hidden));
+  }
+  function finishDrag(cancel=false){
+    if(!drag)return;
+    const previous=drag;
+    drag=null;
+    if(cancel){position=previous.position;paintPosition();}
+    suppressMoveClick=previous.moved;
+    dialog.removeAttribute("data-dragging");
+    if(move.hasPointerCapture(previous.id))move.releasePointerCapture(previous.id);
+  }
+  move.addEventListener("pointerdown",event=>{
+    if(!canMove() || !event.isPrimary || event.button!==0)return;
+    const bounds=dialog.getBoundingClientRect();
+    drag={id:event.pointerId,x:event.clientX,y:event.clientY,left:bounds.left,top:bounds.top,position:position?{...position}:null,moved:false};
+    suppressMoveClick=false;
+    move.setPointerCapture(event.pointerId);
+  });
+  move.addEventListener("pointermove",event=>{
+    if(!drag || event.pointerId!==drag.id)return;
+    const x=event.clientX-drag.x,y=event.clientY-drag.y;
+    if(!drag.moved && Math.hypot(x,y)<4)return;
+    event.preventDefault();drag.moved=true;togglePositions(false);
+    dialog.setAttribute("data-dragging","");
+    position={x:drag.left+x,y:drag.top+y};paintPosition();
+  });
+  move.addEventListener("pointerup",()=>finishDrag());
+  move.addEventListener("pointercancel",()=>finishDrag(true));
+  move.addEventListener("lostpointercapture",()=>finishDrag());
+  move.addEventListener("keydown",event=>{
+    const vectors={ArrowLeft:[-1,0],ArrowRight:[1,0],ArrowUp:[0,-1],ArrowDown:[0,1]};
+    if(!canMove() || (!vectors[event.key] && event.key!=="Home"))return;
+    event.preventDefault();togglePositions(false);
+    if(event.key==="Home")position=null;
+    else{
+      const bounds=dialog.getBoundingClientRect(),step=event.shiftKey?40:16,[x,y]=vectors[event.key];
+      position={x:bounds.left+x*step,y:bounds.top+y*step};
+    }
+    paintPosition();
+  });
+  document.addEventListener("pointerdown",event=>{
+    if(!positions.hidden && !event.composedPath().includes(positions) && !event.composedPath().includes(move))togglePositions(false);
+  });
+  window.addEventListener("resize",()=>{
+    if(dialog.open){finishDrag();paintPosition();fitViewport();}
+  });
   function language(){return (script.dataset.lang||document.documentElement.lang||"de").toLowerCase().startsWith("en")?"en":"de";}
   function send(){if(ready){frame.contentWindow.postMessage({type:"forju:open",lang:language(),topic:queued},origin);queued=null;}}
   function render(){
@@ -107,12 +184,18 @@
     updateControls();
     close.ariaLabel=en?"Close chat":"Chat schlie\u00dfen";dismiss.ariaLabel=en?"Dismiss welcome":"Begr\u00fc\u00dfung schlie\u00dfen";
     clear.ariaLabel=en?"Clear conversation":"Gespr\u00e4ch l\u00f6schen";clear.title=clear.ariaLabel;
+    move.ariaLabel=en?"Move chat":"Chat verschieben";
+    move.title=en?"Drag to move. Use arrow keys, or click for positions.":"Zum Verschieben ziehen. Mit Pfeiltasten bewegen oder f\u00fcr Positionen klicken.";
+    positions.setAttribute("aria-label",en?"Chat position":"Chatposition");
+    positionButtons.forEach((b,i)=>{b.textContent=(en?["Left","Right","Reset position"]:["Links","Rechts","Position zur\u00fccksetzen"])[i];});
   }
   function updateControls() {
     const en = language() === "en";
     const draft = dialog.hasAttribute("data-draft");
     const report = dialog.hasAttribute("data-report");
     const clearing = dialog.hasAttribute("data-clear");
+    move.hidden = !canMove();
+    if(move.hidden){finishDrag();togglePositions(false);}
     resize.hidden = phone.matches || draft || report || clearing;
     close.hidden = draft || report || clearing;
     clear.hidden = !ready || draft || report || clearing;
@@ -160,6 +243,7 @@
       else dialog.show();
     }
     lockPage(modal);
+    paintPosition();
     updateControls();
     fitViewport();
     if (changingMode && wasInFrame) frame.focus({preventScroll:true});
@@ -184,6 +268,9 @@
     }
   });
   dialog.addEventListener("keydown", event => {
+    if(event.key==="Escape" && (drag || !positions.hidden)){
+      event.preventDefault();event.stopPropagation();finishDrag(true);togglePositions(false);move.focus({preventScroll:true});return;
+    }
     if (event.key === "Escape" && !dialog.hasAttribute("data-draft") && !dialog.hasAttribute("data-clear")) {
       event.preventDefault();
       closeChat();
@@ -220,6 +307,7 @@
   });
   function closeChat() {
     if (!dialog.open) return;
+    finishDrag();togglePositions(false);
     dialog.close();
     dialog.removeAttribute("data-draft");
     window.visualViewport?.removeEventListener("resize", fitViewport);
