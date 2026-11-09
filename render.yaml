@@ -24,7 +24,5 @@ services:
         value: adam.maskini@forju.at
       - key: FEEDBACK_FROM_EMAIL
         sync: false
-      - key: COMPASS_ACCOUNT_TEST_MODE
-        value: "false"
       - key: RESEND_API_KEY
         sync: false

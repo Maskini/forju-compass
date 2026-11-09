@@ -64,12 +64,11 @@ There is no database queue, delivery webhook, or automatic retry worker. Reports
 ## Designated test inbox
 
 The current requested receiver is adam.maskini@forju.at for both reports and
-project inquiries. No iCloud fallback is used in COMPASS_ACCOUNT_TEST_MODE.
-For the private account-owner trial, verify this address as the existing Resend
-account email, then follow docs/deployment.md to enable the explicit mode.
-It permits only onboarding@resend.dev and the fixed ForJu receiver. Resend must
-accept the account email; merely setting an environment variable cannot bypass
-that restriction. Public production delivery still needs a verified sender.
+project inquiries. No iCloud fallback is used in production. The Resend login
+email stays unchanged. Use a verified domain sender as described in
+docs/deployment.md; the sender's domain does not need to match the receiver's.
+If no verified sender is available, delivery is not ready. Do not change the
+account email as a substitute for configuring a sender.
 
 Legacy FEEDBACK_LOCAL_TEST supports the old iCloud fixture only in development.
 The former public FEEDBACK_DEMO_MODE no longer enables iCloud delivery. Keep

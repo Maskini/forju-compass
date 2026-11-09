@@ -11,11 +11,7 @@ const projectSubject = (lang:"de"|"en") => lang==="de" ? "[ForJu Compass] Projek
 export function projectMailConfig(env=process.env){
   const key=env.RESEND_API_KEY?.trim(),from=env.PROJECT_FROM_EMAIL?.trim() || env.FEEDBACK_FROM_EMAIL?.trim();
   const sandboxSender=Boolean(from && /@(?:[^@]+\.)?resend\.dev$/i.test(from));
-  const accountTest=env.COMPASS_ACCOUNT_TEST_MODE === "true";
-  const permittedSender=accountTest
-    ? from === "onboarding@resend.dev" && env.FEEDBACK_TO_EMAIL?.trim() === PROJECT_RECIPIENT
-    : !sandboxSender;
-  return key && from && z.email().safeParse(from).success && permittedSender ? {key,from} : null;
+  return key && from && z.email().safeParse(from).success && !sandboxSender ? {key,from} : null;
 }
 const payload=z.strictObject({confirmed:z.literal(true),language:z.enum(["de","en"]),draft:z.string().trim().min(1).max(PROJECT_MAX_LENGTH),replyEmail:z.email().max(254).optional()});
 type Payload=z.infer<typeof payload>;

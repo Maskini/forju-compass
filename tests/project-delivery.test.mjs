@@ -25,10 +25,10 @@ test("missing or sandbox sender disables direct mail",()=>{
  assert.equal(mod.projectMailConfig({RESEND_API_KEY:"fake",FEEDBACK_FROM_EMAIL:"team@example.org"}).from,"team@example.org");
  assert.equal(mod.projectMailConfig({RESEND_API_KEY:"fake",PROJECT_FROM_EMAIL:"demo@example.org"}).from,"demo@example.org");
 });
-test("explicit account-owner testing permits only the ForJu recipient and exact sandbox sender",()=>{
- const env={RESEND_API_KEY:"fake",COMPASS_ACCOUNT_TEST_MODE:"true",FEEDBACK_TO_EMAIL:"adam.maskini@forju.at",FEEDBACK_FROM_EMAIL:"onboarding@resend.dev"};
- assert.deepEqual(mod.projectMailConfig(env),{key:"fake",from:"onboarding@resend.dev"});
- for(const patch of [{COMPASS_ACCOUNT_TEST_MODE:"false"},{FEEDBACK_TO_EMAIL:"adam.maskini@icloud.com"},{FEEDBACK_TO_EMAIL:"other@example.org"},{FEEDBACK_TO_EMAIL:""},{FEEDBACK_FROM_EMAIL:"another@resend.dev"},{PROJECT_FROM_EMAIL:"another@resend.dev"},{FEEDBACK_FROM_EMAIL:"team@example.org"},{RESEND_API_KEY:""}])assert.equal(mod.projectMailConfig({...env,...patch}),null);
+test("project sender can use a different domain without changing the fixed ForJu receiver",()=>{
+ const env={RESEND_API_KEY:"fake",FEEDBACK_FROM_EMAIL:"compass@example.org"};
+ assert.deepEqual(mod.projectMailConfig(env),{key:"fake",from:"compass@example.org"});
+ for(const patch of [{FEEDBACK_FROM_EMAIL:"onboarding@resend.dev"},{FEEDBACK_FROM_EMAIL:"another@resend.dev"},{PROJECT_FROM_EMAIL:"another@resend.dev"},{RESEND_API_KEY:""}])assert.equal(mod.projectMailConfig({...env,...patch}),null);
 });
 test("no confirmation, alternative recipient, chat history, invalid reply-to, oversize or cross-site must not call transport",async()=>{
  for(const extra of [{confirmed:false},{to:"x@example.org"},{history:["private"]},{replyEmail:"bad"},{draft:"a".repeat(16001)}])assert.equal((await post(req({...body,...extra}))).status,400);

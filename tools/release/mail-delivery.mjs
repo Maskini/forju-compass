@@ -16,7 +16,7 @@ const receiver=http.createServer(async(req,res)=>{
   let raw='';for await(const chunk of req)raw+=chunk;
   const mail=JSON.parse(raw),key=req.headers['idempotency-key'];
   assert.deepEqual(mail.to,['adam.maskini@forju.at']);
-  assert.equal(mail.from,'onboarding@resend.dev');
+  assert.equal(mail.from,'compass@example.test');
   attempts.push(key);
   if(!inbox.has(key)){
     inbox.set(key,{id:crypto.randomUUID(),mail});
@@ -30,8 +30,8 @@ const temp=await mkdtemp(join(tmpdir(),'compass-mail-'));
 const origin='http://127.0.0.1:4273';
 const server=spawn(process.execPath,['node_modules/next/dist/bin/next','start','-H','127.0.0.1','-p','4273'],{
   env:{...process.env,NODE_ENV:'production',COMPASS_LOCAL_ONLY:'true',OPENAI_API_KEY:'',RESEND_API_KEY:'re_local_fixture',
-    RESEND_BASE_URL:provider,FEEDBACK_TO_EMAIL:'adam.maskini@forju.at',FEEDBACK_FROM_EMAIL:'onboarding@resend.dev',
-    PROJECT_FROM_EMAIL:'onboarding@resend.dev',COMPASS_ACCOUNT_TEST_MODE:'true',FEEDBACK_DEMO_MODE:'false',FEEDBACK_LOCAL_TEST:'false',
+    RESEND_BASE_URL:provider,FEEDBACK_TO_EMAIL:'adam.maskini@forju.at',FEEDBACK_FROM_EMAIL:'compass@example.test',
+    PROJECT_FROM_EMAIL:'compass@example.test',FEEDBACK_DEMO_MODE:'false',FEEDBACK_LOCAL_TEST:'false',
     COMPASS_QUOTA_DB:join(temp,'quota.sqlite'),RENDER_EXTERNAL_URL:origin},stdio:['ignore','pipe','pipe']
 });
 let logs='';server.stdout.on('data',x=>{logs+=x});server.stderr.on('data',x=>{logs+=x});

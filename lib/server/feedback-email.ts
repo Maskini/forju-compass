@@ -10,15 +10,10 @@ export function feedbackEmailConfig(env = process.env) {
   const key = env.RESEND_API_KEY?.trim();
   const from = env.FEEDBACK_FROM_EMAIL?.trim();
   const to = env.FEEDBACK_TO_EMAIL?.trim();
-  // Resend verifies the account owner itself. This opt-in is for a private
-  // delivery trial after the account email is changed to the ForJu recipient.
-  const accountTest = env.COMPASS_ACCOUNT_TEST_MODE === "true";
   // Never route a deployed visitor report to the former iCloud demo inbox.
   const localTest = env.NODE_ENV === "development" && env.FEEDBACK_LOCAL_TEST === "true";
   const sandboxSender = Boolean(from && /@(?:[^@]+\.)?resend\.dev$/i.test(from));
-  const validRecipient = accountTest
-    ? to === "adam.maskini@forju.at" && from === "onboarding@resend.dev"
-    : localTest
+  const validRecipient = localTest
     ? to === "adam.maskini@icloud.com" && from === "onboarding@resend.dev"
     : to === "adam.maskini@forju.at" && !sandboxSender;
   if (!key || !from || !to || !z.email().safeParse(from).success || !validRecipient) {

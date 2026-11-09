@@ -81,11 +81,10 @@ test('configuration requires the fixed server receiver and a valid sender', () =
   for (const env of [{}, { RESEND_API_KEY: 'test' }, { RESEND_API_KEY: 'test', FEEDBACK_FROM_EMAIL: 'feedback@example.com', FEEDBACK_TO_EMAIL: 'wrong@example.com' }]) assert.throws(() => email.feedbackEmailConfig(env), email.FeedbackConfigurationError);
 });
 
-test('account-owner testing is explicit and never redirects reports to iCloud', () => {
-  const env = {NODE_ENV:'production',COMPASS_ACCOUNT_TEST_MODE:'true',RESEND_API_KEY:'fake',FEEDBACK_FROM_EMAIL:'onboarding@resend.dev',FEEDBACK_TO_EMAIL:'adam.maskini@forju.at'};
-  assert.equal(email.feedbackEmailConfig(env).to,'adam.maskini@forju.at');
-  assert.equal(email.feedbackEmailConfig({...env,FEEDBACK_DEMO_MODE:'true'}).to,'adam.maskini@forju.at');
-  for (const patch of [{COMPASS_ACCOUNT_TEST_MODE:'false'},{FEEDBACK_TO_EMAIL:'adam.maskini@icloud.com'},{FEEDBACK_TO_EMAIL:'other@example.org'},{FEEDBACK_FROM_EMAIL:'other@resend.dev'},{FEEDBACK_FROM_EMAIL:'team@example.org'}]) assert.throws(()=>email.feedbackEmailConfig({...env,...patch}),email.FeedbackConfigurationError);
+test('production feedback uses a domain sender and ForJu receiver independently of account login', () => {
+  const env = {NODE_ENV:'production',RESEND_API_KEY:'fake',FEEDBACK_FROM_EMAIL:'compass@example.org',FEEDBACK_TO_EMAIL:'adam.maskini@forju.at'};
+  assert.deepEqual(email.feedbackEmailConfig(env),{key:'fake',from:'compass@example.org',to:'adam.maskini@forju.at'});
+  for (const patch of [{FEEDBACK_TO_EMAIL:'adam.maskini@icloud.com'},{FEEDBACK_TO_EMAIL:'other@example.org'},{FEEDBACK_FROM_EMAIL:'onboarding@resend.dev'},{FEEDBACK_FROM_EMAIL:'other@resend.dev'}]) assert.throws(()=>email.feedbackEmailConfig({...env,...patch}),email.FeedbackConfigurationError);
 });
 
 test('SDK receives server sender/receiver, optional Reply-To and idempotency; rejection is surfaced', async () => {
