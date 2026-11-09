@@ -105,6 +105,7 @@
   const phone = window.matchMedia("(max-width:640px)");
   let ready = false, queued = null, started = false, expanded = false;
   let savedOverflow = null;
+  let restoreLauncherFocus = true;
   let position=null, drag=null, suppressMoveClick=false;
   function canMove(){
     return dialog.open && !phone.matches && !expanded &&
@@ -303,10 +304,11 @@
   // dialog. Immediate focus alone can be lost during Firefox's close handling.
   // A layout change closes and reopens the dialog; do not steal focus then.
   dialog.addEventListener("close", () => {
-    if (!dialog.open) launcher.focus({preventScroll:true});
+    if (!dialog.open && restoreLauncherFocus) launcher.focus({preventScroll:true});
   });
-  function closeChat() {
+  function closeChat(restoreFocus=true) {
     if (!dialog.open) return;
+    restoreLauncherFocus = restoreFocus !== false;
     finishDrag();togglePositions(false);
     dialog.close();
     dialog.removeAttribute("data-draft");
@@ -314,8 +316,21 @@
     window.visualViewport?.removeEventListener("scroll", fitViewport);
     lockPage(false);
     updateControls();
-    launcher.focus({preventScroll:true});
+    if(restoreLauncherFocus)launcher.focus({preventScroll:true});
   }
+  function leavePage() {
+    // Returning to this page starts collapsed beside the launcher. Keep the
+    // iframe alive so a tab switch does not discard the exchange or form text.
+    finishDrag();
+    if(ready)frame.contentWindow.postMessage({type:"forju:hide"},origin);
+    closeChat(false);
+    position=null;expanded=false;card.hidden=true;
+    for(const attribute of ["data-expanded","data-draft","data-report","data-clear"])dialog.removeAttribute(attribute);
+    paintPosition();updateControls();
+  }
+  document.addEventListener("visibilitychange",()=>{if(document.hidden)leavePage();});
+  // Also covers browser back/forward-cache restoration without a new script run.
+  window.addEventListener("pagehide",leavePage);
   new MutationObserver(()=>{render();if(dialog.open)send();}).observe(document.documentElement,{attributes:true,attributeFilter:["lang"]});
   card.hidden = script.dataset.welcome !== "open";
   render();

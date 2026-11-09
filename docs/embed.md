@@ -21,6 +21,10 @@ On desktop, drag the compact chat by its logo/header to move it. The same
 handle supports arrow keys (Shift for larger steps), Home to reset, and a click
 menu with Left, Right and Reset position. The position is kept in this page's
 memory when minimized or expanded, and stays within the viewport after resizing.
+Leaving the page (including switching to another tab) closes the chat and resets
+its position and size. On return, the launcher stays collapsed; reopening starts
+beside it. A tab switch preserves the exchange, unsent text and project/report
+fields in the existing iframe. Reloading or a full navigation can end that session.
 Project forms keep their centered dialog layout; closing them restores the chat
 position. Nothing about the position is stored or sent to the server.
 Phones use a full-screen chat. Reopening the launcher resumes the exchange. The conversation lasts until the host

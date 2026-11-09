@@ -28,6 +28,11 @@ export default function CompassPanel({initialLanguage,widget=false}:{initialLang
   const pending=useRef<{topic:Topic;lang:"en"|"de"}|null>(null);
   const handleMessage=useEffectEvent((e:MessageEvent)=>{
     if(!widget||e.source!==window.parent)return;
+    if(e.data?.type==="forju:hide"){
+      // Native close handlers retain form fields and release their scroll locks.
+      document.querySelectorAll<HTMLDialogElement>("dialog[open]").forEach(dialog=>dialog.close());
+      return;
+    }
     if(e.data?.type==="forju:clear-request"){clearControl.current?.open();return;}
     if(e.data?.type!=="forju:open")return;
     const next=e.data.lang==="en"?"en":"de";

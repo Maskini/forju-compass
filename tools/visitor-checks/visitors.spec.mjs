@@ -680,3 +680,72 @@ test('Floating widget: drag, keyboard positions, page scroll and resume across l
   await info.attach('movable-widget.png',{body:await page.screenshot(),contentType:'image/png'});
   await checkAccessibility(page,info);
 });
+
+for(const s of [{lang:'de',width:1440},{lang:'en',width:390}])test(`Leaving the page: collapse, reset and retain fields / ${s.lang}`,async({page,context,baseURL},info)=>{
+  await page.setViewportSize({width:s.width,height:960});
+  const origin='https://compass.example.test',hostURL='https://www.forju.at/return-preview',en=s.lang==='en';
+  await context.route(origin+'/**',async route=>{
+    const url=new URL(route.request().url());
+    if(route.request().method()!=='GET' && !(route.request().method()==='POST' && url.pathname==='/api/chat'))return route.abort();
+    const response=await route.fetch({url:baseURL+url.pathname+url.search,maxRedirects:0});await route.fulfill({response});
+  });
+  await context.route(hostURL,route=>route.fulfill({contentType:'text/html; charset=utf-8',body:`<!doctype html><html lang="${s.lang}"><title>Website-Vorschau</title><body><main style="min-height:200vh"><h1>Website-Vorschau</h1><button id="host-control">Website-Aktion</button></main><script defer src="${origin}/compass-widget.js"></script></body></html>`}));
+  await page.goto(hostURL);
+  const host=page.locator('forju-compass-widget'),drawer=host.locator('.drawer'),panel=host.frameLocator('iframe');
+  await host.locator('.launcher').click();await host.locator('.welcome .start').click();
+  await ask(panel,en?'Which workshops do you offer for schools?':'Welche Workshops bietet ihr für Schulen an?');
+  const input=panel.getByRole('textbox',{name:en?'Your question':'Deine Frage',exact:true});
+  await input.fill('Unsent visitor question');
+  const original=await drawer.boundingBox();
+  if(s.width>640){
+    await host.locator('.move').press('ArrowLeft');
+    expect((await drawer.boundingBox()).x).toBeLessThan(original.x);
+    await host.locator('.resize').click();
+  }
+  // Headless engines do not consistently expose background-tab visibility.
+  // Exercise the browser lifecycle signals explicitly; real tab switching is
+  // also checked manually against the published widget.
+  async function leaveAndReturn(kind='visibility'){
+    await page.evaluate(kind=>{
+      if(kind==='pagehide')window.dispatchEvent(new PageTransitionEvent('pagehide',{persisted:true}));
+      else{
+        Object.defineProperty(document,'hidden',{configurable:true,get:()=>true});
+        document.dispatchEvent(new Event('visibilitychange'));
+        delete document.hidden;
+        document.dispatchEvent(new Event('visibilitychange'));
+      }
+    },kind);
+    await expect(drawer).not.toBeVisible();
+    await expect(host.locator('.welcome')).not.toBeVisible();
+    await expect(host.locator('.launcher')).toBeVisible();
+    expect(await page.evaluate(()=>document.body.style.overflowY)).toBe('');
+    await host.locator('.launcher').click();
+    await expect(drawer).not.toHaveAttribute('data-expanded','');
+    await expect.poll(async()=>(await drawer.boundingBox()).x).toBeCloseTo(original.x,0);
+    await expect.poll(async()=>(await drawer.boundingBox()).y).toBeCloseTo(original.y,0);
+    await expect(input).toHaveValue('Unsent visitor question');
+    await expect(panel.locator('[role=log] article')).toHaveCount(1);
+  }
+  await leaveAndReturn();
+  // Clicking or focusing the iframe must not be treated as leaving the page.
+  await input.click();await expect(drawer).toBeVisible();
+  await panel.locator('.draft-launch').click();
+  const project=panel.locator('.project-draft dialog');
+  await project.getByLabel(en?'Project title':'Projekttitel',{exact:true}).fill('Preserved class project');
+  await leaveAndReturn('pagehide');await expect(project).not.toBeVisible();
+  await panel.locator('.draft-launch').click();await expect(project.getByLabel(en?'Project title':'Projekttitel',{exact:true})).toHaveValue('Preserved class project');
+  await project.getByRole('button',{name:en?'← Back to chat':'← Zurück zum Chat',exact:true}).click();
+  await panel.getByRole('button',{name:en?'Report a problem':'Problem melden',exact:true}).click();
+  const report=panel.locator('#feedback-drawer');
+  await report.locator('textarea').fill('Synthetic report retained after leaving the page.');
+  await leaveAndReturn();await expect(report).not.toBeVisible();
+  await panel.getByRole('button',{name:en?'Report a problem':'Problem melden',exact:true}).click();
+  await expect(report.locator('textarea')).toHaveValue('Synthetic report retained after leaving the page.');
+  await report.getByRole('button',{name:en?'Back to chat':'Zurück zum Chat',exact:true}).click();
+  await leaveAndReturn();
+  await info.attach('reopened-beside-launcher.png',{body:await page.screenshot(),contentType:'image/png'});
+  await checkAccessibility(page,info);
+  // An actual navigation/back also returns collapsed (with or without BFCache).
+  await page.goto('about:blank');await page.goBack();
+  await expect(host.locator('.launcher')).toBeVisible();await expect(drawer).not.toBeVisible();
+});
