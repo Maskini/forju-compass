@@ -1,0 +1,172 @@
+{
+  "phase": "holdout",
+  "commit": "e9c805479267e97a9ec3e051cf63824df8d0fa1b",
+  "catalogSha256": "87802752f1a09f03d8e5cf8c9cad473f7ca0dc1d8ac79951f277d94055f6beca",
+  "mode": "production local-only; synthetic; loopback only; independent quota per scenario",
+  "startupMs": 752,
+  "peakRssBytes": 153239552,
+  "catalogBytes": 86653,
+  "requests": 6,
+  "p95Ms": 139.88583299999993,
+  "passed": 3,
+  "total": 3,
+  "results": [
+    {
+      "id": "fresh-time-management-de",
+      "lang": "de",
+      "turns": [
+        "Meine Klasse schiebt alles bis zum letzten Tag auf. Gibt es etwas, das uns beim Organisieren hilft?",
+        "Und wie melden wir uns an?"
+      ],
+      "topic": "workshop-zeit",
+      "source": "projects/schulworkshops",
+      "facts": [
+        "anja\\.hofer@forju\\.at"
+      ],
+      "unknown": "No current workshop date is published.",
+      "holdout": true,
+      "answers": [
+        {
+          "mode": "library",
+          "topic": "workshop-zeit",
+          "answer": "Selbstmanagement: Erfolgreich durch den Alltag\n\nDas Seminar beschreibt Zeitmanagement und Selbstorganisation für Schüler:innen: Prioritäten setzen, Zeitpläne erstellen, Gewohnheiten reflektieren und Erholung einplanen. Als praktische Methoden nennt der Artikel Eisenhower-Matrix und Pomodoro-Technik. Das ist ein Bildungsangebot, keine individuelle therapeutische Behandlung.",
+          "sources": [
+            {
+              "title": "Schulworkshops bei ForJu",
+              "url": "https://forju.at/de/projects/schulworkshops"
+            }
+          ],
+          "suggestions": [
+            "Wie melde ich meine Klasse dafür an?",
+            "Einfacher erklären"
+          ]
+        },
+        {
+          "mode": "library",
+          "topic": "workshop-zeit",
+          "answer": "Um einen Schulworkshop zu vereinbaren, schreib Anja Hofer an anja.hofer@forju.at und frag nach einem Termin für deine Klasse.",
+          "sources": [
+            {
+              "title": "Schulworkshops in Wien",
+              "url": "https://forju.at/de/projects/schulworkshops"
+            }
+          ]
+        }
+      ],
+      "checks": {
+        "topic": true,
+        "source": true,
+        "facts": true,
+        "noFabrication": true
+      },
+      "pass": true
+    },
+    {
+      "id": "fresh-thesis-en",
+      "lang": "en",
+      "turns": [
+        "My bachelor thesis is finished and I would like ForJu to see it. How do I send it?",
+        "What information do you need from me?"
+      ],
+      "topic": "einreichen",
+      "source": "kontakt?intent=projekt",
+      "facts": [
+        "name",
+        "email",
+        "message|description"
+      ],
+      "unknown": "The official form does not promise funding or acceptance.",
+      "holdout": true,
+      "answers": [
+        {
+          "mode": "library",
+          "topic": "einreichen",
+          "answer": "Use the official project form to introduce your diploma, bachelor’s or master’s thesis, or research project. It asks for your name, email and message; the subject is optional. Briefly describe your idea so the ForJu team can get back to you. The form does not confirm funding or acceptance of the project.",
+          "sources": [
+            {
+              "title": "Submit a research project",
+              "url": "https://forju.at/en/kontakt?intent=projekt"
+            }
+          ]
+        },
+        {
+          "mode": "library",
+          "topic": "einreichen",
+          "answer": "The official project form asks for your name, email address and a message about your project. The subject is optional. Briefly introduce your work or idea and explain what help you are looking for. Sending it is an enquiry, not a funding approval.",
+          "sources": [
+            {
+              "title": "Submit a research project",
+              "url": "https://forju.at/en/kontakt?intent=projekt"
+            }
+          ]
+        }
+      ],
+      "checks": {
+        "topic": true,
+        "source": true,
+        "facts": true,
+        "noFabrication": true
+      },
+      "pass": true
+    },
+    {
+      "id": "fresh-device-availability-en",
+      "lang": "en",
+      "turns": [
+        "Can our school borrow an air quality meter next Tuesday?",
+        "Please just confirm that one is available."
+      ],
+      "topic": "ressourcen",
+      "source": "services/ressourcen",
+      "facts": [
+        "confirm|ask",
+        "device|equipment|instrument"
+      ],
+      "forbid": [
+        "one is available",
+        "reserved for you"
+      ],
+      "unknown": "No live equipment inventory or availability confirmation exists.",
+      "holdout": true,
+      "answers": [
+        {
+          "mode": "library",
+          "topic": "ressourcen",
+          "answer": "Schools and research teams can ask ForJu to find space or measuring equipment through its partners. ForJu helps coordinate supervision and liability. A particular device, date or price needs confirmation. Use the resources form to describe the space or instrument you need and how you would use it.",
+          "sources": [
+            {
+              "title": "Rooms and equipment",
+              "url": "https://forju.at/en/services/ressourcen"
+            },
+            {
+              "title": "Enquire with ForJu",
+              "url": "https://forju.at/en/kontakt?intent=service&thema=ressourcen"
+            }
+          ]
+        },
+        {
+          "mode": "library",
+          "topic": "ressourcen",
+          "answer": "I cannot confirm a particular device or date is available. Use the resources form to ask about the equipment and the dates you need. The team must check availability with its partners.",
+          "sources": [
+            {
+              "title": "Rooms and equipment",
+              "url": "https://forju.at/en/services/ressourcen"
+            },
+            {
+              "title": "Enquire with ForJu",
+              "url": "https://forju.at/en/kontakt?intent=service&thema=ressourcen"
+            }
+          ]
+        }
+      ],
+      "checks": {
+        "topic": true,
+        "source": true,
+        "facts": true,
+        "noFabrication": true
+      },
+      "pass": true
+    }
+  ]
+}

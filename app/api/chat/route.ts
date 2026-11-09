@@ -97,7 +97,7 @@ export async function POST(request: Request) {
       : guidedReply("yes",en,history,knowledgeCatalog) ?? guidedReply(en ? "Where do I start?" : "Wo fange ich an?",en,[],knowledgeCatalog);
     return reply({...next, mode:next?.mode ?? "conversation",answer:acknowledgment+"\n\n"+(next?.answer ?? (en ? "What would you like help with?" : "Wobei kann ich dir helfen?")),sources:next?.sources ?? []});
   }
-  const followUp = offerFollowUp(message, parsed.topic, en, knowledgeCatalog, readerUrl);
+  const followUp = offerFollowUp(message, visitorTopic(message) ?? parsed.topic, en, knowledgeCatalog, readerUrl);
   if (followUp) return reply(followUp);
   const enquiry = visitorEnquiry(raw, en, relevantHistory, parsed.topic, knowledgeCatalog, readerUrl, enquiryTopic, affirmedRequest);
   if (enquiry) return reply(enquiry);
@@ -111,7 +111,7 @@ export async function POST(request: Request) {
   const social = conversationalReply(parsed.message, englishUI, preferredLanguage);
   if (social) return reply({mode:"conversation",answer:social,sources:[],topic:parsed.topic});
   const previous = history.filter(m => m.role === "user").at(-1)?.content;
-  const deadline = /deadline|cut[ -]?off|by (what|which) date|last day|how late|\bfrist|anmeldefrist|bewerbungsfrist|bis wann|spätestens/i.test(message);
+  const deadline = /deadline|cut[ -]?off|by (what|which) date|last day|how late|\bfrist|einreichfrist|anmeldefrist|bewerbungsfrist|bis wann|spätestens/i.test(message);
   // An implicit request for the booking contact retains the service discussed.
   // Only accept a complete contact question; an explicitly named new topic wins.
   const bookingContact = /^(?:(?:and|und) )?(?:who (?:do|should|can) (?:i|we) (?:write to|email|contact|ask)(?: (?:for|about|to (?:book|arrange)) (?:a |an |the )?(?:date|appointment|booking))?|(?:wem|an wen) (?:schreib(?:e|en)|wende[n]?) (?:ich|wir)(?: (?:für|wegen) (?:eines? |einem? |den )?termin[s]?)?)[?.! ]*$/i.test(message);

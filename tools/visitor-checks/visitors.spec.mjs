@@ -135,6 +135,24 @@ for(const scenario of [
   }
 });
 
+test('A delayed project-close event preserves the visitor’s new composer focus',async({page})=>{
+  await page.setViewportSize({width:390,height:844});
+  await page.goto('/embed?lang=de');
+  await page.locator('.draft-launch').click();
+  const form=page.locator('.project-draft dialog');
+  await form.getByRole('button',{name:'← Zurück zum Chat',exact:true}).click();
+  await expect(form).not.toBeVisible();
+  const input=page.getByRole('textbox',{name:'Deine Frage',exact:true});
+  await input.fill('Hallo');
+  // Reproduce delivery of the native close notification after the visitor
+  // has moved on. Browser scheduling made this race intermittent in the full run.
+  await form.evaluate(dialog=>dialog.dispatchEvent(new Event('close')));
+  await expect(input).toBeFocused();
+  await input.press('Enter');
+  await expect(page.locator('[role=log] article .response p')).toBeVisible();
+  await expect(form).not.toBeVisible();
+});
+
 test('Clear conversation cancels a pending answer without reviving old context',async({page})=>{
   let releaseOld,releaseNew;const oldReady=new Promise(r=>releaseOld=r),newReady=new Promise(r=>releaseNew=r);const requests=[];
   await page.route('**/api/chat',async route=>{
@@ -487,6 +505,12 @@ test('English phone widget: one Send, retained draft on failure, stable retry an
 });
 
 test('German desktop: keep the project in the form while offline, then send when delivery recovers', async ({page}) => {
+  // The unavailable state is explicit; it must not depend on whether the
+  // production-build fixture enables project mail for other journeys.
+  await page.route('**/api/project-submission', route=>route.fulfill({
+    status:route.request().method()==='GET'?200:503,
+    json:route.request().method()==='GET'?{direct:false}:{error:'unavailable'}
+  }));
   const {promise: scriptsReady, resolve: loadScripts} = Promise.withResolvers();
   await page.route(/\/_next\/static\/.*\.js(?:\?|$)/, async route => {
     await scriptsReady;

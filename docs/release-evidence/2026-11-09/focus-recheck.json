@@ -1,0 +1,50 @@
+{
+  "scope": "local production, separate quota database, delayed close event; external networking disabled",
+  "results": [
+    {
+      "browser": "chromium",
+      "iteration": 1,
+      "pass": true
+    },
+    {
+      "browser": "chromium",
+      "iteration": 2,
+      "pass": true
+    },
+    {
+      "browser": "chromium",
+      "iteration": 3,
+      "pass": true
+    },
+    {
+      "browser": "firefox",
+      "iteration": 1,
+      "pass": true
+    },
+    {
+      "browser": "firefox",
+      "iteration": 2,
+      "pass": true
+    },
+    {
+      "browser": "firefox",
+      "iteration": 3,
+      "pass": true
+    },
+    {
+      "browser": "webkit",
+      "iteration": 1,
+      "pass": true
+    },
+    {
+      "browser": "webkit",
+      "iteration": 2,
+      "pass": true
+    },
+    {
+      "browser": "webkit",
+      "iteration": 3,
+      "pass": true
+    }
+  ]
+}

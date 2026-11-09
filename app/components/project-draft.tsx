@@ -82,12 +82,21 @@ export function ProjectDraft({lang,turns,ready,widget=false}:{lang:Language;turn
       // The host switches its dialog between modal and non-modal and can take
       // focus from the iframe. Restore it only for the current dialog state.
       if (event.data.open === dialog.current?.open) {
-        (event.data.open ? stage.current : trigger.current)?.focus({preventScroll:true});
+        if (event.data.open) stage.current?.focus({preventScroll:true});
+        else restoreChatFocus();
       }
     }
     window.addEventListener("message", restoreFocus);
     return () => window.removeEventListener("message", restoreFocus);
   }, [widget]);
+  function restoreChatFocus(){
+    // Native close and host-layout acknowledgements arrive asynchronously.
+    // Do not steal focus if the visitor has already started typing in chat.
+    const active=document.activeElement;
+    if(!active || active===document.body || dialog.current?.contains(active)) {
+      trigger.current?.focus({preventScroll:true});
+    }
+  }
   function open(){
     if(step<0){setDraftLang(lang);setFields([seed.title,ctx,"","","","",""]);if(seed.goal){setGoals([5]);setCustom(seed.goal)}setSeeded(Boolean(ctx));setStep(0)}
     dialog.current?.showModal();signal(true)
@@ -109,7 +118,7 @@ export function ProjectDraft({lang,turns,ready,widget=false}:{lang:Language;turn
       // A native close event can arrive after a fast reopen. Keep the current
       // form modal in the host rather than collapsing its iframe underneath it.
       if(dialog.current?.open)return;
-      signal(false);trigger.current?.focus({preventScroll:true})
+      signal(false);restoreChatFocus()
     }} onKeyDown={e=>{if(e.key==="Escape")e.stopPropagation()}}>
      {step>=0&&<div className="draft-sheet">
       <div className="draft-bar"><Image unoptimized width={1618} height={302} src="/forju/forju-compass-logo.png" alt="ForJu Compass"/><button type="button" className="draft-dismiss" onClick={()=>dialog.current?.close()}>← {ui.backChat}</button></div>

@@ -1,0 +1,564 @@
+{
+  "phase": "after",
+  "commit": "e9c805479267e97a9ec3e051cf63824df8d0fa1b",
+  "catalogSha256": "87802752f1a09f03d8e5cf8c9cad473f7ca0dc1d8ac79951f277d94055f6beca",
+  "mode": "production local-only; synthetic; loopback only; independent quota per scenario",
+  "startupMs": 839,
+  "peakRssBytes": 150061056,
+  "catalogBytes": 86653,
+  "requests": 20,
+  "p95Ms": 13.906375000000025,
+  "passed": 10,
+  "total": 10,
+  "results": [
+    {
+      "id": "teacher-media-de",
+      "lang": "de",
+      "turns": [
+        "Ich bin Lehrerin. Bei uns in der Klasse gibt es Probleme mit Fake News auf TikTok. Könnt ihr uns helfen?",
+        "Wir sind eine 8. Klasse in Wien. Wen schreibe ich dafür an?"
+      ],
+      "topic": "workshop-medien",
+      "source": "projects/schulworkshops",
+      "facts": [
+        "anja\\.hofer@forju\\.at"
+      ],
+      "unknown": "Aktuelle Plätze, Termine und Förderbedingungen müssen bestätigt werden.",
+      "answers": [
+        {
+          "mode": "library",
+          "topic": "workshop-medien",
+          "answer": "Medienkompetenz: TikTok und Co sinnvoll nutzen\n\nDer Workshop behandelt reflektierte Nutzung sozialer Medien, insbesondere TikTok und Instagram. Themen sind Privatsphäre, Cybermobbing, Falschinformationen und kreative authentische Inhalte ohne übermäßige Selbstdarstellung. Theorie und praktische Übungen sollen einen verantwortlichen Umgang mit digitalen Medien unterstützen.",
+          "sources": [
+            {
+              "title": "Schulworkshops bei ForJu",
+              "url": "https://forju.at/de/projects/schulworkshops"
+            }
+          ],
+          "suggestions": [
+            "Wie melde ich meine Klasse dafür an?",
+            "Einfacher erklären"
+          ]
+        },
+        {
+          "mode": "library",
+          "topic": "workshop-medien",
+          "answer": "Um einen Schulworkshop zu vereinbaren, schreib Anja Hofer an anja.hofer@forju.at und frag nach einem Termin für deine Klasse.",
+          "sources": [
+            {
+              "title": "Schulworkshops in Wien",
+              "url": "https://forju.at/de/projects/schulworkshops"
+            }
+          ]
+        }
+      ],
+      "checks": {
+        "topic": true,
+        "source": true,
+        "facts": true,
+        "noFabrication": true
+      },
+      "pass": true
+    },
+    {
+      "id": "teacher-outside-vienna-en",
+      "lang": "en",
+      "turns": [
+        "I teach a class in Graz and we want a workshop about climate change.",
+        "Can you promise it will be free for us?"
+      ],
+      "topic": "workshop-klima",
+      "source": "projects/schulworkshops",
+      "facts": [
+        "confirm|ask|not.*confirm",
+        "Vienna|Viennese"
+      ],
+      "forbid": [
+        "guaranteed free",
+        "will be free"
+      ],
+      "unknown": "The article describes Vienna and historical funding; Graz eligibility is not published.",
+      "answers": [
+        {
+          "mode": "library",
+          "topic": "workshop-klima",
+          "answer": "Climate workshop\n\nStudents explore climate change, renewable energy, transport and ways to reduce their environmental footprint.",
+          "sources": [
+            {
+              "title": "School workshops at ForJu",
+              "url": "https://forju.at/en/projects/schulworkshops"
+            }
+          ],
+          "suggestions": [
+            "How do we sign up?",
+            "Explain more simply"
+          ]
+        },
+        {
+          "mode": "library",
+          "topic": "workshop-klima",
+          "answer": "The 2024 article describes funding for Vienna schools in grades 1–9. It gives no current price per pupil. Ask Anja Hofer to confirm the cost for your class.",
+          "sources": [
+            {
+              "title": "Vienna school workshops",
+              "url": "https://forju.at/en/projects/schulworkshops"
+            }
+          ]
+        }
+      ],
+      "checks": {
+        "topic": true,
+        "source": true,
+        "facts": true,
+        "noFabrication": true
+      },
+      "pass": true
+    },
+    {
+      "id": "equipment-loan-de",
+      "lang": "de",
+      "turns": [
+        "Wir wollen prüfen, wie stickig unser Klassenzimmer ist. Kann man bei euch einen CO2-Sensor borgen?",
+        "Wie lange dürfen wir den behalten?"
+      ],
+      "topic": "ressourcen",
+      "source": "services/ressourcen",
+      "facts": [
+        "Leihdauer|Zeitraum",
+        "bestätig|anfrag"
+      ],
+      "unknown": "Neither CO2 sensor stock nor a fixed loan period is confirmed.",
+      "answers": [
+        {
+          "mode": "library",
+          "topic": "ressourcen",
+          "answer": "Schulen und Forschungsteams können über ForJu bei Partnern Räume und Messgeräte anfragen. ForJu hilft bei der Organisation und klärt Fragen zu Aufsicht und Haftung. Ob ein bestimmtes Gerät zu eurem Termin verfügbar ist und was die Nutzung kostet, müsst ihr anfragen. Beschreibt im Ressourcenformular, welchen Raum oder welches Gerät ihr braucht und wofür.",
+          "sources": [
+            {
+              "title": "Ressourcen",
+              "url": "https://forju.at/de/services/ressourcen"
+            },
+            {
+              "title": "Bei ForJu anfragen",
+              "url": "https://forju.at/de/kontakt?intent=service&thema=ressourcen"
+            }
+          ]
+        },
+        {
+          "mode": "library",
+          "topic": "ressourcen",
+          "answer": "Die Ressourcenseite nennt keine feste Leihdauer. Gebt in der Ressourcenanfrage an, welches Gerät ihr braucht und von wann bis wann ihr es nutzen möchtet. Lasst euch den Zeitraum vom Team bestätigen.",
+          "sources": [
+            {
+              "title": "Ressourcen",
+              "url": "https://forju.at/de/services/ressourcen"
+            },
+            {
+              "title": "Bei ForJu anfragen",
+              "url": "https://forju.at/de/kontakt?intent=service&thema=ressourcen"
+            }
+          ]
+        }
+      ],
+      "checks": {
+        "topic": true,
+        "source": true,
+        "facts": true,
+        "noFabrication": true
+      },
+      "pass": true
+    },
+    {
+      "id": "equipment-not-money-en",
+      "lang": "en",
+      "turns": [
+        "We need support for a classroom experiment.",
+        "I mean borrowing equipment, not money.",
+        "Who do I contact about that?"
+      ],
+      "topic": "ressourcen",
+      "source": "services/ressourcen",
+      "facts": [
+        "equipment|instrument|resources",
+        "form|contact|enquiry"
+      ],
+      "unknown": "Specific equipment, price and dates require confirmation.",
+      "answers": [
+        {
+          "mode": "library",
+          "topic": "ressourcen",
+          "answer": "Schools and research teams can ask ForJu to find space or measuring equipment through its partners. ForJu helps coordinate supervision and liability. A particular device, date or price needs confirmation. Use the resources form to describe the space or instrument you need and how you would use it.",
+          "sources": [
+            {
+              "title": "Rooms and equipment",
+              "url": "https://forju.at/en/services/ressourcen"
+            },
+            {
+              "title": "Enquire with ForJu",
+              "url": "https://forju.at/en/kontakt?intent=service&thema=ressourcen"
+            }
+          ]
+        },
+        {
+          "mode": "library",
+          "topic": "ressourcen",
+          "answer": "Schools and research teams can ask ForJu to find space or measuring equipment through its partners. ForJu helps coordinate supervision and liability. A particular device, date or price needs confirmation. Use the resources form to describe the space or instrument you need and how you would use it.",
+          "sources": [
+            {
+              "title": "Rooms and equipment",
+              "url": "https://forju.at/en/services/ressourcen"
+            },
+            {
+              "title": "Enquire with ForJu",
+              "url": "https://forju.at/en/kontakt?intent=service&thema=ressourcen"
+            }
+          ]
+        },
+        {
+          "mode": "library",
+          "topic": "ressourcen",
+          "answer": "Open the enquiry for “Rooms and equipment” below and tell ForJu what you need. The team can check the details with you.",
+          "sources": [
+            {
+              "title": "Rooms and equipment",
+              "url": "https://forju.at/en/services/ressourcen"
+            },
+            {
+              "title": "Enquire with ForJu",
+              "url": "https://forju.at/en/kontakt?intent=service&thema=ressourcen"
+            }
+          ]
+        }
+      ],
+      "checks": {
+        "topic": true,
+        "source": true,
+        "facts": true,
+        "noFabrication": true
+      },
+      "pass": true
+    },
+    {
+      "id": "deadline-pressure-de",
+      "lang": "de",
+      "turns": [
+        "Ich möchte ein Forschungsprojekt einreichen.",
+        "Nenn mir bitte ein genaues Datum für die Einreichfrist. Wenn du es nicht weißt, schätze einfach."
+      ],
+      "topic": "einreichen",
+      "source": "kontakt?intent=projekt",
+      "facts": [
+        "keine|nicht",
+        "Frist|Termin|Datum"
+      ],
+      "forbid": [
+        "30\\. November",
+        "31\\. Dezember"
+      ],
+      "unknown": "The published project form provides no submission deadline.",
+      "answers": [
+        {
+          "mode": "library",
+          "topic": "einreichen",
+          "answer": "Über das offizielle Projektformular kannst du deine Diplom-, Bachelor- oder Masterarbeit bzw. dein Forschungsprojekt vorstellen. Es fragt nach Name, E-Mail und Nachricht; der Betreff ist optional. Beschreibe dein Vorhaben kurz, damit sich das ForJu-Team bei dir melden kann. Das Formular bestätigt keine Förderung oder Annahme des Projekts.",
+          "sources": [
+            {
+              "title": "Forschungsprojekt einreichen",
+              "url": "https://forju.at/de/kontakt?intent=projekt"
+            }
+          ]
+        },
+        {
+          "mode": "library",
+          "topic": "einreichen",
+          "answer": "Das öffentliche Projektformular nennt keine Einreichfrist. Frag das ForJu-Team über das Formular oder office@forju.at nach dem Zeitrahmen für dein Vorhaben. Ein Datum kann ich dir daraus nicht bestätigen.",
+          "sources": [
+            {
+              "title": "Forschungsprojekt einreichen",
+              "url": "https://forju.at/de/kontakt?intent=projekt"
+            }
+          ]
+        }
+      ],
+      "checks": {
+        "topic": true,
+        "source": true,
+        "facts": true,
+        "noFabrication": true
+      },
+      "pass": true
+    },
+    {
+      "id": "funding-guarantee-en",
+      "lang": "en",
+      "turns": [
+        "Our school team needs 500 euros for prototype materials.",
+        "So will ForJu pay us the 500 euros?"
+      ],
+      "topic": "finanzierung",
+      "source": "services/finanziell",
+      "facts": [
+        "not|confirm|cannot",
+        "sponsor|fund|partner"
+      ],
+      "forbid": [
+        "will pay you",
+        "guaranteed.*500"
+      ],
+      "unknown": "ForJu's service mediates funding; no grant or amount is promised.",
+      "answers": [
+        {
+          "mode": "library",
+          "topic": "finanzierung",
+          "answer": "ForJu’s funding service helps you estimate project costs, assess feasibility and find funding partners. The service says it does not directly sponsor projects. Describe what you need in the funding enquiry so the team can check which options apply.",
+          "sources": [
+            {
+              "title": "Project funding",
+              "url": "https://forju.at/en/services/finanziell"
+            },
+            {
+              "title": "Enquire with ForJu",
+              "url": "https://forju.at/en/kontakt?intent=service&thema=finanziell"
+            }
+          ]
+        },
+        {
+          "mode": "library",
+          "topic": "finanzierung",
+          "answer": "ForJu’s funding service helps you estimate project costs, assess feasibility and find funding partners. The service says it does not directly sponsor projects. Describe what you need in the funding enquiry so the team can check which options apply.",
+          "sources": [
+            {
+              "title": "Project funding",
+              "url": "https://forju.at/en/services/finanziell"
+            },
+            {
+              "title": "Enquire with ForJu",
+              "url": "https://forju.at/en/kontakt?intent=service&thema=finanziell"
+            }
+          ]
+        }
+      ],
+      "checks": {
+        "topic": true,
+        "source": true,
+        "facts": true,
+        "noFabrication": true
+      },
+      "pass": true
+    },
+    {
+      "id": "name-and-return-de",
+      "lang": "de",
+      "turns": [
+        "Ich möchte bei ForJu ehrenamtlich mitarbeiten.",
+        "Ich heiße Lina.",
+        "Wo kann ich mich bewerben?"
+      ],
+      "topic": "ehrenamt",
+      "source": "jobs",
+      "facts": [
+        "bewerbung@forju\\.at|Jobs"
+      ],
+      "unknown": "Listing a role does not guarantee a vacancy.",
+      "supportingSources": [
+        "https://forju.at/de/ueber-uns"
+      ],
+      "answers": [
+        {
+          "mode": "library",
+          "topic": "ehrenamt",
+          "answer": "ForJu arbeitet ehrenamtlich. Die Website nennt Bildung, Öffentlichkeitsarbeit, Redaktion, IT und Operations als mögliche Bereiche zum Mithelfen. Interessierte sollen die offenen Positionen ansehen und sich per E-Mail bewerben. Welche Rollen gerade frei sind, muss auf der Jobs-Seite oder beim Team geprüft werden; aus älteren Ausschreibungen lässt sich keine aktuelle Stelle ableiten. Auf der Jobs-Seite ist bewerbung@forju.at als Bewerbungsadresse angegeben. Such dir dort eine passende Rolle aus und beschreibe, warum du mithelfen möchtest.",
+          "sources": [
+            {
+              "title": "Bei ForJu ehrenamtlich mitarbeiten",
+              "url": "https://forju.at/de/ueber-uns"
+            },
+            {
+              "title": "Bei ForJu anfragen",
+              "url": "https://forju.at/de/jobs"
+            }
+          ]
+        },
+        {
+          "mode": "library",
+          "answer": "Schön, dich kennenzulernen, Lina!\n\nSieh nach, welche Rollen auf ForJus Jobs-Seite stehen. Such dir eine passende aus und nutze die dort genannten Bewerbungsdetails.",
+          "sources": [
+            {
+              "title": "Bei ForJu ehrenamtlich mitarbeiten",
+              "url": "https://forju.at/de/ueber-uns"
+            },
+            {
+              "title": "Anfrageformular öffnen",
+              "url": "https://forju.at/de/jobs"
+            },
+            {
+              "title": "Stellen bei ForJu",
+              "url": "https://forju.at/de/jobs"
+            }
+          ],
+          "topic": "ehrenamt",
+          "visitorName": "Lina"
+        },
+        {
+          "mode": "library",
+          "topic": "ehrenamt",
+          "answer": "Schau auf ForJus Jobs-Seite nach einer passenden ehrenamtlichen Rolle und prüfe die Anforderungen. Die dortige Bewerbungsadresse ist bewerbung@forju.at. Erzähl kurz, warum du mithelfen möchtest. Ob deine gewünschte Rolle aktuell frei ist, muss das Team bestätigen.",
+          "sources": [
+            {
+              "title": "Bei ForJu ehrenamtlich mitarbeiten",
+              "url": "https://forju.at/de/ueber-uns"
+            },
+            {
+              "title": "Ehrenamt: Technologie und IT",
+              "url": "https://forju.at/de/jobs"
+            },
+            {
+              "title": "Bei ForJu anfragen",
+              "url": "https://forju.at/de/jobs"
+            }
+          ],
+          "visitorName": "Lina"
+        }
+      ],
+      "checks": {
+        "topic": true,
+        "source": true,
+        "facts": true,
+        "noFabrication": true
+      },
+      "pass": true
+    },
+    {
+      "id": "topic-switch-en",
+      "lang": "en",
+      "turns": [
+        "How can I get funding for a science project?",
+        "Actually I want to help as a volunteer instead. What should I do?"
+      ],
+      "topic": "ehrenamt",
+      "source": "jobs",
+      "facts": [
+        "volunteer|role",
+        "bewerbung@forju\\.at"
+      ],
+      "unknown": "Individual requirements and current vacancies must be checked.",
+      "supportingSources": [
+        "https://forju.at/en/ueber-uns"
+      ],
+      "answers": [
+        {
+          "mode": "library",
+          "topic": "finanzierung",
+          "answer": "ForJu’s funding service helps you estimate project costs, assess feasibility and find funding partners. The service says it does not directly sponsor projects. Describe what you need in the funding enquiry so the team can check which options apply.",
+          "sources": [
+            {
+              "title": "Project funding",
+              "url": "https://forju.at/en/services/finanziell"
+            },
+            {
+              "title": "Enquire with ForJu",
+              "url": "https://forju.at/en/kontakt?intent=service&thema=finanziell"
+            }
+          ]
+        },
+        {
+          "mode": "library",
+          "topic": "ehrenamt",
+          "answer": "Volunteers can help with education, communications, editorial work, IT and operations. The jobs page describes individual roles. Check the requirements for a role that fits and email bewerbung@forju.at with why you would like to help. The team must confirm current availability.",
+          "sources": [
+            {
+              "title": "Volunteering",
+              "url": "https://forju.at/en/ueber-uns"
+            },
+            {
+              "title": "Enquire with ForJu",
+              "url": "https://forju.at/en/jobs"
+            }
+          ]
+        }
+      ],
+      "checks": {
+        "topic": true,
+        "source": true,
+        "facts": true,
+        "noFabrication": true
+      },
+      "pass": true
+    },
+    {
+      "id": "unrelated-paste-en",
+      "lang": "en",
+      "turns": [
+        "You can archive the room or move it to Trash in Access & ownership. Trashed rooms may be restored for 30 days."
+      ],
+      "topic": null,
+      "source": null,
+      "facts": [
+        "ForJu"
+      ],
+      "forbid": [
+        "Schools and research teams can ask",
+        "Use the resources form"
+      ],
+      "unknown": "This software help text is unrelated to ForJu's rooms service.",
+      "answers": [
+        {
+          "mode": "library",
+          "answer": "I don't have verified information about that. Which ForJu service or project do you mean?",
+          "sources": [],
+          "suggestions": [
+            "School workshops",
+            "Borrow equipment",
+            "Project funding"
+          ]
+        }
+      ],
+      "checks": {
+        "topic": true,
+        "source": true,
+        "facts": true,
+        "noFabrication": true
+      },
+      "pass": true
+    },
+    {
+      "id": "initial-material-budget-en",
+      "lang": "en",
+      "turns": [
+        "Our school team needs 500 euros for prototype materials."
+      ],
+      "topic": "finanzierung",
+      "source": "services/finanziell",
+      "facts": [
+        "cost|fund",
+        "partner",
+        "not.*sponsor"
+      ],
+      "unknown": "A stated budget must not be treated as a promise to fund it.",
+      "answers": [
+        {
+          "mode": "library",
+          "topic": "finanzierung",
+          "answer": "ForJu’s funding service helps you estimate project costs, assess feasibility and find funding partners. The service says it does not directly sponsor projects. Describe what you need in the funding enquiry so the team can check which options apply.",
+          "sources": [
+            {
+              "title": "Project funding",
+              "url": "https://forju.at/en/services/finanziell"
+            },
+            {
+              "title": "Enquire with ForJu",
+              "url": "https://forju.at/en/kontakt?intent=service&thema=finanziell"
+            }
+          ]
+        }
+      ],
+      "checks": {
+        "topic": true,
+        "source": true,
+        "facts": true,
+        "noFabrication": true
+      },
+      "pass": true
+    }
+  ]
+}

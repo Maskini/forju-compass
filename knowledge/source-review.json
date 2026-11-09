@@ -378,10 +378,11 @@
     "resolvedUrl": "https://forju.at/de/projects/schulworkshops",
     "status": "reviewed",
     "httpStatus": 200,
-    "reviewedAt": "2026-11-07",
+    "reviewedAt": "2026-11-09",
     "recordHashes": {
       "workshop-stress": "be8f08129abe4f580962c3cd97fc32fde19f188ee7c95a63bdadbc366de25eb3",
-      "workshops": "be8f08129abe4f580962c3cd97fc32fde19f188ee7c95a63bdadbc366de25eb3"
+      "workshops": "be8f08129abe4f580962c3cd97fc32fde19f188ee7c95a63bdadbc366de25eb3",
+      "workshop-zeit": "be8f08129abe4f580962c3cd97fc32fde19f188ee7c95a63bdadbc366de25eb3"
     }
   },
   "https://forju.at/en/projects/schulworkshops": {
@@ -475,10 +476,11 @@
     "resolvedUrl": "https://forju.at/en/projects/schulworkshops",
     "status": "reviewed",
     "httpStatus": 200,
-    "reviewedAt": "2026-11-07",
+    "reviewedAt": "2026-11-09",
     "recordHashes": {
       "workshop-stress": "7ddb402e635e7ff2a3ef097ab41167076a134b6b41e58492ddfad451a1373408",
-      "workshops": "7ddb402e635e7ff2a3ef097ab41167076a134b6b41e58492ddfad451a1373408"
+      "workshops": "7ddb402e635e7ff2a3ef097ab41167076a134b6b41e58492ddfad451a1373408",
+      "workshop-zeit": "7ddb402e635e7ff2a3ef097ab41167076a134b6b41e58492ddfad451a1373408"
     }
   },
   "https://forju.at/de/projects/seminare": {
@@ -663,7 +665,7 @@
     "resolvedUrl": "https://forju.at/de/kontakt?intent=projekt",
     "status": "reviewed",
     "httpStatus": 200,
-    "reviewedAt": "2026-11-07",
+    "reviewedAt": "2026-11-09",
     "recordHashes": {
       "einreichen": "9c0e7b9aafcbfe729d16b5305d547fbf218c4a5d46e1a428c4ba663dc134a7f2"
     }
@@ -770,7 +772,7 @@
     "resolvedUrl": "https://forju.at/en/kontakt?intent=projekt",
     "status": "reviewed",
     "httpStatus": 200,
-    "reviewedAt": "2026-11-07",
+    "reviewedAt": "2026-11-09",
     "recordHashes": {
       "einreichen": "37f5612899e899148d5d1a4f7d19d125087c82083a1275e2e33bd6059f2fe85f"
     }
@@ -818,7 +820,7 @@
     "resolvedUrl": "https://forju.at/de/services/ressourcen",
     "status": "reviewed",
     "httpStatus": 200,
-    "reviewedAt": "2026-11-07",
+    "reviewedAt": "2026-11-09",
     "recordHashes": {
       "ressourcen": "90e82feca95d5b16583bb10443656082ed157fcaa587c21b773eadb69e5ea6fd"
     }
@@ -866,7 +868,7 @@
     "resolvedUrl": "https://forju.at/en/services/ressourcen",
     "status": "reviewed",
     "httpStatus": 200,
-    "reviewedAt": "2026-11-07",
+    "reviewedAt": "2026-11-09",
     "recordHashes": {
       "ressourcen": "8ddd31c3a0cc06687369f68fde6ed5007a6800c82f9598018f1722927bf72c56"
     }
@@ -1195,6 +1197,750 @@
     "reviewedAt": "2026-11-07",
     "recordHashes": {
       "jobs-working-conditions": "51abf3b40daf1b206ce5074625eabde4fcf702187326017cfe58e0e265881443"
+    }
+  },
+  "https://forju.at/de/ueber-uns": {
+    "url": "https://forju.at/de/ueber-uns",
+    "language": "de",
+    "title": "Über uns",
+    "dates": {
+      "published": null,
+      "modified": null
+    },
+    "passages": [
+      {
+        "heading": "Über uns › Unsere Prinzipien",
+        "text": "Unsere Prinzipien"
+      },
+      {
+        "heading": "Über uns › Unsere Prinzipien › Neugier zählt",
+        "text": "Neugier zählt"
+      },
+      {
+        "heading": "Über uns › Unsere Prinzipien › Neugier zählt",
+        "text": "Forschungsinteresse zeigt sich nicht nur in Noten, Titeln oder geradlinigen Bildungswegen. Wir nehmen Fragen ernst und suchen nach Potenzial, Lernbereitschaft und Eigeninitiative."
+      },
+      {
+        "heading": "Über uns › Unser Team",
+        "text": "Unser Team"
+      },
+      {
+        "heading": "Über uns › Unser Team",
+        "text": "Unser Verein wird von knapp 60 engagierten Mitarbeiter:innen getragen, die ihre Zeit und Fähigkeiten ehrenamtlich in verschiedensten Bereichen einbringen. Ob in der Organisation von Veranstaltungen, der Betreuung unserer Mitglieder oder der Umsetzung von Projekten – alle leisten einen wertvollen Beitrag für die ForJu-Community."
+      },
+      {
+        "heading": "Über uns › Unser Team › Präsidium",
+        "text": "Präsidium"
+      },
+      {
+        "heading": "Über uns › Unser Team › Bildung",
+        "text": "Bildung"
+      },
+      {
+        "heading": "Über uns › Unser Team › Öffentlichkeitsarbeit & Presse",
+        "text": "Öffentlichkeitsarbeit & Presse"
+      },
+      {
+        "heading": "Über uns › Unser Team › Science Team",
+        "text": "Science Team"
+      },
+      {
+        "heading": "Über uns › Unser Team › IT",
+        "text": "IT"
+      },
+      {
+        "heading": "Über uns › Unser Team › Stabstellen",
+        "text": "Stabstellen"
+      },
+      {
+        "heading": "Über uns › Unser Team › Kooperationen",
+        "text": "Kooperationen"
+      },
+      {
+        "heading": "Über uns › Unser Team › Funktionär:innen",
+        "text": "Funktionär:innen"
+      },
+      {
+        "heading": "Über uns › Unser Team › Altfunktionär:innen / in Pause",
+        "text": "Altfunktionär:innen / in Pause"
+      },
+      {
+        "heading": "Über uns › Mitmachen",
+        "text": "Mitmachen"
+      },
+      {
+        "heading": "Über uns › Mitmachen",
+        "text": "ForJu lebt vom Ehrenamt. Du kannst in Bildung, PR, Redaktion, IT oder Operations mithelfen."
+      },
+      {
+        "heading": "Über uns › Mitmachen",
+        "text": "Schau dir unsere offenen Positionen an."
+      },
+      {
+        "heading": "Über uns › Mitmachen",
+        "text": "Finde eine Rolle, die zu dir passt."
+      },
+      {
+        "heading": "Über uns › Mitmachen",
+        "text": "Bewirb dich per E-Mail — wir melden uns."
+      },
+      {
+        "heading": "Über uns › Mitmachen",
+        "text": "Offene PositionenForJu unterstützen"
+      },
+      {
+        "heading": "Über uns › Jugendschutz",
+        "text": "Jugendschutz"
+      },
+      {
+        "heading": "Über uns › Jugendschutz",
+        "text": "Als Verein legen wir großen Wert auf den Schutz und die Förderung unserer jungen Mitglieder. Unsere Jugendschutzverantwortlichen arbeiten daran, Konzepte zu entwickeln, die eine sichere und unterstützende Umgebung gewährleisten und kontrollieren die Einhaltung dieser. Sie sind nicht nur für die Planung und Umsetzung des Jugendschutzes zuständig, sondern stehen auch bei Fragen oder Anliegen jederzeit zur Verfügung. Zögere nicht, uns zu kontaktieren!"
+      },
+      {
+        "heading": "Über uns › Jugendschutz",
+        "text": "office@forju.at"
+      }
+    ],
+    "forms": [],
+    "links": [
+      {
+        "url": "https://forju.at/de/ueber-uns?person=avid-vormann",
+        "label": "Avid Vormann"
+      },
+      {
+        "url": "mailto:avid.vormann@forju.at",
+        "label": ""
+      },
+      {
+        "url": "https://forju.at/de/ueber-uns?person=laura-scholz",
+        "label": "Laura Scholz"
+      },
+      {
+        "url": "mailto:laura.scholz@forju.at",
+        "label": ""
+      },
+      {
+        "url": "https://forju.at/de/ueber-uns?person=marco-vorgic",
+        "label": "Marco Vorgic"
+      },
+      {
+        "url": "mailto:marco.vorgic@forju.at",
+        "label": ""
+      },
+      {
+        "url": "https://forju.at/de/ueber-uns?person=anja-hofer",
+        "label": "Anja Hofer"
+      },
+      {
+        "url": "mailto:anja.hofer@forju.at",
+        "label": ""
+      },
+      {
+        "url": "https://forju.at/de/ueber-uns?person=sarah-ceculovic",
+        "label": "Sarah Ceculovic"
+      },
+      {
+        "url": "mailto:sarah.ceculovic@forju.at",
+        "label": ""
+      },
+      {
+        "url": "https://forju.at/de/ueber-uns?person=paul-gusich",
+        "label": "Paul Gusich"
+      },
+      {
+        "url": "mailto:paul.gusich@forju.at",
+        "label": ""
+      },
+      {
+        "url": "https://forju.at/de/ueber-uns?person=julian-kadlicz",
+        "label": "Julian Kadlicz"
+      },
+      {
+        "url": "mailto:julian.kadlicz@forju.at",
+        "label": ""
+      },
+      {
+        "url": "https://forju.at/de/ueber-uns?person=anna-ledermueller",
+        "label": "Anna Ledermueller"
+      },
+      {
+        "url": "mailto:anna.ledermueller@forju.at",
+        "label": ""
+      },
+      {
+        "url": "https://forju.at/de/ueber-uns?person=klara-ceculovic",
+        "label": "Klara Ceculovic"
+      },
+      {
+        "url": "mailto:klara.ceculovic@forju.at",
+        "label": ""
+      },
+      {
+        "url": "https://forju.at/de/ueber-uns?person=mija-nikolic",
+        "label": "Mija Nikolic"
+      },
+      {
+        "url": "mailto:mija.nikolic@forju.at",
+        "label": ""
+      },
+      {
+        "url": "https://forju.at/de/ueber-uns?person=sophie-giese",
+        "label": "Sophie Giese"
+      },
+      {
+        "url": "mailto:sophie.giese@forju.at",
+        "label": ""
+      },
+      {
+        "url": "https://forju.at/de/ueber-uns?person=asya-efe",
+        "label": "Asya Efe"
+      },
+      {
+        "url": "mailto:asya.efe@forju.at",
+        "label": ""
+      },
+      {
+        "url": "https://forju.at/de/ueber-uns?person=una-saric",
+        "label": "Una Saric"
+      },
+      {
+        "url": "mailto:una.saric@forju.at",
+        "label": ""
+      },
+      {
+        "url": "https://forju.at/de/ueber-uns?person=victoria-wagner",
+        "label": "Victoria Wagner"
+      },
+      {
+        "url": "mailto:victoria.wagner@forju.at",
+        "label": ""
+      },
+      {
+        "url": "https://forju.at/de/ueber-uns?person=alessandro-rodia",
+        "label": "Alessandro Rodia"
+      },
+      {
+        "url": "mailto:alessandro.rodia@forju.at",
+        "label": ""
+      },
+      {
+        "url": "https://forju.at/de/ueber-uns?person=felix-grafinger",
+        "label": "Felix Grafinger"
+      },
+      {
+        "url": "mailto:felix.grafinger@forju.at",
+        "label": ""
+      },
+      {
+        "url": "https://forju.at/de/ueber-uns?person=miriam-anna-moderegger",
+        "label": "Miriam Anna Moderegger"
+      },
+      {
+        "url": "mailto:miriam.moderegger@forju.at",
+        "label": ""
+      },
+      {
+        "url": "https://forju.at/de/ueber-uns?person=philip-stipkovits",
+        "label": "Philip Stipkovits"
+      },
+      {
+        "url": "mailto:philip.stipkovits@forju.at",
+        "label": ""
+      },
+      {
+        "url": "https://forju.at/de/ueber-uns?person=matthias-kleveta",
+        "label": "Matthias Kleveta"
+      },
+      {
+        "url": "mailto:matthias.kleveta@forju.at",
+        "label": ""
+      },
+      {
+        "url": "https://forju.at/de/ueber-uns?person=amela-kurtic",
+        "label": "Amela Kurtic"
+      },
+      {
+        "url": "mailto:amela.kurtic@forju.at",
+        "label": ""
+      },
+      {
+        "url": "https://forju.at/de/ueber-uns?person=julia-zelic",
+        "label": "Julia Zelic"
+      },
+      {
+        "url": "mailto:julia.zelic@forju.at",
+        "label": ""
+      },
+      {
+        "url": "https://forju.at/de/ueber-uns?person=manuel-stevanovic",
+        "label": "Manuel Stevanovic"
+      },
+      {
+        "url": "mailto:manuel.stevanovic@forju.at",
+        "label": ""
+      },
+      {
+        "url": "https://forju.at/de/ueber-uns?person=aleksandra-jotic",
+        "label": "Aleksandra Jotic"
+      },
+      {
+        "url": "mailto:aleksandra.jotic@forju.at",
+        "label": ""
+      },
+      {
+        "url": "https://forju.at/de/ueber-uns?person=david-levy",
+        "label": "David Levy"
+      },
+      {
+        "url": "mailto:david.levy@forju.at",
+        "label": ""
+      },
+      {
+        "url": "https://forju.at/de/ueber-uns?person=bernhard-socher",
+        "label": "Bernhard Socher"
+      },
+      {
+        "url": "mailto:bernhard.socher@forju.at",
+        "label": ""
+      },
+      {
+        "url": "https://forju.at/de/ueber-uns?person=alexander-bayer",
+        "label": "Alexander Bayer"
+      },
+      {
+        "url": "mailto:alexander.bayer@forju.at",
+        "label": ""
+      },
+      {
+        "url": "https://forju.at/de/ueber-uns?person=anna-grigoviera",
+        "label": "Anna Grigoviera"
+      },
+      {
+        "url": "mailto:anna.grigoviera@forju.at",
+        "label": ""
+      },
+      {
+        "url": "https://forju.at/de/ueber-uns?person=helene-christine-prause",
+        "label": "Helene Christine Prause"
+      },
+      {
+        "url": "mailto:helene.christine.prause@forju.at",
+        "label": ""
+      },
+      {
+        "url": "https://forju.at/de/ueber-uns?person=sophie-heinrich",
+        "label": "Sophie Heinrich"
+      },
+      {
+        "url": "https://forju.at/de/ueber-uns?person=iris-haslinger",
+        "label": "Iris Haslinger"
+      },
+      {
+        "url": "https://forju.at/de/ueber-uns?person=ricarda-loeffler",
+        "label": "Ricarda Loeffler"
+      },
+      {
+        "url": "https://forju.at/de/ueber-uns?person=omar-elghandour",
+        "label": "Omar Elghandour"
+      },
+      {
+        "url": "https://forju.at/de/ueber-uns?person=hubert-van-de-pavert",
+        "label": "Hubert van de Pavert"
+      },
+      {
+        "url": "https://forju.at/de/jobs",
+        "label": "Offene Positionen"
+      },
+      {
+        "url": "https://forju.at/de/spenden",
+        "label": "ForJu unterstützen"
+      },
+      {
+        "url": "mailto:office@forju.at",
+        "label": "office@forju.at"
+      }
+    ],
+    "contentHash": "5ba47200c9892db29ed2c537308426ca62e51f5dbb6cf4ab7f8de365e082319d",
+    "extractor": "structured-main-fallback",
+    "reviewStatus": "pending-human-review",
+    "resolvedUrl": "https://forju.at/de/ueber-uns",
+    "status": "reviewed",
+    "httpStatus": 200,
+    "reviewedAt": "2026-11-09",
+    "recordHashes": {
+      "ehrenamt": "5ba47200c9892db29ed2c537308426ca62e51f5dbb6cf4ab7f8de365e082319d"
+    }
+  },
+  "https://forju.at/en/ueber-uns": {
+    "url": "https://forju.at/en/ueber-uns",
+    "language": "en",
+    "title": "About us",
+    "dates": {
+      "published": null,
+      "modified": null
+    },
+    "passages": [
+      {
+        "heading": "About us › Our principles",
+        "text": "Our principles"
+      },
+      {
+        "heading": "About us › Our principles › Curiosity counts",
+        "text": "Curiosity counts"
+      },
+      {
+        "heading": "About us › Our principles › Curiosity counts",
+        "text": "Research interest is not only shown in grades, titles or linear educational paths. We take questions seriously and look for potential, willingness to learn and initiative."
+      },
+      {
+        "heading": "About us › Our team",
+        "text": "Our team"
+      },
+      {
+        "heading": "About us › Our team",
+        "text": "Our association is carried by nearly 60 committed volunteers who contribute their time and skills across many areas. Whether organising events, supporting our members or delivering projects – everyone makes a valuable contribution to the ForJu community."
+      },
+      {
+        "heading": "About us › Our team › Presidium",
+        "text": "Presidium"
+      },
+      {
+        "heading": "About us › Our team › Education",
+        "text": "Education"
+      },
+      {
+        "heading": "About us › Our team › Public Relations & Press",
+        "text": "Public Relations & Press"
+      },
+      {
+        "heading": "About us › Our team › Science Team",
+        "text": "Science Team"
+      },
+      {
+        "heading": "About us › Our team › IT",
+        "text": "IT"
+      },
+      {
+        "heading": "About us › Our team › Staff Units",
+        "text": "Staff Units"
+      },
+      {
+        "heading": "About us › Our team › Partnerships",
+        "text": "Partnerships"
+      },
+      {
+        "heading": "About us › Our team › Officers",
+        "text": "Officers"
+      },
+      {
+        "heading": "About us › Our team › Former officers / on break",
+        "text": "Former officers / on break"
+      },
+      {
+        "heading": "About us › Get involved",
+        "text": "Get involved"
+      },
+      {
+        "heading": "About us › Get involved",
+        "text": "ForJu runs on volunteering. You can help in education, PR, editorial, IT or operations."
+      },
+      {
+        "heading": "About us › Get involved",
+        "text": "Browse our open positions."
+      },
+      {
+        "heading": "About us › Get involved",
+        "text": "Find a role that fits you."
+      },
+      {
+        "heading": "About us › Get involved",
+        "text": "Apply by email — we’ll get back to you."
+      },
+      {
+        "heading": "About us › Get involved",
+        "text": "Open positionsSupport ForJu"
+      },
+      {
+        "heading": "About us › Youth protection",
+        "text": "Youth protection"
+      },
+      {
+        "heading": "About us › Youth protection",
+        "text": "As an association we place great importance on protecting and supporting our young members. Our youth protection officers develop concepts that ensure a safe and supportive environment and monitor compliance. They are not only responsible for planning and implementing youth protection, but are also available for questions or concerns at any time. Please do not hesitate to contact us!"
+      },
+      {
+        "heading": "About us › Youth protection",
+        "text": "office@forju.at"
+      }
+    ],
+    "forms": [],
+    "links": [
+      {
+        "url": "https://forju.at/en/ueber-uns?person=avid-vormann",
+        "label": "Avid Vormann"
+      },
+      {
+        "url": "mailto:avid.vormann@forju.at",
+        "label": ""
+      },
+      {
+        "url": "https://forju.at/en/ueber-uns?person=laura-scholz",
+        "label": "Laura Scholz"
+      },
+      {
+        "url": "mailto:laura.scholz@forju.at",
+        "label": ""
+      },
+      {
+        "url": "https://forju.at/en/ueber-uns?person=marco-vorgic",
+        "label": "Marco Vorgic"
+      },
+      {
+        "url": "mailto:marco.vorgic@forju.at",
+        "label": ""
+      },
+      {
+        "url": "https://forju.at/en/ueber-uns?person=anja-hofer",
+        "label": "Anja Hofer"
+      },
+      {
+        "url": "mailto:anja.hofer@forju.at",
+        "label": ""
+      },
+      {
+        "url": "https://forju.at/en/ueber-uns?person=sarah-ceculovic",
+        "label": "Sarah Ceculovic"
+      },
+      {
+        "url": "mailto:sarah.ceculovic@forju.at",
+        "label": ""
+      },
+      {
+        "url": "https://forju.at/en/ueber-uns?person=paul-gusich",
+        "label": "Paul Gusich"
+      },
+      {
+        "url": "mailto:paul.gusich@forju.at",
+        "label": ""
+      },
+      {
+        "url": "https://forju.at/en/ueber-uns?person=julian-kadlicz",
+        "label": "Julian Kadlicz"
+      },
+      {
+        "url": "mailto:julian.kadlicz@forju.at",
+        "label": ""
+      },
+      {
+        "url": "https://forju.at/en/ueber-uns?person=anna-ledermueller",
+        "label": "Anna Ledermueller"
+      },
+      {
+        "url": "mailto:anna.ledermueller@forju.at",
+        "label": ""
+      },
+      {
+        "url": "https://forju.at/en/ueber-uns?person=klara-ceculovic",
+        "label": "Klara Ceculovic"
+      },
+      {
+        "url": "mailto:klara.ceculovic@forju.at",
+        "label": ""
+      },
+      {
+        "url": "https://forju.at/en/ueber-uns?person=mija-nikolic",
+        "label": "Mija Nikolic"
+      },
+      {
+        "url": "mailto:mija.nikolic@forju.at",
+        "label": ""
+      },
+      {
+        "url": "https://forju.at/en/ueber-uns?person=sophie-giese",
+        "label": "Sophie Giese"
+      },
+      {
+        "url": "mailto:sophie.giese@forju.at",
+        "label": ""
+      },
+      {
+        "url": "https://forju.at/en/ueber-uns?person=asya-efe",
+        "label": "Asya Efe"
+      },
+      {
+        "url": "mailto:asya.efe@forju.at",
+        "label": ""
+      },
+      {
+        "url": "https://forju.at/en/ueber-uns?person=una-saric",
+        "label": "Una Saric"
+      },
+      {
+        "url": "mailto:una.saric@forju.at",
+        "label": ""
+      },
+      {
+        "url": "https://forju.at/en/ueber-uns?person=victoria-wagner",
+        "label": "Victoria Wagner"
+      },
+      {
+        "url": "mailto:victoria.wagner@forju.at",
+        "label": ""
+      },
+      {
+        "url": "https://forju.at/en/ueber-uns?person=alessandro-rodia",
+        "label": "Alessandro Rodia"
+      },
+      {
+        "url": "mailto:alessandro.rodia@forju.at",
+        "label": ""
+      },
+      {
+        "url": "https://forju.at/en/ueber-uns?person=felix-grafinger",
+        "label": "Felix Grafinger"
+      },
+      {
+        "url": "mailto:felix.grafinger@forju.at",
+        "label": ""
+      },
+      {
+        "url": "https://forju.at/en/ueber-uns?person=miriam-anna-moderegger",
+        "label": "Miriam Anna Moderegger"
+      },
+      {
+        "url": "mailto:miriam.moderegger@forju.at",
+        "label": ""
+      },
+      {
+        "url": "https://forju.at/en/ueber-uns?person=philip-stipkovits",
+        "label": "Philip Stipkovits"
+      },
+      {
+        "url": "mailto:philip.stipkovits@forju.at",
+        "label": ""
+      },
+      {
+        "url": "https://forju.at/en/ueber-uns?person=matthias-kleveta",
+        "label": "Matthias Kleveta"
+      },
+      {
+        "url": "mailto:matthias.kleveta@forju.at",
+        "label": ""
+      },
+      {
+        "url": "https://forju.at/en/ueber-uns?person=amela-kurtic",
+        "label": "Amela Kurtic"
+      },
+      {
+        "url": "mailto:amela.kurtic@forju.at",
+        "label": ""
+      },
+      {
+        "url": "https://forju.at/en/ueber-uns?person=julia-zelic",
+        "label": "Julia Zelic"
+      },
+      {
+        "url": "mailto:julia.zelic@forju.at",
+        "label": ""
+      },
+      {
+        "url": "https://forju.at/en/ueber-uns?person=manuel-stevanovic",
+        "label": "Manuel Stevanovic"
+      },
+      {
+        "url": "mailto:manuel.stevanovic@forju.at",
+        "label": ""
+      },
+      {
+        "url": "https://forju.at/en/ueber-uns?person=aleksandra-jotic",
+        "label": "Aleksandra Jotic"
+      },
+      {
+        "url": "mailto:aleksandra.jotic@forju.at",
+        "label": ""
+      },
+      {
+        "url": "https://forju.at/en/ueber-uns?person=david-levy",
+        "label": "David Levy"
+      },
+      {
+        "url": "mailto:david.levy@forju.at",
+        "label": ""
+      },
+      {
+        "url": "https://forju.at/en/ueber-uns?person=bernhard-socher",
+        "label": "Bernhard Socher"
+      },
+      {
+        "url": "mailto:bernhard.socher@forju.at",
+        "label": ""
+      },
+      {
+        "url": "https://forju.at/en/ueber-uns?person=alexander-bayer",
+        "label": "Alexander Bayer"
+      },
+      {
+        "url": "mailto:alexander.bayer@forju.at",
+        "label": ""
+      },
+      {
+        "url": "https://forju.at/en/ueber-uns?person=anna-grigoviera",
+        "label": "Anna Grigoviera"
+      },
+      {
+        "url": "mailto:anna.grigoviera@forju.at",
+        "label": ""
+      },
+      {
+        "url": "https://forju.at/en/ueber-uns?person=helene-christine-prause",
+        "label": "Helene Christine Prause"
+      },
+      {
+        "url": "mailto:helene.christine.prause@forju.at",
+        "label": ""
+      },
+      {
+        "url": "https://forju.at/en/ueber-uns?person=sophie-heinrich",
+        "label": "Sophie Heinrich"
+      },
+      {
+        "url": "https://forju.at/en/ueber-uns?person=iris-haslinger",
+        "label": "Iris Haslinger"
+      },
+      {
+        "url": "https://forju.at/en/ueber-uns?person=ricarda-loeffler",
+        "label": "Ricarda Loeffler"
+      },
+      {
+        "url": "https://forju.at/en/ueber-uns?person=omar-elghandour",
+        "label": "Omar Elghandour"
+      },
+      {
+        "url": "https://forju.at/en/ueber-uns?person=hubert-van-de-pavert",
+        "label": "Hubert van de Pavert"
+      },
+      {
+        "url": "https://forju.at/en/jobs",
+        "label": "Open positions"
+      },
+      {
+        "url": "https://forju.at/en/spenden",
+        "label": "Support ForJu"
+      },
+      {
+        "url": "mailto:office@forju.at",
+        "label": "office@forju.at"
+      }
+    ],
+    "contentHash": "94ba415e532de8d109d99622cc3cfff15e5c8244176bc276fe29b361e6ef6a4d",
+    "extractor": "structured-main-fallback",
+    "reviewStatus": "pending-human-review",
+    "resolvedUrl": "https://forju.at/en/ueber-uns",
+    "status": "reviewed",
+    "httpStatus": 200,
+    "reviewedAt": "2026-11-09",
+    "recordHashes": {
+      "ehrenamt": "94ba415e532de8d109d99622cc3cfff15e5c8244176bc276fe29b361e6ef6a4d"
     }
   }
 }

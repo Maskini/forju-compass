@@ -87,8 +87,8 @@ export default function CompassPanel({initialLanguage,widget=false}:{initialLang
           ? [en?"Ask about rooms or equipment":"Räume oder Geräte anfragen","/kontakt?intent=service&thema=ressourcen"]
           : source.includes("/services/finanziell")
           ? [en?"Request funding support":"Finanzierungshilfe anfragen","/kontakt?intent=service&thema=finanziell"]
-          : source.includes("schulworkshops") ? [en?"Enquire about a school workshop":"Schulworkshop anfragen","/kontakt?intent=service"] : null;
-        return action && <a className="next-step" href={"https://forju.at/"+(source.startsWith("https://forju.at/en/")?"en":"de")+action[1]} target="_blank" rel="noopener noreferrer">{action[0]} →</a>
+          : source.includes("schulworkshops") ? [en?"Enquire about a school workshop":"Schulworkshop anfragen","mailto:anja.hofer@forju.at"] : null;
+        return action && <a className="next-step" href={action[1].startsWith("mailto:") ? action[1] : "https://forju.at/"+(source.startsWith("https://forju.at/en/")?"en":"de")+action[1]} target="_blank" rel="noopener noreferrer">{action[0]} →</a>
       })()}
       <ProjectDraft key={conversationId} ready={ready} lang={lang} turns={turns} widget={widget}/>
       {loading&&<div role="status"><div className="question-bubble"><p>{submittedQuestion}</p></div>{en?"Looking for an answer…":"Ich suche eine Antwort …"}</div>}

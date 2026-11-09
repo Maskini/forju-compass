@@ -1,0 +1,21 @@
+{
+  "baseCommit": "e9c805479267e97a9ec3e051cf63824df8d0fa1b",
+  "scope": "Final working-tree source used in production build and isolated release tests. Documentation is not part of the runtime hash set.",
+  "files": {
+    "app/api/chat/route.ts": "5bc6f8c267ecc295058764616234d81c0147fac6fca159bfd56a61dcd4ac0563",
+    "app/components/project-draft.tsx": "95ef5da2aad990632e695f4aaf0d8f8585e3cd259ee361a6f65b1b268e9eea1b",
+    "app/demo/route.ts": "2ce4f6c4d45b2c5eeb3f3e78025780d0d798f1700d23f1e4b29330852fc7bb1c",
+    "app/embed/panel.tsx": "0940528b097e9f5413afab65724e534fde27999bb2fb3f26a59bdc6c994ca27a",
+    "knowledge/catalog.json": "87802752f1a09f03d8e5cf8c9cad473f7ca0dc1d8ac79951f277d94055f6beca",
+    "knowledge/source-review.json": "86da8ba19fcd78551036433b2e547f5e6506b482769c3bf4f1c0df3f7a0efd8b",
+    "lib/knowledge.ts": "6fa4c405ce61dcc1ce59e807e3f9ea0b6e7ed1fb9f13591e1d1ba2cf141c03e7",
+    "lib/offer-follow-up.ts": "2a32cf1f69d3dbddf4d798b3d211090a860e18d2c22859f507fee7e1b3aa63cb",
+    "tests/chat-route.test.mjs": "2cbac2c5b4e29940fc757bce209e3a2b7bd4c02df7914d84c5c459eca50d7999",
+    "tools/release/quality/cases.cjs": "54dfb731630d3f835b6d996e4b13e447efe140c6a89a443bbcd04fa57b847df3",
+    "tools/release/quality/grade.cjs": "bfae582813ae9ccfd916386b24f5cb393450aa494f5789077ec096afe286e10e",
+    "tools/release/run.sh": "35fa492b3132769f58f40e7a022398aa40f6908abf8184827ca9ed1d941d29c6",
+    "tools/visitor-checks/release.spec.mjs": "7532af9aadde480d28e232728067c3ab3add9ab22370e8c0779d864a80fd9150",
+    "tools/visitor-checks/visitors.spec.mjs": "05b6cdef0d2ddda110e2c93eb112e7790c10b055863abc0c0eb287e70137349c",
+    "tools/knowledge-checks/final-visitor-cases.json": "195380e4d8d55d676816bdc15a2f575391b33cf2d44e6a1badcba5d806e60a6a"
+  }
+}

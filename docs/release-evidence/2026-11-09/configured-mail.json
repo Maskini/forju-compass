@@ -1,0 +1,39 @@
+{
+  "scope": "local production routes with simulated provider, no external email",
+  "results": [
+    {
+      "kind": "feedback",
+      "language": "de",
+      "initialStatus": 502,
+      "retryStatus": 200,
+      "recipient": "adam.maskini@icloud.com",
+      "messageCount": 1
+    },
+    {
+      "kind": "project-submission",
+      "language": "de",
+      "initialStatus": 502,
+      "retryStatus": 200,
+      "recipient": "adam.maskini@icloud.com",
+      "messageCount": 1
+    },
+    {
+      "kind": "feedback",
+      "language": "en",
+      "initialStatus": 502,
+      "retryStatus": 200,
+      "recipient": "adam.maskini@icloud.com",
+      "messageCount": 1
+    },
+    {
+      "kind": "project-submission",
+      "language": "en",
+      "initialStatus": 502,
+      "retryStatus": 200,
+      "recipient": "adam.maskini@icloud.com",
+      "messageCount": 1
+    }
+  ],
+  "messages": 4,
+  "attempts": 8
+}

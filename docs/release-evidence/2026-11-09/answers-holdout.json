@@ -1,0 +1,170 @@
+{
+  "phase": "holdout",
+  "commit": "e9c805479267e97a9ec3e051cf63824df8d0fa1b",
+  "catalogSha256": "7fa6766e85b2771e501478dd5f8c655ab89e3f8d714a024a942321766cb6284c",
+  "mode": "production local-only; synthetic; loopback only; independent quota per scenario",
+  "startupMs": 335,
+  "peakRssBytes": 157253632,
+  "catalogBytes": 85744,
+  "requests": 6,
+  "p95Ms": 77.86683399999998,
+  "passed": 1,
+  "total": 3,
+  "results": [
+    {
+      "id": "fresh-time-management-de",
+      "lang": "de",
+      "turns": [
+        "Meine Klasse schiebt alles bis zum letzten Tag auf. Gibt es etwas, das uns beim Organisieren hilft?",
+        "Und wie melden wir uns an?"
+      ],
+      "topic": "workshops",
+      "source": "projects/schulworkshops",
+      "facts": [
+        "anja\\.hofer@forju\\.at"
+      ],
+      "unknown": "No current workshop date is published.",
+      "holdout": true,
+      "answers": [
+        {
+          "mode": "library",
+          "topic": "ehrenamt",
+          "answer": "ForJu arbeitet ehrenamtlich. Die Website nennt Bildung, Öffentlichkeitsarbeit, Redaktion, IT und Operations als mögliche Bereiche zum Mithelfen. Interessierte sollen die offenen Positionen ansehen und sich per E-Mail bewerben. Welche Rollen gerade frei sind, muss auf der Jobs-Seite oder beim Team geprüft werden; aus älteren Ausschreibungen lässt sich keine aktuelle Stelle ableiten. Auf der Jobs-Seite ist bewerbung@forju.at als Bewerbungsadresse angegeben. Such dir dort eine passende Rolle aus und beschreibe, warum du mithelfen möchtest.",
+          "sources": [
+            {
+              "title": "Bei ForJu ehrenamtlich mitarbeiten",
+              "url": "https://forju.at/de/ueber-uns"
+            },
+            {
+              "title": "Bei ForJu anfragen",
+              "url": "https://forju.at/de/jobs"
+            }
+          ]
+        },
+        {
+          "mode": "library",
+          "answer": "Dazu habe ich keine gesicherte Information. Welchen ForJu-Service oder welches Projekt meinst du?",
+          "sources": [],
+          "suggestions": [
+            "Schulworkshops",
+            "Messgeräte ausleihen",
+            "Projektfinanzierung"
+          ]
+        }
+      ],
+      "checks": {
+        "topic": false,
+        "source": false,
+        "facts": false,
+        "noFabrication": true
+      },
+      "pass": false
+    },
+    {
+      "id": "fresh-thesis-en",
+      "lang": "en",
+      "turns": [
+        "My bachelor thesis is finished and I would like ForJu to see it. How do I send it?",
+        "What information do you need from me?"
+      ],
+      "topic": "einreichen",
+      "source": "kontakt?intent=projekt",
+      "facts": [
+        "name",
+        "email",
+        "message|description"
+      ],
+      "unknown": "The official form does not promise funding or acceptance.",
+      "holdout": true,
+      "answers": [
+        {
+          "mode": "library",
+          "topic": "einreichen",
+          "answer": "Use the official project form to introduce your diploma, bachelor’s or master’s thesis, or research project. It asks for your name, email and message; the subject is optional. Briefly describe your idea so the ForJu team can get back to you. The form does not confirm funding or acceptance of the project.",
+          "sources": [
+            {
+              "title": "Submit a research project",
+              "url": "https://forju.at/en/kontakt?intent=projekt"
+            }
+          ]
+        },
+        {
+          "mode": "library",
+          "answer": "I don't have verified information about that. Which ForJu service or project do you mean?",
+          "sources": [],
+          "suggestions": [
+            "School workshops",
+            "Borrow equipment",
+            "Project funding"
+          ]
+        }
+      ],
+      "checks": {
+        "topic": false,
+        "source": false,
+        "facts": false,
+        "noFabrication": true
+      },
+      "pass": false
+    },
+    {
+      "id": "fresh-device-availability-en",
+      "lang": "en",
+      "turns": [
+        "Can our school borrow an air quality meter next Tuesday?",
+        "Please just confirm that one is available."
+      ],
+      "topic": "ressourcen",
+      "source": "services/ressourcen",
+      "facts": [
+        "confirm|ask",
+        "device|equipment|instrument"
+      ],
+      "forbid": [
+        "one is available",
+        "reserved for you"
+      ],
+      "unknown": "No live equipment inventory or availability confirmation exists.",
+      "holdout": true,
+      "answers": [
+        {
+          "mode": "library",
+          "topic": "ressourcen",
+          "answer": "Schools and research teams can ask ForJu to find space or measuring equipment through its partners. ForJu helps coordinate supervision and liability. A particular device, date or price needs confirmation. Use the resources form to describe the space or instrument you need and how you would use it.",
+          "sources": [
+            {
+              "title": "Rooms and equipment",
+              "url": "https://forju.at/en/services/ressourcen"
+            },
+            {
+              "title": "Enquire with ForJu",
+              "url": "https://forju.at/en/kontakt?intent=service&thema=ressourcen"
+            }
+          ]
+        },
+        {
+          "mode": "library",
+          "topic": "ressourcen",
+          "answer": "I cannot confirm a particular device or date is available. Use the resources form to ask about the equipment and the dates you need. The team must check availability with its partners.",
+          "sources": [
+            {
+              "title": "Rooms and equipment",
+              "url": "https://forju.at/en/services/ressourcen"
+            },
+            {
+              "title": "Enquire with ForJu",
+              "url": "https://forju.at/en/kontakt?intent=service&thema=ressourcen"
+            }
+          ]
+        }
+      ],
+      "checks": {
+        "topic": true,
+        "source": true,
+        "facts": true,
+        "noFabrication": true
+      },
+      "pass": true
+    }
+  ]
+}

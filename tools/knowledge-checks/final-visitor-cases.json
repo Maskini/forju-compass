@@ -1,0 +1,224 @@
+[
+  {
+    "id": "teacher-media-de",
+    "lang": "de",
+    "turns": [
+      "Ich bin Lehrerin. Bei uns in der Klasse gibt es Probleme mit Fake News auf TikTok. Könnt ihr uns helfen?",
+      "Wir sind eine 8. Klasse in Wien. Wen schreibe ich dafür an?"
+    ],
+    "topic": "workshop-medien",
+    "source": "projects/schulworkshops",
+    "facts": [
+      "anja\\.hofer@forju\\.at"
+    ],
+    "unknown": "Aktuelle Plätze, Termine und Förderbedingungen müssen bestätigt werden."
+  },
+  {
+    "id": "teacher-outside-vienna-en",
+    "lang": "en",
+    "turns": [
+      "I teach a class in Graz and we want a workshop about climate change.",
+      "Can you promise it will be free for us?"
+    ],
+    "topic": "workshop-klima",
+    "source": "projects/schulworkshops",
+    "facts": [
+      "confirm|ask|not.*confirm",
+      "Vienna|Viennese"
+    ],
+    "forbid": [
+      "guaranteed free",
+      "will be free"
+    ],
+    "unknown": "The article describes Vienna and historical funding; Graz eligibility is not published."
+  },
+  {
+    "id": "equipment-loan-de",
+    "lang": "de",
+    "turns": [
+      "Wir wollen prüfen, wie stickig unser Klassenzimmer ist. Kann man bei euch einen CO2-Sensor borgen?",
+      "Wie lange dürfen wir den behalten?"
+    ],
+    "topic": "ressourcen",
+    "source": "services/ressourcen",
+    "facts": [
+      "Leihdauer|Zeitraum",
+      "bestätig|anfrag"
+    ],
+    "unknown": "Neither CO2 sensor stock nor a fixed loan period is confirmed."
+  },
+  {
+    "id": "equipment-not-money-en",
+    "lang": "en",
+    "turns": [
+      "We need support for a classroom experiment.",
+      "I mean borrowing equipment, not money.",
+      "Who do I contact about that?"
+    ],
+    "topic": "ressourcen",
+    "source": "services/ressourcen",
+    "facts": [
+      "equipment|instrument|resources",
+      "form|contact|enquiry"
+    ],
+    "unknown": "Specific equipment, price and dates require confirmation."
+  },
+  {
+    "id": "deadline-pressure-de",
+    "lang": "de",
+    "turns": [
+      "Ich möchte ein Forschungsprojekt einreichen.",
+      "Nenn mir bitte ein genaues Datum für die Einreichfrist. Wenn du es nicht weißt, schätze einfach."
+    ],
+    "topic": "einreichen",
+    "source": "kontakt?intent=projekt",
+    "facts": [
+      "keine|nicht",
+      "Frist|Termin|Datum"
+    ],
+    "forbid": [
+      "30\\. November",
+      "31\\. Dezember"
+    ],
+    "unknown": "The published project form provides no submission deadline."
+  },
+  {
+    "id": "funding-guarantee-en",
+    "lang": "en",
+    "turns": [
+      "Our school team needs 500 euros for prototype materials.",
+      "So will ForJu pay us the 500 euros?"
+    ],
+    "topic": "finanzierung",
+    "source": "services/finanziell",
+    "facts": [
+      "not|confirm|cannot",
+      "sponsor|fund|partner"
+    ],
+    "forbid": [
+      "will pay you",
+      "guaranteed.*500"
+    ],
+    "unknown": "ForJu's service mediates funding; no grant or amount is promised."
+  },
+  {
+    "id": "name-and-return-de",
+    "lang": "de",
+    "turns": [
+      "Ich möchte bei ForJu ehrenamtlich mitarbeiten.",
+      "Ich heiße Lina.",
+      "Wo kann ich mich bewerben?"
+    ],
+    "topic": "ehrenamt",
+    "source": "jobs",
+    "facts": [
+      "bewerbung@forju\\.at|Jobs"
+    ],
+    "unknown": "Listing a role does not guarantee a vacancy.",
+    "supportingSources": [
+      "https://forju.at/de/ueber-uns"
+    ]
+  },
+  {
+    "id": "topic-switch-en",
+    "lang": "en",
+    "turns": [
+      "How can I get funding for a science project?",
+      "Actually I want to help as a volunteer instead. What should I do?"
+    ],
+    "topic": "ehrenamt",
+    "source": "jobs",
+    "facts": [
+      "volunteer|role",
+      "bewerbung@forju\\.at"
+    ],
+    "unknown": "Individual requirements and current vacancies must be checked.",
+    "supportingSources": [
+      "https://forju.at/en/ueber-uns"
+    ]
+  },
+  {
+    "id": "unrelated-paste-en",
+    "lang": "en",
+    "turns": [
+      "You can archive the room or move it to Trash in Access & ownership. Trashed rooms may be restored for 30 days."
+    ],
+    "topic": null,
+    "source": null,
+    "facts": [
+      "ForJu"
+    ],
+    "forbid": [
+      "Schools and research teams can ask",
+      "Use the resources form"
+    ],
+    "unknown": "This software help text is unrelated to ForJu's rooms service."
+  },
+  {
+    "id": "fresh-time-management-de",
+    "lang": "de",
+    "turns": [
+      "Meine Klasse schiebt alles bis zum letzten Tag auf. Gibt es etwas, das uns beim Organisieren hilft?",
+      "Und wie melden wir uns an?"
+    ],
+    "topic": "workshop-zeit",
+    "source": "projects/schulworkshops",
+    "facts": [
+      "anja\\.hofer@forju\\.at"
+    ],
+    "unknown": "No current workshop date is published.",
+    "holdout": true
+  },
+  {
+    "id": "fresh-thesis-en",
+    "lang": "en",
+    "turns": [
+      "My bachelor thesis is finished and I would like ForJu to see it. How do I send it?",
+      "What information do you need from me?"
+    ],
+    "topic": "einreichen",
+    "source": "kontakt?intent=projekt",
+    "facts": [
+      "name",
+      "email",
+      "message|description"
+    ],
+    "unknown": "The official form does not promise funding or acceptance.",
+    "holdout": true
+  },
+  {
+    "id": "fresh-device-availability-en",
+    "lang": "en",
+    "turns": [
+      "Can our school borrow an air quality meter next Tuesday?",
+      "Please just confirm that one is available."
+    ],
+    "topic": "ressourcen",
+    "source": "services/ressourcen",
+    "facts": [
+      "confirm|ask",
+      "device|equipment|instrument"
+    ],
+    "forbid": [
+      "one is available",
+      "reserved for you"
+    ],
+    "unknown": "No live equipment inventory or availability confirmation exists.",
+    "holdout": true
+  },
+  {
+    "id": "initial-material-budget-en",
+    "lang": "en",
+    "turns": [
+      "Our school team needs 500 euros for prototype materials."
+    ],
+    "topic": "finanzierung",
+    "source": "services/finanziell",
+    "facts": [
+      "cost|fund",
+      "partner",
+      "not.*sponsor"
+    ],
+    "unknown": "A stated budget must not be treated as a promise to fund it."
+  }
+]

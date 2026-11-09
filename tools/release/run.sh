@@ -28,7 +28,7 @@ docker run -d --name "$box" --network none --shm-size=1g -v "$out:/out" \
   -e COMPASS_QUOTA_DB=/tmp/compass-check-release/quota.sqlite -e COMPASS_CLIENT_IP_HEADER=x-audit-client \
   -e RESEND_API_KEY=re_local_fixture -e RESEND_BASE_URL=http://127.0.0.1:4204 \
   -e FEEDBACK_IP_HEADER=x-audit-feedback-ip -e FEEDBACK_FROM_EMAIL=compass@example.test -e FEEDBACK_TO_EMAIL=adam.maskini@forju.at \
-  -e PROJECT_FROM_EMAIL=onboarding@resend.dev -e RENDER_EXTERNAL_URL=https://127.0.0.1:4203 \
+  -e PROJECT_FROM_EMAIL=compass@example.test -e RENDER_EXTERNAL_URL=https://127.0.0.1:4203 \
   -e COMPASS_TEST_QUOTA=/tmp/compass-check-release/quota.sqlite forju-release-tools:local sleep infinity >/dev/null
 # Only app source, approved assets and test programs enter the isolated machine.
 git ls-files -co --exclude-standard -z -- app lib public tests knowledge/catalog.json knowledge/source-review.json knowledge/public-sources.json knowledge/language scripts \
@@ -39,6 +39,7 @@ git ls-files -co --exclude-standard -z -- app lib public tests knowledge/catalog
 mkdir -p "$out/fixtures/knowledge-checks"
 docker cp "$box:/app/tools/release/quality" "$out/fixtures/quality"
 docker cp "$box:/app/tools/knowledge-checks/release-cases.json" "$out/fixtures/knowledge-checks/release-cases.json"
+docker cp "$box:/app/tools/knowledge-checks/final-visitor-cases.json" "$out/fixtures/knowledge-checks/final-visitor-cases.json"
 docker cp "$box:/app/tools/release/load.js" "$out/fixtures/load.js"
 docker cp "$box:/app/tools/release/zap-hook.py" "$out/fixtures/zap-hook.py"
 inside(){ docker exec "$box" "$@"; }
@@ -75,6 +76,7 @@ fi
 stage quality quality
 if [ "$phase" != baseline ]; then
   stage project-inbox inside node tools/release/project-mail.mjs
+  stage configured-mail inside node tools/release/mail-delivery.mjs --icloud /out/configured-mail.json
   stage security inside node tools/release/security.mjs
   if [ "$phase" = trial ]; then
     stage browser inside sh -c 'cd tools/visitor-checks && node node_modules/@playwright/test/cli.js test -c release.config.mjs release.spec.mjs'

@@ -1,0 +1,58 @@
+
+
+  █ THRESHOLDS
+
+    burst_ms
+    ✓ 'p(95)<2500' p(95)=48.44ms
+
+    checks
+    ✓ 'rate==1' rate=100.00%
+
+    expected_429
+    ✓ 'count>0' count=14
+
+    normal_ms
+    ✓ 'p(95)<1500' p(95)=32.03ms
+
+    unexpected_errors
+    ✓ 'count==0' count=0
+
+
+  █ TOTAL RESULTS
+
+    checks_total.......: 10      0.161865/s
+    checks_succeeded...: 100.00% 10 out of 10
+    checks_failed......: 0.00%   0 out of 10
+
+    ✓ normal answers accepted
+    ✓ identified visitor limited before shared capacity is full
+    ✓ burst: seven remaining global slots
+    ✓ burst: thirteen expected limits
+    ✓ bounded Retry-After
+    ✓ recovery after real window reset
+
+    CUSTOM
+    accepted.......................: 13     0.210424/s
+    burst_accepted_ms..............: avg=14.87ms max=30.3ms  p(95)=27.21ms
+    burst_limited_ms...............: avg=33.09ms max=48.85ms p(95)=48.59ms
+    burst_ms.......................: avg=26.71ms max=48.85ms p(95)=48.44ms
+    expected_429...................: 14     0.226611/s
+    normal_ms......................: avg=18.98ms max=35.69ms p(95)=32.03ms
+    recovery_ms....................: avg=53.76ms max=53.76ms p(95)=53.76ms
+    unexpected_errors..............: 0      0/s
+
+    HTTP
+    http_req_duration..............: avg=25.75ms max=53.76ms p(95)=48.72ms
+      { expected_response:true }...: avg=25.75ms max=53.76ms p(95)=48.72ms
+    http_req_failed................: 0.00%  0 out of 27
+    http_reqs......................: 27     0.437035/s
+
+    EXECUTION
+    iteration_duration.............: avg=1m1s    max=1m1s    p(95)=1m1s
+    iterations.....................: 1      0.016186/s
+    vus............................: 1      min=1       max=1
+    vus_max........................: 1      min=1       max=1
+
+    NETWORK
+    data_received..................: 26 kB  427 B/s
+    data_sent......................: 5.7 kB 92 B/s

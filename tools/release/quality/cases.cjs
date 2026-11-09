@@ -32,3 +32,7 @@ module.exports=[
 // Additional reference cases were recorded before the November 7 fixes.
 const fresh = require("../../knowledge-checks/release-cases.json");
 module.exports.push(...fresh.map(c=>({...c,id:"knowledge-"+c.id,source:c.source?"https://forju.at/"+c.lang+"/"+c.source:null,fact:c.facts.join("; "),must:c.facts,forbid:c.forbid||[]})));
+// Independently written November 9 journeys: contact, corrections and missing
+// logistics. The held-out cases are included only in the final release run.
+const finalVisitors = require("../../knowledge-checks/final-visitor-cases.json");
+module.exports.push(...finalVisitors.map(c=>({...c,id:"visitor-"+c.id,source:c.source?"https://forju.at/"+c.lang+"/"+c.source:null,fact:c.facts.join("; "),must:c.facts,forbid:c.forbid||[]})));

@@ -594,6 +594,19 @@ test('a logistical resolver does not reuse an old offer for named unrelated subj
  assert.equal(offerFollowUp.offerFollowUp('How long does it last?',undefined,true,catalog,s=>s),null);
 });
 
+test('final visitor goals retain the offer through contact and logistics questions',async()=>{
+ const cases=JSON.parse(readFileSync(new URL('../tools/knowledge-checks/final-visitor-cases.json',import.meta.url),'utf8'));
+ for(const c of cases.filter(c=>!c.holdout)) {
+  const v=visitor(c.lang);let a;
+  for(const q of c.turns)a=await v.ask(q);
+  assert.equal(a.topic??null,c.topic,c.id);
+  if(c.source)assert.ok(a.sources.some(s=>s.url==='https://forju.at/'+c.lang+'/'+c.source),c.id);
+  else assert.deepEqual(a.sources,[],c.id);
+  for(const p of c.facts)assert.match(a.answer,new RegExp(p,'iu'),c.id);
+  for(const p of c.forbid||[])assert.doesNotMatch(a.answer,new RegExp(p,'iu'),c.id);
+ }
+});
+
 
 test('session preferences, clarification and role-specific passages through the chat route',async()=>{
  const cases=JSON.parse(readFileSync(new URL('../tools/knowledge-checks/conversation-cases.json',import.meta.url),'utf8'));

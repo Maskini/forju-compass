@@ -1,48 +1,75 @@
-# ForJu Compass release decision · 6 November 2026
+# ForJu Compass final-fixes pass · 9 November 2026
 
-**Hold public installation. The catalog-only candidate is ready for ForJu staging.** The local receiver proves that the app can submit and retry safely. The public service still needs an authorized project sender, and the real feedback destination and host installation need validation. A green local suite is insufficient to promise those services to visitors.
+**Decision: ready for private testing of the catalog-only preview.** It does not install anything on the official ForJu website. No real emails were sent during this pass.
 
-Tested candidate: `996f9f1`. The release branch is `release/visitor-audit-20261106`. The audit did not publish a deployment or send real mail.
+The tested base was `e9c805479267e97a9ec3e051cf63824df8d0fa1b`. [Candidate file hashes](release-evidence/2026-11-09/candidate-files.json) identify the changed application and test files. The release uses the existing Render service and URL, with `COMPASS_LOCAL_ONLY=true` and the existing iCloud recipient. No package, paid API, model or external service was added.
 
-| Critical journey | Local production build | Public launch |
-|---|---|---|
-| German teacher asks about a workshop, follows up and opens the supporting page | **PASS** on the standalone homepage and separate-origin widget. The answer named Anja Hofer, included her published address, and opened the expected German workshop URL. The destination was served by an explicitly offline fixture. | Actual ForJu host journey untested. |
-| Bilingual answers and citations | **PASS, 19/19 cases (26 turns)**. Deterministic fact and exact-source checks against separately reviewed public pages. | AI-backed answers untested. |
-| Project idea → six steps → edit → close → resume → copy | **PASS**. The final text contained the correction, omitted the skipped timing, and pasted exactly via the device copy command. A second browser session had empty fields. Send stays the primary action. | **Blocked for submission** pending an authorized production sender. |
-| Project receipt | **PASS** for the disabled path. A separately configured instance refused an unconfirmed request, returned an error after a lost acknowledgement, and accepted a retry with one exact draft in the simulated inbox. | Production acceptance and inbox delivery untested. |
-| Wrong-answer report → opt in or out → fail → retry → return | **PASS**. Desktop and phone-sized journeys exercised the actual feedback API and SDK. The receiver stored one message for two attempts. Opt-out excluded the exchange; opt-in included just the chosen pair. No unrelated turn or reply address appeared. Focus returned to the original answer. | **Untested** in the designated real inbox. |
-| Embed permissions, privacy and accessibility | **PASS**. The permitted local HTTPS host displayed the real widget. The denied host could not. HTML-like visitor text stayed inert. Tested keyboard focus, small-screen action reachability and axe WCAG A/AA checks. | ForJu’s actual CMS, headers, physical phone and keyboard remain live checks. |
-| Security and traffic | **PASS with two reviewed scanner warnings**. Read the limits and scan findings below. | Render cold-start time, production burst capacity and broader security coverage untested. |
+## Fixes made
 
-## Evidence and fixes
+- Offer-specific follow-ups now retain context for contact, registration, preparation, loan duration, deadlines and availability. An explicit new offer still wins over an earlier topic.
+- “Wen schreibe ich dafür an?” after a media-workshop question returns Anja Hofer's published workshop contact. The widget's school-workshop action now opens that email address instead of a generic service form.
+- A class needing money for prototype materials reaches financial support. A request for a submission deadline no longer drifts to donation-receipt information. Compass does not invent a deadline, fee, funding guarantee or device availability.
+- The public catalog now includes a reviewed volunteering application route, project inquiry fields, and everyday time-management phrasing. Reviewed pages include the German and English workshop, resources, jobs and contact pages. Record hashes and excerpts remain in `knowledge/source-review.json`.
+- Fixed a delayed project-close event stealing focus from the composer. In the first complete candidate run, immediately returning from the form and typing reopened it instead of sending. Focus restoration now leaves a visitor’s newly focused input alone; a deterministic delayed-close regression covers the race. Nine focused checks passed across Chromium, Firefox and WebKit. [Focus evidence](release-evidence/2026-11-09/focus-recheck.json).
+- The video page no longer says project email is disabled. It accurately explains that the recording shows completion/review without sending.
+- The repeatable browser suite now exercises actual project submission, lost acknowledgement and retry, in addition to reporting. A dedicated local-provider check uses the currently configured iCloud recipient and sandbox sender in both languages.
 
-* First 12 development questions: 10 passed the original deterministic rubric. Direct sponsorship incorrectly opened project submission. An unspecified “Can you help with that?” picked funding. The fixes route sponsorship to financial support and ask for the visitor’s goal when there is no topic. Manual review strengthened two weak checks: the typo question asked **who** offers a workshop, and an answer about eligibility must address eligibility itself.
-* Seven questions were withheld across successive rounds. On first exposure, four passed. Three missed useful routes: the booking contact after an Instagram workshop, the named partnership contact after an equipment offer, and a search for funding partners that was mistaken for donating. All seven are now regression cases. [First-attempt answers and grades](release-evidence/2026-11-06/first-attempts.json). The final percentage includes these repaired cases and is not an estimate of accuracy on arbitrary new questions.
-* A real cross-origin project dialog lost focus as the host expanded it. The iframe now restores focus after the host confirms layout. axe exposed insufficient contrast in report text and a launcher whose accessible name omitted its visible hint. The review also lacked a way to copy the complete edited project. A selectable final text view now supports copying without leaving the form.
-* Chat and search previously returned HTTP 200 for a 33.5 KB chunked JSON request that bypassed the Content-Length check. Both endpoints now cap bytes while reading. Forged report/submission origins, form-encoded feedback, unsafe markup, malformed history and oversized inputs are covered. Early ZAP runs also found missing nosniff, a framework identification header and an overly broad CSP. The candidate adds nosniff, removes the banner, and uses a fresh script nonce on rendered pages.
-* Feedback and project retries were exercised with **lost acknowledgements**, not just errors before sending. The SDK used a loopback mail receiver and a synthetic key. Network isolation was enforced with Docker `--network none`; scanners and evaluators shared only the test container’s loopback. No real visitor data, paid model calls or live mail were used. Public-source review and fetching tool images were separate preparation steps.
-* Human review: the workshop article’s funding statement is dated November 2024. The reply correctly asks visitors to confirm current costs. A human content owner would need to confirm any stronger eligibility or price promise. A request for a sensor is supported; device stock and dates must come from the partner. Semantic entailment of untested answers and user satisfaction cannot be inferred from pattern matches.
+## Answer evidence
 
-## Measurements and scope
+Nine fresh scenarios initially passed **2/9**. After fixes the same visitor needs passed, together with an additional materials-budget scenario (**10/10**). Two expected topic IDs were refined from the general workshop to the matching specialist workshop; the baseline cases also had substantive answer/contact failures. Three questions reserved until after those fixes initially passed **1/3**; procrastination and thesis-preparation follow-ups exposed two further gaps. Those are fixed and the rerun passed **3/3**. They are now regression cases, not blind holdouts. These numbers do not estimate accuracy on arbitrary questions.
 
-The final build and lint completed and all 72 unit tests passed. Playwright passed all 68 runs without retries, skips or flaky outcomes: 20 each in desktop Chromium, Firefox and WebKit, plus eight in mobile WebKit emulation. Eight retry journeys each produced exactly one local feedback receipt. [Per-engine evidence](release-evidence/2026-11-06/summary.md) · [Final API answers and citations](release-evidence/2026-11-06/final-answers.jsonl).
+[Before answers](release-evidence/2026-11-09/answers-before.json) · [After answers](release-evidence/2026-11-09/answers-after.json) · [First held-out run](release-evidence/2026-11-09/answers-holdout.json) · [Held-out rerun](release-evidence/2026-11-09/answers-holdout-rerun.json).
 
-k6 measured **17.1 ms p95** for five spaced successful chat requests and **48.4 ms p95** for the 20-request burst. Within the burst, accepted p95 was 24.5 ms and limited p95 was 49.3 ms. Across all phases there were **13 accepted, 14 expected HTTP 429, and 0 unexpected responses**. The per-visitor and shared limits were measured separately. Waiting through the real Retry-After interval restored service without resetting the database. These are small-sample, warm, local timings. [k6 measurements](release-evidence/2026-11-06/load.json).
+The complete Promptfoo run calls the actual `/api/chat` with conversation history and returned topic. It checks expected facts, explicit unknowns and supporting URLs independently of the answer implementation. Human review is still needed for claims beyond those assertions. The workshop funding statement is dated November 2024; current prices, device inventory, deadlines and availability must not be inferred from it.
 
-ZAP passively scanned 42 local URLs, including the widget and embed. There were no high alerts. Two medium findings were reviewed: the UI permits inline **styles**, and the static feedback form has no HTML CSRF token. The application rejects cross-origin JSON and form-encoded posts (403/415), and script execution uses a nonce. The gate accepts the token warning only for that specific form. Informational findings and full counts are recorded. This is a passive baseline, not a comprehensive penetration test. [ZAP findings](release-evidence/2026-11-06/zap-findings.log).
+## Final automated results
 
-No local generative model was available (no local Ollama/LM Studio service or installed Docker model was found). DeepEval was therefore **untested**. AI-backed retrieval, remote generation, its citations, egress and costs are outside this catalog-only run.
+The complete rerun uses the same production source identified by the candidate hashes. **87 unit tests, 10 source-tool tests, 55 Promptfoo scenarios (78 turns), and 136 browser checks passed.** The browser run had no failures, retries, skips or flaky results: 42 checks each in Chromium, Firefox and WebKit, plus 10 mobile-WebKit checks. Six repeated Firefox stability checks and nine focused close-event checks also passed.
 
-## Read-only live observations
+| Critical behavior | Result and evidence |
+|---|---|
+| German workshop question → follow-up → published contact/source | PASS in standalone and separate-origin widget |
+| English correction → appropriate equipment enquiry | PASS in standalone/widget coverage and manual phone-width use |
+| Project prefill → edit → close → resume → review → send/retry | PASS; the local receiver got exactly one edited project per retry journey |
+| Report one answer → choose inclusion → fail → retry → return | PASS; optional reply email, limited context and one local receipt verified |
+| Keyboard/focus, clearing, scrolling, dragging and page-return reset | PASS, including the repaired close-event race |
+| Embed permissions, inert markup, session isolation and observed egress | PASS in the isolated suite |
+| Production build, catalog review and lint | PASS; lint retains 10 existing warnings, no errors |
 
-The deployed Render status endpoint returned HTTP 200 and reported direct project sending disabled. Neither the German nor English ForJu homepage showed the Compass script, launcher or iframe during inspection. No live submission was attempted. [Live observations](release-evidence/2026-11-06/live-readonly.json).
+[Browser outcomes and payload evidence](release-evidence/2026-11-09/browser-results.json) · [All final answers](release-evidence/2026-11-09/final-answers.jsonl) · [Configured iCloud-mode local delivery](release-evidence/2026-11-09/configured-mail.json).
 
-## Smallest live checks
+Accessibility checks cover tested states and keyboard journeys; they are not a certification of every possible interaction.
 
-1. Use a staging installation on ForJu’s actual website, with its real origin, CSP and site-wide embed snippet. Open it by keyboard, ask the German teacher follow-up, open the citation and resume the exchange. Repeat on a physical phone with its keyboard visible. Check initial load after the hosting service has been idle.
-2. Confirm the intended feedback inbox and authorized sender. The checked-in Render demo configuration routes feedback to the iCloud account owner; the production mail policy permits `adam.maskini@forju.at`. Switch out of demo mode only with the approved settings. From staging, send one explicitly authorized, labeled report and one project, and reconcile server acceptance with **actual inbox receipt**. Project email needs a verified sender usable by the configured key.
-3. Keep `COMPASS_LOCAL_ONLY=true` for this release. Check that the default global quota of 12 requests/minute and 300/day fits the anticipated audience. A larger rollout or an AI-backed launch needs separate evidence before making the same release decision.
+The final command exited **0**, with every stage passing. [Full stage summary](release-evidence/2026-11-09/summary.md). k6 measured **32.0 ms normal p95** and **48.4 ms burst p95** (the latter includes fast quota responses): 13 accepted, 14 expected HTTP 429, no unexpected responses. Recovery after the real limit reset passed. These are small-sample warm local timings, not Render performance claims.
 
-## Repeat
+The ZAP passive scan found no high alerts or unreviewed medium alerts. Two existing medium warning categories remain explicitly reviewed: inline CSS styling and absence of an HTML CSRF token on the JSON-only feedback form. Targeted tests separately verify origin rejection and rejection of cross-site form encoding. [Scanner findings](release-evidence/2026-11-09/zap-findings.log). This is a baseline, not a penetration test. No unintended server egress was recorded; external networking was independently disabled by the container.
 
-From the repository root run `npm run test:release`. The full run prints its evidence directory. Public tool installation needs internet and local Docker. The test phase runs offline. See the [suite instructions](../tools/release/README.md), [independent fact cards](../tools/release/sources.md), and [recorded evidence](release-evidence/2026-11-06/summary.md).
+## Manual browser checks
+
+On the local production build, a German teacher reached the published media-workshop contact over two turns. At 390 × 844, an English visitor corrected “support” to borrowing equipment and received the relevant enquiry route. A project description from chat was prefilled; the visitor changed two ponds to three, closed the form and reopened it with the correction and title intact. Focus returned to the resume action and the conversation remained in place.
+
+The actual public ForJu workshop, resources, jobs and contact pages were inspected in a browser. The official contact form was not submitted. Automated source-link navigation uses a clearly labelled offline destination at the expected source URL, so that test alone is not evidence of live source contents.
+
+## Privacy, cost and delivery boundaries
+
+The local suite uses synthetic data, a disposable quota database, a fake mail key and a loopback receiver inside Docker with external networking disabled. Promptfoo, Playwright/axe, k6 and ZAP stay outside the application runtime. Real application routes and the Resend SDK run; inbox receipt is simulated. Server acceptance and a local provider receipt do not prove delivery to an actual inbox.
+
+The existing live email configuration sends both forms to **adam.maskini@icloud.com**, as requested. No account email, DNS, sender, recipient or hosting plan was changed in this pass. Previous live server acceptance is not an independent confirmation that an email appeared in that inbox.
+
+## Limits before an official-site rollout
+
+1. The actual ForJu CMS installation and its headers/consent UI are not available for integration here. The separate-origin local host is verified instead.
+2. A phone-sized browser was tested; a physical phone and its native keyboard are not verified.
+3. Actual inbox receipt remains separate from local acceptance/retry evidence. Do not switch to the ForJu recipient without a sender authorized for that destination.
+4. The free Render service warns that an idle instance may take 50 seconds or more to wake. Warm local measurements cannot establish cold-start availability.
+5. This release is catalog-only. Remote AI mode and local generative models were not enabled or evaluated.
+
+These are limits for a public organizational rollout, not a request to share the preview now.
+
+## Repeat, update and rollback
+
+Run `npm run test:release` from the repository root with local Docker running. The command builds and starts production, then prints the evidence directory and stage results. See [suite instructions](../tools/release/README.md).
+
+For content updates, edit the existing reviewed catalog and use the documented review workflow, then run the catalog checks and release suite. Push the reviewed release to `main`; Render redeploys the same URL. Verify the new commit is Live and repeat a useful conversation. For this pass, the known previous deploy is `dep-dbp071etlv9c73dt85lg` (`e9c8054`). Roll back to that deployment in Render and revert the release commit on `main` to keep source and hosting aligned. See [deployment instructions](deployment.md).
+
+[Historical 6 November audit](release-evidence/2026-11-06/release-decision.md).

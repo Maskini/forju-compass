@@ -59,6 +59,7 @@ for(const widget of [false,true]){
     await ask(panel,widget,'Wir suchen einen Schulworkshop zu Konflikten für unsere Klasse.');
     const reply=await ask(panel,widget,'Und wie melde ich meine Klasse dafür an?');
     await expect(reply).toContainText('anja.hofer@forju.at');
+    if(widget)await expect(panel.getByRole('link',{name:'Schulworkshop anfragen →',exact:true})).toHaveAttribute('href','mailto:anja.hofer@forju.at');
     const url='https://forju.at/de/projects/schulworkshops';
     const citation=reply.locator('a[href="'+url+'"]').first();
     await expect(citation).toBeVisible();
@@ -67,7 +68,8 @@ for(const widget of [false,true]){
     const popup=page.waitForEvent('popup');await citation.click();const target=await popup;
     await expect(target).toHaveURL(url);await target.close();
   });
-  test(surface+' / edit, resume and copy exactly the final project in an isolated session',async({page,browser},info)=>{
+  test(surface+' / edit, resume and send exactly the final project once in an isolated session',async({page,browser,request},info)=>{
+    await request.post(receiver+'/reset');
     const panel=await visit(page,widget,widget?'en':'de');
     const idea=widget?'Our class project measures the water in our pond.':'Unser Klassenprojekt untersucht das Wasser im Schulteich.';
     await ask(panel,widget,idea);
@@ -93,8 +95,17 @@ for(const widget of [false,true]){
     await paste.focus();await paste.press('Control+v');await expect(paste).toHaveValue(expected);
     await paste.fill('');
     const send=form.getByRole('button',{name:widget?'Send':'Senden',exact:true});await expect(send).toBeInViewport();
-    await send.click();await expect(form.getByRole('status')).toContainText(widget?'wasn’t sent':'nicht gesendet');
+    await send.click();await expect(form.getByRole('status')).toContainText(widget?'Sending wasn’t confirmed':'Der Versand wurde nicht bestätigt');
     await scan(page,info,'project');
+    await expect(finalText).toHaveValue(expected);
+    await send.click();await expect(form.getByRole('status')).toContainText(widget?'accepted for delivery':'zum Versand');
+    const inbox=await (await request.get(receiver+'/inbox')).json();
+    expect(inbox.messages).toHaveLength(1);expect(inbox.attempts).toHaveLength(2);
+    expect(new Set(inbox.attempts).size).toBe(1);
+    expect(inbox.messages[0].mail.text).toContain(expected);
+    expect(inbox.messages[0].mail.to).toEqual(['adam.maskini@forju.at']);
+    await info.attach('project-local-mail-receipt.json',{body:JSON.stringify({scope:'simulated local inbox',count:1,attempts:2,exactText:expected}),contentType:'application/json'});
+    await info.attach('project-sent.png',{body:await page.screenshot(),contentType:'image/png'});
     const other=await browser.newContext({ignoreHTTPSErrors:true,serviceWorkers:'block'});
     try{await guard(other);const otherPage=await other.newPage();await otherPage.goto(app);
       await expect(otherPage.locator('.chat-turn')).toHaveCount(0);await otherPage.getByRole('button',{name:/Projekt vorstellen/}).click();
@@ -102,6 +113,23 @@ for(const widget of [false,true]){
       await expect(otherPage.getByLabel('Kurze Beschreibung',{exact:true})).toHaveValue('');
       expect(external.get(other)).toEqual([]);
     }finally{await other.close()}
+  });
+  test(surface+' / new visitor follow-up reaches the offer-specific next step',async({page},info)=>{
+    const lang=widget?'en':'de',panel=await visit(page,widget,lang);
+    let turn;
+    if(widget){
+      await ask(panel,true,'We need support for a classroom experiment.');
+      await ask(panel,true,'I mean borrowing equipment, not money.');
+      turn=await ask(panel,true,'Who do I contact about that?');
+      await expect(turn).toContainText(/equipment/i);
+      await expect(turn.locator('a[href="https://forju.at/en/kontakt?intent=service&thema=ressourcen"]')).toBeVisible();
+    }else{
+      await ask(panel,false,'Ich bin Lehrerin. Bei uns in der Klasse gibt es Probleme mit Fake News auf TikTok. Könnt ihr uns helfen?');
+      turn=await ask(panel,false,'Wir sind eine 8. Klasse in Wien. Wen schreibe ich dafür an?');
+      await expect(turn).toContainText('anja.hofer@forju.at');
+      await expect(turn.locator('a[href="https://forju.at/de/projects/schulworkshops"]')).toBeVisible();
+    }
+    await info.attach('final-followup.png',{body:await page.screenshot(),contentType:'image/png'});
   });
   test(surface+' / wrong-answer report survives lost acknowledgement, one local email',async({page,request},info)=>{
     await request.post(receiver+'/reset');

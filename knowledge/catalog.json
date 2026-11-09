@@ -109,13 +109,13 @@
     "sourceTitle": "ForJu – öffentliche Website",
     "sourceUrl": "https://forju.at/de/services/ressourcen",
     "sourceYear": 2026,
-    "sourceSha256": "df03e94bbb15ee6b08703eb04ca928378a9528cafee9a4958300509ed3141186",
+    "sourceSha256": "6e885447a9a82cd2e12f365902a9d1733f8161b4fac17663b971c9396dc7acd1",
     "reviewStatus": "public-website-summary",
     "owner": null,
-    "lastReviewedAt": "2026-11-07",
-    "nextReviewAt": "2026-12-07",
+    "lastReviewedAt": "2026-11-09",
+    "nextReviewAt": "2026-12-09",
     "active": true,
-    "indexTitle": "forju-public:ressourcen:df03e94bbb15",
+    "indexTitle": "forju-public:ressourcen:6e885447a9a8",
     "sourceUpdatedAt": null,
     "titleEn": "Rooms and equipment",
     "contentEn": "Schools and research teams can ask ForJu to find space or measuring equipment through its partners. ForJu helps coordinate supervision and liability. A particular device, date or price needs confirmation. Use the resources form to describe the space or instrument you need and how you would use it.",
@@ -131,6 +131,10 @@
       "price": {
         "de": "ForJus Ressourcenseite nennt keinen Leihpreis. Frag das Team nach den Kosten für euer Gerät und euren Zeitraum.",
         "en": "ForJu’s resources page gives no loan price. Ask the team to confirm the cost for your device and dates."
+      },
+      "availability": {
+        "de": "Ich kann kein bestimmtes Gerät oder einen freien Termin bestätigen. Frag über das Ressourcenformular nach dem Gerät und eurem gewünschten Zeitraum. Das Team muss die Verfügbarkeit bei seinen Partnern klären.",
+        "en": "I cannot confirm a particular device or date is available. Use the resources form to ask about the equipment and the dates you need. The team must check availability with its partners."
       }
     }
   },
@@ -230,25 +234,38 @@
   {
     "id": "ehrenamt",
     "title": "Bei ForJu ehrenamtlich mitarbeiten",
-    "content": "ForJu arbeitet ehrenamtlich. Die Website nennt Bildung, Öffentlichkeitsarbeit, Redaktion, IT und Operations als mögliche Bereiche zum Mithelfen. Interessierte sollen die offenen Positionen ansehen und sich per E-Mail bewerben. Welche Rollen gerade frei sind, muss auf der Jobs-Seite oder beim Team geprüft werden; aus älteren Ausschreibungen lässt sich keine aktuelle Stelle ableiten.",
+    "content": "ForJu arbeitet ehrenamtlich. Die Website nennt Bildung, Öffentlichkeitsarbeit, Redaktion, IT und Operations als mögliche Bereiche zum Mithelfen. Interessierte sollen die offenen Positionen ansehen und sich per E-Mail bewerben. Welche Rollen gerade frei sind, muss auf der Jobs-Seite oder beim Team geprüft werden; aus älteren Ausschreibungen lässt sich keine aktuelle Stelle ableiten. Auf der Jobs-Seite ist bewerbung@forju.at als Bewerbungsadresse angegeben. Such dir dort eine passende Rolle aus und beschreibe, warum du mithelfen möchtest.",
     "keywords": "mitmachen bewerben jobs volunteering volunteer join team",
     "kind": "public-website",
     "sourceId": "https://forju.at/de/ueber-uns",
     "sourceUrl": "https://forju.at/de/ueber-uns",
     "sourceTitle": "Über uns",
     "sourceYear": 2026,
-    "sourceSha256": "e67e7befb14683fe039c5966d3123994f4b5f63246f05f5a0513d5058cb067e0",
-    "sourceUpdatedAt": "2026-10-30T18:09:34.288Z",
-    "lastReviewedAt": "2026-11-06",
-    "nextReviewAt": "2026-12-06",
+    "sourceSha256": "6860bb316e8d619ac8074dfe0bf5d79cc8405471efee14b449048f27cff258e2",
+    "sourceUpdatedAt": null,
+    "lastReviewedAt": "2026-11-09",
+    "nextReviewAt": "2026-12-09",
     "reviewStatus": "reviewed-public-summary",
     "owner": null,
     "page": 0,
     "section": "Bei ForJu ehrenamtlich mitarbeiten",
     "active": true,
-    "indexTitle": "forju-public:ehrenamt:e67e7befb146",
+    "indexTitle": "forju-public:ehrenamt:6860bb316e8d",
     "titleEn": "Volunteering",
-    "contentEn": "Volunteers can help with education, communications, editorial work, IT and operations. The jobs page describes individual roles."
+    "contentEn": "Volunteers can help with education, communications, editorial work, IT and operations. The jobs page describes individual roles. Check the requirements for a role that fits and email bewerbung@forju.at with why you would like to help. The team must confirm current availability.",
+    "visitorAnswers": {
+      "contact": {
+        "de": "Schau auf ForJus Jobs-Seite nach einer passenden ehrenamtlichen Rolle und prüfe die Anforderungen. Die dortige Bewerbungsadresse ist bewerbung@forju.at. Erzähl kurz, warum du mithelfen möchtest. Ob deine gewünschte Rolle aktuell frei ist, muss das Team bestätigen.",
+        "en": "Check ForJu’s jobs page for a volunteer role that fits and read its requirements. The published application address is bewerbung@forju.at. Briefly explain why you would like to help. The team needs to confirm whether your preferred role is currently open.",
+        "also": [
+          "jobs-tech"
+        ]
+      }
+    },
+    "requestUrl": "https://forju.at/de/jobs",
+    "contentVersion": 2,
+    "sourcePublishedAt": null,
+    "sourceContentHash": "5ba47200c9892db29ed2c537308426ca62e51f5dbb6cf4ab7f8de365e082319d"
   },
   {
     "id": "team",
@@ -727,16 +744,16 @@
     "sourceUrl": "https://forju.at/de/projects/schulworkshops",
     "sourceTitle": "Schulworkshops",
     "sourceYear": 2024,
-    "sourceSha256": "00f0b9fa3deaa889e60bb6195e80dea0e2898363a947bcc2306fb73fe362ab81",
-    "sourceUpdatedAt": "2024-11-04T10:00:13.000+01:00",
-    "lastReviewedAt": "2026-11-06",
-    "nextReviewAt": "2026-12-06",
+    "sourceSha256": "71c7d8a4594b9e1b8ec3f7ba03a48c472d1af715b14b56765c461e5f6c0d02ab",
+    "sourceUpdatedAt": null,
+    "lastReviewedAt": "2026-11-09",
+    "nextReviewAt": "2026-12-09",
     "reviewStatus": "reviewed-public-summary",
     "owner": null,
     "page": 0,
     "section": "Selbstmanagement: Erfolgreich durch den Alltag",
     "active": true,
-    "indexTitle": "forju-public:workshop-zeit:00f0b9fa3dea",
+    "indexTitle": "forju-public:workshop-zeit:71c7d8a4594b",
     "titleEn": "Time management",
     "contentEn": "Students practise setting priorities and scheduling tasks with methods such as Pomodoro and the Eisenhower matrix.",
     "plainLanguage": {
@@ -755,8 +772,14 @@
       "Zeit einteilen",
       "Zeitmanagement",
       "Lernplan",
-      "Zeit planen"
-    ]
+      "Zeit planen",
+      "schiebt auf",
+      "schieben auf",
+      "alles aufschieben"
+    ],
+    "sourcePublishedAt": "2024-04-24T13:35:06.000+02:00",
+    "sourceContentHash": "be8f08129abe4f580962c3cd97fc32fde19f188ee7c95a63bdadbc366de25eb3",
+    "contentVersion": 2
   },
   {
     "id": "workshop-ethik",
@@ -1280,19 +1303,29 @@
     "sourceTitle": "ForJu – öffentliche Website",
     "sourceUrl": "https://forju.at/de/kontakt?intent=projekt",
     "sourceYear": 2026,
-    "sourceSha256": "ac69d49403541d5ffe987f4acbe847d06dae52e6524117b6c45bbbba54e2e711",
+    "sourceSha256": "fcadf39cf49a25fe4c573f1e8a3e8a13a788a9f21cf6d362eb21f046537853f4",
     "reviewStatus": "public-website-summary",
     "owner": null,
-    "lastReviewedAt": "2026-11-07",
-    "nextReviewAt": "2026-12-07",
+    "lastReviewedAt": "2026-11-09",
+    "nextReviewAt": "2026-12-09",
     "active": true,
-    "indexTitle": "forju-public:einreichen:ac69d4940354",
+    "indexTitle": "forju-public:einreichen:fcadf39cf49a",
     "sourceUpdatedAt": null,
     "titleEn": "Submit a research project",
     "contentEn": "Use the official project form to introduce your diploma, bachelor’s or master’s thesis, or research project. It asks for your name, email and message; the subject is optional. Briefly describe your idea so the ForJu team can get back to you. The form does not confirm funding or acceptance of the project.",
     "sourcePublishedAt": null,
     "sourceContentHash": "9c0e7b9aafcbfe729d16b5305d547fbf218c4a5d46e1a428c4ba663dc134a7f2",
-    "contentVersion": 2
+    "contentVersion": 2,
+    "visitorAnswers": {
+      "deadline": {
+        "de": "Das öffentliche Projektformular nennt keine Einreichfrist. Frag das ForJu-Team über das Formular oder office@forju.at nach dem Zeitrahmen für dein Vorhaben. Ein Datum kann ich dir daraus nicht bestätigen.",
+        "en": "The public project form gives no submission deadline. Ask the ForJu team through the form or office@forju.at about the timeframe for your project. I cannot confirm a date from that page."
+      },
+      "preparation": {
+        "de": "Im offiziellen Projektformular gibst du deinen Namen, deine E-Mail-Adresse und eine Nachricht zu deinem Vorhaben an. Der Betreff ist optional. Stell deine Arbeit oder Idee kurz vor und sag, welche Unterstützung du suchst. Das Absenden ist eine Anfrage, keine Förderzusage.",
+        "en": "The official project form asks for your name, email address and a message about your project. The subject is optional. Briefly introduce your work or idea and explain what help you are looking for. Sending it is an enquiry, not a funding approval."
+      }
+    }
   },
   {
     "id": "jobs-working-conditions",

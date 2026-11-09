@@ -1,0 +1,6 @@
+▲ Next.js 16.3.5
+- Local:         http://127.0.0.1:4198
+- Network:       http://127.0.0.1:4198
+✓ Ready in 76ms
+✓ Running next.config.ts took 25ms
+PASS: no unconfirmed send; lost acknowledgement returned 502; retry accepted with one exact draft in the local receiver.

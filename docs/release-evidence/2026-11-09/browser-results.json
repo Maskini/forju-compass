@@ -1,0 +1,2639 @@
+{
+  "scope": "local isolated production, real browser engines; simulated mail; phone viewport emulation",
+  "stats": {
+    "startTime": "2026-11-09T18:21:03.033Z",
+    "duration": 355834.423,
+    "expected": 136,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "tests": [
+    {
+      "title": "standalone / teacher books with the published workshop contact",
+      "browser": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 2849,
+          "retry": 0
+        }
+      ],
+      "evidence": [
+        {
+          "name": "browser-egress.json",
+          "data": []
+        }
+      ]
+    },
+    {
+      "title": "standalone / teacher books with the published workshop contact",
+      "browser": "firefox",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 1598,
+          "retry": 0
+        }
+      ],
+      "evidence": [
+        {
+          "name": "browser-egress.json",
+          "data": []
+        }
+      ]
+    },
+    {
+      "title": "standalone / teacher books with the published workshop contact",
+      "browser": "webkit",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 24648,
+          "retry": 0
+        }
+      ],
+      "evidence": [
+        {
+          "name": "browser-egress.json",
+          "data": []
+        }
+      ]
+    },
+    {
+      "title": "standalone / teacher books with the published workshop contact",
+      "browser": "mobile-webkit",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 1740,
+          "retry": 0
+        }
+      ],
+      "evidence": [
+        {
+          "name": "browser-egress.json",
+          "data": []
+        }
+      ]
+    },
+    {
+      "title": "standalone / edit, resume and send exactly the final project once in an isolated session",
+      "browser": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 2235,
+          "retry": 0
+        }
+      ],
+      "evidence": [
+        {
+          "name": "axe-project",
+          "data": []
+        },
+        {
+          "name": "project-local-mail-receipt.json",
+          "data": {
+            "scope": "simulated local inbox",
+            "count": 1,
+            "attempts": 2,
+            "exactText": "Hallo ForJu-Team,\n\nProjekttitel: Pond study\n\nKurze Beschreibung: Wir messen das Wasser in zwei Teichen.\n\nVielen Dank!"
+          }
+        },
+        {
+          "name": "browser-egress.json",
+          "data": []
+        }
+      ]
+    },
+    {
+      "title": "standalone / edit, resume and send exactly the final project once in an isolated session",
+      "browser": "firefox",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 4624,
+          "retry": 0
+        }
+      ],
+      "evidence": [
+        {
+          "name": "axe-project",
+          "data": []
+        },
+        {
+          "name": "project-local-mail-receipt.json",
+          "data": {
+            "scope": "simulated local inbox",
+            "count": 1,
+            "attempts": 2,
+            "exactText": "Hallo ForJu-Team,\n\nProjekttitel: Pond study\n\nKurze Beschreibung: Wir messen das Wasser in zwei Teichen.\n\nVielen Dank!"
+          }
+        },
+        {
+          "name": "browser-egress.json",
+          "data": []
+        }
+      ]
+    },
+    {
+      "title": "standalone / edit, resume and send exactly the final project once in an isolated session",
+      "browser": "webkit",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 16525,
+          "retry": 0
+        }
+      ],
+      "evidence": [
+        {
+          "name": "axe-project",
+          "data": []
+        },
+        {
+          "name": "project-local-mail-receipt.json",
+          "data": {
+            "scope": "simulated local inbox",
+            "count": 1,
+            "attempts": 2,
+            "exactText": "Hallo ForJu-Team,\n\nProjekttitel: Pond study\n\nKurze Beschreibung: Wir messen das Wasser in zwei Teichen.\n\nVielen Dank!"
+          }
+        },
+        {
+          "name": "browser-egress.json",
+          "data": []
+        }
+      ]
+    },
+    {
+      "title": "standalone / edit, resume and send exactly the final project once in an isolated session",
+      "browser": "mobile-webkit",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 6110,
+          "retry": 0
+        }
+      ],
+      "evidence": [
+        {
+          "name": "axe-project",
+          "data": []
+        },
+        {
+          "name": "project-local-mail-receipt.json",
+          "data": {
+            "scope": "simulated local inbox",
+            "count": 1,
+            "attempts": 2,
+            "exactText": "Hallo ForJu-Team,\n\nProjekttitel: Pond study\n\nKurze Beschreibung: Wir messen das Wasser in zwei Teichen.\n\nVielen Dank!"
+          }
+        },
+        {
+          "name": "browser-egress.json",
+          "data": []
+        }
+      ]
+    },
+    {
+      "title": "standalone / new visitor follow-up reaches the offer-specific next step",
+      "browser": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 858,
+          "retry": 0
+        }
+      ],
+      "evidence": [
+        {
+          "name": "browser-egress.json",
+          "data": []
+        }
+      ]
+    },
+    {
+      "title": "standalone / new visitor follow-up reaches the offer-specific next step",
+      "browser": "firefox",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 826,
+          "retry": 0
+        }
+      ],
+      "evidence": [
+        {
+          "name": "browser-egress.json",
+          "data": []
+        }
+      ]
+    },
+    {
+      "title": "standalone / new visitor follow-up reaches the offer-specific next step",
+      "browser": "webkit",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 3874,
+          "retry": 0
+        }
+      ],
+      "evidence": [
+        {
+          "name": "browser-egress.json",
+          "data": []
+        }
+      ]
+    },
+    {
+      "title": "standalone / new visitor follow-up reaches the offer-specific next step",
+      "browser": "mobile-webkit",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 1083,
+          "retry": 0
+        }
+      ],
+      "evidence": [
+        {
+          "name": "browser-egress.json",
+          "data": []
+        }
+      ]
+    },
+    {
+      "title": "standalone / wrong-answer report survives lost acknowledgement, one local email",
+      "browser": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 1394,
+          "retry": 0
+        }
+      ],
+      "evidence": [
+        {
+          "name": "axe-report-error",
+          "data": []
+        },
+        {
+          "name": "local-mail-receipt.json",
+          "data": {
+            "id": "cb4a9a7a-0eb4-4b1e-8d7c-69609ad82817",
+            "attempts": 2,
+            "count": 1,
+            "exchangeIncluded": false
+          }
+        },
+        {
+          "name": "browser-egress.json",
+          "data": []
+        }
+      ]
+    },
+    {
+      "title": "standalone / wrong-answer report survives lost acknowledgement, one local email",
+      "browser": "firefox",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 2201,
+          "retry": 0
+        }
+      ],
+      "evidence": [
+        {
+          "name": "axe-report-error",
+          "data": []
+        },
+        {
+          "name": "local-mail-receipt.json",
+          "data": {
+            "id": "69fb661f-bd5e-4d71-8802-0abdb719fce4",
+            "attempts": 2,
+            "count": 1,
+            "exchangeIncluded": false
+          }
+        },
+        {
+          "name": "browser-egress.json",
+          "data": []
+        }
+      ]
+    },
+    {
+      "title": "standalone / wrong-answer report survives lost acknowledgement, one local email",
+      "browser": "webkit",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 7480,
+          "retry": 0
+        }
+      ],
+      "evidence": [
+        {
+          "name": "axe-report-error",
+          "data": []
+        },
+        {
+          "name": "local-mail-receipt.json",
+          "data": {
+            "id": "a60372d4-e143-4311-bb32-f765a1f1803b",
+            "attempts": 2,
+            "count": 1,
+            "exchangeIncluded": false
+          }
+        },
+        {
+          "name": "browser-egress.json",
+          "data": []
+        }
+      ]
+    },
+    {
+      "title": "standalone / wrong-answer report survives lost acknowledgement, one local email",
+      "browser": "mobile-webkit",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 2133,
+          "retry": 0
+        }
+      ],
+      "evidence": [
+        {
+          "name": "axe-report-error",
+          "data": []
+        },
+        {
+          "name": "local-mail-receipt.json",
+          "data": {
+            "id": "57ec3285-f5d4-4e28-8922-17f9ce424510",
+            "attempts": 2,
+            "count": 1,
+            "exchangeIncluded": false
+          }
+        },
+        {
+          "name": "browser-egress.json",
+          "data": []
+        }
+      ]
+    },
+    {
+      "title": "embedded / teacher books with the published workshop contact",
+      "browser": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 656,
+          "retry": 0
+        }
+      ],
+      "evidence": [
+        {
+          "name": "browser-egress.json",
+          "data": []
+        }
+      ]
+    },
+    {
+      "title": "embedded / teacher books with the published workshop contact",
+      "browser": "firefox",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 699,
+          "retry": 0
+        }
+      ],
+      "evidence": [
+        {
+          "name": "browser-egress.json",
+          "data": []
+        }
+      ]
+    },
+    {
+      "title": "embedded / teacher books with the published workshop contact",
+      "browser": "webkit",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 2342,
+          "retry": 0
+        }
+      ],
+      "evidence": [
+        {
+          "name": "browser-egress.json",
+          "data": []
+        }
+      ]
+    },
+    {
+      "title": "embedded / teacher books with the published workshop contact",
+      "browser": "mobile-webkit",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 927,
+          "retry": 0
+        }
+      ],
+      "evidence": [
+        {
+          "name": "browser-egress.json",
+          "data": []
+        }
+      ]
+    },
+    {
+      "title": "embedded / edit, resume and send exactly the final project once in an isolated session",
+      "browser": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 2074,
+          "retry": 0
+        }
+      ],
+      "evidence": [
+        {
+          "name": "axe-project",
+          "data": []
+        },
+        {
+          "name": "project-local-mail-receipt.json",
+          "data": {
+            "scope": "simulated local inbox",
+            "count": 1,
+            "attempts": 2,
+            "exactText": "Hello ForJu team,\n\nProject title: Pond study\n\nShort description: We will sample water in two ponds.\n\nThank you!"
+          }
+        },
+        {
+          "name": "browser-egress.json",
+          "data": []
+        }
+      ]
+    },
+    {
+      "title": "embedded / edit, resume and send exactly the final project once in an isolated session",
+      "browser": "firefox",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 4667,
+          "retry": 0
+        }
+      ],
+      "evidence": [
+        {
+          "name": "axe-project",
+          "data": []
+        },
+        {
+          "name": "project-local-mail-receipt.json",
+          "data": {
+            "scope": "simulated local inbox",
+            "count": 1,
+            "attempts": 2,
+            "exactText": "Hello ForJu team,\n\nProject title: Pond study\n\nShort description: We will sample water in two ponds.\n\nThank you!"
+          }
+        },
+        {
+          "name": "browser-egress.json",
+          "data": []
+        }
+      ]
+    },
+    {
+      "title": "embedded / edit, resume and send exactly the final project once in an isolated session",
+      "browser": "webkit",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 11524,
+          "retry": 0
+        }
+      ],
+      "evidence": [
+        {
+          "name": "axe-project",
+          "data": []
+        },
+        {
+          "name": "project-local-mail-receipt.json",
+          "data": {
+            "scope": "simulated local inbox",
+            "count": 1,
+            "attempts": 2,
+            "exactText": "Hello ForJu team,\n\nProject title: Pond study\n\nShort description: We will sample water in two ponds.\n\nThank you!"
+          }
+        },
+        {
+          "name": "browser-egress.json",
+          "data": []
+        }
+      ]
+    },
+    {
+      "title": "embedded / edit, resume and send exactly the final project once in an isolated session",
+      "browser": "mobile-webkit",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 3191,
+          "retry": 0
+        }
+      ],
+      "evidence": [
+        {
+          "name": "axe-project",
+          "data": []
+        },
+        {
+          "name": "project-local-mail-receipt.json",
+          "data": {
+            "scope": "simulated local inbox",
+            "count": 1,
+            "attempts": 2,
+            "exactText": "Hello ForJu team,\n\nProject title: Pond study\n\nShort description: We will sample water in two ponds.\n\nThank you!"
+          }
+        },
+        {
+          "name": "browser-egress.json",
+          "data": []
+        }
+      ]
+    },
+    {
+      "title": "embedded / new visitor follow-up reaches the offer-specific next step",
+      "browser": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 605,
+          "retry": 0
+        }
+      ],
+      "evidence": [
+        {
+          "name": "browser-egress.json",
+          "data": []
+        }
+      ]
+    },
+    {
+      "title": "embedded / new visitor follow-up reaches the offer-specific next step",
+      "browser": "firefox",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 880,
+          "retry": 0
+        }
+      ],
+      "evidence": [
+        {
+          "name": "browser-egress.json",
+          "data": []
+        }
+      ]
+    },
+    {
+      "title": "embedded / new visitor follow-up reaches the offer-specific next step",
+      "browser": "webkit",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 1352,
+          "retry": 0
+        }
+      ],
+      "evidence": [
+        {
+          "name": "browser-egress.json",
+          "data": []
+        }
+      ]
+    },
+    {
+      "title": "embedded / new visitor follow-up reaches the offer-specific next step",
+      "browser": "mobile-webkit",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 956,
+          "retry": 0
+        }
+      ],
+      "evidence": [
+        {
+          "name": "browser-egress.json",
+          "data": []
+        }
+      ]
+    },
+    {
+      "title": "embedded / wrong-answer report survives lost acknowledgement, one local email",
+      "browser": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 1218,
+          "retry": 0
+        }
+      ],
+      "evidence": [
+        {
+          "name": "axe-report-error",
+          "data": []
+        },
+        {
+          "name": "local-mail-receipt.json",
+          "data": {
+            "id": "1298592f-72d6-47ad-bf21-9b19ff7e8a62",
+            "attempts": 2,
+            "count": 1,
+            "exchangeIncluded": true
+          }
+        },
+        {
+          "name": "browser-egress.json",
+          "data": []
+        }
+      ]
+    },
+    {
+      "title": "embedded / wrong-answer report survives lost acknowledgement, one local email",
+      "browser": "firefox",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 2533,
+          "retry": 0
+        }
+      ],
+      "evidence": [
+        {
+          "name": "axe-report-error",
+          "data": []
+        },
+        {
+          "name": "local-mail-receipt.json",
+          "data": {
+            "id": "63b7b99c-e393-48e6-a2d3-2b40c02ccb8b",
+            "attempts": 2,
+            "count": 1,
+            "exchangeIncluded": true
+          }
+        },
+        {
+          "name": "browser-egress.json",
+          "data": []
+        }
+      ]
+    },
+    {
+      "title": "embedded / wrong-answer report survives lost acknowledgement, one local email",
+      "browser": "webkit",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 2482,
+          "retry": 0
+        }
+      ],
+      "evidence": [
+        {
+          "name": "axe-report-error",
+          "data": []
+        },
+        {
+          "name": "local-mail-receipt.json",
+          "data": {
+            "id": "071f356e-6691-4e3e-acc6-e356df827909",
+            "attempts": 2,
+            "count": 1,
+            "exchangeIncluded": true
+          }
+        },
+        {
+          "name": "browser-egress.json",
+          "data": []
+        }
+      ]
+    },
+    {
+      "title": "embedded / wrong-answer report survives lost acknowledgement, one local email",
+      "browser": "mobile-webkit",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 1711,
+          "retry": 0
+        }
+      ],
+      "evidence": [
+        {
+          "name": "axe-report-error",
+          "data": []
+        },
+        {
+          "name": "local-mail-receipt.json",
+          "data": {
+            "id": "3ed0c04b-81b2-4dfd-83df-360a76b8512c",
+            "attempts": 2,
+            "count": 1,
+            "exchangeIncluded": true
+          }
+        },
+        {
+          "name": "browser-egress.json",
+          "data": []
+        }
+      ]
+    },
+    {
+      "title": "unapproved local HTTPS origin cannot display the Compass frame",
+      "browser": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 563,
+          "retry": 0
+        }
+      ],
+      "evidence": [
+        {
+          "name": "browser-egress.json",
+          "data": []
+        }
+      ]
+    },
+    {
+      "title": "unapproved local HTTPS origin cannot display the Compass frame",
+      "browser": "firefox",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 704,
+          "retry": 0
+        }
+      ],
+      "evidence": [
+        {
+          "name": "browser-egress.json",
+          "data": []
+        }
+      ]
+    },
+    {
+      "title": "unapproved local HTTPS origin cannot display the Compass frame",
+      "browser": "webkit",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 889,
+          "retry": 0
+        }
+      ],
+      "evidence": [
+        {
+          "name": "browser-egress.json",
+          "data": []
+        }
+      ]
+    },
+    {
+      "title": "unapproved local HTTPS origin cannot display the Compass frame",
+      "browser": "mobile-webkit",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 617,
+          "retry": 0
+        }
+      ],
+      "evidence": [
+        {
+          "name": "browser-egress.json",
+          "data": []
+        }
+      ]
+    },
+    {
+      "title": "visitor markup is inert and cannot trigger egress",
+      "browser": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 406,
+          "retry": 0
+        }
+      ],
+      "evidence": [
+        {
+          "name": "browser-egress.json",
+          "data": []
+        }
+      ]
+    },
+    {
+      "title": "visitor markup is inert and cannot trigger egress",
+      "browser": "firefox",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 626,
+          "retry": 0
+        }
+      ],
+      "evidence": [
+        {
+          "name": "browser-egress.json",
+          "data": []
+        }
+      ]
+    },
+    {
+      "title": "visitor markup is inert and cannot trigger egress",
+      "browser": "webkit",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 1046,
+          "retry": 0
+        }
+      ],
+      "evidence": [
+        {
+          "name": "browser-egress.json",
+          "data": []
+        }
+      ]
+    },
+    {
+      "title": "visitor markup is inert and cannot trigger egress",
+      "browser": "mobile-webkit",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 644,
+          "retry": 0
+        }
+      ],
+      "evidence": [
+        {
+          "name": "browser-egress.json",
+          "data": []
+        }
+      ]
+    },
+    {
+      "title": "Unpublished details retain context / de / widget",
+      "browser": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 930,
+          "retry": 0
+        }
+      ],
+      "evidence": []
+    },
+    {
+      "title": "Unpublished details retain context / de / widget",
+      "browser": "firefox",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 1148,
+          "retry": 0
+        }
+      ],
+      "evidence": []
+    },
+    {
+      "title": "Unpublished details retain context / de / widget",
+      "browser": "webkit",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 2012,
+          "retry": 0
+        }
+      ],
+      "evidence": []
+    },
+    {
+      "title": "Unpublished details retain context / en / standalone",
+      "browser": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 631,
+          "retry": 0
+        }
+      ],
+      "evidence": []
+    },
+    {
+      "title": "Unpublished details retain context / en / standalone",
+      "browser": "firefox",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 504,
+          "retry": 0
+        }
+      ],
+      "evidence": []
+    },
+    {
+      "title": "Unpublished details retain context / en / standalone",
+      "browser": "webkit",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 1415,
+          "retry": 0
+        }
+      ],
+      "evidence": []
+    },
+    {
+      "title": "Unpublished details retain context / de / standalone",
+      "browser": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 950,
+          "retry": 0
+        }
+      ],
+      "evidence": []
+    },
+    {
+      "title": "Unpublished details retain context / de / standalone",
+      "browser": "firefox",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 503,
+          "retry": 0
+        }
+      ],
+      "evidence": []
+    },
+    {
+      "title": "Unpublished details retain context / de / standalone",
+      "browser": "webkit",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 2816,
+          "retry": 0
+        }
+      ],
+      "evidence": []
+    },
+    {
+      "title": "Unpublished details retain context / en / widget",
+      "browser": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 2111,
+          "retry": 0
+        }
+      ],
+      "evidence": []
+    },
+    {
+      "title": "Unpublished details retain context / en / widget",
+      "browser": "firefox",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 1372,
+          "retry": 0
+        }
+      ],
+      "evidence": []
+    },
+    {
+      "title": "Unpublished details retain context / en / widget",
+      "browser": "webkit",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 7519,
+          "retry": 0
+        }
+      ],
+      "evidence": []
+    },
+    {
+      "title": "Clear conversation / de / widget / 1280",
+      "browser": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 2171,
+          "retry": 0
+        }
+      ],
+      "evidence": [
+        {
+          "name": "accessibility.json",
+          "data": []
+        }
+      ]
+    },
+    {
+      "title": "Clear conversation / de / widget / 1280",
+      "browser": "firefox",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 3407,
+          "retry": 0
+        }
+      ],
+      "evidence": [
+        {
+          "name": "accessibility.json",
+          "data": []
+        }
+      ]
+    },
+    {
+      "title": "Clear conversation / de / widget / 1280",
+      "browser": "webkit",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 6882,
+          "retry": 0
+        }
+      ],
+      "evidence": [
+        {
+          "name": "accessibility.json",
+          "data": []
+        }
+      ]
+    },
+    {
+      "title": "Clear conversation / en / widget / 390",
+      "browser": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 1782,
+          "retry": 0
+        }
+      ],
+      "evidence": [
+        {
+          "name": "accessibility.json",
+          "data": []
+        }
+      ]
+    },
+    {
+      "title": "Clear conversation / en / widget / 390",
+      "browser": "firefox",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 3282,
+          "retry": 0
+        }
+      ],
+      "evidence": [
+        {
+          "name": "accessibility.json",
+          "data": []
+        }
+      ]
+    },
+    {
+      "title": "Clear conversation / en / widget / 390",
+      "browser": "webkit",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 4196,
+          "retry": 0
+        }
+      ],
+      "evidence": [
+        {
+          "name": "accessibility.json",
+          "data": []
+        }
+      ]
+    },
+    {
+      "title": "Clear conversation / en / standalone / 1280",
+      "browser": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 1181,
+          "retry": 0
+        }
+      ],
+      "evidence": [
+        {
+          "name": "accessibility.json",
+          "data": []
+        }
+      ]
+    },
+    {
+      "title": "Clear conversation / en / standalone / 1280",
+      "browser": "firefox",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 2871,
+          "retry": 0
+        }
+      ],
+      "evidence": [
+        {
+          "name": "accessibility.json",
+          "data": []
+        }
+      ]
+    },
+    {
+      "title": "Clear conversation / en / standalone / 1280",
+      "browser": "webkit",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 2686,
+          "retry": 0
+        }
+      ],
+      "evidence": [
+        {
+          "name": "accessibility.json",
+          "data": []
+        }
+      ]
+    },
+    {
+      "title": "Clear conversation / de / standalone / 390",
+      "browser": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 930,
+          "retry": 0
+        }
+      ],
+      "evidence": [
+        {
+          "name": "accessibility.json",
+          "data": []
+        }
+      ]
+    },
+    {
+      "title": "Clear conversation / de / standalone / 390",
+      "browser": "firefox",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 2307,
+          "retry": 0
+        }
+      ],
+      "evidence": [
+        {
+          "name": "accessibility.json",
+          "data": []
+        }
+      ]
+    },
+    {
+      "title": "Clear conversation / de / standalone / 390",
+      "browser": "webkit",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 2112,
+          "retry": 0
+        }
+      ],
+      "evidence": [
+        {
+          "name": "accessibility.json",
+          "data": []
+        }
+      ]
+    },
+    {
+      "title": "A delayed project-close event preserves the visitor\u2019s new composer focus",
+      "browser": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 307,
+          "retry": 0
+        }
+      ],
+      "evidence": []
+    },
+    {
+      "title": "A delayed project-close event preserves the visitor\u2019s new composer focus",
+      "browser": "firefox",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 1025,
+          "retry": 0
+        }
+      ],
+      "evidence": []
+    },
+    {
+      "title": "A delayed project-close event preserves the visitor\u2019s new composer focus",
+      "browser": "webkit",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 973,
+          "retry": 0
+        }
+      ],
+      "evidence": []
+    },
+    {
+      "title": "Clear conversation cancels a pending answer without reviving old context",
+      "browser": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 491,
+          "retry": 0
+        }
+      ],
+      "evidence": []
+    },
+    {
+      "title": "Clear conversation cancels a pending answer without reviving old context",
+      "browser": "firefox",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 2620,
+          "retry": 0
+        }
+      ],
+      "evidence": []
+    },
+    {
+      "title": "Clear conversation cancels a pending answer without reviving old context",
+      "browser": "webkit",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 743,
+          "retry": 0
+        }
+      ],
+      "evidence": []
+    },
+    {
+      "title": "Clear conversation on the homepage leaves another visitor untouched",
+      "browser": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 842,
+          "retry": 0
+        }
+      ],
+      "evidence": []
+    },
+    {
+      "title": "Clear conversation on the homepage leaves another visitor untouched",
+      "browser": "firefox",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 7161,
+          "retry": 0
+        }
+      ],
+      "evidence": []
+    },
+    {
+      "title": "Clear conversation on the homepage leaves another visitor untouched",
+      "browser": "webkit",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 4195,
+          "retry": 0
+        }
+      ],
+      "evidence": []
+    },
+    {
+      "title": "Personal introduction / German standalone desktop",
+      "browser": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 495,
+          "retry": 0
+        }
+      ],
+      "evidence": []
+    },
+    {
+      "title": "Personal introduction / German standalone desktop",
+      "browser": "firefox",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 1730,
+          "retry": 0
+        }
+      ],
+      "evidence": []
+    },
+    {
+      "title": "Personal introduction / German standalone desktop",
+      "browser": "webkit",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 1815,
+          "retry": 0
+        }
+      ],
+      "evidence": []
+    },
+    {
+      "title": "Personal introduction / English widget phone",
+      "browser": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 801,
+          "retry": 0
+        }
+      ],
+      "evidence": []
+    },
+    {
+      "title": "Personal introduction / English widget phone",
+      "browser": "firefox",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 2464,
+          "retry": 0
+        }
+      ],
+      "evidence": []
+    },
+    {
+      "title": "Personal introduction / English widget phone",
+      "browser": "webkit",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 2442,
+          "retry": 0
+        }
+      ],
+      "evidence": []
+    },
+    {
+      "title": "German on mobile: answer whether a Vienna workshop is available in Graz",
+      "browser": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 265,
+          "retry": 0
+        }
+      ],
+      "evidence": []
+    },
+    {
+      "title": "German on mobile: answer whether a Vienna workshop is available in Graz",
+      "browser": "firefox",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 681,
+          "retry": 0
+        }
+      ],
+      "evidence": []
+    },
+    {
+      "title": "German on mobile: answer whether a Vienna workshop is available in Graz",
+      "browser": "webkit",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 910,
+          "retry": 0
+        }
+      ],
+      "evidence": []
+    },
+    {
+      "title": "English: edit and copy an equipment email with the visitor\u2019s month",
+      "browser": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 766,
+          "retry": 0
+        }
+      ],
+      "evidence": [
+        {
+          "name": "accessibility.json",
+          "data": []
+        }
+      ]
+    },
+    {
+      "title": "English: edit and copy an equipment email with the visitor\u2019s month",
+      "browser": "firefox",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 1842,
+          "retry": 0
+        }
+      ],
+      "evidence": [
+        {
+          "name": "accessibility.json",
+          "data": []
+        }
+      ]
+    },
+    {
+      "title": "English: edit and copy an equipment email with the visitor\u2019s month",
+      "browser": "webkit",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 1431,
+          "retry": 0
+        }
+      ],
+      "evidence": [
+        {
+          "name": "accessibility.json",
+          "data": []
+        }
+      ]
+    },
+    {
+      "title": "Separate website origin: open the widget by keyboard, ask, close and resume",
+      "browser": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 1262,
+          "retry": 0
+        }
+      ],
+      "evidence": []
+    },
+    {
+      "title": "Separate website origin: open the widget by keyboard, ask, close and resume",
+      "browser": "firefox",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 2298,
+          "retry": 0
+        }
+      ],
+      "evidence": []
+    },
+    {
+      "title": "Separate website origin: open the widget by keyboard, ask, close and resume",
+      "browser": "webkit",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 2549,
+          "retry": 0
+        }
+      ],
+      "evidence": []
+    },
+    {
+      "title": "Accessibility: standalone chat with a German answer",
+      "browser": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 573,
+          "retry": 0
+        }
+      ],
+      "evidence": [
+        {
+          "name": "accessibility.json",
+          "data": []
+        }
+      ]
+    },
+    {
+      "title": "Accessibility: standalone chat with a German answer",
+      "browser": "firefox",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 1197,
+          "retry": 0
+        }
+      ],
+      "evidence": [
+        {
+          "name": "accessibility.json",
+          "data": []
+        }
+      ]
+    },
+    {
+      "title": "Accessibility: standalone chat with a German answer",
+      "browser": "webkit",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 1487,
+          "retry": 0
+        }
+      ],
+      "evidence": [
+        {
+          "name": "accessibility.json",
+          "data": []
+        }
+      ]
+    },
+    {
+      "title": "Accessibility: mobile project draft open",
+      "browser": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 492,
+          "retry": 0
+        }
+      ],
+      "evidence": [
+        {
+          "name": "accessibility.json",
+          "data": []
+        }
+      ]
+    },
+    {
+      "title": "Accessibility: mobile project draft open",
+      "browser": "firefox",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 2449,
+          "retry": 0
+        }
+      ],
+      "evidence": [
+        {
+          "name": "accessibility.json",
+          "data": []
+        }
+      ]
+    },
+    {
+      "title": "Accessibility: mobile project draft open",
+      "browser": "webkit",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 1372,
+          "retry": 0
+        }
+      ],
+      "evidence": [
+        {
+          "name": "accessibility.json",
+          "data": []
+        }
+      ]
+    },
+    {
+      "title": "Standalone homepage: turn a school workshop enquiry into a German email",
+      "browser": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 553,
+          "retry": 0
+        }
+      ],
+      "evidence": []
+    },
+    {
+      "title": "Standalone homepage: turn a school workshop enquiry into a German email",
+      "browser": "firefox",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 934,
+          "retry": 0
+        }
+      ],
+      "evidence": []
+    },
+    {
+      "title": "Standalone homepage: turn a school workshop enquiry into a German email",
+      "browser": "webkit",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 1630,
+          "retry": 0
+        }
+      ],
+      "evidence": []
+    },
+    {
+      "title": "stakeholder preview: launch the German widget and recover from an unrelated question",
+      "browser": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 887,
+          "retry": 0
+        }
+      ],
+      "evidence": []
+    },
+    {
+      "title": "stakeholder preview: launch the German widget and recover from an unrelated question",
+      "browser": "firefox",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 1447,
+          "retry": 0
+        }
+      ],
+      "evidence": []
+    },
+    {
+      "title": "stakeholder preview: launch the German widget and recover from an unrelated question",
+      "browser": "webkit",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 1421,
+          "retry": 0
+        }
+      ],
+      "evidence": []
+    },
+    {
+      "title": "English mobile: correct what the class measures, accept a draft, then ask a person",
+      "browser": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 878,
+          "retry": 0
+        }
+      ],
+      "evidence": []
+    },
+    {
+      "title": "English mobile: correct what the class measures, accept a draft, then ask a person",
+      "browser": "firefox",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 1068,
+          "retry": 0
+        }
+      ],
+      "evidence": []
+    },
+    {
+      "title": "English mobile: correct what the class measures, accept a draft, then ask a person",
+      "browser": "webkit",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 1143,
+          "retry": 0
+        }
+      ],
+      "evidence": []
+    },
+    {
+      "title": "a teacher can choose between two classroom needs and prepare an enquiry on a phone",
+      "browser": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 744,
+          "retry": 0
+        }
+      ],
+      "evidence": []
+    },
+    {
+      "title": "a teacher can choose between two classroom needs and prepare an enquiry on a phone",
+      "browser": "firefox",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 1246,
+          "retry": 0
+        }
+      ],
+      "evidence": []
+    },
+    {
+      "title": "a teacher can choose between two classroom needs and prepare an enquiry on a phone",
+      "browser": "webkit",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 1092,
+          "retry": 0
+        }
+      ],
+      "evidence": []
+    },
+    {
+      "title": "an English-speaking lab can offer equipment and prepare an email to the partnership contact",
+      "browser": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 331,
+          "retry": 0
+        }
+      ],
+      "evidence": []
+    },
+    {
+      "title": "an English-speaking lab can offer equipment and prepare an email to the partnership contact",
+      "browser": "firefox",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 519,
+          "retry": 0
+        }
+      ],
+      "evidence": []
+    },
+    {
+      "title": "an English-speaking lab can offer equipment and prepare an email to the partnership contact",
+      "browser": "webkit",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 1002,
+          "retry": 0
+        }
+      ],
+      "evidence": []
+    },
+    {
+      "title": "English phone widget: one Send, retained draft on failure, stable retry and receipt",
+      "browser": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 1446,
+          "retry": 0
+        }
+      ],
+      "evidence": []
+    },
+    {
+      "title": "English phone widget: one Send, retained draft on failure, stable retry and receipt",
+      "browser": "firefox",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 1987,
+          "retry": 0
+        }
+      ],
+      "evidence": []
+    },
+    {
+      "title": "English phone widget: one Send, retained draft on failure, stable retry and receipt",
+      "browser": "webkit",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 2767,
+          "retry": 0
+        }
+      ],
+      "evidence": []
+    },
+    {
+      "title": "German desktop: keep the project in the form while offline, then send when delivery recovers",
+      "browser": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 760,
+          "retry": 0
+        }
+      ],
+      "evidence": []
+    },
+    {
+      "title": "German desktop: keep the project in the form while offline, then send when delivery recovers",
+      "browser": "firefox",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 2960,
+          "retry": 0
+        }
+      ],
+      "evidence": []
+    },
+    {
+      "title": "German desktop: keep the project in the form while offline, then send when delivery recovers",
+      "browser": "webkit",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 3632,
+          "retry": 0
+        }
+      ],
+      "evidence": []
+    },
+    {
+      "title": "Project form: prefill, edit, resume and review / de",
+      "browser": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 1653,
+          "retry": 0
+        }
+      ],
+      "evidence": [
+        {
+          "name": "accessibility.json",
+          "data": []
+        }
+      ]
+    },
+    {
+      "title": "Project form: prefill, edit, resume and review / de",
+      "browser": "firefox",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 5807,
+          "retry": 0
+        }
+      ],
+      "evidence": [
+        {
+          "name": "accessibility.json",
+          "data": []
+        }
+      ]
+    },
+    {
+      "title": "Project form: prefill, edit, resume and review / de",
+      "browser": "webkit",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 5284,
+          "retry": 0
+        }
+      ],
+      "evidence": [
+        {
+          "name": "accessibility.json",
+          "data": []
+        }
+      ]
+    },
+    {
+      "title": "Project form: prefill, edit, resume and review / en",
+      "browser": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 991,
+          "retry": 0
+        }
+      ],
+      "evidence": [
+        {
+          "name": "accessibility.json",
+          "data": []
+        }
+      ]
+    },
+    {
+      "title": "Project form: prefill, edit, resume and review / en",
+      "browser": "firefox",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 3418,
+          "retry": 0
+        }
+      ],
+      "evidence": [
+        {
+          "name": "accessibility.json",
+          "data": []
+        }
+      ]
+    },
+    {
+      "title": "Project form: prefill, edit, resume and review / en",
+      "browser": "webkit",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 3164,
+          "retry": 0
+        }
+      ],
+      "evidence": [
+        {
+          "name": "accessibility.json",
+          "data": []
+        }
+      ]
+    },
+    {
+      "title": "Conversation repairs and session preferences / de / widget",
+      "browser": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 1375,
+          "retry": 0
+        }
+      ],
+      "evidence": [
+        {
+          "name": "request-times.json",
+          "data": [
+            {
+              "question": "My name is Maya",
+              "status": 200,
+              "requestMs": 21
+            },
+            {
+              "question": "Which workshops do you offer for schools?",
+              "status": 200,
+              "requestMs": 17
+            },
+            {
+              "question": "Auf Deutsch bitte.",
+              "status": 200,
+              "requestMs": 24
+            },
+            {
+              "question": "How long does it last?",
+              "status": 200,
+              "requestMs": 19
+            },
+            {
+              "question": "Actually, we need advice, not workshops.",
+              "status": 200,
+              "requestMs": 31
+            },
+            {
+              "question": "The second one",
+              "status": 200,
+              "requestMs": 22
+            },
+            {
+              "question": "What is my name?",
+              "status": 200,
+              "requestMs": 21
+            }
+          ]
+        },
+        {
+          "name": "accessibility.json",
+          "data": []
+        }
+      ]
+    },
+    {
+      "title": "Conversation repairs and session preferences / de / widget",
+      "browser": "firefox",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 5303,
+          "retry": 0
+        }
+      ],
+      "evidence": [
+        {
+          "name": "request-times.json",
+          "data": [
+            {
+              "question": "My name is Maya",
+              "status": 200,
+              "requestMs": 32
+            },
+            {
+              "question": "Which workshops do you offer for schools?",
+              "status": 200,
+              "requestMs": 759
+            },
+            {
+              "question": "Auf Deutsch bitte.",
+              "status": 200,
+              "requestMs": 58
+            },
+            {
+              "question": "How long does it last?",
+              "status": 200,
+              "requestMs": 111
+            },
+            {
+              "question": "Actually, we need advice, not workshops.",
+              "status": 200,
+              "requestMs": 133
+            },
+            {
+              "question": "The second one",
+              "status": 200,
+              "requestMs": 55
+            },
+            {
+              "question": "What is my name?",
+              "status": 200,
+              "requestMs": 43
+            }
+          ]
+        },
+        {
+          "name": "accessibility.json",
+          "data": []
+        }
+      ]
+    },
+    {
+      "title": "Conversation repairs and session preferences / de / widget",
+      "browser": "webkit",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 3461,
+          "retry": 0
+        }
+      ],
+      "evidence": [
+        {
+          "name": "request-times.json",
+          "data": [
+            {
+              "question": "My name is Maya",
+              "status": 200,
+              "requestMs": 60
+            },
+            {
+              "question": "Which workshops do you offer for schools?",
+              "status": 200,
+              "requestMs": 74
+            },
+            {
+              "question": "Auf Deutsch bitte.",
+              "status": 200,
+              "requestMs": 59
+            },
+            {
+              "question": "How long does it last?",
+              "status": 200,
+              "requestMs": 40
+            },
+            {
+              "question": "Actually, we need advice, not workshops.",
+              "status": 200,
+              "requestMs": 40
+            },
+            {
+              "question": "The second one",
+              "status": 200,
+              "requestMs": 32
+            },
+            {
+              "question": "What is my name?",
+              "status": 200,
+              "requestMs": 34
+            }
+          ]
+        },
+        {
+          "name": "accessibility.json",
+          "data": []
+        }
+      ]
+    },
+    {
+      "title": "Conversation repairs and session preferences / en / standalone",
+      "browser": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 773,
+          "retry": 0
+        }
+      ],
+      "evidence": [
+        {
+          "name": "request-times.json",
+          "data": [
+            {
+              "question": "My name is Maya",
+              "status": 200,
+              "requestMs": 16
+            },
+            {
+              "question": "Which workshops do you offer for schools?",
+              "status": 200,
+              "requestMs": 14
+            },
+            {
+              "question": "Auf Deutsch bitte.",
+              "status": 200,
+              "requestMs": 21
+            },
+            {
+              "question": "How long does it last?",
+              "status": 200,
+              "requestMs": 10
+            },
+            {
+              "question": "Actually, we need advice, not workshops.",
+              "status": 200,
+              "requestMs": 18
+            },
+            {
+              "question": "The second one",
+              "status": 200,
+              "requestMs": 11
+            },
+            {
+              "question": "What is my name?",
+              "status": 200,
+              "requestMs": 22
+            }
+          ]
+        },
+        {
+          "name": "accessibility.json",
+          "data": []
+        }
+      ]
+    },
+    {
+      "title": "Conversation repairs and session preferences / en / standalone",
+      "browser": "firefox",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 2872,
+          "retry": 0
+        }
+      ],
+      "evidence": [
+        {
+          "name": "request-times.json",
+          "data": [
+            {
+              "question": "My name is Maya",
+              "status": 200,
+              "requestMs": 29
+            },
+            {
+              "question": "Which workshops do you offer for schools?",
+              "status": 200,
+              "requestMs": 28
+            },
+            {
+              "question": "Auf Deutsch bitte.",
+              "status": 200,
+              "requestMs": 22
+            },
+            {
+              "question": "How long does it last?",
+              "status": 200,
+              "requestMs": 22
+            },
+            {
+              "question": "Actually, we need advice, not workshops.",
+              "status": 200,
+              "requestMs": 24
+            },
+            {
+              "question": "The second one",
+              "status": 200,
+              "requestMs": 43
+            },
+            {
+              "question": "What is my name?",
+              "status": 200,
+              "requestMs": 27
+            }
+          ]
+        },
+        {
+          "name": "accessibility.json",
+          "data": []
+        }
+      ]
+    },
+    {
+      "title": "Conversation repairs and session preferences / en / standalone",
+      "browser": "webkit",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 1646,
+          "retry": 0
+        }
+      ],
+      "evidence": [
+        {
+          "name": "request-times.json",
+          "data": [
+            {
+              "question": "My name is Maya",
+              "status": 200,
+              "requestMs": 29
+            },
+            {
+              "question": "Which workshops do you offer for schools?",
+              "status": 200,
+              "requestMs": 27
+            },
+            {
+              "question": "Auf Deutsch bitte.",
+              "status": 200,
+              "requestMs": 31
+            },
+            {
+              "question": "How long does it last?",
+              "status": 200,
+              "requestMs": 20
+            },
+            {
+              "question": "Actually, we need advice, not workshops.",
+              "status": 200,
+              "requestMs": 27
+            },
+            {
+              "question": "The second one",
+              "status": 200,
+              "requestMs": 24
+            },
+            {
+              "question": "What is my name?",
+              "status": 200,
+              "requestMs": 35
+            }
+          ]
+        },
+        {
+          "name": "accessibility.json",
+          "data": []
+        }
+      ]
+    },
+    {
+      "title": "Floating widget: drag, keyboard positions, page scroll and resume across layouts",
+      "browser": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 2883,
+          "retry": 0
+        }
+      ],
+      "evidence": [
+        {
+          "name": "accessibility.json",
+          "data": []
+        }
+      ]
+    },
+    {
+      "title": "Floating widget: drag, keyboard positions, page scroll and resume across layouts",
+      "browser": "firefox",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 5468,
+          "retry": 0
+        }
+      ],
+      "evidence": [
+        {
+          "name": "accessibility.json",
+          "data": []
+        }
+      ]
+    },
+    {
+      "title": "Floating widget: drag, keyboard positions, page scroll and resume across layouts",
+      "browser": "webkit",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 12460,
+          "retry": 0
+        }
+      ],
+      "evidence": [
+        {
+          "name": "accessibility.json",
+          "data": []
+        }
+      ]
+    },
+    {
+      "title": "Leaving the page: collapse, reset and retain fields / de",
+      "browser": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 3630,
+          "retry": 0
+        }
+      ],
+      "evidence": [
+        {
+          "name": "accessibility.json",
+          "data": []
+        }
+      ]
+    },
+    {
+      "title": "Leaving the page: collapse, reset and retain fields / de",
+      "browser": "firefox",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 10403,
+          "retry": 0
+        }
+      ],
+      "evidence": [
+        {
+          "name": "accessibility.json",
+          "data": []
+        }
+      ]
+    },
+    {
+      "title": "Leaving the page: collapse, reset and retain fields / de",
+      "browser": "webkit",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 8904,
+          "retry": 0
+        }
+      ],
+      "evidence": [
+        {
+          "name": "accessibility.json",
+          "data": []
+        }
+      ]
+    },
+    {
+      "title": "Leaving the page: collapse, reset and retain fields / en",
+      "browser": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 3436,
+          "retry": 0
+        }
+      ],
+      "evidence": [
+        {
+          "name": "accessibility.json",
+          "data": []
+        }
+      ]
+    },
+    {
+      "title": "Leaving the page: collapse, reset and retain fields / en",
+      "browser": "firefox",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 8265,
+          "retry": 0
+        }
+      ],
+      "evidence": [
+        {
+          "name": "accessibility.json",
+          "data": []
+        }
+      ]
+    },
+    {
+      "title": "Leaving the page: collapse, reset and retain fields / en",
+      "browser": "webkit",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 3808,
+          "retry": 0
+        }
+      ],
+      "evidence": [
+        {
+          "name": "accessibility.json",
+          "data": []
+        }
+      ]
+    }
+  ]
+}

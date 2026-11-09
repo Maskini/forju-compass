@@ -43,6 +43,8 @@ export function visitorTopic(input: string) {
   const lacksMoney = /reicht nicht|nicht genug|zu wenig|geld fehlt|can.t afford|cannot afford|short of money|lack of funds/.test(q);
   const projectExpense = /material|ausgaben|bauteil|projekt|experiment|equipment|supplies|project/.test(q);
   if (lacksMoney && projectExpense && !gaveMoney) return "finanzierung";
+  const requestsAmount = /(?:need|needs|brauchen|benotigen)\b.{0,28}(?:\d[\d.,]*\s*(?:euros?|eur\b|€)|money|geld)/.test(q);
+  if (requestsAmount && projectExpense && !gaveMoney) return "finanzierung";
   if (/notenschnitt|notendurchschnitt|gute noten|straight a(?:s|'s)\b|top grades|grades .{0,20}(?:join|participate)|grades (?:matter|count)/.test(q)) return "mission";
   if (/^(?:wer (?:ist|arbeitet) (?:bei forju|im (?:forju.)?team)|who (?:works at forju|is (?:on|in) (?:the |your )?team))[?!. ]*$/.test(q)) return "team";
   if (/mitglied werden|mitgliedschaft|beitreten|join forju|become a member|membership form/.test(q)) return "mitglied";
