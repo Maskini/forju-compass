@@ -32,16 +32,17 @@ export function visitorTopic(input: string) {
   const q=input.toLowerCase().normalize("NFKD").replace(/\p{M}/gu,"");
   // Distinguish people from physical resources, and money given from money needed.
   const wantsIntroduction = /introduc|put .{0,28}in touch|connect .{0,28}with|in kontakt bringen|kennenlernen|vermittel/.test(q);
-  const mentionsPerson = /scientist|researcher|someone in a lab|expert|wissenschaftler|forscher|forschend|fachperson/.test(q);
+  const mentionsPerson = /scientist|researcher|someone in a lab|expert|wissenschaftler|forscher|forschend|fachperson|biolog(?:ist|in|en|e)\b|chemist\b|chemiker|physicist\b|physiker/.test(q);
   const lookingForResearcher = /(?:need|looking for|speak (?:to|with)|talk (?:to|with)) (?:a (?:scientist|researcher)|someone who (?:studies|researches))\b|(?:suchen|brauchen) (?:jemanden,? (?:der|die) .{1,50}forscht|eine[n]? (?:forscher|wissenschaftler))/.test(q);
-  if ((lookingForResearcher && !/\b(?:jobs?|vacanc(?:y|ies)|stelle|stellenangebot)\b/.test(q)) || (wantsIntroduction && mentionsPerson)) return "connections";
+  const requestsContact = wantsIntroduction || /kontakt (?:herstellen|aufbauen)|in touch with/.test(q);
+  if ((lookingForResearcher && !/\b(?:jobs?|vacanc(?:y|ies)|stelle|stellenangebot)\b/.test(q)) || (requestsContact && mentionsPerson)) return "connections";
 
   const gaveMoney = /donat|spende|uberwiesen|(?:gave|sent|transferred).{0,32}money/.test(q);
   const wantsProof = /receipt|acknowledg|confirmation|proof|nachweis|beleg|quittung|bestatigung/.test(q);
   if (gaveMoney && wantsProof) return "spenden-bestaetigung";
 
-  const lacksMoney = /reicht nicht|nicht genug|zu wenig|geld fehlt|can.t afford|cannot afford|short of money|lack of funds/.test(q);
-  const projectExpense = /material|ausgaben|bauteil|projekt|experiment|equipment|supplies|project/.test(q);
+  const lacksMoney = /reicht nicht|nicht genug|zu wenig|geld fehlt|zu teuer|can.t afford|cannot afford|short of money|lack of funds|cost more than|cover (?:the |our )?(?:expense|cost)/.test(q);
+  const projectExpense = /material|ausgaben|bauteil|projekt|versuch|experiment|equipment|supplies|project/.test(q);
   if (lacksMoney && projectExpense && !gaveMoney) return "finanzierung";
   const requestsAmount = /(?:need|needs|brauchen|benotigen)\b.{0,28}(?:\d[\d.,]*\s*(?:euros?|eur\b|€)|money|geld)/.test(q);
   if (requestsAmount && projectExpense && !gaveMoney) return "finanzierung";
@@ -61,6 +62,8 @@ export function visitorTopic(input: string) {
   if (/fordermoglichkeit|funding|financial support|fund my|finanzier/.test(q) && !/workshop|spende|donat|seminar/.test(q)) return "finanzierung";
   if (/welche projekte gibt|what projects (does|are)|which projects/.test(q)) return "projekte";
   if (/ehrenamtlich engagieren|how can i (volunteer|get involved)/.test(q)) return "ehrenamt";
+  const offersTime = /^(?:i|we|ich|wir)\b/.test(q) && /(?:spare|free) time|freizeit|(?:give|offer|contribute) .{0,20}hours/.test(q);
+  if (offersTime && /organisation|organization|forju|lend a hand|mithelfen|mitarbeiten/.test(q)) return "ehrenamt";
   return null;
 }
 

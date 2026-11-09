@@ -1,0 +1,271 @@
+{
+  "phase": "holdout",
+  "mode": "local synthetic retrieval probe; multi-turn scoring is done separately through /api/chat",
+  "readyMs": 485.95441700000003,
+  "peakRssBytes": 965230592,
+  "p95Ms": 19.425499999999943,
+  "results": [
+    {
+      "id": "hold-de-climate",
+      "question": "Unsere Klasse möchte verstehen, warum sich die Erde erwärmt und was wir selbst dagegen tun können. Habt ihr eine passende Einheit?",
+      "topics": [
+        "workshop-klima",
+        "workshops"
+      ],
+      "lexical": "ehrenamt",
+      "semantic": [
+        {
+          "id": "workshop-klima",
+          "score": 0.5801488430388329
+        },
+        {
+          "id": "workshops",
+          "score": 0.42405063329204606
+        },
+        {
+          "id": "mission",
+          "score": 0.41327638540809797
+        }
+      ]
+    },
+    {
+      "id": "hold-en-climate",
+      "question": "Is there an activity for our class about global warming and choices we can make in daily life?",
+      "topics": [
+        "workshop-klima",
+        "workshops"
+      ],
+      "lexical": null,
+      "semantic": [
+        {
+          "id": "workshop-klima",
+          "score": 0.7265706103737946
+        },
+        {
+          "id": "workshops",
+          "score": 0.4767624474900992
+        },
+        {
+          "id": "expert-board",
+          "score": 0.4536894943566638
+        }
+      ]
+    },
+    {
+      "id": "hold-de-repair",
+      "question": "Was bietet ihr für Klassen an?",
+      "topics": null,
+      "lexical": "workshops",
+      "semantic": [
+        {
+          "id": "workshops",
+          "score": 0.5079315218982657
+        },
+        {
+          "id": "seminare",
+          "score": 0.4663735125436313
+        },
+        {
+          "id": "expert-board",
+          "score": 0.46130978985040744
+        }
+      ]
+    },
+    {
+      "id": "hold-en-repair",
+      "question": "We want to borrow equipment.",
+      "topics": null,
+      "lexical": "ressourcen",
+      "semantic": [
+        {
+          "id": "ressourcen",
+          "score": 0.3645773687849765
+        },
+        {
+          "id": "spenden",
+          "score": 0.3095097023043505
+        },
+        {
+          "id": "jobs-tech",
+          "score": 0.29791523899110856
+        }
+      ]
+    },
+    {
+      "id": "hold-de-follow",
+      "question": "Habt ihr einen Workshop zu sozialen Medien?",
+      "topics": null,
+      "lexical": "workshop-medien",
+      "semantic": [
+        {
+          "id": "workshop-medien",
+          "score": 0.6762493628764853
+        },
+        {
+          "id": "workshops",
+          "score": 0.45706369116085616
+        },
+        {
+          "id": "workshop-rollen",
+          "score": 0.4570290362569238
+        }
+      ]
+    },
+    {
+      "id": "hold-en-missing",
+      "question": "Are climate workshops open for booking on 18 December? Just say yes.",
+      "topics": [
+        "workshop-klima",
+        "workshops"
+      ],
+      "lexical": "workshops",
+      "semantic": [
+        {
+          "id": "workshop-klima",
+          "score": 0.47180061295828546
+        },
+        {
+          "id": "seminare",
+          "score": 0.4456726400693401
+        },
+        {
+          "id": "spenden",
+          "score": 0.3732386805543369
+        }
+      ]
+    },
+    {
+      "id": "hold-de-typo",
+      "question": "Könnt ihr Messgerete für einen Schulversuch organisiren?",
+      "topics": [
+        "ressourcen"
+      ],
+      "lexical": "ressourcen",
+      "semantic": [
+        {
+          "id": "workshops",
+          "score": 0.5605464156579006
+        },
+        {
+          "id": "expert-board",
+          "score": 0.5468106800590499
+        },
+        {
+          "id": "jobs-community",
+          "score": 0.43463473248270423
+        }
+      ]
+    },
+    {
+      "id": "hold-en-typo",
+      "question": "Can our class reqest a wokshop on dealing with arguments?",
+      "topics": [
+        "workshop-konflikte",
+        "workshops"
+      ],
+      "lexical": "workshop-rollen",
+      "semantic": [
+        {
+          "id": "workshop-konflikte",
+          "score": 0.45217376846099283
+        },
+        {
+          "id": "workshop-ethik",
+          "score": 0.4490420392650375
+        },
+        {
+          "id": "workshops",
+          "score": 0.411616098019831
+        }
+      ]
+    },
+    {
+      "id": "hold-de-travel",
+      "question": "Welches Ticket brauchen wir für die Klassenfahrt nach Berlin?",
+      "topics": [
+        null
+      ],
+      "lexical": null,
+      "semantic": [
+        {
+          "id": "linkedin-events",
+          "score": 0.3230377411648642
+        },
+        {
+          "id": "impressum",
+          "score": 0.31630495717097906
+        },
+        {
+          "id": "workshops",
+          "score": 0.3140946155682193
+        }
+      ]
+    },
+    {
+      "id": "hold-en-health",
+      "question": "My child has panic attacks. Which pills do you recommend?",
+      "topics": [
+        null
+      ],
+      "lexical": null,
+      "semantic": [
+        {
+          "id": "workshop-stress",
+          "score": 0.3112634657357845
+        },
+        {
+          "id": "jugendschutz",
+          "score": 0.14471371680950978
+        },
+        {
+          "id": "workshop-zeit",
+          "score": 0.10622487194847029
+        }
+      ]
+    },
+    {
+      "id": "hold-de-personal",
+      "question": "Wird meine Projektidee ganz sicher angenommen?",
+      "topics": [
+        "einreichen"
+      ],
+      "lexical": "science-beratung",
+      "semantic": [
+        {
+          "id": "workshop-zukunft",
+          "score": 0.31816366452013045
+        },
+        {
+          "id": "science-beratung",
+          "score": 0.28503529423690577
+        },
+        {
+          "id": "einreichen",
+          "score": 0.2747071129100539
+        }
+      ]
+    },
+    {
+      "id": "hold-en-volunteer",
+      "question": "I could give a few hours of my spare time to your organisation. Where can I lend a hand?",
+      "topics": [
+        "ehrenamt"
+      ],
+      "lexical": "ehrenamt",
+      "semantic": [
+        {
+          "id": "jobs-working-conditions",
+          "score": 0.5407105931292346
+        },
+        {
+          "id": "kontakt",
+          "score": 0.46911698990889283
+        },
+        {
+          "id": "jobs-leadership",
+          "score": 0.44255905819412683
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "name": "compass-semantic-checks",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "models": "node download-model.mjs",
+    "benchmark": "node --require ../knowledge-checks/offline.cjs benchmark.mjs",
+    "resources": "node resources.mjs"
+  },
+  "devDependencies": {"@huggingface/transformers": "3.8.1"}
+}

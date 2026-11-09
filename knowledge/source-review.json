@@ -382,7 +382,10 @@
     "recordHashes": {
       "workshop-stress": "be8f08129abe4f580962c3cd97fc32fde19f188ee7c95a63bdadbc366de25eb3",
       "workshops": "be8f08129abe4f580962c3cd97fc32fde19f188ee7c95a63bdadbc366de25eb3",
-      "workshop-zeit": "be8f08129abe4f580962c3cd97fc32fde19f188ee7c95a63bdadbc366de25eb3"
+      "workshop-zeit": "be8f08129abe4f580962c3cd97fc32fde19f188ee7c95a63bdadbc366de25eb3",
+      "workshop-konflikte": "be8f08129abe4f580962c3cd97fc32fde19f188ee7c95a63bdadbc366de25eb3",
+      "workshop-klima": "be8f08129abe4f580962c3cd97fc32fde19f188ee7c95a63bdadbc366de25eb3",
+      "workshop-medien": "be8f08129abe4f580962c3cd97fc32fde19f188ee7c95a63bdadbc366de25eb3"
     }
   },
   "https://forju.at/en/projects/schulworkshops": {
@@ -480,7 +483,10 @@
     "recordHashes": {
       "workshop-stress": "7ddb402e635e7ff2a3ef097ab41167076a134b6b41e58492ddfad451a1373408",
       "workshops": "7ddb402e635e7ff2a3ef097ab41167076a134b6b41e58492ddfad451a1373408",
-      "workshop-zeit": "7ddb402e635e7ff2a3ef097ab41167076a134b6b41e58492ddfad451a1373408"
+      "workshop-zeit": "7ddb402e635e7ff2a3ef097ab41167076a134b6b41e58492ddfad451a1373408",
+      "workshop-konflikte": "7ddb402e635e7ff2a3ef097ab41167076a134b6b41e58492ddfad451a1373408",
+      "workshop-klima": "7ddb402e635e7ff2a3ef097ab41167076a134b6b41e58492ddfad451a1373408",
+      "workshop-medien": "7ddb402e635e7ff2a3ef097ab41167076a134b6b41e58492ddfad451a1373408"
     }
   },
   "https://forju.at/de/projects/seminare": {

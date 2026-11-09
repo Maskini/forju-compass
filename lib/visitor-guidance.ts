@@ -28,6 +28,9 @@ export function offersPartnership(message: string) {
 
 function publicationDetail(message: string, previous?: string): Detail | undefined {
   const q = fold(message);
+  const projectDecision=/projekt(?:idee)?|project(?: idea)?/.test(q)
+    && /angenommen|genehmigt|bewilligt|accepted|approved|acceptance/.test(q);
+  if (projectDecision) return {topic:"einreichen",passage:"acceptance"};
   const donation = /spende|\bdonat|(?:i|we) give (?:to|every month)|(?:meine|my) .{0,12}(?:dauerauftrag|monthly gift)|monthly (?:gift|giving)|(?:money|geld) .{0,24}(?:give|forju)/.test(q);
   const onDonations = previous === "spenden" || previous === "spenden-bestaetigung";
   const shortFollowUp = q.split(/\s+/).length <= 12;

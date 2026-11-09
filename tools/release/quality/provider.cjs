@@ -5,6 +5,8 @@ class Compass {
   async callApi(id){
     const c=cases.find(row=>row.id===id.trim());
     if(!c) throw Error('Unknown fixture');
+    const isolated=await fetch('http://127.0.0.1:4204/scenario',{method:'POST',signal:AbortSignal.timeout(5000)});
+    if(!isolated.ok)throw Error('Disposable scenario quota unavailable');
     const history=[], answers=[]; let topic;
     for(const message of c.turns){
       const body=JSON.stringify({message,history,topic});

@@ -49,3 +49,4 @@ next-env.d.ts
 # Maintainer-only source tools
 /tools/knowledge-checks/node_modules/
 /tools/knowledge-checks/__pycache__/
+/tools/semantic-checks/node_modules

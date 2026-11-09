@@ -1,0 +1,9 @@
+[
+  {
+    "case": {
+      "caseId": "language-hold-en-volunteer"
+    },
+    "reason": "Unrelated additional citation: https://forju.at/en/jobs",
+    "actualResponse": "{\"mode\":\"library\",\"topic\":\"ehrenamt\",\"answer\":\"Volunteers can help with education, communications, editorial work, IT and operations. The jobs page describes individual roles. Check the requirements for a role that fits and email bewerbung@forju.at with why you would like to help. The team must confirm current availability.\",\"sources\":[{\"title\":\"Volunteering\",\"url\":\"https://forju.at/en/ueber-uns\"},{\"title\":\"Enquire with ForJu\",\"url\":\"https://forju.at/en/jobs\"}]}"
+  }
+]

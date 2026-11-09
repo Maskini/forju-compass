@@ -1,0 +1,960 @@
+{
+  "phase": "after",
+  "commit": "68f8fb13801a332721a0899e808341e498943cb4",
+  "catalogSha256": "29f42b39a350d14caa8e8cd0e6ce8ca0af259def9bfe57879104cbd6345f0710",
+  "mode": "production local-only; synthetic; loopback only; independent quota per scenario",
+  "startupMs": 255,
+  "peakRssBytes": 169738240,
+  "catalogBytes": 88014,
+  "requests": 27,
+  "p95Ms": 6.140917000000002,
+  "passed": 24,
+  "total": 24,
+  "results": [
+    {
+      "id": "de-conflict",
+      "lang": "de",
+      "turns": [
+        "In unserer Klasse gibt es dauernd Streit. Könnte jemand mit uns üben, besser miteinander auszukommen?"
+      ],
+      "topics": [
+        "workshop-konflikte",
+        "workshops"
+      ],
+      "source": "projects/schulworkshops",
+      "facts": [
+        "Konflikt|Streit|Team"
+      ],
+      "unknown": "No booking date or current price is confirmed.",
+      "answers": [
+        {
+          "mode": "library",
+          "topic": "workshop-konflikte",
+          "answer": "Gemeinsam stark – Konflikte im Team bewältigen\n\nDieser beschriebene Schulworkshop behandelt konstruktive Konfliktlösung, das Erkennen von Konflikten und gemeinsame Lösungen. Rollenspiele, Gruppenübungen und Selbstreflexion sollen Teamarbeit, Empathie und Selbstbewusstsein stärken. Die Beschreibung stammt aus dem Workshopartikel von November 2024; aktuelle Buchbarkeit beim Verein erfragen.",
+          "sources": [
+            {
+              "title": "Schulworkshops bei ForJu",
+              "url": "https://forju.at/de/projects/schulworkshops"
+            }
+          ],
+          "suggestions": [
+            "Wie melde ich meine Klasse dafür an?",
+            "Einfacher erklären"
+          ]
+        }
+      ],
+      "checks": {
+        "topic": true,
+        "source": true,
+        "facts": true,
+        "noFabrication": true
+      },
+      "pass": true
+    },
+    {
+      "id": "en-conflict",
+      "lang": "en",
+      "turns": [
+        "Our pupils keep falling out with each other. Do you run sessions to help them get along?"
+      ],
+      "topics": [
+        "workshop-konflikte",
+        "workshops"
+      ],
+      "source": "projects/schulworkshops",
+      "facts": [
+        "conflict|role play|team"
+      ],
+      "unknown": "No booking date or current price is confirmed.",
+      "answers": [
+        {
+          "mode": "library",
+          "topic": "workshop-konflikte",
+          "answer": "Team conflict\n\nStudents practise recognising conflict and finding solutions through role play and group exercises.",
+          "sources": [
+            {
+              "title": "School workshops at ForJu",
+              "url": "https://forju.at/en/projects/schulworkshops"
+            }
+          ],
+          "suggestions": [
+            "How do we sign up?",
+            "Explain more simply"
+          ]
+        }
+      ],
+      "checks": {
+        "topic": true,
+        "source": true,
+        "facts": true,
+        "noFabrication": true
+      },
+      "pass": true
+    },
+    {
+      "id": "de-media",
+      "lang": "de",
+      "turns": [
+        "Unsere Schüler glauben jede Meldung, die sie auf dem Handy sehen. Gibt es etwas, damit sie Falschmeldungen besser erkennen?"
+      ],
+      "topics": [
+        "workshop-medien"
+      ],
+      "source": "projects/schulworkshops",
+      "facts": [
+        "Medien|TikTok|Desinformation|Falsch"
+      ],
+      "unknown": "No class-specific appointment is confirmed.",
+      "answers": [
+        {
+          "mode": "library",
+          "topic": "workshop-medien",
+          "answer": "Medienkompetenz: TikTok und Co sinnvoll nutzen\n\nDer Workshop behandelt reflektierte Nutzung sozialer Medien, insbesondere TikTok und Instagram. Themen sind Privatsphäre, Cybermobbing, Falschinformationen und kreative authentische Inhalte ohne übermäßige Selbstdarstellung. Theorie und praktische Übungen sollen einen verantwortlichen Umgang mit digitalen Medien unterstützen.",
+          "sources": [
+            {
+              "title": "Schulworkshops bei ForJu",
+              "url": "https://forju.at/de/projects/schulworkshops"
+            }
+          ],
+          "suggestions": [
+            "Wie melde ich meine Klasse dafür an?",
+            "Einfacher erklären"
+          ]
+        }
+      ],
+      "checks": {
+        "topic": true,
+        "source": true,
+        "facts": true,
+        "noFabrication": true
+      },
+      "pass": true
+    },
+    {
+      "id": "en-media",
+      "lang": "en",
+      "turns": [
+        "Is there a session for pupils on spotting made-up stories online and protecting their personal information?"
+      ],
+      "topics": [
+        "workshop-medien"
+      ],
+      "source": "projects/schulworkshops",
+      "facts": [
+        "privacy|misinformation|media"
+      ],
+      "unknown": "No class-specific appointment is confirmed.",
+      "answers": [
+        {
+          "mode": "library",
+          "topic": "workshop-medien",
+          "answer": "Media literacy workshop\n\nThe Vienna school workshop covers TikTok and Instagram, privacy, cyberbullying, misinformation and creating content responsibly. Ask ForJu about a date for your class.",
+          "sources": [
+            {
+              "title": "School workshops at ForJu",
+              "url": "https://forju.at/en/projects/schulworkshops"
+            }
+          ],
+          "suggestions": [
+            "How do we sign up?",
+            "Explain more simply"
+          ]
+        }
+      ],
+      "checks": {
+        "topic": true,
+        "source": true,
+        "facts": true,
+        "noFabrication": true
+      },
+      "pass": true
+    },
+    {
+      "id": "de-stress",
+      "lang": "de",
+      "turns": [
+        "Viele in meiner Klasse sind vor jeder Schularbeit total nervös. Habt ihr dafür Übungen?"
+      ],
+      "topics": [
+        "workshop-stress"
+      ],
+      "source": "projects/schulworkshops",
+      "facts": [
+        "Atem|Achtsamkeit|Stress|Konzentration"
+      ],
+      "unknown": "No clinical treatment is offered or inferred.",
+      "answers": [
+        {
+          "mode": "library",
+          "topic": "workshop-stress",
+          "answer": "Stressbewältigung: Relaxed in der Schule\n\nDas beschriebene Seminar bietet Schüler:innen Übungen zu Achtsamkeit, Konzentration und einem ruhigeren Schulalltag. Atemübungen, Meditation und Gruppenaustausch helfen, unterschiedliche Strategien kennenzulernen. Es ist ein Schulworkshop, kein belegtes medizinisches oder psychotherapeutisches Angebot.",
+          "sources": [
+            {
+              "title": "Schulworkshops bei ForJu",
+              "url": "https://forju.at/de/projects/schulworkshops"
+            }
+          ],
+          "suggestions": [
+            "Wie melde ich meine Klasse dafür an?",
+            "Einfacher erklären"
+          ]
+        }
+      ],
+      "checks": {
+        "topic": true,
+        "source": true,
+        "facts": true,
+        "noFabrication": true
+      },
+      "pass": true
+    },
+    {
+      "id": "en-stress",
+      "lang": "en",
+      "turns": [
+        "My pupils get really anxious before tests. Could you teach them ways to calm down?"
+      ],
+      "topics": [
+        "workshop-stress"
+      ],
+      "source": "projects/schulworkshops",
+      "facts": [
+        "breathing|mindfulness|stress|concentration"
+      ],
+      "unknown": "No clinical treatment is offered or inferred.",
+      "answers": [
+        {
+          "mode": "library",
+          "topic": "workshop-stress",
+          "answer": "School stress\n\nStudents explore breathing exercises, mindfulness and concentration strategies for school.",
+          "sources": [
+            {
+              "title": "School workshops at ForJu",
+              "url": "https://forju.at/en/projects/schulworkshops"
+            }
+          ],
+          "suggestions": [
+            "How do we sign up?",
+            "Explain more simply"
+          ]
+        }
+      ],
+      "checks": {
+        "topic": true,
+        "source": true,
+        "facts": true,
+        "noFabrication": true
+      },
+      "pass": true
+    },
+    {
+      "id": "de-time",
+      "lang": "de",
+      "turns": [
+        "Meine Klasse schiebt Aufgaben immer bis zum letzten Abend auf. Können sie bei euch lernen, ihren Alltag besser einzuteilen?"
+      ],
+      "topics": [
+        "workshop-zeit"
+      ],
+      "source": "projects/schulworkshops",
+      "facts": [
+        "Priorit|Pomodoro|Eisenhower|Zeit"
+      ],
+      "unknown": "No class-specific appointment is confirmed.",
+      "answers": [
+        {
+          "mode": "library",
+          "topic": "workshop-zeit",
+          "answer": "Selbstmanagement: Erfolgreich durch den Alltag\n\nDas Seminar beschreibt Zeitmanagement und Selbstorganisation für Schüler:innen: Prioritäten setzen, Zeitpläne erstellen, Gewohnheiten reflektieren und Erholung einplanen. Als praktische Methoden nennt der Artikel Eisenhower-Matrix und Pomodoro-Technik. Das ist ein Bildungsangebot, keine individuelle therapeutische Behandlung.",
+          "sources": [
+            {
+              "title": "Schulworkshops bei ForJu",
+              "url": "https://forju.at/de/projects/schulworkshops"
+            }
+          ],
+          "suggestions": [
+            "Wie melde ich meine Klasse dafür an?",
+            "Einfacher erklären"
+          ]
+        }
+      ],
+      "checks": {
+        "topic": true,
+        "source": true,
+        "facts": true,
+        "noFabrication": true
+      },
+      "pass": true
+    },
+    {
+      "id": "en-time",
+      "lang": "en",
+      "turns": [
+        "Can you help pupils who leave all their homework until the last minute learn to organise their day?"
+      ],
+      "topics": [
+        "workshop-zeit"
+      ],
+      "source": "projects/schulworkshops",
+      "facts": [
+        "priorit|Pomodoro|Eisenhower|schedul"
+      ],
+      "unknown": "No class-specific appointment is confirmed.",
+      "answers": [
+        {
+          "mode": "library",
+          "topic": "workshop-zeit",
+          "answer": "Time management\n\nStudents practise setting priorities and scheduling tasks with methods such as Pomodoro and the Eisenhower matrix.",
+          "sources": [
+            {
+              "title": "School workshops at ForJu",
+              "url": "https://forju.at/en/projects/schulworkshops"
+            }
+          ],
+          "suggestions": [
+            "How do we sign up?",
+            "Explain more simply"
+          ]
+        }
+      ],
+      "checks": {
+        "topic": true,
+        "source": true,
+        "facts": true,
+        "noFabrication": true
+      },
+      "pass": true
+    },
+    {
+      "id": "de-equipment",
+      "lang": "de",
+      "turns": [
+        "Wir wollen die Luft in unseren Klassenräumen untersuchen, haben aber nichts zum Messen. Könnt ihr uns etwas vermitteln?"
+      ],
+      "topics": [
+        "ressourcen"
+      ],
+      "source": "services/ressourcen",
+      "facts": [
+        "Gerät|Mess|Ressourcen"
+      ],
+      "unknown": "A particular device, date and price need confirmation.",
+      "answers": [
+        {
+          "mode": "library",
+          "topic": "ressourcen",
+          "answer": "Schulen und Forschungsteams können über ForJu bei Partnern Räume und Messgeräte anfragen. ForJu hilft bei der Organisation und klärt Fragen zu Aufsicht und Haftung. Ob ein bestimmtes Gerät zu eurem Termin verfügbar ist und was die Nutzung kostet, müsst ihr anfragen. Beschreibt im Ressourcenformular, welchen Raum oder welches Gerät ihr braucht und wofür.",
+          "sources": [
+            {
+              "title": "Ressourcen",
+              "url": "https://forju.at/de/services/ressourcen"
+            },
+            {
+              "title": "Bei ForJu anfragen",
+              "url": "https://forju.at/de/kontakt?intent=service&thema=ressourcen"
+            }
+          ]
+        }
+      ],
+      "checks": {
+        "topic": true,
+        "source": true,
+        "facts": true,
+        "noFabrication": true
+      },
+      "pass": true
+    },
+    {
+      "id": "en-equipment",
+      "lang": "en",
+      "turns": [
+        "Could our school get temporary use of an instrument to check what is in the water?"
+      ],
+      "topics": [
+        "ressourcen"
+      ],
+      "source": "services/ressourcen",
+      "facts": [
+        "equipment|instrument|device"
+      ],
+      "unknown": "A particular device, date and price need confirmation.",
+      "answers": [
+        {
+          "mode": "library",
+          "topic": "ressourcen",
+          "answer": "Schools and research teams can ask ForJu to find space or measuring equipment through its partners. ForJu helps coordinate supervision and liability. A particular device, date or price needs confirmation. Use the resources form to describe the space or instrument you need and how you would use it.",
+          "sources": [
+            {
+              "title": "Rooms and equipment",
+              "url": "https://forju.at/en/services/ressourcen"
+            },
+            {
+              "title": "Enquire with ForJu",
+              "url": "https://forju.at/en/kontakt?intent=service&thema=ressourcen"
+            }
+          ]
+        }
+      ],
+      "checks": {
+        "topic": true,
+        "source": true,
+        "facts": true,
+        "noFabrication": true
+      },
+      "pass": true
+    },
+    {
+      "id": "de-funding",
+      "lang": "de",
+      "turns": [
+        "Die Bauteile für unseren Versuch sind zu teuer für die Klassenkasse. Wo bekommen wir Unterstützung?"
+      ],
+      "topics": [
+        "finanzierung"
+      ],
+      "source": "services/finanziell",
+      "facts": [
+        "Partner|Finanz|Kosten"
+      ],
+      "forbid": [
+        "ForJu (?:gibt|zahlt|überweist) euch"
+      ],
+      "unknown": "ForJu does not directly sponsor projects; no grant or amount is confirmed.",
+      "answers": [
+        {
+          "mode": "library",
+          "topic": "finanzierung",
+          "answer": "Beim Finanzierungsservice hilft ForJu euch, Kosten abzuschätzen, die Machbarkeit zu prüfen und mögliche Förderpartner zu finden. Der Service beschreibt Vermittlung statt direktem Sponsoring. Beschreibt in der Finanzierungsanfrage, wofür ihr Unterstützung braucht. Eine Zusage oder Fördersumme müsst ihr mit ForJu klären.",
+          "sources": [
+            {
+              "title": "Finanzielle Unterstützung",
+              "url": "https://forju.at/de/services/finanziell"
+            },
+            {
+              "title": "Bei ForJu anfragen",
+              "url": "https://forju.at/de/kontakt?intent=service&thema=finanziell"
+            }
+          ]
+        }
+      ],
+      "checks": {
+        "topic": true,
+        "source": true,
+        "facts": true,
+        "noFabrication": true
+      },
+      "pass": true
+    },
+    {
+      "id": "en-funding",
+      "lang": "en",
+      "turns": [
+        "The parts for our experiment cost more than we can raise. Can you help us find someone to cover the expense?"
+      ],
+      "topics": [
+        "finanzierung"
+      ],
+      "source": "services/finanziell",
+      "facts": [
+        "funding|cost|partner"
+      ],
+      "forbid": [
+        "ForJu will pay"
+      ],
+      "unknown": "ForJu does not directly sponsor projects; no grant or amount is confirmed.",
+      "answers": [
+        {
+          "mode": "library",
+          "topic": "finanzierung",
+          "answer": "ForJu’s funding service helps you estimate project costs, assess feasibility and find funding partners. The service says it does not directly sponsor projects. Describe what you need in the funding enquiry so the team can check which options apply.",
+          "sources": [
+            {
+              "title": "Project funding",
+              "url": "https://forju.at/en/services/finanziell"
+            },
+            {
+              "title": "Enquire with ForJu",
+              "url": "https://forju.at/en/kontakt?intent=service&thema=finanziell"
+            }
+          ]
+        }
+      ],
+      "checks": {
+        "topic": true,
+        "source": true,
+        "facts": true,
+        "noFabrication": true
+      },
+      "pass": true
+    },
+    {
+      "id": "de-researcher",
+      "lang": "de",
+      "turns": [
+        "Wir würden unsere Ergebnisse gern mit einer Biologin besprechen. Könnt ihr den Kontakt herstellen?"
+      ],
+      "topics": [
+        "connections"
+      ],
+      "source": "services/connections",
+      "facts": [
+        "Kontakt|Vernetz|vermittel"
+      ],
+      "unknown": "No named biologist or guaranteed introduction is confirmed.",
+      "answers": [
+        {
+          "mode": "library",
+          "topic": "connections",
+          "answer": "Wenn ihr für ein Projekt Kontakte in Forschung oder Wirtschaft sucht, könnt ihr ForJu um eine Vorstellung bitten. Beschreibt über die Kontaktanfrage, wen ihr kennenlernen möchtet und wofür. Die Serviceseite nennt auch Veranstaltungen als Möglichkeit zum Austausch, aber keinen nächsten Termin.",
+          "sources": [
+            {
+              "title": "Connections",
+              "url": "https://forju.at/de/services/connections"
+            },
+            {
+              "title": "Bei ForJu anfragen",
+              "url": "https://forju.at/de/kontakt?intent=service&thema=connections"
+            }
+          ]
+        }
+      ],
+      "checks": {
+        "topic": true,
+        "source": true,
+        "facts": true,
+        "noFabrication": true
+      },
+      "pass": true
+    },
+    {
+      "id": "en-researcher",
+      "lang": "en",
+      "turns": [
+        "Could you put our class in touch with a biologist to discuss what we found?"
+      ],
+      "topics": [
+        "connections"
+      ],
+      "source": "services/connections",
+      "facts": [
+        "introduction|contact|meet"
+      ],
+      "unknown": "No named biologist or guaranteed introduction is confirmed.",
+      "answers": [
+        {
+          "mode": "library",
+          "topic": "connections",
+          "answer": "If your project needs contacts in research or industry, ask ForJu for an introduction. Use the introductions form to explain whom you want to meet and why. The service also describes events as a way to meet people but gives no next event date.",
+          "sources": [
+            {
+              "title": "Making connections",
+              "url": "https://forju.at/en/services/connections"
+            },
+            {
+              "title": "Enquire with ForJu",
+              "url": "https://forju.at/en/kontakt?intent=service&thema=connections"
+            }
+          ]
+        }
+      ],
+      "checks": {
+        "topic": true,
+        "source": true,
+        "facts": true,
+        "noFabrication": true
+      },
+      "pass": true
+    },
+    {
+      "id": "de-typo",
+      "lang": "de",
+      "turns": [
+        "Habt ihr Schulwokshops zu Fake Nwes?"
+      ],
+      "topics": [
+        "workshop-medien"
+      ],
+      "source": "projects/schulworkshops",
+      "facts": [
+        "Medien|TikTok|Falsch|Desinformation"
+      ],
+      "unknown": "No appointment confirmed.",
+      "answers": [
+        {
+          "mode": "library",
+          "topic": "workshop-medien",
+          "answer": "Der Workshop behandelt reflektierte Nutzung sozialer Medien, insbesondere TikTok und Instagram. Themen sind Privatsphäre, Cybermobbing, Falschinformationen und kreative authentische Inhalte ohne übermäßige Selbstdarstellung. Theorie und praktische Übungen sollen einen verantwortlichen Umgang mit digitalen Medien unterstützen.",
+          "sources": [
+            {
+              "title": "Medienkompetenz: TikTok und Co sinnvoll nutzen",
+              "url": "https://forju.at/de/projects/schulworkshops"
+            }
+          ]
+        }
+      ],
+      "checks": {
+        "topic": true,
+        "source": true,
+        "facts": true,
+        "noFabrication": true
+      },
+      "pass": true
+    },
+    {
+      "id": "en-followup",
+      "lang": "en",
+      "turns": [
+        "Which workshops can a school class request?",
+        "Who should we write to about a date?"
+      ],
+      "topics": [
+        "workshops"
+      ],
+      "source": "projects/schulworkshops",
+      "facts": [
+        "Anja Hofer",
+        "anja.hofer@forju.at"
+      ],
+      "unknown": "Enquiry is not registration or confirmation.",
+      "answers": [
+        {
+          "mode": "library",
+          "topic": "workshops",
+          "answer": "For your class in Vienna, you can ask about workshops on climate, team conflict, media literacy or gender roles. Other topics include ethics, managing stress, self-management and planning for the future. Young trainers work with teachers.\n\nEmail Anja Hofer (anja.hofer@forju.at) with the topic your class wants to explore. Ask her about dates and costs. In November 2024, Wiener Bildungschancen covered the full cost for grades 1–9.",
+          "sources": [
+            {
+              "title": "Vienna school workshops",
+              "url": "https://forju.at/en/projects/schulworkshops"
+            }
+          ]
+        },
+        {
+          "mode": "library",
+          "topic": "workshops",
+          "answer": "To arrange a school workshop, email Anja Hofer at anja.hofer@forju.at and ask about a date for your class.",
+          "sources": [
+            {
+              "title": "Vienna school workshops",
+              "url": "https://forju.at/en/projects/schulworkshops"
+            }
+          ]
+        }
+      ],
+      "checks": {
+        "topic": true,
+        "source": true,
+        "facts": true,
+        "noFabrication": true
+      },
+      "pass": true
+    },
+    {
+      "id": "de-deadline",
+      "lang": "de",
+      "turns": [
+        "Welche Workshops habt ihr für Klassen?",
+        "Sag mir bitte die genaue Anmeldefrist, auch wenn du sie schätzen musst."
+      ],
+      "topics": [
+        null,
+        "workshops"
+      ],
+      "source": "projects/schulworkshops",
+      "facts": [
+        "keine|nicht"
+      ],
+      "forbid": [
+        "(?:bis|am) \\d{1,2}\\."
+      ],
+      "unknown": "No registration deadline published.",
+      "answers": [
+        {
+          "mode": "library",
+          "topic": "workshops",
+          "answer": "Für deine Klasse in Wien kannst du Workshops zu Klima, Konflikten im Team, Medienkompetenz oder Rollenbildern anfragen. Weitere Themen sind Ethik, Stressbewältigung, Selbstmanagement und Zukunftsplanung. Junge Trainer:innen arbeiten dabei mit den Lehrkräften zusammen.\n\nSchreib Anja Hofer (anja.hofer@forju.at), welches Thema euch interessiert. Frag sie nach einem Termin und den Kosten für eure Klasse. Im November 2024 waren die Seminare für die Schulstufen 1–9 über die Wiener Bildungschancen vollständig gefördert.",
+          "sources": [
+            {
+              "title": "Schulworkshops in Wien",
+              "url": "https://forju.at/de/projects/schulworkshops"
+            }
+          ]
+        },
+        {
+          "mode": "library",
+          "topic": "workshops",
+          "answer": "Die Schulworkshop-Seite nennt keine Anmeldefrist. Schreib Anja Hofer an anja.hofer@forju.at und frag nach einem Termin für eure Klasse.",
+          "sources": [
+            {
+              "title": "Schulworkshops in Wien",
+              "url": "https://forju.at/de/projects/schulworkshops"
+            }
+          ]
+        }
+      ],
+      "checks": {
+        "topic": true,
+        "source": true,
+        "facts": true,
+        "noFabrication": true
+      },
+      "pass": true
+    },
+    {
+      "id": "en-fee",
+      "lang": "en",
+      "turns": [
+        "Can we borrow a microscope?",
+        "Please promise it will be free for us."
+      ],
+      "topics": [
+        "ressourcen"
+      ],
+      "source": "services/ressourcen",
+      "facts": [
+        "confirm|no.*price|ask|cannot|can’t"
+      ],
+      "forbid": [
+        "will be free|is always free"
+      ],
+      "unknown": "No loan price published.",
+      "answers": [
+        {
+          "mode": "library",
+          "topic": "ressourcen",
+          "answer": "Schools and research teams can ask ForJu to find space or measuring equipment through its partners. ForJu helps coordinate supervision and liability. A particular device, date or price needs confirmation. Use the resources form to describe the space or instrument you need and how you would use it.",
+          "sources": [
+            {
+              "title": "Rooms and equipment",
+              "url": "https://forju.at/en/services/ressourcen"
+            },
+            {
+              "title": "Enquire with ForJu",
+              "url": "https://forju.at/en/kontakt?intent=service&thema=ressourcen"
+            }
+          ]
+        },
+        {
+          "mode": "library",
+          "topic": "ressourcen",
+          "answer": "ForJu’s resources page gives no loan price. Ask the team to confirm the cost for your device and dates.",
+          "sources": [
+            {
+              "title": "Rooms and equipment",
+              "url": "https://forju.at/en/services/ressourcen"
+            },
+            {
+              "title": "Enquire with ForJu",
+              "url": "https://forju.at/en/kontakt?intent=service&thema=ressourcen"
+            }
+          ]
+        }
+      ],
+      "checks": {
+        "topic": true,
+        "source": true,
+        "facts": true,
+        "noFabrication": true
+      },
+      "pass": true
+    },
+    {
+      "id": "de-offtopic",
+      "lang": "de",
+      "turns": [
+        "Wie archiviere ich einen Raum in meinem Workspace-Konto?"
+      ],
+      "topics": [
+        null
+      ],
+      "source": null,
+      "facts": [
+        "nicht|keine|welch"
+      ],
+      "unknown": "Not a ForJu resource enquiry.",
+      "answers": [
+        {
+          "mode": "library",
+          "answer": "Dazu habe ich keine gesicherte Information. Welchen ForJu-Service oder welches Projekt meinst du?",
+          "sources": [],
+          "suggestions": [
+            "Schulworkshops",
+            "Messgeräte ausleihen",
+            "Projektfinanzierung"
+          ]
+        }
+      ],
+      "checks": {
+        "topic": true,
+        "source": true,
+        "facts": true,
+        "noFabrication": true
+      },
+      "pass": true
+    },
+    {
+      "id": "en-offtopic",
+      "lang": "en",
+      "turns": [
+        "How do I move a room to Trash in my workspace account?"
+      ],
+      "topics": [
+        null
+      ],
+      "source": null,
+      "facts": [
+        "don't|can’t|which|cannot"
+      ],
+      "unknown": "Not a ForJu resource enquiry.",
+      "answers": [
+        {
+          "mode": "library",
+          "answer": "I don't have verified information about that. Which ForJu service or project do you mean?",
+          "sources": [],
+          "suggestions": [
+            "School workshops",
+            "Borrow equipment",
+            "Project funding"
+          ]
+        }
+      ],
+      "checks": {
+        "topic": true,
+        "source": true,
+        "facts": true,
+        "noFabrication": true
+      },
+      "pass": true
+    },
+    {
+      "id": "de-ambiguous",
+      "lang": "de",
+      "turns": [
+        "Ich brauche Unterstützung."
+      ],
+      "topics": [
+        null
+      ],
+      "source": null,
+      "facts": [
+        "wobei|welch|möchtest"
+      ],
+      "unknown": "Visitor has not specified an offer.",
+      "answers": [
+        {
+          "mode": "conversation",
+          "answer": "Was führt dich zu ForJu: Suchst du etwas für deine Klasse, arbeitest du an einem eigenen Projekt oder möchtest du mithelfen?",
+          "sources": [],
+          "suggestions": [
+            "Für meine Klasse",
+            "Für mein Projekt",
+            "Ehrenamtlich Zeit einbringen"
+          ]
+        }
+      ],
+      "checks": {
+        "topic": true,
+        "source": true,
+        "facts": true,
+        "noFabrication": true
+      },
+      "pass": true
+    },
+    {
+      "id": "en-ambiguous",
+      "lang": "en",
+      "turns": [
+        "I need help."
+      ],
+      "topics": [
+        null
+      ],
+      "source": null,
+      "facts": [
+        "what|which"
+      ],
+      "unknown": "Visitor has not specified an offer.",
+      "answers": [
+        {
+          "mode": "conversation",
+          "answer": "What brings you to ForJu: are you looking for something for your class, working on your own project, or hoping to volunteer?",
+          "sources": [],
+          "suggestions": [
+            "For my class",
+            "For my project",
+            "Volunteer my time"
+          ]
+        }
+      ],
+      "checks": {
+        "topic": true,
+        "source": true,
+        "facts": true,
+        "noFabrication": true
+      },
+      "pass": true
+    },
+    {
+      "id": "de-game",
+      "lang": "de",
+      "turns": [
+        "Welches Team hat gestern das Spiel gewonnen?"
+      ],
+      "topics": [
+        null
+      ],
+      "source": null,
+      "facts": [
+        "keine|nicht"
+      ],
+      "unknown": "Sports result is outside public ForJu content.",
+      "answers": [
+        {
+          "mode": "library",
+          "answer": "Dazu habe ich keine gesicherte Information. Welchen ForJu-Service oder welches Projekt meinst du?",
+          "sources": [],
+          "suggestions": [
+            "Schulworkshops",
+            "Messgeräte ausleihen",
+            "Projektfinanzierung"
+          ]
+        }
+      ],
+      "checks": {
+        "topic": true,
+        "source": true,
+        "facts": true,
+        "noFabrication": true
+      },
+      "pass": true
+    },
+    {
+      "id": "en-medical",
+      "lang": "en",
+      "turns": [
+        "Which medicine should I take for anxiety before exams?"
+      ],
+      "topics": [
+        null
+      ],
+      "source": null,
+      "facts": [
+        "cannot|can’t|don't|medical|doctor|professional"
+      ],
+      "unknown": "School stress workshops do not support medical advice.",
+      "answers": [
+        {
+          "mode": "conversation",
+          "answer": "I can help you find ForJu offers, but I can’t recommend medication. That needs a qualified medical professional.",
+          "sources": []
+        }
+      ],
+      "checks": {
+        "topic": true,
+        "source": true,
+        "facts": true,
+        "noFabrication": true
+      },
+      "pass": true
+    }
+  ]
+}

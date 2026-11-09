@@ -11,7 +11,7 @@ export function offerDetail(message:string):Detail|undefined {
   // These facets belong to the selected offer, not to a loosely matching word
   // in another article. A named new offer is resolved by the caller first.
   if (/\b(?:einreichfrist|anmeldefrist|bewerbungsfrist|submission deadline|registration deadline|application deadline)\b/.test(q)) return "deadline";
-  if (/^(?:(?:can|could) you (?:promise|guarantee|confirm) (?:that )?)?(?:it|that|this) (?:will be|is) (?:free|available)(?: (?:for (?:us|me)|on that date))?$/.test(q)) return /free/.test(q)?"price":"availability";
+  if (/^(?:(?:(?:can|could) you )?(?:promise|guarantee|confirm) (?:that )?)?(?:it|that|this) (?:will be|is) (?:free|available)(?: (?:for (?:us|me)|on that date))?$/.test(q)) return /free/.test(q)?"price":"availability";
   if (/^(?:(?:please |just )?(?:confirm|guarantee) (?:that )?)(?:one|it|that|the device|the equipment) is available$/.test(q)) return "availability";
   const lastQuestion=message.split(/[.!?]+/).filter(s=>s.trim()).at(-1)?.trim().toLowerCase() ?? "";
   if (/^(?:(?:and|und) )?(?:who (?:do|should|can) (?:i|we) (?:contact|email|ask|write to)(?: (?:about|for) (?:that|this|it))?|(?:wen|wem|an wen) (?:schreibe|schreiben|wende|wenden) (?:ich|wir)(?: (?:dafür|dazu))?(?: an)?|wo (?:kann ich mich|können wir uns) bewerben)$/.test(lastQuestion)) return "contact";

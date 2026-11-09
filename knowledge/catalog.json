@@ -103,19 +103,19 @@
     "page": 0,
     "section": "Ressourcen",
     "kind": "public-website",
-    "keywords": "Labor Infrastruktur Geräte Ressourcen Räume borrow lend loan measuring sensor air quality carbon dioxide classroom lab space ausleihen leihen Luftqualität Luftgüte Sensor CO2 messen Laborraum Spezialgeräte Messreihe Räumlichkeiten Versuche borgen ausborgen special equipment measuring experiment premises",
+    "keywords": "Labor Infrastruktur Geräte Ressourcen Räume borrow lend loan measuring sensor air quality carbon dioxide classroom lab space ausleihen leihen Luftqualität Luftgüte Sensor CO2 messen Laborraum Spezialgeräte Messreihe Räumlichkeiten Versuche borgen ausborgen special equipment measuring experiment premises Messgeräte Messinstrumente",
     "content": "Schulen und Forschungsteams können über ForJu bei Partnern Räume und Messgeräte anfragen. ForJu hilft bei der Organisation und klärt Fragen zu Aufsicht und Haftung. Ob ein bestimmtes Gerät zu eurem Termin verfügbar ist und was die Nutzung kostet, müsst ihr anfragen. Beschreibt im Ressourcenformular, welchen Raum oder welches Gerät ihr braucht und wofür.",
     "sourceId": "forju-public-website",
     "sourceTitle": "ForJu – öffentliche Website",
     "sourceUrl": "https://forju.at/de/services/ressourcen",
     "sourceYear": 2026,
-    "sourceSha256": "6e885447a9a82cd2e12f365902a9d1733f8161b4fac17663b971c9396dc7acd1",
+    "sourceSha256": "0f2e68ce3099a70f5034fc2332929f1d6d6d2bc03b8f89c31e698643bbbbeff9",
     "reviewStatus": "public-website-summary",
     "owner": null,
     "lastReviewedAt": "2026-11-09",
     "nextReviewAt": "2026-12-09",
     "active": true,
-    "indexTitle": "forju-public:ressourcen:6e885447a9a8",
+    "indexTitle": "forju-public:ressourcen:0f2e68ce3099",
     "sourceUpdatedAt": null,
     "titleEn": "Rooms and equipment",
     "contentEn": "Schools and research teams can ask ForJu to find space or measuring equipment through its partners. ForJu helps coordinate supervision and liability. A particular device, date or price needs confirmation. Use the resources form to describe the space or instrument you need and how you would use it.",
@@ -615,16 +615,16 @@
     "sourceUrl": "https://forju.at/de/projects/schulworkshops",
     "sourceTitle": "Schulworkshops",
     "sourceYear": 2024,
-    "sourceSha256": "d9cd4c84a3c7d7f835ef9b5a689d23b4c92695b4b3cb31fc78ca722b0c20abb9",
+    "sourceSha256": "718365985369b3e83826c858d7f15bdd9ae97ac577986b7cc2a1f080b7c32959",
     "sourceUpdatedAt": null,
-    "lastReviewedAt": "2026-11-07",
-    "nextReviewAt": "2026-12-07",
+    "lastReviewedAt": "2026-11-09",
+    "nextReviewAt": "2026-12-09",
     "reviewStatus": "reviewed-public-summary",
     "owner": null,
     "page": 0,
     "section": "Schulworkshops in Wien",
     "active": true,
-    "indexTitle": "forju-public:workshops:d9cd4c84a3c7",
+    "indexTitle": "forju-public:workshops:718365985369",
     "titleEn": "Vienna school workshops",
     "pricing": {
       "de": "Der Artikel von 2024 beschreibt eine Förderung für Wiener Schulen der Schulstufen 1 bis 9. Einen aktuellen Preis pro Kind nennt er nicht. Anja Hofer kann euch die Kosten für eure Klasse bestätigen.",
@@ -645,12 +645,16 @@
     "contentEn": "For your class in Vienna, you can ask about workshops on climate, team conflict, media literacy or gender roles. Other topics include ethics, managing stress, self-management and planning for the future. Young trainers work with teachers.\n\nEmail Anja Hofer (anja.hofer@forju.at) with the topic your class wants to explore. Ask her about dates and costs. In November 2024, Wiener Bildungschancen covered the full cost for grades 1–9.",
     "visitorAnswers": {
       "duration": {
-        "de": "Die Schulworkshop-Seite nennt keine Dauer. Frag Anja Hofer unter anja.hofer@forju.at, wie viel Zeit ihr für euren gewünschten Workshop einplanen solltet.",
-        "en": "The school-workshop page does not give a duration. Ask Anja Hofer at anja.hofer@forju.at how much time to allow for the workshop you want."
+        "de": "Die Kurzbeschreibung nennt eintägige Workshops. Die genaue Dauer eures gewählten Workshops ist damit noch nicht bestätigt. Frag Anja Hofer unter anja.hofer@forju.at, wie viel Zeit eure Klasse einplanen sollte.",
+        "en": "The page describes one-day workshops, but does not confirm the exact duration of your chosen session. Ask Anja Hofer at anja.hofer@forju.at how much time your class should allow."
       },
       "groupSize": {
         "de": "Die Schulworkshop-Seite nennt keine minimale oder maximale Gruppengröße. Schreib Anja Hofer an anja.hofer@forju.at, wie viele Kinder teilnehmen würden, und lass dir bestätigen, ob das für euren Workshop passt.",
         "en": "The school-workshop page gives no minimum or maximum group size. Tell Anja Hofer at anja.hofer@forju.at how many pupils would attend and ask her to confirm whether that works for your workshop."
+      },
+      "deadline": {
+        "de": "Die Schulworkshop-Seite nennt keine Anmeldefrist. Schreib Anja Hofer an anja.hofer@forju.at und frag nach einem Termin für eure Klasse.",
+        "en": "The school-workshop page gives no registration deadline. Email Anja Hofer at anja.hofer@forju.at and ask about a date for your class."
       }
     },
     "sourcePublishedAt": "2024-04-24T13:35:06.000+02:00",
@@ -667,16 +671,16 @@
     "sourceUrl": "https://forju.at/de/projects/schulworkshops",
     "sourceTitle": "Schulworkshops",
     "sourceYear": 2024,
-    "sourceSha256": "41432670ebe911a8e1ce89b39bf6621f3a05393110d7045d530eb30fc1e5e618",
-    "sourceUpdatedAt": "2024-11-04T10:00:13.000+01:00",
-    "lastReviewedAt": "2026-11-06",
-    "nextReviewAt": "2026-12-06",
+    "sourceSha256": "12ba4418440e6b97dee1d662307526b02bd182588d86aeeda4ae1736b127ae21",
+    "sourceUpdatedAt": null,
+    "lastReviewedAt": "2026-11-09",
+    "nextReviewAt": "2026-12-09",
     "reviewStatus": "reviewed-public-summary",
     "owner": null,
     "page": 0,
     "section": "Gemeinsam stark – Konflikte im Team bewältigen",
     "active": true,
-    "indexTitle": "forju-public:workshop-konflikte:41432670ebe9",
+    "indexTitle": "forju-public:workshop-konflikte:12ba4418440e",
     "titleEn": "Team conflict",
     "contentEn": "Students practise recognising conflict and finding solutions through role play and group exercises.",
     "plainLanguage": {
@@ -694,8 +698,16 @@
       "Zoff",
       "Streit schlichten",
       "Konflikte lösen",
-      "Konfliktlösung"
-    ]
+      "Konfliktlösung",
+      "Streit",
+      "miteinander auskommen",
+      "getting along",
+      "get along",
+      "disagreements"
+    ],
+    "sourcePublishedAt": "2024-04-24T13:35:06.000+02:00",
+    "sourceContentHash": "be8f08129abe4f580962c3cd97fc32fde19f188ee7c95a63bdadbc366de25eb3",
+    "contentVersion": 2
   },
   {
     "id": "workshop-klima",
@@ -707,16 +719,16 @@
     "sourceUrl": "https://forju.at/de/projects/schulworkshops",
     "sourceTitle": "Schulworkshops",
     "sourceYear": 2024,
-    "sourceSha256": "c166b06dbb2c4494560a09dad75d542a3adf374af5a6afdfdaa68422de8200ed",
-    "sourceUpdatedAt": "2024-11-04T10:00:13.000+01:00",
-    "lastReviewedAt": "2026-11-06",
-    "nextReviewAt": "2026-12-06",
+    "sourceSha256": "bb9f713a4d5a6330444f27e0201b1ee8a141489aac4b130244d0ad27f7ff2d2b",
+    "sourceUpdatedAt": null,
+    "lastReviewedAt": "2026-11-09",
+    "nextReviewAt": "2026-12-09",
     "reviewStatus": "reviewed-public-summary",
     "owner": null,
     "page": 0,
     "section": "Klimadetektiv:innen – unser Planet & wir",
     "active": true,
-    "indexTitle": "forju-public:workshop-klima:c166b06dbb2c",
+    "indexTitle": "forju-public:workshop-klima:bb9f713a4d5a",
     "titleEn": "Climate workshop",
     "contentEn": "Students explore climate change, renewable energy, transport and ways to reduce their environmental footprint.",
     "plainLanguage": {
@@ -731,8 +743,16 @@
       "Klimaschutz",
       "Klimawandel",
       "erneuerbare Energie",
-      "ökologischer Fußabdruck"
-    ]
+      "ökologischer Fußabdruck",
+      "global warming",
+      "Erde erwärmt",
+      "Erderwärmung",
+      "earth warming",
+      "planet warming"
+    ],
+    "sourcePublishedAt": "2024-04-24T13:35:06.000+02:00",
+    "sourceContentHash": "be8f08129abe4f580962c3cd97fc32fde19f188ee7c95a63bdadbc366de25eb3",
+    "contentVersion": 2
   },
   {
     "id": "workshop-zeit",
@@ -829,16 +849,16 @@
     "sourceUrl": "https://forju.at/de/projects/schulworkshops",
     "sourceTitle": "Schulworkshops",
     "sourceYear": 2024,
-    "sourceSha256": "c866583e9bcb32bc1198e313f66281953c5dee46053c2db25ee10d22d8704520",
+    "sourceSha256": "8688564348ad4b68269aeeb826acd3e7068fd91669233c1c4b9b8d9dceba4a07",
     "sourceUpdatedAt": null,
-    "lastReviewedAt": "2026-11-07",
-    "nextReviewAt": "2026-12-07",
+    "lastReviewedAt": "2026-11-09",
+    "nextReviewAt": "2026-12-09",
     "reviewStatus": "reviewed-public-summary",
     "owner": null,
     "page": 0,
     "section": "Stressbewältigung: Relaxed in der Schule",
     "active": true,
-    "indexTitle": "forju-public:workshop-stress:c866583e9bcb",
+    "indexTitle": "forju-public:workshop-stress:8688564348ad",
     "titleEn": "School stress",
     "contentEn": "Students explore breathing exercises, mindfulness and concentration strategies for school.",
     "plainLanguage": {
@@ -861,7 +881,14 @@
       "overwhelmed tests",
       "worried exams",
       "Prüfungsdruck",
-      "überfordert Prüfungen"
+      "überfordert Prüfungen",
+      "nervös Schularbeit",
+      "nervös Prüfung",
+      "nervös Prüfungen",
+      "anxious tests",
+      "anxious exams",
+      "calm down",
+      "nervous tests"
     ],
     "sourcePublishedAt": "2024-04-24T13:35:06.000+02:00",
     "sourceContentHash": "be8f08129abe4f580962c3cd97fc32fde19f188ee7c95a63bdadbc366de25eb3",
@@ -917,16 +944,16 @@
     "sourceUrl": "https://forju.at/de/projects/schulworkshops",
     "sourceTitle": "Schulworkshops",
     "sourceYear": 2024,
-    "sourceSha256": "b9c185446bce0e4528e51540b7ba625db2cc2198a7b3ac7aa61171a85d072191",
-    "sourceUpdatedAt": "2024-11-04T10:00:13.000+01:00",
-    "lastReviewedAt": "2026-11-06",
-    "nextReviewAt": "2026-12-06",
+    "sourceSha256": "037730a803302a555e338db1da0ef8e9eabf8394d4f80e09f8620bf725b7a443",
+    "sourceUpdatedAt": null,
+    "lastReviewedAt": "2026-11-09",
+    "nextReviewAt": "2026-12-09",
     "reviewStatus": "reviewed-public-summary",
     "owner": null,
     "page": 0,
     "section": "Medienkompetenz: TikTok und Co sinnvoll nutzen",
     "active": true,
-    "indexTitle": "forju-public:workshop-medien:b9c185446bce",
+    "indexTitle": "forju-public:workshop-medien:037730a80330",
     "titleEn": "Media literacy workshop",
     "contentEn": "The Vienna school workshop covers TikTok and Instagram, privacy, cyberbullying, misinformation and creating content responsibly. Ask ForJu about a date for your class.",
     "plainLanguage": {
@@ -944,8 +971,16 @@
       "Cybermobbing",
       "Medienkompetenz",
       "TikTok",
-      "Instagram"
-    ]
+      "Instagram",
+      "made up stories",
+      "false stories online",
+      "spotting false information",
+      "protecting personal information",
+      "Falschinformationen erkennen"
+    ],
+    "sourcePublishedAt": "2024-04-24T13:35:06.000+02:00",
+    "sourceContentHash": "be8f08129abe4f580962c3cd97fc32fde19f188ee7c95a63bdadbc366de25eb3",
+    "contentVersion": 2
   },
   {
     "id": "workshop-rollen",
@@ -1303,13 +1338,13 @@
     "sourceTitle": "ForJu – öffentliche Website",
     "sourceUrl": "https://forju.at/de/kontakt?intent=projekt",
     "sourceYear": 2026,
-    "sourceSha256": "fcadf39cf49a25fe4c573f1e8a3e8a13a788a9f21cf6d362eb21f046537853f4",
+    "sourceSha256": "eb37fd715a87f17064d9fffb5f72407b016882f945c1401ae2f9560b86f0f466",
     "reviewStatus": "public-website-summary",
     "owner": null,
     "lastReviewedAt": "2026-11-09",
     "nextReviewAt": "2026-12-09",
     "active": true,
-    "indexTitle": "forju-public:einreichen:fcadf39cf49a",
+    "indexTitle": "forju-public:einreichen:eb37fd715a87",
     "sourceUpdatedAt": null,
     "titleEn": "Submit a research project",
     "contentEn": "Use the official project form to introduce your diploma, bachelor’s or master’s thesis, or research project. It asks for your name, email and message; the subject is optional. Briefly describe your idea so the ForJu team can get back to you. The form does not confirm funding or acceptance of the project.",
@@ -1324,6 +1359,10 @@
       "preparation": {
         "de": "Im offiziellen Projektformular gibst du deinen Namen, deine E-Mail-Adresse und eine Nachricht zu deinem Vorhaben an. Der Betreff ist optional. Stell deine Arbeit oder Idee kurz vor und sag, welche Unterstützung du suchst. Das Absenden ist eine Anfrage, keine Förderzusage.",
         "en": "The official project form asks for your name, email address and a message about your project. The subject is optional. Briefly introduce your work or idea and explain what help you are looking for. Sending it is an enquiry, not a funding approval."
+      },
+      "acceptance": {
+        "de": "Ich kann dir nicht zusagen, dass ForJu dein Projekt annimmt. Beschreibe deine Idee in der Projektanfrage und bitte das Team um eine Rückmeldung. Eine abgeschickte Anfrage ist noch keine Zusage.",
+        "en": "I can’t promise that ForJu will accept your project. Describe your idea in the project enquiry and ask the team for a response. Sending an enquiry is not an acceptance."
       }
     }
   },

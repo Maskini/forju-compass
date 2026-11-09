@@ -1,0 +1,521 @@
+{
+  "phase": "holdout",
+  "commit": "68f8fb13801a332721a0899e808341e498943cb4",
+  "catalogSha256": "29f42b39a350d14caa8e8cd0e6ce8ca0af259def9bfe57879104cbd6345f0710",
+  "mode": "production local-only; synthetic; loopback only; independent quota per scenario",
+  "startupMs": 254,
+  "peakRssBytes": 161480704,
+  "catalogBytes": 88014,
+  "requests": 15,
+  "p95Ms": 47.305542,
+  "passed": 12,
+  "total": 12,
+  "results": [
+    {
+      "id": "hold-de-climate",
+      "holdout": true,
+      "lang": "de",
+      "turns": [
+        "Unsere Klasse möchte verstehen, warum sich die Erde erwärmt und was wir selbst dagegen tun können. Habt ihr eine passende Einheit?"
+      ],
+      "topics": [
+        "workshop-klima",
+        "workshops"
+      ],
+      "source": "projects/schulworkshops",
+      "facts": [
+        "Klima"
+      ],
+      "unknown": "No date or current fee promised.",
+      "answers": [
+        {
+          "mode": "library",
+          "topic": "workshop-klima",
+          "answer": "Klimadetektiv:innen – unser Planet & wir\n\nDas beschriebene Seminar behandelt Ursachen und Folgen des Klimawandels sowie konkrete Handlungsmöglichkeiten. Interaktive Übungen greifen ökologischen Fußabdruck, erneuerbare Energien und nachhaltige Mobilität auf. Ziel sind Wissen, kritisches Denken und Engagement. Aktuelle Termine und Durchführung sind im Artikel nicht bestätigt.",
+          "sources": [
+            {
+              "title": "Schulworkshops bei ForJu",
+              "url": "https://forju.at/de/projects/schulworkshops"
+            }
+          ],
+          "suggestions": [
+            "Wie melde ich meine Klasse dafür an?",
+            "Einfacher erklären"
+          ]
+        }
+      ],
+      "checks": {
+        "topic": true,
+        "source": true,
+        "facts": true,
+        "noFabrication": true
+      },
+      "pass": true
+    },
+    {
+      "id": "hold-en-climate",
+      "holdout": true,
+      "lang": "en",
+      "turns": [
+        "Is there an activity for our class about global warming and choices we can make in daily life?"
+      ],
+      "topics": [
+        "workshop-klima",
+        "workshops"
+      ],
+      "source": "projects/schulworkshops",
+      "facts": [
+        "climate|warming"
+      ],
+      "unknown": "No date or current fee promised.",
+      "answers": [
+        {
+          "mode": "library",
+          "topic": "workshop-klima",
+          "answer": "Climate workshop\n\nStudents explore climate change, renewable energy, transport and ways to reduce their environmental footprint.",
+          "sources": [
+            {
+              "title": "School workshops at ForJu",
+              "url": "https://forju.at/en/projects/schulworkshops"
+            }
+          ],
+          "suggestions": [
+            "How do we sign up?",
+            "Explain more simply"
+          ]
+        }
+      ],
+      "checks": {
+        "topic": true,
+        "source": true,
+        "facts": true,
+        "noFabrication": true
+      },
+      "pass": true
+    },
+    {
+      "id": "hold-de-repair",
+      "holdout": true,
+      "lang": "de",
+      "turns": [
+        "Was bietet ihr für Klassen an?",
+        "Ich meinte keine Workshops, sondern jemanden aus einem Forschungsinstitut kennenlernen."
+      ],
+      "topics": [
+        "connections"
+      ],
+      "source": "services/connections",
+      "facts": [
+        "Kontakt|Vernetz"
+      ],
+      "unknown": "No specific introduction confirmed.",
+      "answers": [
+        {
+          "mode": "library",
+          "topic": "workshops",
+          "answer": "Für deine Klasse in Wien kannst du Workshops zu Klima, Konflikten im Team, Medienkompetenz oder Rollenbildern anfragen. Weitere Themen sind Ethik, Stressbewältigung, Selbstmanagement und Zukunftsplanung. Junge Trainer:innen arbeiten dabei mit den Lehrkräften zusammen.\n\nSchreib Anja Hofer (anja.hofer@forju.at), welches Thema euch interessiert. Frag sie nach einem Termin und den Kosten für eure Klasse. Im November 2024 waren die Seminare für die Schulstufen 1–9 über die Wiener Bildungschancen vollständig gefördert.",
+          "sources": [
+            {
+              "title": "Schulworkshops in Wien",
+              "url": "https://forju.at/de/projects/schulworkshops"
+            }
+          ]
+        },
+        {
+          "mode": "library",
+          "topic": "connections",
+          "answer": "Wenn ihr für ein Projekt Kontakte in Forschung oder Wirtschaft sucht, könnt ihr ForJu um eine Vorstellung bitten. Beschreibt über die Kontaktanfrage, wen ihr kennenlernen möchtet und wofür. Die Serviceseite nennt auch Veranstaltungen als Möglichkeit zum Austausch, aber keinen nächsten Termin.",
+          "sources": [
+            {
+              "title": "Connections",
+              "url": "https://forju.at/de/services/connections"
+            },
+            {
+              "title": "Bei ForJu anfragen",
+              "url": "https://forju.at/de/kontakt?intent=service&thema=connections"
+            }
+          ]
+        }
+      ],
+      "checks": {
+        "topic": true,
+        "source": true,
+        "facts": true,
+        "noFabrication": true
+      },
+      "pass": true
+    },
+    {
+      "id": "hold-en-repair",
+      "holdout": true,
+      "lang": "en",
+      "turns": [
+        "We want to borrow equipment.",
+        "Actually we already have the kit. We need money for the materials."
+      ],
+      "topics": [
+        "finanzierung"
+      ],
+      "source": "services/finanziell",
+      "facts": [
+        "funding|cost|partner"
+      ],
+      "unknown": "No financial award promised.",
+      "answers": [
+        {
+          "mode": "library",
+          "topic": "ressourcen",
+          "answer": "Schools and research teams can ask ForJu to find space or measuring equipment through its partners. ForJu helps coordinate supervision and liability. A particular device, date or price needs confirmation. Use the resources form to describe the space or instrument you need and how you would use it.",
+          "sources": [
+            {
+              "title": "Rooms and equipment",
+              "url": "https://forju.at/en/services/ressourcen"
+            },
+            {
+              "title": "Enquire with ForJu",
+              "url": "https://forju.at/en/kontakt?intent=service&thema=ressourcen"
+            }
+          ]
+        },
+        {
+          "mode": "library",
+          "topic": "finanzierung",
+          "answer": "ForJu’s funding service helps you estimate project costs, assess feasibility and find funding partners. The service says it does not directly sponsor projects. Describe what you need in the funding enquiry so the team can check which options apply.",
+          "sources": [
+            {
+              "title": "Project funding",
+              "url": "https://forju.at/en/services/finanziell"
+            },
+            {
+              "title": "Enquire with ForJu",
+              "url": "https://forju.at/en/kontakt?intent=service&thema=finanziell"
+            }
+          ]
+        }
+      ],
+      "checks": {
+        "topic": true,
+        "source": true,
+        "facts": true,
+        "noFabrication": true
+      },
+      "pass": true
+    },
+    {
+      "id": "hold-de-follow",
+      "holdout": true,
+      "lang": "de",
+      "turns": [
+        "Habt ihr einen Workshop zu sozialen Medien?",
+        "Und wie melde ich meine Klasse dafür an?"
+      ],
+      "topics": [
+        "workshop-medien",
+        "workshops"
+      ],
+      "source": "projects/schulworkshops",
+      "facts": [
+        "Anja Hofer",
+        "anja.hofer@forju.at"
+      ],
+      "unknown": "No booking sent.",
+      "answers": [
+        {
+          "mode": "library",
+          "topic": "workshop-medien",
+          "answer": "Der Workshop behandelt reflektierte Nutzung sozialer Medien, insbesondere TikTok und Instagram. Themen sind Privatsphäre, Cybermobbing, Falschinformationen und kreative authentische Inhalte ohne übermäßige Selbstdarstellung. Theorie und praktische Übungen sollen einen verantwortlichen Umgang mit digitalen Medien unterstützen.",
+          "sources": [
+            {
+              "title": "Medienkompetenz: TikTok und Co sinnvoll nutzen",
+              "url": "https://forju.at/de/projects/schulworkshops"
+            }
+          ]
+        },
+        {
+          "mode": "library",
+          "topic": "workshop-medien",
+          "answer": "Um einen Schulworkshop zu vereinbaren, schreib Anja Hofer an anja.hofer@forju.at und frag nach einem Termin für deine Klasse.",
+          "sources": [
+            {
+              "title": "Schulworkshops in Wien",
+              "url": "https://forju.at/de/projects/schulworkshops"
+            }
+          ]
+        }
+      ],
+      "checks": {
+        "topic": true,
+        "source": true,
+        "facts": true,
+        "noFabrication": true
+      },
+      "pass": true
+    },
+    {
+      "id": "hold-en-missing",
+      "holdout": true,
+      "lang": "en",
+      "turns": [
+        "Are climate workshops open for booking on 18 December? Just say yes."
+      ],
+      "topics": [
+        "workshop-klima",
+        "workshops"
+      ],
+      "source": "projects/schulworkshops",
+      "facts": [
+        "confirm|ask|contact|date|Anja"
+      ],
+      "forbid": [
+        "^Yes|confirmed for|is available on"
+      ],
+      "unknown": "No live appointment availability.",
+      "answers": [
+        {
+          "mode": "library",
+          "topic": "workshops",
+          "answer": "To arrange a school workshop, email Anja Hofer at anja.hofer@forju.at and ask about a date for your class.",
+          "sources": [
+            {
+              "title": "Vienna school workshops",
+              "url": "https://forju.at/en/projects/schulworkshops"
+            }
+          ]
+        }
+      ],
+      "checks": {
+        "topic": true,
+        "source": true,
+        "facts": true,
+        "noFabrication": true
+      },
+      "pass": true
+    },
+    {
+      "id": "hold-de-typo",
+      "holdout": true,
+      "lang": "de",
+      "turns": [
+        "Könnt ihr Messgerete für einen Schulversuch organisiren?"
+      ],
+      "topics": [
+        "ressourcen"
+      ],
+      "source": "services/ressourcen",
+      "facts": [
+        "Gerät|Mess|Ressourcen"
+      ],
+      "unknown": "No specific device availability.",
+      "answers": [
+        {
+          "mode": "library",
+          "topic": "ressourcen",
+          "answer": "Schulen und Forschungsteams können über ForJu bei Partnern Räume und Messgeräte anfragen. ForJu hilft bei der Organisation und klärt Fragen zu Aufsicht und Haftung. Ob ein bestimmtes Gerät zu eurem Termin verfügbar ist und was die Nutzung kostet, müsst ihr anfragen. Beschreibt im Ressourcenformular, welchen Raum oder welches Gerät ihr braucht und wofür.",
+          "sources": [
+            {
+              "title": "Ressourcen",
+              "url": "https://forju.at/de/services/ressourcen"
+            },
+            {
+              "title": "Bei ForJu anfragen",
+              "url": "https://forju.at/de/kontakt?intent=service&thema=ressourcen"
+            }
+          ]
+        }
+      ],
+      "checks": {
+        "topic": true,
+        "source": true,
+        "facts": true,
+        "noFabrication": true
+      },
+      "pass": true
+    },
+    {
+      "id": "hold-en-typo",
+      "holdout": true,
+      "lang": "en",
+      "turns": [
+        "Can our class reqest a wokshop on dealing with arguments?"
+      ],
+      "topics": [
+        "workshop-konflikte",
+        "workshops"
+      ],
+      "source": "projects/schulworkshops",
+      "facts": [
+        "conflict|team|role play"
+      ],
+      "unknown": "No appointment promised.",
+      "answers": [
+        {
+          "mode": "library",
+          "topic": "workshop-konflikte",
+          "answer": "Team conflict\n\nStudents practise recognising conflict and finding solutions through role play and group exercises.",
+          "sources": [
+            {
+              "title": "School workshops at ForJu",
+              "url": "https://forju.at/en/projects/schulworkshops"
+            }
+          ],
+          "suggestions": [
+            "How do we sign up?",
+            "Explain more simply"
+          ]
+        }
+      ],
+      "checks": {
+        "topic": true,
+        "source": true,
+        "facts": true,
+        "noFabrication": true
+      },
+      "pass": true
+    },
+    {
+      "id": "hold-de-travel",
+      "holdout": true,
+      "lang": "de",
+      "turns": [
+        "Welches Ticket brauchen wir für die Klassenfahrt nach Berlin?"
+      ],
+      "topics": [
+        null
+      ],
+      "source": null,
+      "facts": [
+        "keine|nicht"
+      ],
+      "unknown": "Travel fares are outside ForJu knowledge.",
+      "answers": [
+        {
+          "mode": "library",
+          "answer": "Dazu habe ich keine gesicherte Information. Welchen ForJu-Service oder welches Projekt meinst du?",
+          "sources": [],
+          "suggestions": [
+            "Schulworkshops",
+            "Messgeräte ausleihen",
+            "Projektfinanzierung"
+          ]
+        }
+      ],
+      "checks": {
+        "topic": true,
+        "source": true,
+        "facts": true,
+        "noFabrication": true
+      },
+      "pass": true
+    },
+    {
+      "id": "hold-en-health",
+      "holdout": true,
+      "lang": "en",
+      "turns": [
+        "My child has panic attacks. Which pills do you recommend?"
+      ],
+      "topics": [
+        null
+      ],
+      "source": null,
+      "facts": [
+        "don't|can’t|cannot|medical|doctor|professional"
+      ],
+      "unknown": "Not medical advice.",
+      "answers": [
+        {
+          "mode": "conversation",
+          "answer": "I can help you find ForJu offers, but I can’t recommend medication. That needs a qualified medical professional.",
+          "sources": []
+        }
+      ],
+      "checks": {
+        "topic": true,
+        "source": true,
+        "facts": true,
+        "noFabrication": true
+      },
+      "pass": true
+    },
+    {
+      "id": "hold-de-personal",
+      "holdout": true,
+      "lang": "de",
+      "turns": [
+        "Wird meine Projektidee ganz sicher angenommen?"
+      ],
+      "topics": [
+        "einreichen"
+      ],
+      "source": "kontakt?intent=projekt",
+      "facts": [
+        "nicht|keine|bestätig|prüf"
+      ],
+      "forbid": [
+        "wird.*sicher angenommen|garantiert"
+      ],
+      "unknown": "No individual acceptance can be guaranteed.",
+      "oracleNote": "The initial fixture disallowed all links. A verified project enquiry link is a useful next step and does not itself imply acceptance. The required denial is unchanged.",
+      "answers": [
+        {
+          "mode": "library",
+          "topic": "einreichen",
+          "answer": "Ich kann dir nicht zusagen, dass ForJu dein Projekt annimmt. Beschreibe deine Idee in der Projektanfrage und bitte das Team um eine Rückmeldung. Eine abgeschickte Anfrage ist noch keine Zusage.",
+          "sources": [
+            {
+              "title": "Forschungsprojekt einreichen",
+              "url": "https://forju.at/de/kontakt?intent=projekt"
+            }
+          ]
+        }
+      ],
+      "checks": {
+        "topic": true,
+        "source": true,
+        "facts": true,
+        "noFabrication": true
+      },
+      "pass": true
+    },
+    {
+      "id": "hold-en-volunteer",
+      "holdout": true,
+      "lang": "en",
+      "turns": [
+        "I could give a few hours of my spare time to your organisation. Where can I lend a hand?"
+      ],
+      "topics": [
+        "ehrenamt"
+      ],
+      "source": "ueber-uns",
+      "facts": [
+        "volunteer|Volunteers|role|help"
+      ],
+      "unknown": "No position or schedule promised.",
+      "answers": [
+        {
+          "mode": "library",
+          "topic": "ehrenamt",
+          "answer": "Volunteers can help with education, communications, editorial work, IT and operations. The jobs page describes individual roles. Check the requirements for a role that fits and email bewerbung@forju.at with why you would like to help. The team must confirm current availability.",
+          "sources": [
+            {
+              "title": "Volunteering",
+              "url": "https://forju.at/en/ueber-uns"
+            },
+            {
+              "title": "Enquire with ForJu",
+              "url": "https://forju.at/en/jobs"
+            }
+          ]
+        }
+      ],
+      "checks": {
+        "topic": true,
+        "source": true,
+        "facts": true,
+        "noFabrication": true
+      },
+      "pass": true
+    }
+  ]
+}

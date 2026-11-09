@@ -4,7 +4,7 @@ import { createWorkshopGuide } from "@/lib/workshop-guide";
 import { offerFollowUp } from "@/lib/offer-follow-up";
 import { visitorEnquiry } from "@/lib/visitor-enquiry";
 import {guidedReply,isGuidedPrompt} from "@/lib/dialogue";
-import {languageRequest, languageReplay, affirmedRequest, repairRequest, wantsTeam, conversationalReply, questionAfterGreeting, topicHistory, selfIntroduction, nameRecall, recentVisitorName, namePrompts} from "@/lib/conversation";
+import {languageRequest, languageReplay, affirmedRequest, repairRequest, wantsTeam, conversationalReply, unsupportedAdvice, questionAfterGreeting, topicHistory, selfIntroduction, nameRecall, recentVisitorName, namePrompts} from "@/lib/conversation";
 import { takeAiRequest } from "@/lib/server/ai-limit";
 import OpenAI from "openai";
 import { NextResponse } from "next/server";
@@ -97,6 +97,8 @@ export async function POST(request: Request) {
       : guidedReply("yes",en,history,knowledgeCatalog) ?? guidedReply(en ? "Where do I start?" : "Wo fange ich an?",en,[],knowledgeCatalog);
     return reply({...next, mode:next?.mode ?? "conversation",answer:acknowledgment+"\n\n"+(next?.answer ?? (en ? "What would you like help with?" : "Wobei kann ich dir helfen?")),sources:next?.sources ?? []});
   }
+  const outsideScope = unsupportedAdvice(message,en);
+  if (outsideScope) return reply({mode:"conversation",answer:outsideScope,sources:[]});
   const followUp = offerFollowUp(message, visitorTopic(message) ?? parsed.topic, en, knowledgeCatalog, readerUrl);
   if (followUp) return reply(followUp);
   const enquiry = visitorEnquiry(raw, en, relevantHistory, parsed.topic, knowledgeCatalog, readerUrl, enquiryTopic, affirmedRequest);

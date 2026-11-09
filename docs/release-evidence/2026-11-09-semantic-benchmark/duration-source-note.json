@@ -1,0 +1,13 @@
+{
+  "checkedAt": "2026-11-09",
+  "field": "meta[name=description]",
+  "de": {
+    "url": "https://forju.at/de/projects/schulworkshops",
+    "text": "Eintägige Workshops, die Schüler:innen in Wien in die Welt der Informatik und andere Fachbereiche einführen und Begeisterung für Bildung und Innovation wecken."
+  },
+  "en": {
+    "url": "https://forju.at/en/projects/schulworkshops",
+    "text": "One-day workshops that introduce pupils in Vienna to the world of computer science and other subject areas, and inspire a passion for education and innovation."
+  },
+  "interpretation": "A broad one-day description, not a class-specific schedule or confirmed slot."
+}

@@ -1,0 +1,193 @@
+{
+  "status": "local candidate verified; not deployed",
+  "baseCommit": "68f8fb13801a332721a0899e808341e498943cb4",
+  "unitTests": 108,
+  "promptfoo": {
+    "successes": 116,
+    "failures": 0,
+    "errors": 0,
+    "tokenUsage": {
+      "prompt": 0,
+      "completion": 0,
+      "cached": 0,
+      "total": 0,
+      "numRequests": 116,
+      "completionDetails": {
+        "reasoning": 0,
+        "acceptedPrediction": 0,
+        "rejectedPrediction": 0,
+        "cacheReadInputTokens": 0,
+        "cacheCreationInputTokens": 0
+      },
+      "assertions": {
+        "total": 0,
+        "prompt": 0,
+        "completion": 0,
+        "cached": 0,
+        "numRequests": 0,
+        "completionDetails": {
+          "reasoning": 0,
+          "acceptedPrediction": 0,
+          "rejectedPrediction": 0,
+          "cacheReadInputTokens": 0,
+          "cacheCreationInputTokens": 0
+        }
+      }
+    },
+    "durationMs": 1818,
+    "evaluationDurationMs": 1818
+  },
+  "browser": {
+    "startTime": "2026-11-09T23:00:42.476Z",
+    "duration": 271260.128,
+    "expected": 208,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "productionBuild": "pass",
+  "sourceValidation": "pass",
+  "k6": {
+    "accepted": {
+      "count": 13,
+      "rate": 0.2727504714919226
+    },
+    "data_received": {
+      "count": 26357,
+      "rate": 552.9910905471235
+    },
+    "burst_ms": {
+      "avg": 21.008814699999995,
+      "max": 40.210417,
+      "p(95)": 39.230967,
+      "thresholds": {
+        "p(95)<2500": false
+      }
+    },
+    "iteration_duration": {
+      "max": 47662.180021,
+      "p(95)": 47662.180021,
+      "avg": 47662.180021
+    },
+    "http_req_sending": {
+      "avg": 0.22347229629629628,
+      "max": 1.214792,
+      "p(95)": 0.8876669
+    },
+    "normal_ms": {
+      "max": 14.351458,
+      "p(95)": 14.1029164,
+      "avg": 10.6613334,
+      "thresholds": {
+        "p(95)<1500": false
+      }
+    },
+    "burst_accepted_ms": {
+      "avg": 9.787196428571429,
+      "max": 20.977084,
+      "p(95)": 18.9676465
+    },
+    "unexpected_errors": {
+      "rate": 0,
+      "count": 0,
+      "thresholds": {
+        "count==0": false
+      }
+    },
+    "http_reqs": {
+      "count": 27,
+      "rate": 0.5664817484832239
+    },
+    "burst_limited_ms": {
+      "avg": 27.051224538461536,
+      "max": 40.210417,
+      "p(95)": 39.591817
+    },
+    "http_req_duration": {
+      "avg": 18.99220688888889,
+      "max": 40.210417,
+      "p(95)": 39.152141900000004
+    },
+    "http_req_blocked": {
+      "max": 2.773792,
+      "p(95)": 1.4498286999999996,
+      "avg": 0.40531622222222224
+    },
+    "http_req_waiting": {
+      "avg": 18.695239185185184,
+      "max": 39.31275,
+      "p(95)": 39.101908099999996
+    },
+    "vus_max": {
+      "value": 1,
+      "min": 1,
+      "max": 1
+    },
+    "http_req_duration{expected_response:true}": {
+      "p(95)": 39.152141900000004,
+      "avg": 18.99220688888889,
+      "max": 40.210417
+    },
+    "http_req_receiving": {
+      "avg": 0.0734954074074074,
+      "max": 0.306375,
+      "p(95)": 0.2532081
+    },
+    "expected_429": {
+      "count": 14,
+      "rate": 0.2937312769913013,
+      "thresholds": {
+        "count>0": false
+      }
+    },
+    "http_req_tls_handshaking": {
+      "avg": 0,
+      "max": 0,
+      "p(95)": 0
+    },
+    "iterations": {
+      "count": 1,
+      "rate": 0.02098080549937866
+    },
+    "vus": {
+      "value": 1,
+      "min": 1,
+      "max": 1
+    },
+    "recovery_ms": {
+      "avg": 30.791167,
+      "max": 30.791167,
+      "p(95)": 30.791167
+    },
+    "checks": {
+      "passes": 10,
+      "fails": 0,
+      "thresholds": {
+        "rate==1": false
+      },
+      "value": 1
+    },
+    "http_req_connecting": {
+      "max": 1.238042,
+      "p(95)": 1.1190793999999997,
+      "avg": 0.24291977777777773
+    },
+    "http_req_failed": {
+      "passes": 0,
+      "fails": 27,
+      "value": 0
+    },
+    "data_sent": {
+      "count": 5682,
+      "rate": 119.21293684746956
+    }
+  },
+  "security": "targeted checks passed",
+  "zap": "baseline and existing reviewed-alert gate passed; known warnings remain",
+  "outbound": "no monitored server/browser requests outside the isolated local fixtures",
+  "realEmailsSent": false,
+  "qualityResolution": "The full run exited non-zero because one fixture incorrectly disallowed the official jobs link. After correcting only that fixture, all 116 Promptfoo cases plus unit tests, catalog validation and build passed again in a fresh network-isolated container. Browser/security/load code and application behaviour were unchanged.",
+  "fullRun": "work/release-audit/20261109T230007Z-final-55225",
+  "qualityRerun": "work/semantic-benchmark/quality-final",
+  "modelDecision": "rejected for production: 512 MiB model-only Linux OOM, exit 137; no remote inference added"
+}

@@ -80,6 +80,18 @@ export function wantsTeam(text:string) {
   const s=normalizeTurn(text);
   return /^(?:contact the forju team|mit forju sprechen|(?:can|could|may) i (?:please )?(?:talk|speak|chat) (?:to|with) (?:a (?:real person|human|person)|the (?:forju )?team|someone (?:at|from) forju)(?: (?:about (?:this|that)|instead|please))?|(?:ich (?:möchte|will|würde gern)|kann ich) (?:bitte )?mit (?:einem (?:echten )?menschen|jemandem(?: (?:bei|von) forju)?|dem (?:forju )?team) (?:sprechen|reden|schreiben)(?: bitte)?)$/.test(s);
 }
+// A school wellbeing topic does not make a request for medication a ForJu
+// workshop enquiry. Decline before retrieval can turn shared words into a source.
+export function unsupportedAdvice(text: string, en: boolean) {
+  const q=text.toLowerCase().normalize("NFKD").replace(/\p{M}/gu, "");
+  const medication=/\b(?:medicine|medication|pills?|dosage|medikament\w*|tablett\w*|dosierung)\b/.test(q);
+  const personalRequest=/\b(?:which|what|recommend|should|take|give|welch\w*|empfiehl\w*|empfehl\w*|soll\w*|nehmen|einnehmen)\b/.test(q);
+  if (medication && personalRequest) return en
+    ? "I can help you find ForJu offers, but I can’t recommend medication. That needs a qualified medical professional."
+    : "Ich helfe dir bei ForJu-Angeboten, kann aber keine Medikamente empfehlen. Dafür brauchst du medizinisches Fachpersonal.";
+  return null;
+}
+
 export function conversationalReply(text: string, englishUI: boolean, preferredLanguage?:"de"|"en") {
   const kind = intent(text) ?? intent(questionAfterGreeting(text));
   if (!kind) return null;

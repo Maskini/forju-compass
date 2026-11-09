@@ -32,7 +32,7 @@ docker run -d --name "$box" --network none --shm-size=1g -v "$out:/out" \
   -e COMPASS_TEST_QUOTA=/tmp/compass-check-release/quota.sqlite forju-release-tools:local sleep infinity >/dev/null
 # Only app source, approved assets and test programs enter the isolated machine.
 git ls-files -co --exclude-standard -z -- app lib public tests knowledge/catalog.json knowledge/source-review.json knowledge/public-sources.json knowledge/language scripts \
-  tools/mail-status.mjs tools/knowledge-checks tools/visitor-checks/'*.mjs' tools/visitor-checks/package.json tools/release \
+  tools/mail-status.mjs tools/knowledge-checks tools/semantic-checks/cases.json tools/semantic-checks/fresh-cases.json tools/visitor-checks/'*.mjs' tools/visitor-checks/package.json tools/release \
   tsconfig.json proxy.ts next.config.ts eslint.config.mjs postcss.config.mjs package.json .node-version \
   | COPYFILE_DISABLE=1 tar -cf - --null -T - | docker exec -i "$box" tar --warning=no-unknown-keyword -xf - -C /app
 # Freeze the same test inputs for the three independent tool containers.
@@ -41,6 +41,9 @@ docker cp "$box:/app/tools/release/quality" "$out/fixtures/quality"
 docker cp "$box:/app/tools/knowledge-checks/release-cases.json" "$out/fixtures/knowledge-checks/release-cases.json"
 docker cp "$box:/app/tools/knowledge-checks/final-visitor-cases.json" "$out/fixtures/knowledge-checks/final-visitor-cases.json"
 docker cp "$box:/app/tools/knowledge-checks/project-introduction-cases.json" "$out/fixtures/knowledge-checks/project-introduction-cases.json"
+mkdir -p "$out/fixtures/semantic-checks"
+docker cp "$box:/app/tools/semantic-checks/cases.json" "$out/fixtures/semantic-checks/cases.json"
+docker cp "$box:/app/tools/semantic-checks/fresh-cases.json" "$out/fixtures/semantic-checks/fresh-cases.json"
 docker cp "$box:/app/tools/release/load.js" "$out/fixtures/load.js"
 docker cp "$box:/app/tools/release/zap-hook.py" "$out/fixtures/zap-hook.py"
 inside(){ docker exec "$box" "$@"; }
@@ -64,13 +67,14 @@ docker exec -d "$box" sh -c 'NODE_OPTIONS=--require=/app/tools/release/server-ob
 inside node -e '(async()=>{for(let i=0;i<80;i++){try{if((await fetch("http://127.0.0.1:4196/embed")).ok)return}catch{}await new Promise(r=>setTimeout(r,250))}process.exit(1)})()'
 share=(--rm --network "container:$box" --user 0:0 -v "$out:/out")
 quality(){
- docker run "${share[@]}" -v "$out/fixtures/quality:/app/tools/release/quality:ro" -v "$out/fixtures/knowledge-checks:/app/tools/knowledge-checks:ro" -w /app/tools/release/quality \
+ docker run "${share[@]}" -v "$out/fixtures/quality:/app/tools/release/quality:ro" -v "$out/fixtures/knowledge-checks:/app/tools/knowledge-checks:ro" -v "$out/fixtures/semantic-checks:/app/tools/semantic-checks:ro" -w /app/tools/release/quality \
   -e PROMPTFOO_DISABLE_TELEMETRY=1 -e PROMPTFOO_DISABLE_UPDATE=1 -e PROMPTFOO_DISABLE_WAL_MODE=1 \
   -e PROMPTFOO_CONFIG_DIR=/tmp/promptfoo -e AUDIT_PHASE="$phase" --entrypoint promptfoo "$pf" \
   eval -c config.cjs --no-cache --max-concurrency 1 --no-progress-bar -o /out/promptfoo.json
 }
 # Catch browser-tool regressions and cross-frame focus failures before the slower
-# answer run, which deliberately waits through the app's real quota windows.
+# answer run. Independent scenarios reset only the disposable quota database;
+# the load/security stages below verify the actual limits and reset recovery.
 if [ "$phase" != baseline ]; then
   stage browser-stability inside sh -c 'cd tools/visitor-checks && node node_modules/@playwright/test/cli.js test -c release.config.mjs visitors.spec.mjs --project=firefox --grep="Project form: prefill, edit, resume and review / de|Separate website origin: open the widget by keyboard" --repeat-each=3 --reporter=list --output=/out/firefox-recheck'
 fi

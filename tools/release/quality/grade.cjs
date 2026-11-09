@@ -6,6 +6,7 @@ module.exports=(output,context)=>{
  for(const pattern of c.forbid)if(new RegExp(pattern,'iu').test(a.answer))errors.push('Contradicted source or correction: '+pattern);
  if(c.source&&!a.sources?.some(s=>s.url===c.source))errors.push('Missing exact supporting page '+c.source);
  if(c.topic!==undefined && (a.topic??null)!==c.topic)errors.push("Wrong offer: "+a.topic);
+ if(c.topics && !c.topics.includes(a.topic??null))errors.push('Wrong offer: '+a.topic);
  const allowed=new Set([c.source,...(c.supportingSources||[])]);
  if(c.source?.includes('/services/')){
    const route=new URL(c.source);

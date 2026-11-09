@@ -31,7 +31,7 @@ try{
    const a=await res.json();answers.push(a);topic=a.topic;preferredLanguage=a.preferredLanguage;history.push({role:'user',content:message},{role:'assistant',content:a.answer});sample();
   }
   const a=answers.at(-1),sources=a.sources||[],url=c.source?'https://forju.at/'+(c.sourceLanguage||c.lang)+'/'+c.source:null;
-  const checks={topic:(a.topic??null)===c.topic,source:url?sources.some(s=>s.url===url):sources.length===0,facts:c.facts.every(p=>new RegExp(p,'iu').test(a.answer)),noFabrication:!(c.forbid||[]).some(p=>new RegExp(p,'iu').test(a.answer))};
+  const checks={topic:(c.topics??[c.topic]).includes(a.topic??null),source:url?sources.some(s=>s.url===url):sources.length===0,facts:c.facts.every(p=>new RegExp(p,'iu').test(a.answer)),noFabrication:!(c.forbid||[]).some(p=>new RegExp(p,'iu').test(a.answer))};
   results.push({...c,answers,checks,pass:Object.values(checks).every(Boolean)});
  }
  const ordered=[...latencies].sort((a,b)=>a-b);

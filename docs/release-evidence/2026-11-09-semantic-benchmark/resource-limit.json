@@ -1,0 +1,23 @@
+{
+  "budgetBytes": 536870912,
+  "cpus": 0.1,
+  "network": "none",
+  "swapDisabled": true,
+  "modelOnly": true,
+  "appIncluded": false,
+  "timedOut": false,
+  "state": {
+    "Status": "exited",
+    "Running": false,
+    "Paused": false,
+    "Restarting": false,
+    "OOMKilled": true,
+    "Dead": false,
+    "Pid": 0,
+    "ExitCode": 137,
+    "Error": "",
+    "StartedAt": "2026-11-09T22:56:37.874517055Z",
+    "FinishedAt": "2026-11-09T22:58:09.978195Z"
+  },
+  "result": "REJECT: model does not fit the existing hosting gate"
+}

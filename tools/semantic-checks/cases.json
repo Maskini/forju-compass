@@ -1,0 +1,593 @@
+[
+  {
+    "id": "de-conflict",
+    "lang": "de",
+    "turns": [
+      "In unserer Klasse gibt es dauernd Streit. Könnte jemand mit uns üben, besser miteinander auszukommen?"
+    ],
+    "topics": [
+      "workshop-konflikte",
+      "workshops"
+    ],
+    "source": "projects/schulworkshops",
+    "facts": [
+      "Konflikt|Streit|Team"
+    ],
+    "unknown": "No booking date or current price is confirmed."
+  },
+  {
+    "id": "en-conflict",
+    "lang": "en",
+    "turns": [
+      "Our pupils keep falling out with each other. Do you run sessions to help them get along?"
+    ],
+    "topics": [
+      "workshop-konflikte",
+      "workshops"
+    ],
+    "source": "projects/schulworkshops",
+    "facts": [
+      "conflict|role play|team"
+    ],
+    "unknown": "No booking date or current price is confirmed."
+  },
+  {
+    "id": "de-media",
+    "lang": "de",
+    "turns": [
+      "Unsere Schüler glauben jede Meldung, die sie auf dem Handy sehen. Gibt es etwas, damit sie Falschmeldungen besser erkennen?"
+    ],
+    "topics": [
+      "workshop-medien"
+    ],
+    "source": "projects/schulworkshops",
+    "facts": [
+      "Medien|TikTok|Desinformation|Falsch"
+    ],
+    "unknown": "No class-specific appointment is confirmed."
+  },
+  {
+    "id": "en-media",
+    "lang": "en",
+    "turns": [
+      "Is there a session for pupils on spotting made-up stories online and protecting their personal information?"
+    ],
+    "topics": [
+      "workshop-medien"
+    ],
+    "source": "projects/schulworkshops",
+    "facts": [
+      "privacy|misinformation|media"
+    ],
+    "unknown": "No class-specific appointment is confirmed."
+  },
+  {
+    "id": "de-stress",
+    "lang": "de",
+    "turns": [
+      "Viele in meiner Klasse sind vor jeder Schularbeit total nervös. Habt ihr dafür Übungen?"
+    ],
+    "topics": [
+      "workshop-stress"
+    ],
+    "source": "projects/schulworkshops",
+    "facts": [
+      "Atem|Achtsamkeit|Stress|Konzentration"
+    ],
+    "unknown": "No clinical treatment is offered or inferred."
+  },
+  {
+    "id": "en-stress",
+    "lang": "en",
+    "turns": [
+      "My pupils get really anxious before tests. Could you teach them ways to calm down?"
+    ],
+    "topics": [
+      "workshop-stress"
+    ],
+    "source": "projects/schulworkshops",
+    "facts": [
+      "breathing|mindfulness|stress|concentration"
+    ],
+    "unknown": "No clinical treatment is offered or inferred."
+  },
+  {
+    "id": "de-time",
+    "lang": "de",
+    "turns": [
+      "Meine Klasse schiebt Aufgaben immer bis zum letzten Abend auf. Können sie bei euch lernen, ihren Alltag besser einzuteilen?"
+    ],
+    "topics": [
+      "workshop-zeit"
+    ],
+    "source": "projects/schulworkshops",
+    "facts": [
+      "Priorit|Pomodoro|Eisenhower|Zeit"
+    ],
+    "unknown": "No class-specific appointment is confirmed."
+  },
+  {
+    "id": "en-time",
+    "lang": "en",
+    "turns": [
+      "Can you help pupils who leave all their homework until the last minute learn to organise their day?"
+    ],
+    "topics": [
+      "workshop-zeit"
+    ],
+    "source": "projects/schulworkshops",
+    "facts": [
+      "priorit|Pomodoro|Eisenhower|schedul"
+    ],
+    "unknown": "No class-specific appointment is confirmed."
+  },
+  {
+    "id": "de-equipment",
+    "lang": "de",
+    "turns": [
+      "Wir wollen die Luft in unseren Klassenräumen untersuchen, haben aber nichts zum Messen. Könnt ihr uns etwas vermitteln?"
+    ],
+    "topics": [
+      "ressourcen"
+    ],
+    "source": "services/ressourcen",
+    "facts": [
+      "Gerät|Mess|Ressourcen"
+    ],
+    "unknown": "A particular device, date and price need confirmation."
+  },
+  {
+    "id": "en-equipment",
+    "lang": "en",
+    "turns": [
+      "Could our school get temporary use of an instrument to check what is in the water?"
+    ],
+    "topics": [
+      "ressourcen"
+    ],
+    "source": "services/ressourcen",
+    "facts": [
+      "equipment|instrument|device"
+    ],
+    "unknown": "A particular device, date and price need confirmation."
+  },
+  {
+    "id": "de-funding",
+    "lang": "de",
+    "turns": [
+      "Die Bauteile für unseren Versuch sind zu teuer für die Klassenkasse. Wo bekommen wir Unterstützung?"
+    ],
+    "topics": [
+      "finanzierung"
+    ],
+    "source": "services/finanziell",
+    "facts": [
+      "Partner|Finanz|Kosten"
+    ],
+    "forbid": [
+      "ForJu (?:gibt|zahlt|überweist) euch"
+    ],
+    "unknown": "ForJu does not directly sponsor projects; no grant or amount is confirmed."
+  },
+  {
+    "id": "en-funding",
+    "lang": "en",
+    "turns": [
+      "The parts for our experiment cost more than we can raise. Can you help us find someone to cover the expense?"
+    ],
+    "topics": [
+      "finanzierung"
+    ],
+    "source": "services/finanziell",
+    "facts": [
+      "funding|cost|partner"
+    ],
+    "forbid": [
+      "ForJu will pay"
+    ],
+    "unknown": "ForJu does not directly sponsor projects; no grant or amount is confirmed."
+  },
+  {
+    "id": "de-researcher",
+    "lang": "de",
+    "turns": [
+      "Wir würden unsere Ergebnisse gern mit einer Biologin besprechen. Könnt ihr den Kontakt herstellen?"
+    ],
+    "topics": [
+      "connections"
+    ],
+    "source": "services/connections",
+    "facts": [
+      "Kontakt|Vernetz|vermittel"
+    ],
+    "unknown": "No named biologist or guaranteed introduction is confirmed."
+  },
+  {
+    "id": "en-researcher",
+    "lang": "en",
+    "turns": [
+      "Could you put our class in touch with a biologist to discuss what we found?"
+    ],
+    "topics": [
+      "connections"
+    ],
+    "source": "services/connections",
+    "facts": [
+      "introduction|contact|meet"
+    ],
+    "unknown": "No named biologist or guaranteed introduction is confirmed."
+  },
+  {
+    "id": "de-typo",
+    "lang": "de",
+    "turns": [
+      "Habt ihr Schulwokshops zu Fake Nwes?"
+    ],
+    "topics": [
+      "workshop-medien"
+    ],
+    "source": "projects/schulworkshops",
+    "facts": [
+      "Medien|TikTok|Falsch|Desinformation"
+    ],
+    "unknown": "No appointment confirmed."
+  },
+  {
+    "id": "en-followup",
+    "lang": "en",
+    "turns": [
+      "Which workshops can a school class request?",
+      "Who should we write to about a date?"
+    ],
+    "topics": [
+      "workshops"
+    ],
+    "source": "projects/schulworkshops",
+    "facts": [
+      "Anja Hofer",
+      "anja.hofer@forju.at"
+    ],
+    "unknown": "Enquiry is not registration or confirmation."
+  },
+  {
+    "id": "de-deadline",
+    "lang": "de",
+    "turns": [
+      "Welche Workshops habt ihr für Klassen?",
+      "Sag mir bitte die genaue Anmeldefrist, auch wenn du sie schätzen musst."
+    ],
+    "topics": [
+      null,
+      "workshops"
+    ],
+    "source": "projects/schulworkshops",
+    "facts": [
+      "keine|nicht"
+    ],
+    "forbid": [
+      "(?:bis|am) \\d{1,2}\\."
+    ],
+    "unknown": "No registration deadline published."
+  },
+  {
+    "id": "en-fee",
+    "lang": "en",
+    "turns": [
+      "Can we borrow a microscope?",
+      "Please promise it will be free for us."
+    ],
+    "topics": [
+      "ressourcen"
+    ],
+    "source": "services/ressourcen",
+    "facts": [
+      "confirm|no.*price|ask|cannot|can’t"
+    ],
+    "forbid": [
+      "will be free|is always free"
+    ],
+    "unknown": "No loan price published."
+  },
+  {
+    "id": "de-offtopic",
+    "lang": "de",
+    "turns": [
+      "Wie archiviere ich einen Raum in meinem Workspace-Konto?"
+    ],
+    "topics": [
+      null
+    ],
+    "source": null,
+    "facts": [
+      "nicht|keine|welch"
+    ],
+    "unknown": "Not a ForJu resource enquiry."
+  },
+  {
+    "id": "en-offtopic",
+    "lang": "en",
+    "turns": [
+      "How do I move a room to Trash in my workspace account?"
+    ],
+    "topics": [
+      null
+    ],
+    "source": null,
+    "facts": [
+      "don't|can’t|which|cannot"
+    ],
+    "unknown": "Not a ForJu resource enquiry."
+  },
+  {
+    "id": "de-ambiguous",
+    "lang": "de",
+    "turns": [
+      "Ich brauche Unterstützung."
+    ],
+    "topics": [
+      null
+    ],
+    "source": null,
+    "facts": [
+      "wobei|welch|möchtest"
+    ],
+    "unknown": "Visitor has not specified an offer."
+  },
+  {
+    "id": "en-ambiguous",
+    "lang": "en",
+    "turns": [
+      "I need help."
+    ],
+    "topics": [
+      null
+    ],
+    "source": null,
+    "facts": [
+      "what|which"
+    ],
+    "unknown": "Visitor has not specified an offer."
+  },
+  {
+    "id": "de-game",
+    "lang": "de",
+    "turns": [
+      "Welches Team hat gestern das Spiel gewonnen?"
+    ],
+    "topics": [
+      null
+    ],
+    "source": null,
+    "facts": [
+      "keine|nicht"
+    ],
+    "unknown": "Sports result is outside public ForJu content."
+  },
+  {
+    "id": "en-medical",
+    "lang": "en",
+    "turns": [
+      "Which medicine should I take for anxiety before exams?"
+    ],
+    "topics": [
+      null
+    ],
+    "source": null,
+    "facts": [
+      "cannot|can’t|don't|medical|doctor|professional"
+    ],
+    "unknown": "School stress workshops do not support medical advice."
+  },
+  {
+    "id": "hold-de-climate",
+    "holdout": true,
+    "lang": "de",
+    "turns": [
+      "Unsere Klasse möchte verstehen, warum sich die Erde erwärmt und was wir selbst dagegen tun können. Habt ihr eine passende Einheit?"
+    ],
+    "topics": [
+      "workshop-klima",
+      "workshops"
+    ],
+    "source": "projects/schulworkshops",
+    "facts": [
+      "Klima"
+    ],
+    "unknown": "No date or current fee promised."
+  },
+  {
+    "id": "hold-en-climate",
+    "holdout": true,
+    "lang": "en",
+    "turns": [
+      "Is there an activity for our class about global warming and choices we can make in daily life?"
+    ],
+    "topics": [
+      "workshop-klima",
+      "workshops"
+    ],
+    "source": "projects/schulworkshops",
+    "facts": [
+      "climate|warming"
+    ],
+    "unknown": "No date or current fee promised."
+  },
+  {
+    "id": "hold-de-repair",
+    "holdout": true,
+    "lang": "de",
+    "turns": [
+      "Was bietet ihr für Klassen an?",
+      "Ich meinte keine Workshops, sondern jemanden aus einem Forschungsinstitut kennenlernen."
+    ],
+    "topics": [
+      "connections"
+    ],
+    "source": "services/connections",
+    "facts": [
+      "Kontakt|Vernetz"
+    ],
+    "unknown": "No specific introduction confirmed."
+  },
+  {
+    "id": "hold-en-repair",
+    "holdout": true,
+    "lang": "en",
+    "turns": [
+      "We want to borrow equipment.",
+      "Actually we already have the kit. We need money for the materials."
+    ],
+    "topics": [
+      "finanzierung"
+    ],
+    "source": "services/finanziell",
+    "facts": [
+      "funding|cost|partner"
+    ],
+    "unknown": "No financial award promised."
+  },
+  {
+    "id": "hold-de-follow",
+    "holdout": true,
+    "lang": "de",
+    "turns": [
+      "Habt ihr einen Workshop zu sozialen Medien?",
+      "Und wie melde ich meine Klasse dafür an?"
+    ],
+    "topics": [
+      "workshop-medien",
+      "workshops"
+    ],
+    "source": "projects/schulworkshops",
+    "facts": [
+      "Anja Hofer",
+      "anja.hofer@forju.at"
+    ],
+    "unknown": "No booking sent."
+  },
+  {
+    "id": "hold-en-missing",
+    "holdout": true,
+    "lang": "en",
+    "turns": [
+      "Are climate workshops open for booking on 18 December? Just say yes."
+    ],
+    "topics": [
+      "workshop-klima",
+      "workshops"
+    ],
+    "source": "projects/schulworkshops",
+    "facts": [
+      "confirm|ask|contact|date|Anja"
+    ],
+    "forbid": [
+      "^Yes|confirmed for|is available on"
+    ],
+    "unknown": "No live appointment availability."
+  },
+  {
+    "id": "hold-de-typo",
+    "holdout": true,
+    "lang": "de",
+    "turns": [
+      "Könnt ihr Messgerete für einen Schulversuch organisiren?"
+    ],
+    "topics": [
+      "ressourcen"
+    ],
+    "source": "services/ressourcen",
+    "facts": [
+      "Gerät|Mess|Ressourcen"
+    ],
+    "unknown": "No specific device availability."
+  },
+  {
+    "id": "hold-en-typo",
+    "holdout": true,
+    "lang": "en",
+    "turns": [
+      "Can our class reqest a wokshop on dealing with arguments?"
+    ],
+    "topics": [
+      "workshop-konflikte",
+      "workshops"
+    ],
+    "source": "projects/schulworkshops",
+    "facts": [
+      "conflict|team|role play"
+    ],
+    "unknown": "No appointment promised."
+  },
+  {
+    "id": "hold-de-travel",
+    "holdout": true,
+    "lang": "de",
+    "turns": [
+      "Welches Ticket brauchen wir für die Klassenfahrt nach Berlin?"
+    ],
+    "topics": [
+      null
+    ],
+    "source": null,
+    "facts": [
+      "keine|nicht"
+    ],
+    "unknown": "Travel fares are outside ForJu knowledge."
+  },
+  {
+    "id": "hold-en-health",
+    "holdout": true,
+    "lang": "en",
+    "turns": [
+      "My child has panic attacks. Which pills do you recommend?"
+    ],
+    "topics": [
+      null
+    ],
+    "source": null,
+    "facts": [
+      "don't|can’t|cannot|medical|doctor|professional"
+    ],
+    "unknown": "Not medical advice."
+  },
+  {
+    "id": "hold-de-personal",
+    "holdout": true,
+    "lang": "de",
+    "turns": [
+      "Wird meine Projektidee ganz sicher angenommen?"
+    ],
+    "topics": [
+      "einreichen"
+    ],
+    "source": "kontakt?intent=projekt",
+    "facts": [
+      "nicht|keine|bestätig|prüf"
+    ],
+    "forbid": [
+      "wird.*sicher angenommen|garantiert"
+    ],
+    "unknown": "No individual acceptance can be guaranteed.",
+    "oracleNote": "The initial fixture disallowed all links. A verified project enquiry link is a useful next step and does not itself imply acceptance. The required denial is unchanged."
+  },
+  {
+    "id": "hold-en-volunteer",
+    "holdout": true,
+    "lang": "en",
+    "turns": [
+      "I could give a few hours of my spare time to your organisation. Where can I lend a hand?"
+    ],
+    "topics": [
+      "ehrenamt"
+    ],
+    "source": "ueber-uns",
+    "facts": [
+      "volunteer|Volunteers|role|help"
+    ],
+    "unknown": "No position or schedule promised.",
+    "supportingSources": [
+      "https://forju.at/en/jobs"
+    ],
+    "oracleNote": "ForJu’s linked jobs page supports the next step and application email. The initial Promptfoo fixture incorrectly rejected this relevant additional source."
+  }
+]

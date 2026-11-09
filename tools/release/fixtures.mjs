@@ -3,6 +3,7 @@
 import http from 'node:http';
 import https from 'node:https';
 import fs from 'node:fs';
+import {DatabaseSync} from 'node:sqlite';
 const tls={key:fs.readFileSync('/tmp/release.key'),cert:fs.readFileSync('/tmp/release.crt')};
 const host='127.0.0.1';
 for(const port of [4201,4202]){
@@ -19,6 +20,15 @@ https.createServer(tls,(req,res)=>{
 let inbox=new Map(), attempts=[], loseAck=false;
 http.createServer(async(req,res)=>{
   const json=(status,value)=>{res.writeHead(status,{'content-type':'application/json','connection':'close'});res.end(JSON.stringify(value))};
+  // Independent answer scenarios are not a load test. Reset ONLY the disposable
+  // audit database between them; k6/security separately exercise real quotas.
+  if(req.method==='POST'&&req.url==='/scenario'){
+    const path=process.env.COMPASS_QUOTA_DB;
+    if(path!=='/tmp/compass-check-release/quota.sqlite')return json(403,{});
+    const db=new DatabaseSync(path);
+    try{if(db.prepare("select 1 from sqlite_master where name='counts'").get())db.exec('delete from counts')}finally{db.close()}
+    return json(200,{});
+  }
   if(req.method==='POST'&&req.url==='/reset'){inbox=new Map();attempts=[];loseAck=true;return json(200,{})}
   if(req.method==='GET'&&req.url==='/inbox')return json(200,{messages:[...inbox.values()],attempts});
   if(req.method!=='POST'||req.url!=='/emails')return json(404,{});

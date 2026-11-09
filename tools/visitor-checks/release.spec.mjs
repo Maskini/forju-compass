@@ -54,6 +54,16 @@ async function scan(page,info,state){
 }
 for(const widget of [false,true]){
   const surface=widget?'embedded':'standalone';
+  for(const lang of ['de','en']) test(surface+' / everyday workshop question and follow-up / '+lang,async({page})=>{
+    const panel=await visit(page,widget,lang);
+    const en=lang==='en';
+    const question=en?'Could you offer a session for pupils who feel nervous before tests?':'In unserer Klasse gibt es dauernd Streit. Könnt ihr uns helfen, besser miteinander auszukommen?';
+    const answer=await ask(panel,widget,question);
+    await expect(answer).toContainText(en?'breathing exercises':'Konflikt');
+    const next=await ask(panel,widget,en?'Who should we write to about a date?':'Und wie melde ich meine Klasse dafür an?');
+    await expect(next).toContainText('anja.hofer@forju.at');
+    await expect(next.locator('a[href="https://forju.at/'+lang+'/projects/schulworkshops"]').first()).toBeVisible();
+  });
   test(surface+' / Project form: prefill from an understood project description',async({page})=>{
     const panel=await visit(page,widget,'de');
     const idea='Unser Klassenprojekt untersucht das Wasser im Schulteich.';

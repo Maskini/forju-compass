@@ -645,3 +645,24 @@ for(const c of projectIntroductions.filter(c=>!c.holdout)) test('project introdu
  for(const p of c.forbid)assert.doesNotMatch(a.answer,new RegExp(p,'iu'),c.id);
  assert.deepEqual(v.calls,{embeddings:[],responses:[]});
 });
+
+test('fresh everyday questions select supported facts and preserve missing details',async()=>{
+ const mode=process.env.COMPASS_LOCAL_ONLY;process.env.COMPASS_LOCAL_ONLY='true';
+ try {
+  const cases=['cases.json','fresh-cases.json'].flatMap(file=>JSON.parse(readFileSync(new URL('../tools/semantic-checks/'+file,import.meta.url),'utf8')));
+  for(const c of cases){
+   const {POST,calls}=setup();const history=[];let topic,answer;
+   for(const message of c.turns){
+    const response=await POST(new Request('http://localhost/api/chat',{method:'POST',headers:{'accept-language':c.lang},body:JSON.stringify({message,history,topic})}));
+    assert.equal(response.status,200,c.id);answer=await response.json();topic=answer.topic;
+    history.push({role:'user',content:message},{role:'assistant',content:answer.answer});
+   }
+   assert.ok(c.topics.includes(answer.topic??null),c.id+': '+answer.answer);
+   if(c.source)assert.ok(answer.sources.some(s=>s.url==='https://forju.at/'+c.lang+'/'+c.source),c.id);
+   else assert.deepEqual(answer.sources,[],c.id);
+   for(const pattern of c.facts)assert.match(answer.answer,new RegExp(pattern,'iu'),c.id);
+   for(const pattern of c.forbid||[])assert.doesNotMatch(answer.answer,new RegExp(pattern,'iu'),c.id);
+   assert.equal(calls.embeddings.length+calls.responses.length,0,c.id);
+  }
+ } finally {process.env.COMPASS_LOCAL_ONLY=mode;}
+});

@@ -1,0 +1,10 @@
+[
+ {"id":"fresh-de-class","lang":"de","turns":["Gibt es für unsere Klasse Übungen, damit wir nach einem Streit wieder zusammenarbeiten können?"],"topics":["workshop-konflikte","workshops"],"source":"projects/schulworkshops","facts":["Konflikt|Team|Rollenspiel"],"unknown":"No booked workshop."},
+ {"id":"fresh-en-calm","lang":"en","turns":["Can you offer a session for students who feel nervous about tests?"],"topics":["workshop-stress"],"source":"projects/schulworkshops","facts":["breathing|mindfulness|concentration|stress"],"unknown":"School activity, not medical treatment."},
+ {"id":"fresh-de-climate-follow","lang":"de","turns":["Kann unsere Klasse einen Workshop zur Erderwärmung anfragen?","Wie melden wir uns dafür an?"],"topics":["workshops","workshop-klima"],"source":"projects/schulworkshops","facts":["anja.hofer@forju.at"],"unknown":"No appointment sent."},
+ {"id":"fresh-en-introduction","lang":"en","turns":["Could you connect our school with a physicist for a discussion about our results?"],"topics":["connections"],"source":"services/connections","facts":["introduction|contact"],"unknown":"No specific physicist confirmed."},
+ {"id":"fresh-de-equipment-cost","lang":"de","turns":["Unsere Klasse möchte Messgeräte ausborgen.","Wie viel müssen wir dafür zahlen?"],"topics":["ressourcen"],"source":"services/ressourcen","facts":["keine|nicht","Kosten|Preis"],"unknown":"No loan price published."},
+ {"id":"fresh-en-support","lang":"en","turns":["Can you help me?"],"topics":[null],"source":null,"facts":["what|which|What"],"unknown":"Do not infer an offer without a goal."},
+ {"id":"fresh-de-unrelated","lang":"de","turns":["Wie lösche ich mein Benutzerkonto in einem Online-Spiel?"],"topics":[null],"source":null,"facts":["nicht|keine"],"unknown":"Unrelated account support."},
+ {"id":"fresh-en-medication-after-workshop","lang":"en","turns":["Do you offer a school workshop about stress?","What medication should I give my child?"],"topics":[null],"source":null,"facts":["can’t|cannot","medication"],"unknown":"Do not carry workshop evidence into medication advice."}
+]

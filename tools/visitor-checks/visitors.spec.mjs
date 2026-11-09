@@ -76,7 +76,7 @@ for(const s of [{lang:'de',widget:true,width:390},{lang:'en',widget:false,width:
   if(host){await host.locator('.close').click();await host.locator('.launcher').click();}
   await ask(panel,en?'Which workshops do you offer for schools?':'Welche Workshops bietet ihr für Schulen an?');
   const duration=await ask(panel,en?'How long does it last?':'Wie lange dauert der?');
-  await expect(duration).toContainText(en?'does not give a duration':'keine Dauer');
+  await expect(duration).toContainText(en?'one-day workshops':'eintägige Workshops');
   await expect(duration).toContainText('anja.hofer@forju.at');
   await expect(duration.locator('.read-more a').first()).toHaveAttribute('href',`https://forju.at/${s.lang}/projects/schulworkshops`);
   await expect(panel.getByRole('textbox',{name:en?'Your question':'Deine Frage',exact:true})).toBeInViewport();
@@ -628,7 +628,7 @@ for(const s of [{lang:'de',widget:true,width:1280},{lang:'en',widget:false,width
   const translation=await ask(panel,'Auf Deutsch bitte.',observer);
   await expect(translation).toContainText(/Schul|Wien/);
   const follow=await ask(panel,'How long does it last?',observer);
-  await expect(follow).toContainText('keine Dauer');
+  await expect(follow).toContainText('eintägige Workshops');
   await expect(follow.locator('.read-more a').first()).toHaveAttribute('href','https://forju.at/de/projects/schulworkshops');
   const clarification=await ask(panel,'Actually, we need advice, not workshops.',observer);
   await expect(clarification).toContainText('Forschungsidee');

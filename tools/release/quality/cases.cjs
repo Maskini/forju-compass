@@ -38,3 +38,7 @@ const finalVisitors = require("../../knowledge-checks/final-visitor-cases.json")
 module.exports.push(...finalVisitors.map(c=>({...c,id:"visitor-"+c.id,source:c.source?"https://forju.at/"+c.lang+"/"+c.source:null,fact:c.facts.join("; "),must:c.facts,forbid:c.forbid||[]})));
 const projectIntroductions = require("../../knowledge-checks/project-introduction-cases.json");
 module.exports.push(...projectIntroductions.map(c=>({...c,id:"project-"+c.id,source:c.source?"https://forju.at/"+c.lang+"/"+c.source:null,fact:c.facts.join("; "),must:c.facts,forbid:c.forbid||[]})));
+// Independently annotated before the semantic experiment; the original failed
+// runs and the untouched final eight cases are retained in release evidence.
+const languageCases=[...require('../../semantic-checks/cases.json'),...require('../../semantic-checks/fresh-cases.json')];
+module.exports.push(...languageCases.map(c=>({...c,id:'language-'+c.id,source:c.source?'https://forju.at/'+c.lang+'/'+c.source:null,fact:c.facts.join('; '),must:c.facts,forbid:c.forbid||[]})));

@@ -1,0 +1,533 @@
+{
+  "phase": "development",
+  "mode": "local synthetic retrieval probe; multi-turn scoring is done separately through /api/chat",
+  "readyMs": 1890.8127089999998,
+  "peakRssBytes": 1019527168,
+  "p95Ms": 5.434833000000253,
+  "results": [
+    {
+      "id": "de-conflict",
+      "question": "In unserer Klasse gibt es dauernd Streit. Könnte jemand mit uns üben, besser miteinander auszukommen?",
+      "topics": [
+        "workshop-konflikte",
+        "workshops"
+      ],
+      "lexical": null,
+      "semantic": [
+        {
+          "id": "workshop-konflikte",
+          "score": 0.6121154536934772
+        },
+        {
+          "id": "workshops",
+          "score": 0.42601233157362794
+        },
+        {
+          "id": "workshop-stress",
+          "score": 0.3894897877985605
+        }
+      ]
+    },
+    {
+      "id": "en-conflict",
+      "question": "Our pupils keep falling out with each other. Do you run sessions to help them get along?",
+      "topics": [
+        "workshop-konflikte",
+        "workshops"
+      ],
+      "lexical": null,
+      "semantic": [
+        {
+          "id": "workshop-konflikte",
+          "score": 0.5096295796818301
+        },
+        {
+          "id": "workshop-stress",
+          "score": 0.41654457556023805
+        },
+        {
+          "id": "workshops",
+          "score": 0.39310892065579434
+        }
+      ]
+    },
+    {
+      "id": "de-media",
+      "question": "Unsere Schüler glauben jede Meldung, die sie auf dem Handy sehen. Gibt es etwas, damit sie Falschmeldungen besser erkennen?",
+      "topics": [
+        "workshop-medien"
+      ],
+      "lexical": "linkedin-profile",
+      "semantic": [
+        {
+          "id": "expert-board",
+          "score": 0.3343009073754235
+        },
+        {
+          "id": "workshop-stress",
+          "score": 0.2868945372738859
+        },
+        {
+          "id": "datenschutz-website",
+          "score": 0.27351385927981214
+        }
+      ]
+    },
+    {
+      "id": "en-media",
+      "question": "Is there a session for pupils on spotting made-up stories online and protecting their personal information?",
+      "topics": [
+        "workshop-medien"
+      ],
+      "lexical": null,
+      "semantic": [
+        {
+          "id": "workshop-rollen",
+          "score": 0.45391824277014026
+        },
+        {
+          "id": "workshop-medien",
+          "score": 0.4194057872466042
+        },
+        {
+          "id": "podium",
+          "score": 0.3958815498686015
+        }
+      ]
+    },
+    {
+      "id": "de-stress",
+      "question": "Viele in meiner Klasse sind vor jeder Schularbeit total nervös. Habt ihr dafür Übungen?",
+      "topics": [
+        "workshop-stress"
+      ],
+      "lexical": null,
+      "semantic": [
+        {
+          "id": "workshop-stress",
+          "score": 0.543469289011114
+        },
+        {
+          "id": "workshops",
+          "score": 0.4540224385657555
+        },
+        {
+          "id": "workshop-zukunft",
+          "score": 0.3640814853183729
+        }
+      ]
+    },
+    {
+      "id": "en-stress",
+      "question": "My pupils get really anxious before tests. Could you teach them ways to calm down?",
+      "topics": [
+        "workshop-stress"
+      ],
+      "lexical": null,
+      "semantic": [
+        {
+          "id": "workshop-stress",
+          "score": 0.5597860531838906
+        },
+        {
+          "id": "workshops",
+          "score": 0.3709945898275827
+        },
+        {
+          "id": "workshop-konflikte",
+          "score": 0.35235603990803044
+        }
+      ]
+    },
+    {
+      "id": "de-time",
+      "question": "Meine Klasse schiebt Aufgaben immer bis zum letzten Abend auf. Können sie bei euch lernen, ihren Alltag besser einzuteilen?",
+      "topics": [
+        "workshop-zeit"
+      ],
+      "lexical": "jobs-community",
+      "semantic": [
+        {
+          "id": "workshop-zeit",
+          "score": 0.545651512379999
+        },
+        {
+          "id": "workshops",
+          "score": 0.4813038210287015
+        },
+        {
+          "id": "workshop-konflikte",
+          "score": 0.46270476744427486
+        }
+      ]
+    },
+    {
+      "id": "en-time",
+      "question": "Can you help pupils who leave all their homework until the last minute learn to organise their day?",
+      "topics": [
+        "workshop-zeit"
+      ],
+      "lexical": null,
+      "semantic": [
+        {
+          "id": "workshop-zeit",
+          "score": 0.493252372657925
+        },
+        {
+          "id": "expert-board",
+          "score": 0.4373056769567756
+        },
+        {
+          "id": "workshops",
+          "score": 0.41293458864602295
+        }
+      ]
+    },
+    {
+      "id": "de-equipment",
+      "question": "Wir wollen die Luft in unseren Klassenräumen untersuchen, haben aber nichts zum Messen. Könnt ihr uns etwas vermitteln?",
+      "topics": [
+        "ressourcen"
+      ],
+      "lexical": "ressourcen",
+      "semantic": [
+        {
+          "id": "workshops",
+          "score": 0.44791154803972166
+        },
+        {
+          "id": "workshop-stress",
+          "score": 0.4308833843616756
+        },
+        {
+          "id": "workshop-klima",
+          "score": 0.40373426053767564
+        }
+      ]
+    },
+    {
+      "id": "en-equipment",
+      "question": "Could our school get temporary use of an instrument to check what is in the water?",
+      "topics": [
+        "ressourcen"
+      ],
+      "lexical": "ressourcen",
+      "semantic": [
+        {
+          "id": "expert-board",
+          "score": 0.3967120631865415
+        },
+        {
+          "id": "ressourcen",
+          "score": 0.3849518417469676
+        },
+        {
+          "id": "mission",
+          "score": 0.3425404788827663
+        }
+      ]
+    },
+    {
+      "id": "de-funding",
+      "question": "Die Bauteile für unseren Versuch sind zu teuer für die Klassenkasse. Wo bekommen wir Unterstützung?",
+      "topics": [
+        "finanzierung"
+      ],
+      "lexical": "ressourcen",
+      "semantic": [
+        {
+          "id": "partnerpool",
+          "score": 0.45757747000525756
+        },
+        {
+          "id": "projekte",
+          "score": 0.43211671906963783
+        },
+        {
+          "id": "spenden",
+          "score": 0.4241336188857922
+        }
+      ]
+    },
+    {
+      "id": "en-funding",
+      "question": "The parts for our experiment cost more than we can raise. Can you help us find someone to cover the expense?",
+      "topics": [
+        "finanzierung"
+      ],
+      "lexical": "ressourcen",
+      "semantic": [
+        {
+          "id": "science-beratung",
+          "score": 0.4733393763407633
+        },
+        {
+          "id": "partnerpool",
+          "score": 0.3969036545017387
+        },
+        {
+          "id": "ressourcen",
+          "score": 0.3911080212899998
+        }
+      ]
+    },
+    {
+      "id": "de-researcher",
+      "question": "Wir würden unsere Ergebnisse gern mit einer Biologin besprechen. Könnt ihr den Kontakt herstellen?",
+      "topics": [
+        "connections"
+      ],
+      "lexical": "kontakt",
+      "semantic": [
+        {
+          "id": "science-beratung",
+          "score": 0.5731080115200148
+        },
+        {
+          "id": "workshop-ethik",
+          "score": 0.5229089617804479
+        },
+        {
+          "id": "workshop-klima",
+          "score": 0.4330103295991417
+        }
+      ]
+    },
+    {
+      "id": "en-researcher",
+      "question": "Could you put our class in touch with a biologist to discuss what we found?",
+      "topics": [
+        "connections"
+      ],
+      "lexical": "podium",
+      "semantic": [
+        {
+          "id": "science-beratung",
+          "score": 0.5179963710026231
+        },
+        {
+          "id": "workshop-ethik",
+          "score": 0.5035944919273403
+        },
+        {
+          "id": "expert-board",
+          "score": 0.417550050473128
+        }
+      ]
+    },
+    {
+      "id": "de-typo",
+      "question": "Habt ihr Schulwokshops zu Fake Nwes?",
+      "topics": [
+        "workshop-medien"
+      ],
+      "lexical": "workshop-medien",
+      "semantic": [
+        {
+          "id": "projekte",
+          "score": 0.3484758994131785
+        },
+        {
+          "id": "workshops",
+          "score": 0.3479796023809053
+        },
+        {
+          "id": "workshop-medien",
+          "score": 0.32166643746243634
+        }
+      ]
+    },
+    {
+      "id": "en-followup",
+      "question": "Which workshops can a school class request?",
+      "topics": null,
+      "lexical": "workshops",
+      "semantic": [
+        {
+          "id": "workshops",
+          "score": 0.6096433284567013
+        },
+        {
+          "id": "seminare",
+          "score": 0.5598043933839487
+        },
+        {
+          "id": "projekte",
+          "score": 0.5506615907575868
+        }
+      ]
+    },
+    {
+      "id": "de-deadline",
+      "question": "Welche Workshops habt ihr für Klassen?",
+      "topics": null,
+      "lexical": "workshops",
+      "semantic": [
+        {
+          "id": "workshops",
+          "score": 0.585754741490548
+        },
+        {
+          "id": "seminare",
+          "score": 0.562135631886806
+        },
+        {
+          "id": "workshop-ethik",
+          "score": 0.5154075971230297
+        }
+      ]
+    },
+    {
+      "id": "en-fee",
+      "question": "Can we borrow a microscope?",
+      "topics": null,
+      "lexical": "ressourcen",
+      "semantic": [
+        {
+          "id": "workshop-ethik",
+          "score": 0.38186338725013225
+        },
+        {
+          "id": "science-beratung",
+          "score": 0.3282853104910315
+        },
+        {
+          "id": "mission",
+          "score": 0.2644484716037069
+        }
+      ]
+    },
+    {
+      "id": "de-offtopic",
+      "question": "Wie archiviere ich einen Raum in meinem Workspace-Konto?",
+      "topics": [
+        null
+      ],
+      "lexical": null,
+      "semantic": [
+        {
+          "id": "ressourcen",
+          "score": 0.3888190807118478
+        },
+        {
+          "id": "jobs-marketing",
+          "score": 0.3429278661394637
+        },
+        {
+          "id": "jobs-partnerships",
+          "score": 0.3340739516506284
+        }
+      ]
+    },
+    {
+      "id": "en-offtopic",
+      "question": "How do I move a room to Trash in my workspace account?",
+      "topics": [
+        null
+      ],
+      "lexical": null,
+      "semantic": [
+        {
+          "id": "ressourcen",
+          "score": 0.23708494118735252
+        },
+        {
+          "id": "jobs-partnerships",
+          "score": 0.23525742247569048
+        },
+        {
+          "id": "jobs-working-conditions",
+          "score": 0.22931940654386554
+        }
+      ]
+    },
+    {
+      "id": "de-ambiguous",
+      "question": "Ich brauche Unterstützung.",
+      "topics": [
+        null
+      ],
+      "lexical": "finanzierung",
+      "semantic": [
+        {
+          "id": "science-beratung",
+          "score": 0.38720305633819535
+        },
+        {
+          "id": "finanzierung",
+          "score": 0.36737571400795416
+        },
+        {
+          "id": "mitglied",
+          "score": 0.3648540428751863
+        }
+      ]
+    },
+    {
+      "id": "en-ambiguous",
+      "question": "I need help.",
+      "topics": [
+        null
+      ],
+      "lexical": null,
+      "semantic": [
+        {
+          "id": "know-how",
+          "score": 0.33601229702732127
+        },
+        {
+          "id": "workshop-konflikte",
+          "score": 0.2649948140406996
+        },
+        {
+          "id": "ressourcen",
+          "score": 0.26465851825999376
+        }
+      ]
+    },
+    {
+      "id": "de-game",
+      "question": "Welches Team hat gestern das Spiel gewonnen?",
+      "topics": [
+        null
+      ],
+      "lexical": null,
+      "semantic": [
+        {
+          "id": "team",
+          "score": 0.23750422828561477
+        },
+        {
+          "id": "impressum",
+          "score": 0.18800876443995196
+        },
+        {
+          "id": "workshop-konflikte",
+          "score": 0.1835524741842401
+        }
+      ]
+    },
+    {
+      "id": "en-medical",
+      "question": "Which medicine should I take for anxiety before exams?",
+      "topics": [
+        null
+      ],
+      "lexical": "workshop-stress",
+      "semantic": [
+        {
+          "id": "workshop-stress",
+          "score": 0.4055354674756916
+        },
+        {
+          "id": "workshop-zeit",
+          "score": 0.179145680883778
+        },
+        {
+          "id": "science-beratung",
+          "score": 0.1783808818935984
+        }
+      ]
+    }
+  ]
+}
