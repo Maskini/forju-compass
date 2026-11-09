@@ -1,0 +1,123 @@
+
+> forju-compass@0.1.0 test
+> node --test tests/*.test.mjs
+
+(node:45) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///app/lib/chat.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /app/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+▶ chat request flow
+  ✔ invalid JSON is rejected before external calls (11.524208ms)
+  ✔ empty retrieval returns fallback without generation (14.926667ms)
+  ✔ follow-up reaches retrieval and model with safe source links (7.479834ms)
+  ✔ missing citations return a cautious fallback (1.452792ms)
+  ✔ incomplete generation still returns a reviewed workshop answer (1.303916ms)
+  ✔ a failed database does not turn an unknown topic into a fabricated answer (1.110167ms)
+✔ chat request flow (38.503ms)
+✔ public catalog fallback handles bilingual questions and a contact follow-up without credentials (10.595666ms)
+✔ school registration uses reviewed contact details before any provider call (1.83925ms)
+✔ catalog follows an equipment request through cost and contact questions (2.146666ms)
+✔ ordinary conversation needs neither a knowledge citation nor a provider call (3.706875ms)
+✔ a mixed greeting still answers the actual question, and thanks does not erase the topic (1.323208ms)
+✔ introductions with typos acknowledge the visitor and continue volunteering (2.802042ms)
+✔ introductions and corrections use only the visitor’s recent words, in either language (9.51375ms)
+✔ an introduction never swallows the question or its missing deadline (2.48025ms)
+✔ names are not inferred from roles, third parties, source contacts or assistant messages (0.345041ms)
+✔ an unsure class can describe its need, simplify the equipment answer and act on it (1.14275ms)
+✔ an English visitor can select by number, change their mind and ask for the actual workshop contact (1.30475ms)
+✔ specific questions, unsupported deadlines, and off-topic questions bypass the navigation choices (1.462334ms)
+✔ a bare yes does not guess which option, and the pronoun it does not imply IT jobs (0.743458ms)
+✔ a German workshop enquiry retains the town, workshop theme and the public workshop contact (3.824208ms)
+✔ equipment email uses the latest time in the visitor’s own words and only relevant details (29.772167ms)
+✔ clarify an unanchored draft request and handle bare German months and uncertain dates (0.83625ms)
+✔ a new equipment request leaves the previous workshop location and month out of the draft (0.678458ms)
+✔ a mixed workshop question covers both the location and current price (19.956334ms)
+✔ a corrected month replaces the old month in a bilingual equipment draft (30.146958ms)
+✔ both the cited destination and answer topic match visitor goals in German and English (10.084333ms)
+✔ a visitor can change the subject to an unrelated question and recover via a suggestion (0.7565ms)
+✔ a receipt or introduction enquiry keeps the right public destination through to an email draft (1.291583ms)
+✔ a visitor can replace a rejected goal and reach the right person, without carrying over the old loan (0.80225ms)
+✔ explicit corrections replace the device or measurement, before and after drafting (2.292917ms)
+✔ misunderstandings can be repaired or taken to a verified human contact (1.065833ms)
+✔ plain language and a price follow-up stay with the specific workshop (1.414958ms)
+✔ questions and additive contrasts retain their full meaning (0.037666ms)
+✔ two misses offer a way out instead of cycling through the same clarification (0.528833ms)
+✔ support enquiries answer the requested detail and cite a page the visitor can act on (7.168458ms)
+✔ teachers can describe the situation without knowing the official workshop title (4.073417ms)
+✔ two classroom needs give a choice; both numbered and named replies reach the right workshop contact (1.226416ms)
+✔ a supporting organisation gets its partnership form and an editable offer, while a borrower gets the loan form (0.922166ms)
+✔ campaign goals stay distinct from reimbursements and PayPal instructions stay within the FAQ (0.612625ms)
+✔ additional visitor phrasings keep offers, requests and unrelated tasks separate (4.758708ms)
+✔ a teacher can ask about both suggested workshops without being promised a combined session (0.500208ms)
+✔ November 7 independent bilingual knowledge scenarios keep facts, topic and exact source (10.141708ms)
+✔ a specific device-availability follow-up never turns into a dated seminar offer (1.331208ms)
+✔ logistical follow-ups keep their offer and distinguish published facts from missing details (7.36075ms)
+✔ a logistical resolver does not reuse an old offer for named unrelated subjects (0.068666ms)
+✔ final visitor goals retain the offer through contact and logistics questions (5.539292ms)
+✔ session preferences, clarification and role-specific passages through the chat route (9.86125ms)
+✔ explicit name survives the history window and stays inside one session (1.383792ms)
+✔ language requests are commands, not workshop subjects or untrusted language values (0.062541ms)
+(node:46) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///app/lib/chat.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /app/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ accepts first questions and complete follow-up exchanges (2.247958ms)
+✔ rejects malformed, excessive and privileged conversation inputs (0.306833ms)
+✔ rejects weak and malformed knowledge and limits context (3.189375ms)
+✔ only permits ordinary HTTP source links (0.233166ms)
+✔ feedback validates required fields, bounds, metadata and optional email (5.49825ms)
+✔ API sends only validated reports, stable idempotency keys and safe success (40.848125ms)
+✔ API rejects malformed, oversized, cross-site and wrong-content requests before sending (1.451916ms)
+✔ honeypot is ignored and rate limit returns Retry-After without sending (0.472333ms)
+✔ missing configuration and provider failures never claim success or leak details (0.976458ms)
+✔ rate limiter allows five attempts and expires after ten minutes (0.122167ms)
+✔ email escapes markup, strips URL secrets and leaves nonexistent IDs out (1.481084ms)
+✔ configuration requires the fixed server receiver and a valid sender (0.956ms)
+✔ production feedback uses a domain sender and ForJu receiver independently of account login (0.491958ms)
+✔ SDK receives server sender/receiver, optional Reply-To and idempotency; rejection is surfaced (13.168958ms)
+✔ both environments can use the explicitly selected iCloud account inbox (0.197291ms)
+✔ obsolete flags cannot override the configured recipient or enable a sandbox ForJu send (0.085958ms)
+✔ embedded reports allow one selected exchange on the public origin (0.901875ms)
+(node:53) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///app/lib/feedback.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /app/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ unknown and superseded database rows cannot become knowledge (2.091417ms)
+✔ catalog content and statuses win over manipulated database payloads (1.80875ms)
+✔ internal staff guidance is excluded and every entry has provenance (0.385416ms)
+✔ invalid scores and duplicate rows do not create misleading sources (0.123542ms)
+✔ citations must exist and refer to supplied evidence (0.2085ms)
+✔ feedback requires explicit opt-in and bounded content (0.171291ms)
+✔ structured answers validate evidence without visible citation clutter (0.206708ms)
+✔ read-more links are optional and must be supported by the answer (0.978208ms)
+✔ public provenance gate rejects internal documents even when active (12.549791ms)
+✔ new topics are retrievable before vector import and planned work stays labelled (0.211042ms)
+✔ launcher and panel prompts retrieve the intended public topic in German and English (5.641125ms)
+✔ delivery lookup uses only a GET with the receipt ID and never prints message contents (23.613667ms)
+✔ sending-only credentials, missing records, errors and unknown states are explicit without provider content (5.663917ms)
+✔ acceptance logger emits only whitelisted receipt metadata, not unsafe provider strings (53.397417ms)
+✔ missing or sandbox sender disables direct mail (0.848416ms)
+✔ project sender can use a different domain without changing the fixed ForJu receiver (0.475791ms)
+✔ no confirmation, alternative recipient, chat history, invalid reply-to, oversize or cross-site must not call transport (20.30525ms)
+✔ mock provider rejection and retry use identical key; only provider acceptance yields success (10.088333ms)
+✔ project delivery uses the same selected iCloud recipient as feedback (0.249792ms)
+(node:72) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///app/lib/project-seed.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /app/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ draft uses the visitor’s description, never assistant suggestions or unrelated follow-ups (2.13075ms)
+✔ explicit titles and goals carry across turns without adding stale project details (0.302667ms)
+✔ retrieval queries only public titles, never private document content (0.938292ms)
+✔ one visitor cannot spend the shared budget; restart preserves both counters (167.885583ms)
+✔ per-tab recovery survives reads without extending expiry; expired, malformed and future data are removed (1.567625ms)
+✔ blocked storage stays usable in memory and never throws; oversize data removes stale recovery (0.424833ms)
+✔ clear removes chat and project in this surface only; distinct tabs cannot read each other (0.1005ms)
+✔ restore validates source URLs and preserves project idempotency and accepted identity, not an open dialog (1.550166ms)
+ℹ tests 94
+ℹ suites 0
+ℹ pass 94
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 834.942501

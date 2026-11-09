@@ -11,8 +11,9 @@ function load(file, overrides = {}) {
   new Function('require', 'exports', code)(id => id === 'server-only' ? {} : (overrides[id] ?? require(id)), exports);
   return exports;
 }
+const diagnostics=load("../lib/server/mail-diagnostics.ts");
 const validation = load('../lib/feedback-validation.ts');
-const email = load('../lib/server/feedback-email.ts', { '../feedback-validation': validation });
+const email = load('../lib/server/feedback-email.ts', { '../feedback-validation': validation, './mail-diagnostics': diagnostics });
 const { createFeedbackHandler } = load('../lib/server/feedback-handler.ts', { '../feedback-validation': validation, './feedback-email': email, './request-body.mjs': requestBody });
 const { createFeedbackLimiter } = load('../lib/server/feedback-rate-limit.ts');
 const report = { type: 'technical_problem', description: 'The search button does not respond.', timestamp: '2026-09-20T12:00:00.000Z', language: 'en' };
@@ -93,7 +94,7 @@ test('SDK receives server sender/receiver, optional Reply-To and idempotency; re
   Object.assign(process.env, { RESEND_API_KEY: 'test-key', FEEDBACK_FROM_EMAIL: 'feedback@example.com', FEEDBACK_TO_EMAIL: 'adam.maskini@forju.at' });
   const calls = []; let failure = false;
   class Resend { emails = { send: async (...args) => { calls.push(args); return failure ? { error: { message: 'secret' } } : { data: { id: 'id' } }; } }; }
-  const emailModule = load('../lib/server/feedback-email.ts', { resend: { Resend }, '../feedback-validation': validation });
+  const emailModule = load('../lib/server/feedback-email.ts', { resend: { Resend }, '../feedback-validation': validation, './mail-diagnostics': diagnostics });
   try {
     assert.equal(await emailModule.sendFeedbackEmail({ ...report, email: 'reply@example.com' }, 'stable'), 'id');
     assert.equal(calls[0][0].from, 'feedback@example.com'); assert.deepEqual(calls[0][0].to, ['adam.maskini@forju.at']);

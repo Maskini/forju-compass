@@ -1,6 +1,7 @@
 "use client";
 
 import {useEffect, useRef, useState} from "react";
+import type {ProjectRecovery} from "@/lib/tab-recovery";
 import {PROJECT_MAX_LENGTH} from "@/lib/project-mail";
 
 async function checkSender(signal: AbortSignal) {
@@ -8,17 +9,17 @@ async function checkSender(signal: AbortSignal) {
   if (!response.ok) throw new Error("Could not check sending availability");
   return (await response.json()).direct === true;
 }
-type Receipt = {identity: string; state: "accepted" | "unavailable" | "error"};
+type Delivery=ProjectRecovery["delivery"];
 
 // Lives with the draft, so going back a step or returning to chat keeps the
 // reply address and receipt. Only an explicit press of Send can post a draft.
-export function useProjectDelivery(started: boolean, lang: "de" | "en", message: string) {
+export function useProjectDelivery(started: boolean, lang: "de" | "en", message: string, saved:Delivery, save:(update:(previous:Delivery)=>Delivery)=>void) {
   const [unavailable, setUnavailable] = useState(false);
-  const [reply, setReply] = useState("");
-  const [receipt, setReceipt] = useState<Receipt | null>(null);
+  const {reply,receipt}=saved;
+  const setReply=(reply:string)=>save(s=>({...s,reply}));
+  const setReceipt=(receipt:Delivery["receipt"])=>save(s=>({...s,receipt}));
   const [busy, setBusy] = useState(false);
   const lock = useRef(false);
-  const key = useRef("");
   const replyEmail = reply.trim();
   const validReply = !replyEmail || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(replyEmail);
   const identity = JSON.stringify([lang, message, replyEmail]);
@@ -51,9 +52,10 @@ export function useProjectDelivery(started: boolean, lang: "de" | "en", message:
         setUnavailable(false);
       }
       // The endpoint also includes a payload digest in its provider key.
-      key.current ||= crypto.randomUUID();
+      const key=saved.key || crypto.randomUUID();
+      save(s=>({...s,key}));
       const response = await fetch("/api/project-submission", {
-        method:"POST", headers:{"Content-Type":"application/json", "Idempotency-Key":key.current},
+        method:"POST", headers:{"Content-Type":"application/json", "Idempotency-Key":key},
         body:JSON.stringify({draft:message, language:lang, confirmed:true, ...(replyEmail ? {replyEmail} : {})}),
         signal:AbortSignal.timeout(20000),
       });

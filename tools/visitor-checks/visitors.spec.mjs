@@ -772,4 +772,7 @@ for(const s of [{lang:'de',width:1440},{lang:'en',width:390}])test(`Leaving the 
   // An actual navigation/back also returns collapsed (with or without BFCache).
   await page.goto('about:blank');await page.goBack();
   await expect(host.locator('.launcher')).toBeVisible();await expect(drawer).not.toBeVisible();
+  // Drain the local proxy after navigation before Playwright disposes its
+  // API responses during context teardown (especially in WebKit).
+  await context.unrouteAll({behavior:'wait'});
 });

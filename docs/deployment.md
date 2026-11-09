@@ -93,3 +93,48 @@ retain the draft; retries use the same provider idempotency key for identical
 content. A provider ID confirms acceptance for delivery, not inbox receipt.
 Use mocked transport for automated tests. Real delivery checks require the user's
 explicit request and clearly labelled synthetic messages.
+
+## Trace an email without sending another one
+
+Both mail adapters now write a `[compass-mail]` entry after Resend accepts a
+message. It contains only kind (`feedback` or `project`), state (`accepted`),
+providerId and timestamp. No form body, address, API key or raw provider error is
+logged. The recipient and sender settings above are unchanged.
+
+Find the providerId in the private Render logs, then find that ID in the signed-in
+Resend **Emails** dashboard. This works even when the application key is
+sending-only. If an existing private key already has read permission, this
+optional laptop command prints only delivery metadata:
+
+```sh
+node --env-file=.env.local tools/mail-status.mjs PROVIDER_UUID
+```
+
+Replace `PROVIDER_UUID` with that message ID. Do not paste an API key into the
+command. The tool makes a single authenticated GET to the existing Resend API;
+it cannot send or retry a message. A sending-only key receives a clear dashboard
+instruction; do not broaden the production key just to run this tool. No new
+service, dependency, subscription, paid inference call or automated polling was
+added. Lookup remains subject to the existing account's API limits.
+
+`accepted` means the send API acknowledged the message. `delivered` means the
+recipient mail server accepted it, not that a person saw it in their inbox.
+`bounced`, `failed` or `suppressed` require checking the provider events. Do not
+blindly resend: the original may already be delivered. There is no public email
+lookup endpoint and no background delivery tracking in Compass.
+
+References checked 9 November 2026:
+- https://resend.com/docs/api-reference/emails/retrieve-email
+- https://resend.com/docs/dashboard/api-keys/introduction
+
+## Temporary tab recovery
+
+Conversation and project data can survive a refresh using bounded sessionStorage,
+with a 30-minute recovery window after the last change. No account, shared server
+conversation store or new data destination is involved. Trash clears the current
+chat surface and its project record. Browser restrictions fall back to memory;
+recovery is not guaranteed when storage is blocked or a browser discards the tab.
+The widget still returns closed, at the launcher, after navigation. Reports retain
+the existing in-memory retry behavior and are **not** recovered after a reload.
+The host site's privacy notice must describe temporary browser storage before
+public installation. See [embed.md](embed.md) for details.

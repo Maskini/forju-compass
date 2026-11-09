@@ -1,5 +1,5 @@
 "use client";
-import {useId, useImperativeHandle, useRef, useState, type Ref} from "react";
+import {useEffect,useId, useImperativeHandle, useRef, useState, type Ref} from "react";
 import "./clear-conversation.css";
 
 export type ClearConversationControls = {open:()=>void};
@@ -10,6 +10,17 @@ export function ClearConversation({language, ready, onClear, widget=false, showL
   const dialog=useRef<HTMLDialogElement>(null), trigger=useRef<HTMLButtonElement>(null), cancel=useRef<HTMLButtonElement>(null);
   const [notice,setNotice]=useState("");
   const label=en?"Clear conversation":"Gespräch löschen";
+  useEffect(()=>{
+    if(!widget || window.parent===window)return;
+    function returnFocus(event:MessageEvent){
+      if(event.source!==window.parent || event.data?.type!=="forju:clear-focus-check" || dialog.current?.open)return;
+      const active=document.activeElement;
+      // A visitor who already moved back to the composer keeps that focus.
+      if(!active || active===document.body || dialog.current?.contains(active))window.parent.postMessage({type:"forju:clear-focus"},"*");
+    }
+    window.addEventListener("message",returnFocus);
+    return ()=>window.removeEventListener("message",returnFocus);
+  },[widget]);
   function signal(open:boolean) {
     if(widget && window.parent!==window) window.parent.postMessage({type:"forju:clear-dialog",open},"*");
   }

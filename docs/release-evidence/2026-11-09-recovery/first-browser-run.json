@@ -1,0 +1,24 @@
+{
+  "stats": {
+    "startTime": "2026-11-09T19:37:30.928Z",
+    "duration": 286281.944,
+    "expected": 178,
+    "skipped": 0,
+    "unexpected": 2,
+    "flaky": 0
+  },
+  "failures": [
+    {
+      "title": "Clear conversation / de / widget / 1280",
+      "project": "firefox",
+      "status": "unexpected",
+      "error": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeFocused\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('forju-compass-widget .clear')\nExpected: focused\nReceived: inactive\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toBeFocused\" locator('forju-compass-widget .clear') with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('forju-compass-widget .clear')\u001b[22m\n\u001b[2m    12 \u00d7 locator resolved to <button class=\"clear\" type=\"button\" title=\"Gespr\u00e4ch l\u00f6schen\" aria-label=\"Gespr\u00e4ch l\u00f6schen\">\u2026</button>\u001b[22m\n\u001b[2m       - unexpected value \"inactive\"\u001b[22m\n"
+    },
+    {
+      "title": "Clear conversation / en / widget / 390",
+      "project": "firefox",
+      "status": "unexpected",
+      "error": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeFocused\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('forju-compass-widget .clear')\nExpected: focused\nReceived: inactive\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toBeFocused\" locator('forju-compass-widget .clear') with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('forju-compass-widget .clear')\u001b[22m\n\u001b[2m    14 \u00d7 locator resolved to <button class=\"clear\" type=\"button\" title=\"Clear conversation\" aria-label=\"Clear conversation\">\u2026</button>\u001b[22m\n\u001b[2m       - unexpected value \"inactive\"\u001b[22m\n"
+    }
+  ]
+}

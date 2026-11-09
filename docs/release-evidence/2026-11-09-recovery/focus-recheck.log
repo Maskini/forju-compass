@@ -1,0 +1,20 @@
+
+Running 15 tests using 1 worker
+
+  ✓   1 [firefox] › recovery.spec.mjs:105:1 › late clear-dialog focus acknowledgement leaves a visitor already typing in control (1.2s)
+  ✓   2 [firefox] › visitors.spec.mjs:90:4 › Clear conversation / de / widget / 1280 (2.0s)
+  ✓   3 [firefox] › visitors.spec.mjs:90:4 › Clear conversation / en / widget / 390 (1.7s)
+  ✓   4 [firefox] › recovery.spec.mjs:105:1 › late clear-dialog focus acknowledgement leaves a visitor already typing in control (1.8s)
+  ✓   5 [firefox] › visitors.spec.mjs:90:4 › Clear conversation / de / widget / 1280 (2.2s)
+  ✓   6 [firefox] › visitors.spec.mjs:90:4 › Clear conversation / en / widget / 390 (2.0s)
+  ✓   7 [firefox] › recovery.spec.mjs:105:1 › late clear-dialog focus acknowledgement leaves a visitor already typing in control (1.3s)
+  ✓   8 [firefox] › visitors.spec.mjs:90:4 › Clear conversation / de / widget / 1280 (1.9s)
+  ✓   9 [firefox] › visitors.spec.mjs:90:4 › Clear conversation / en / widget / 390 (1.7s)
+  ✓  10 [firefox] › recovery.spec.mjs:105:1 › late clear-dialog focus acknowledgement leaves a visitor already typing in control (1.5s)
+  ✓  11 [firefox] › visitors.spec.mjs:90:4 › Clear conversation / de / widget / 1280 (3.3s)
+  ✓  12 [firefox] › visitors.spec.mjs:90:4 › Clear conversation / en / widget / 390 (3.2s)
+  ✓  13 [firefox] › recovery.spec.mjs:105:1 › late clear-dialog focus acknowledgement leaves a visitor already typing in control (1.5s)
+  ✓  14 [firefox] › visitors.spec.mjs:90:4 › Clear conversation / de / widget / 1280 (2.5s)
+  ✓  15 [firefox] › visitors.spec.mjs:90:4 › Clear conversation / en / widget / 390 (3.2s)
+
+  15 passed (35.3s)

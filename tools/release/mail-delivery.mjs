@@ -62,7 +62,12 @@ try{
     results.push({kind,language:lang,initialStatus:502,retryStatus:200,recipient:mail.to[0],messageCount:1});
   }
   assert.equal(inbox.size,4);assert.equal(attempts.length,8);
-  const evidence={scope:'local production routes with simulated provider, no external email',results,messages:inbox.size,attempts:attempts.length};
+  const receipts=logs.split('\n').filter(line=>line.startsWith('[compass-mail] ')).map(line=>JSON.parse(line.slice('[compass-mail] '.length)));
+  assert.equal(receipts.length,4);
+  assert.deepEqual([...new Set(receipts.map(x=>x.kind))].sort(),['feedback','project']);
+  for(const row of receipts){assert.equal(row.state,'accepted');assert.deepEqual(Object.keys(row).sort(),['at','kind','providerId','state']);assert.ok([...inbox.values()].some(x=>x.id===row.providerId));}
+  assert.ok(!logs.includes('TEST / local receiver') && !logs.includes('re_local_fixture') && !logs.includes(recipient));
+  const evidence={receiptMetadataVerified:true,scope:'local production routes with simulated provider, no external email',results,messages:inbox.size,attempts:attempts.length};
   if(outputPath)await writeFile(outputPath,JSON.stringify(evidence,null,2)+'\n');
   console.log(JSON.stringify(evidence,null,2));
 }finally{

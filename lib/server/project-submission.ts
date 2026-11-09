@@ -5,6 +5,7 @@ import {z} from "zod";
 import {PROJECT_MAX_LENGTH} from "../project-mail";
 import {BodyError,readBody} from "./request-body.mjs";
 import {feedbackEmailConfig,FeedbackConfigurationError} from "./feedback-email";
+import {recordMailAcceptance} from "./mail-diagnostics";
 
 const projectSubject = (lang:"de"|"en") => lang==="de" ? "[ForJu Compass] Projektanfrage" : "[ForJu Compass] Project enquiry";
 
@@ -25,7 +26,9 @@ export async function deliverProject(config:{from:string;key:string;to:string},p
       new Resend(config.key).emails.send({from:config.from,to:[config.to],subject:projectSubject(p.language),text:p.draft,...(p.replyEmail?{replyTo:p.replyEmail}:{})},{idempotencyKey:key}),
       new Promise<never>((_,reject)=>{timer=setTimeout(()=>reject(new Error("timeout")),15000)})
     ]);
-    return !result.error && !!result.data?.id;
+    if(result.error || !result.data?.id)return false;
+    recordMailAcceptance("project",result.data.id);
+    return true;
   }finally{clearTimeout(timer)}
 }
 type Dependencies={config:typeof projectMailConfig;deliver:typeof deliverProject;limit:(req:Request)=>{allowed:boolean;retryAfter:number}};

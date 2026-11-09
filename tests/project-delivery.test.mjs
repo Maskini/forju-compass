@@ -10,12 +10,13 @@ function load(path,overrides={}){
  new Function("require","exports",out)(id=>id==="server-only"?{}:(overrides[id]??require(id)),e);return e;
 }
 
+const diagnostics=load("../lib/server/mail-diagnostics.ts");
 const constants=load("../lib/project-mail.ts"),calls=[];
 let result={data:{id:"synthetic"}};
 class FakeResend { emails={send:async (...args)=>{calls.push(args);return result}} }
 const validation=load("../lib/feedback-validation.ts");
-const feedback=load("../lib/server/feedback-email.ts",{"../feedback-validation":validation});
-const mod=load("../lib/server/project-submission.ts",{"./feedback-email":feedback,"./request-body.mjs":requestBody,"../project-mail":constants,resend:{Resend:FakeResend}});
+const feedback=load("../lib/server/feedback-email.ts",{"../feedback-validation":validation,"./mail-diagnostics":diagnostics});
+const mod=load("../lib/server/project-submission.ts",{"./mail-diagnostics":diagnostics,"./feedback-email":feedback,"./request-body.mjs":requestBody,"../project-mail":constants,resend:{Resend:FakeResend}});
 const config=()=>({key:"fake-only",from:"demo@example.org",to:"adam.maskini@forju.at"}),limit=()=>({allowed:true,retryAfter:0});
 const post=mod.createProjectHandler({config,limit,deliver:mod.deliverProject});
 const body={draft:"Our synthetic class project.",language:"en",confirmed:true};

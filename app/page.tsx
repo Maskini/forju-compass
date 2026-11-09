@@ -1,5 +1,6 @@
 "use client";
 
+import {SessionNotice} from "@/app/components/session-notice";
 import {EnquiryDraft} from "@/app/components/enquiry-draft";
 import {ChatChoices} from "@/app/components/chat-choices";
 import { useEffect, useRef, type ReactNode } from "react";
@@ -335,6 +336,7 @@ export default function Home() {
               </div>
               <ProjectDraft ready={ready} key={conversationId} lang={language} turns={turns}/>
               {turns.length === 0 && !loading && !error && <a className="answer-cta" href={official("/services")} target="_blank" rel="noopener noreferrer">{t("Mehr erfahren")} <ChevronIcon /></a>}
+              <SessionNotice language={language}/>
               <ClearConversation ready={ready} language={language} onClear={clearConversation} showLabel/>
 
               <div

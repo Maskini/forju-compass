@@ -1,20 +1,15 @@
 "use client";
-import {useEffect,useRef,useState,useSyncExternalStore} from "react";
+import {useEffect,useRef,useState} from "react";
 import {MAX_HISTORY_MESSAGES, MAX_MESSAGE_LENGTH, safeSourceUrl, type ChatMessage, type Source} from "@/lib/chat";
-// Static HTML can arrive well before React attaches the submit handler.
-const subscribe = () => () => {};
-const clientReady = () => true;
-const serverReady = () => false;
+import {chatRecoverySchema,clearRecovery,type ChatRecovery} from "./tab-recovery";
+import {useTabRecovery} from "./use-tab-recovery";
+const restoreChat=(saved:ChatRecovery)=>({...saved,question:saved.question || saved.pending,pending:""});
 export function useCompassChat(language:"en"|"de") {
-  const ready = useSyncExternalStore(subscribe,clientReady,serverReady);
-  const [question, setQuestion] = useState("");
+  const [saved,setSaved,ready]=useTabRecovery<ChatRecovery>("chat",chatRecoverySchema,{question:"",pending:"",turns:[],uiLanguage:language},restoreChat);
+  const {turns}=saved;
   const [submittedQuestion, setSubmittedQuestion] = useState("");
   const [conversationId, setConversationId] = useState(0);
-
-  const [turns, setTurns] = useState<{ question: string; answer: string; sources: Source[]; draft: boolean; recipient?:string; suggestions:string[]; topic?:string; answeredAt:number }[]>([]);
-  const preferredLanguage = useRef<"de"|"en"|undefined>(undefined);
-  const visitorName = useRef<string|undefined>(undefined);
-  const uiLanguage = useRef(language);
+  const setQuestion=(question:string)=>setSaved(previous=>({...previous,question}));
   const inFlight = useRef(false);
   const requestVersion = useRef(0);
   const requestController = useRef<AbortController | null>(null);
@@ -33,9 +28,9 @@ export function useCompassChat(language:"en"|"de") {
     requestController.current?.abort();
     requestController.current = null;
     inFlight.current = false;
-    preferredLanguage.current = undefined;
-    visitorName.current = undefined;
-    setTurns([]); setQuestion(""); setSubmittedQuestion(""); setError(""); setLoading(false);
+    setSaved({question:"",pending:"",turns:[],uiLanguage:language});
+    try{clearRecovery(window.sessionStorage,window.location.pathname)}catch{}
+    setSubmittedQuestion(""); setError(""); setLoading(false);
     setConversationId(id => id + 1);
     transcript.current?.scrollTo(0, 0);
   }
@@ -54,19 +49,19 @@ export function useCompassChat(language:"en"|"de") {
   }, [turns, loading, error]);
 
   async function submit(value?: string, replyLanguage: "de"|"en" = language) {
-    const next = (value ?? question).trim();
+    const next = (value ?? saved.question).trim();
 
-    if (!next || inFlight.current || next.length > MAX_MESSAGE_LENGTH) {
+    if (!ready || !next || inFlight.current || next.length > MAX_MESSAGE_LENGTH) {
       return;
     }
 
-    if (uiLanguage.current !== replyLanguage) {preferredLanguage.current = undefined; uiLanguage.current = replyLanguage;}
+    const preferredLanguage=saved.uiLanguage===replyLanguage?saved.preferredLanguage:undefined;
     inFlight.current = true;
     const version = ++requestVersion.current;
     const controller = new AbortController();
     requestController.current = controller;
     setSubmittedQuestion(next);
-    setQuestion("");
+    setSaved(previous=>({...previous,question:"",pending:next,uiLanguage:replyLanguage,preferredLanguage}));
     setError("");
     setLoading(true);
 
@@ -78,7 +73,7 @@ export function useCompassChat(language:"en"|"de") {
         },
         signal: AbortSignal.any([controller.signal, AbortSignal.timeout(60000)]),
         body: JSON.stringify({
-          message: next, topic: turns.at(-1)?.topic, preferredLanguage:preferredLanguage.current, visitorName:visitorName.current,
+          message: next, topic: turns.at(-1)?.topic, preferredLanguage, visitorName:saved.visitorName,
           history: turns.slice(-MAX_HISTORY_MESSAGES / 2).flatMap((turn): ChatMessage[] => [
             { role: "user", content: turn.question },
             { role: "assistant", content: turn.answer.slice(0, 4000) },
@@ -99,18 +94,20 @@ export function useCompassChat(language:"en"|"de") {
       if (typeof data.answer !== "string" || !data.answer.trim()) {
         throw new Error("Die Antwort war leer. Bitte versuche es erneut.");
       }
-      if (typeof data.visitorName === "string" && data.visitorName.length <= 80) visitorName.current = data.visitorName;
-      if (data.preferredLanguage === "de" || data.preferredLanguage === "en") preferredLanguage.current = data.preferredLanguage;
+
       const sources: Source[] = Array.isArray(data.sources) ? data.sources.filter(
         (source: Source) => source && typeof source.title === "string" && safeSourceUrl(source.url)
       ) : [];
       const suggestions:string[] = Array.isArray(data.suggestions)
         ? data.suggestions.filter((s:unknown)=>typeof s==="string" && s.length>0 && s.length<80).slice(0,4) : [];
-      setTurns((previous) => [...previous, { question: next, answer: data.answer, sources, suggestions, topic:typeof data.topic==="string"?data.topic:undefined, draft:data.mode === "draft", recipient: typeof data.recipient==="string" && /^[\w.+-]+@forju\.at$/i.test(data.recipient) ? data.recipient : undefined, answeredAt:Date.now() }]);
+      setSaved(previous => ({...previous, pending:"",
+        visitorName:typeof data.visitorName === "string" && data.visitorName.length <= 80 ? data.visitorName : previous.visitorName,
+        preferredLanguage:data.preferredLanguage === "de" || data.preferredLanguage === "en" ? data.preferredLanguage : previous.preferredLanguage,
+        turns:[...previous.turns, { question: next, answer: data.answer, sources, suggestions, topic:typeof data.topic==="string"?data.topic:undefined, draft:data.mode === "draft", recipient: typeof data.recipient==="string" && /^[\w.+-]+@forju\.at$/i.test(data.recipient) ? data.recipient : undefined, answeredAt:Date.now() }].slice(-30)}));
       setSubmittedQuestion("");
     } catch (err) {
       if (version !== requestVersion.current) return;
-      setQuestion(next);
+      setSaved(previous=>({...previous,question:previous.question || next,pending:""}));
       setError(err instanceof Error && err.name === "TimeoutError"
         ? "Die Anfrage hat zu lange gedauert. Bitte versuche es erneut."
         : err instanceof Error ? err.message : "Die Anfrage konnte nicht verarbeitet werden.");
@@ -123,5 +120,5 @@ export function useCompassChat(language:"en"|"de") {
     }
   }
 
-  return {ready,question,setQuestion,submittedQuestion,turns,transcript,loading,error,latestSources,submit,conversationId,clearConversation};
+  return {ready,question:saved.question,setQuestion,submittedQuestion,turns,transcript,loading,error,latestSources,submit,conversationId,clearConversation};
 }

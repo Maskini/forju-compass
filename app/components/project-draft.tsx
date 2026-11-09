@@ -1,9 +1,11 @@
 "use client";
 
-import {useEffect, useId, useLayoutEffect, useRef, useState} from "react";
+import {useEffect, useId, useLayoutEffect, useRef} from "react";
 import "./project-draft.css";
 import Image from "next/image";
 import {useProjectDelivery} from "./project-delivery";
+import {useTabRecovery} from "@/lib/use-tab-recovery";
+import {projectRecoverySchema,type ProjectRecovery} from "@/lib/tab-recovery";
 import {projectSeed} from "@/lib/project-seed";
 
 type Language = "de" | "en";
@@ -12,7 +14,7 @@ const language = {
   de:{
     launch:"Projekt vorstellen",resume:"Projektangaben fortsetzen",offer:"Möchtest du ForJu mehr über dein Projekt erzählen?",
     title:"Projekt einreichen",intro:"In wenigen Schritten von der Idee zum Projekt.",backChat:"Zurück zum Chat",
-    local:"Kein Konto nötig. Deine Angaben bleiben hier erhalten, bis du die Seite neu lädst.",tip:"Tipp von ForJu Compass",
+    local:"Kein Konto nötig. Wenn dein Browser es erlaubt, bleiben deine Angaben in diesem Tab beim Neuladen für 30 Minuten nach der letzten Änderung erhalten. Mit „Gespräch löschen“ entfernst du sie.",tip:"Tipp von ForJu Compass",
     steps:["Idee & Zielsetzung","Zielgruppe","Umsetzung","Ressourcen","Wirkung","Überprüfen"],
     shortSteps:["Idee","Zielgruppe","Umsetzung","Ressourcen","Wirkung","Prüfen"],
     captions:["Worum geht es?","Wer profitiert?","Wie soll es ablaufen?","Was wird benötigt?","Was soll sich ändern?","Alles bereit?"],
@@ -35,7 +37,7 @@ const language = {
   en:{
     launch:"Tell us about your project",resume:"Continue your project details",offer:"Would you like to tell ForJu more about your project?",
     title:"Prepare a project",intro:"From your first idea to a project inquiry.",backChat:"Back to chat",
-    local:"No account needed. Your details stay here until you reload the page.",tip:"ForJu Compass tip",
+    local:"No account needed. When your browser allows it, your details survive a reload in this tab for 30 minutes after the last edit. Use “Clear conversation” to remove them.",tip:"ForJu Compass tip",
     steps:["Idea & goals","Audience","Implementation","Resources","Impact","Review"],
     shortSteps:["Idea","Audience","Plan","Resources","Impact","Review"],
     captions:["What is the idea?","Who benefits?","What is the plan?","What do you need?","What will change?","Ready to share?"],
@@ -60,12 +62,18 @@ const sections=[[0,1],[2],[3,4],[5],[6]];
 function Bulb(){return <svg aria-hidden="true" viewBox="0 0 100 110" className="draft-bulb"><g stroke="#e58c9b" strokeWidth="2.5"><path d="m17 29-10-5m19-7-6-9m54 9 7-10m2 22 10-6"/></g><path fill="#ee95a2" d="m49 12 21 11 10 19-8 21-13 18H40L27 61l-8-20 11-19z"/><path fill="#f6adba" d="m49 12-9 31-10-21z"/><path fill="#d97789" d="m49 12 13 31 8-20zM40 81l-9-40 16 19z"/><path fill="#ec8797" d="m49 12-2 48 15-17z"/><path fill="#be6075" d="M59 81H40l7-21 15-17z"/><path fill="#c66677" d="M39 81h21l-3 12-8 5-8-5z"/><path stroke="#f6bcc4" strokeWidth="2" d="m40 85 19-1m-18 6 17-1"/></svg>}
 export function ProjectDraft({lang,turns,ready,widget=false}:{lang:Language;turns:Turn[];ready:boolean;widget?:boolean}){
   const dialog=useRef<HTMLDialogElement>(null), trigger=useRef<HTMLButtonElement>(null), main=useRef<HTMLDivElement>(null), stage=useRef<HTMLHeadingElement>(null);
-  const id=useId(),[draftLang,setDraftLang]=useState(lang),[step,setStep]=useState(-1),[fields,setFields]=useState<string[]>(Array(7).fill("")),[goals,setGoals]=useState<number[]>([]),[custom,setCustom]=useState(""),[seeded,setSeeded]=useState(false);
+  const id=useId();
+  const [saved,setSaved,recovered]=useTabRecovery<ProjectRecovery>("project",projectRecoverySchema,{
+    draftLang:lang,step:-1,fields:Array(7).fill(""),goals:[],custom:"",seeded:false,delivery:{reply:"",key:"",receipt:null},
+  });
+  const {draftLang,step,fields,goals,custom,seeded}=saved;
+  const setGoals=(goals:number[])=>setSaved(s=>({...s,goals}));
+  const setCustom=(custom:string)=>setSaved(s=>({...s,custom}));
   const ui=language[draftLang],seed=projectSeed(turns),ctx=seed.description,review=step===5;
   const goalText=goals.flatMap(i=>i===5?(custom.trim()?[custom.trim()]:[]):[ui.options[i]]).join(", ");
   const lines=fields.flatMap((v,i)=>[v.trim()?ui.labels[i]+": "+v.trim():"",i===1&&goalText?ui.goals+": "+goalText:""].filter(Boolean));
   const message=lines.length?[ui.start,...lines,ui.end].join("\n\n"):"";
-  const mail=useProjectDelivery(step >= 0, draftLang, message), en=draftLang==="en";
+  const mail=useProjectDelivery(step >= 0, draftLang, message, saved.delivery, update=>setSaved(s=>({...s,delivery:update(s.delivery)}))), en=draftLang==="en";
   const sent = mail.result === "accepted";
   const sendLabel = sent ? ui.sent : mail.busy ? ui.sending : ui.send;
   let deliveryNotice = "";
@@ -98,11 +106,11 @@ export function ProjectDraft({lang,turns,ready,widget=false}:{lang:Language;turn
     }
   }
   function open(){
-    if(step<0){setDraftLang(lang);setFields([seed.title,ctx,"","","","",""]);if(seed.goal){setGoals([5]);setCustom(seed.goal)}setSeeded(Boolean(ctx));setStep(0)}
+    if(step<0)setSaved(s=>({...s,draftLang:lang,fields:[seed.title,ctx,"","","","",""],goals:seed.goal?[5]:[],custom:seed.goal||"",seeded:Boolean(ctx),step:0}));
     dialog.current?.showModal();signal(true)
   }
-  function changeStep(next:number){setStep(next)}
-  function edit(i:number,v:string){setFields(a=>a.map((x,n)=>n===i?v:x))}
+  function changeStep(step:number){setSaved(s=>({...s,step}))}
+  function edit(i:number,v:string){setSaved(s=>({...s,fields:s.fields.map((x,n)=>n===i?v:x)}))}
   useLayoutEffect(()=>{if(step>=0 && dialog.current?.open){main.current?.scrollTo(0,0);stage.current?.focus({preventScroll:true})}},[step]);
   const field=(i:number)=>{
     const inputId=id+"-field-"+i, hint=!review&&(i===0?ui.titleHint:i===1?(seeded?ui.from:ui.descriptionHint):"");
@@ -113,7 +121,7 @@ export function ProjectDraft({lang,turns,ready,widget=false}:{lang:Language;turn
     </div>;
   };
   const goalFields=<fieldset className="draft-goals" aria-describedby={id+"-goals-hint"}><legend>{ui.goals}</legend><small id={id+"-goals-hint"}>{ui.many}</small><div>{ui.options.map((s,i)=><label key={s}><input type="checkbox" checked={goals.includes(i)} onChange={e=>{setGoals(e.target.checked?[...goals,i]:goals.filter(x=>x!==i))}}/><span>{s}</span></label>)}</div>{goals.includes(5)&&<label className="draft-field">{ui.own}<input className="fj-field" value={custom} onChange={e=>{setCustom(e.target.value)}}/></label>}</fieldset>;
-  return <section className="project-draft">{ctx&&step<0&&<p>{language[lang].offer}</p>}<button ref={trigger} disabled={!ready} className="draft-launch fj-action" type="button" aria-haspopup="dialog" onClick={open}>{step<0?language[lang].launch:language[lang].resume} →</button>
+  return <section className="project-draft">{ctx&&step<0&&<p>{language[lang].offer}</p>}<button ref={trigger} disabled={!ready || !recovered} className="draft-launch fj-action" type="button" aria-haspopup="dialog" onClick={open}>{step<0?language[lang].launch:language[lang].resume} →</button>
     <dialog ref={dialog} lang={draftLang} aria-labelledby={id} onClose={()=>{
       // A native close event can arrive after a fast reopen. Keep the current
       // form modal in the host rather than collapsing its iframe underneath it.

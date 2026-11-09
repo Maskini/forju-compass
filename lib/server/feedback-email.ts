@@ -2,6 +2,7 @@ import "server-only";
 import { Resend } from "resend";
 import { z } from "zod";
 import { feedbackPageUrl, type FeedbackReport } from "../feedback-validation";
+import {recordMailAcceptance} from "./mail-diagnostics";
 
 const labels = { incorrect_answer: "Falsche Antwort", technical_problem: "Technisches Problem", outdated_information: "Veraltete Information", other: "Sonstiges" };
 export class FeedbackConfigurationError extends Error {}
@@ -55,6 +56,7 @@ export async function sendFeedbackEmail(report: FeedbackReport, idempotencyKey: 
       new Promise<never>((_, reject) => { timer = setTimeout(() => reject(new FeedbackDeliveryError("provider_timeout")), 15000); }),
     ]);
     if (result.error || !result.data?.id) throw new FeedbackDeliveryError("provider_rejected");
+    recordMailAcceptance("feedback",result.data.id);
     return result.data.id;
   } finally { if (timer) clearTimeout(timer); }
 }

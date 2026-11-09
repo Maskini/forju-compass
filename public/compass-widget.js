@@ -282,7 +282,19 @@
     if(event.data?.type==="forju:clear-dialog" && dialog.open && typeof event.data.open==="boolean"){
       dialog.toggleAttribute("data-clear",event.data.open);
       updateControls();
-      if(!event.data.open) clear.focus({preventScroll:true});
+      if(!event.data.open) {
+        // Firefox can still treat the just-revealed control as unfocusable in
+        // this message task. Let the native dialog close and visibility settle.
+        requestAnimationFrame(()=>{
+          if(dialog.open && !dialog.hasAttribute("data-clear") && !dialog.hasAttribute("data-draft") && !dialog.hasAttribute("data-report") &&
+            (!root.activeElement || root.activeElement===frame || root.activeElement===dialog)) {
+            frame.contentWindow.postMessage({type:"forju:clear-focus-check"},origin);
+          }
+        });
+      }
+    }
+    if(event.data?.type==="forju:clear-focus" && dialog.open && !dialog.hasAttribute("data-clear") && !dialog.hasAttribute("data-draft") && !dialog.hasAttribute("data-report")) {
+      if(!root.activeElement || root.activeElement===frame || root.activeElement===dialog)clear.focus({preventScroll:true});
     }
     if(event.data?.type==="forju:report" && dialog.open && typeof event.data.open==="boolean"){
       dialog.toggleAttribute("data-report",event.data.open);

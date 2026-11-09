@@ -24,11 +24,10 @@ memory when minimized or expanded, and stays within the viewport after resizing.
 Leaving the page (including switching to another tab) closes the chat and resets
 its position and size. On return, the launcher stays collapsed; reopening starts
 beside it. A tab switch preserves the exchange, unsent text and project/report
-fields in the existing iframe. Reloading or a full navigation can end that session.
+fields in the existing iframe. The conversation and project entries can recover after a reload in the same tab for 30 minutes after their last edit; report fields still remain in memory only. Browser storage restrictions can prevent recovery.
 Project forms keep their centered dialog layout; closing them restores the chat
 position. Nothing about the position is stored or sent to the server.
-Phones use a full-screen chat. Reopening the launcher resumes the exchange. The conversation lasts until the host
-document reloads. The same panel is also available on its own at
+Phones use a full-screen chat. Reopening the launcher resumes the exchange. The conversation can recover in the same tab after a host reload; the widget still starts closed in its default position. The same panel is also available on its own at
 `/embed?lang=en` or `/embed?lang=de`; all surfaces use `/api/chat`.
 
 If the host enforces CSP, permit the Compass origin in `script-src`,
@@ -76,13 +75,12 @@ unlisted origin is denied framing. The standalone page should still open.
 
 ## Project inquiries
 
-“Projektentwurf starten” / “Start a project draft” uses the visitor’s words
-from this chat. Guided answers and edits live in component memory. Reloading
-the page clears them. On Review, visitors can expand the final text, select it and use the
+“Projekt vorstellen” / “Tell us about your project” uses the visitor’s words
+from this chat. Guided answers and edits also use bounded, versioned sessionStorage for same-tab reload recovery. Records expire 30 minutes after their last edit, are purged on access and periodically while the page is active, and are removed by the trash action. Browser restrictions fall back to memory. On Review, visitors can expand the final text, select it and use the
 device’s Copy command. Send requests delivery using the configured project sender.
 If the sender is unavailable, Compass keeps the draft in the current tab.
 
-The draft follows six optional steps: idea and goals, audience, implementation, resources, impact, and review. Closing the draft returns to the conversation; reopening resumes the same step. No account or browser storage is used for project details. Only a layout toggle (no draft content) is sent to the host widget to expand its desktop dialog.
+The draft follows six optional steps: idea and goals, audience, implementation, resources, impact, and review. Closing the draft returns to the conversation; reopening resumes the same step. No account is needed. Project fields, optional reply address, step and delivery receipt/key stay in the tab’s temporary recovery record. Reloading never submits anything. Identical retries retain their idempotency key, and an accepted project remains marked as accepted until edited. Only a layout toggle (no draft content) is sent to the host widget to expand its desktop dialog.
 
 ## Review the design inside the ForJu website
 
@@ -105,7 +103,6 @@ Compass retains an explicitly supplied name and requested answer language in the
 current chat component, alongside the current topic. These small values accompany
 requests to the existing Compass server; they are not authentication or verified
 identity. Chat history remains bounded to the last four exchanges per request.
-The trash/clear action and a page reload remove these values. They are not written
-to cookies, browser storage, the host page, or a server conversation database.
+The trash/clear action removes these values and the current surface’s recovery records. Up to 30 exchanges, unsent text and these preferences can recover from sessionStorage in the same tab for 30 minutes after the last change. They are not written to cookies, localStorage, the host page or a server conversation database. Separate browser sessions have separate storage. Browser “restore tabs” features can preserve sessionStorage, so expiry and explicit clearing remain important. The project and conversation records expire separately; reopening alone does not renew them.
 In local-only mode there are no inference-provider calls. Hosting still receives
 the normal HTTP requests; its infrastructure logging is separate from app memory.

@@ -1,0 +1,15 @@
+
+Running 10 tests using 1 worker
+
+  ✓   1 [webkit] › visitors.spec.mjs:708:63 › Leaving the page: collapse, reset and retain fields / de (3.2s)
+  ✓   2 [webkit] › visitors.spec.mjs:708:63 › Leaving the page: collapse, reset and retain fields / en (2.5s)
+  ✓   3 [webkit] › visitors.spec.mjs:708:63 › Leaving the page: collapse, reset and retain fields / de (3.0s)
+  ✓   4 [webkit] › visitors.spec.mjs:708:63 › Leaving the page: collapse, reset and retain fields / en (2.5s)
+  ✓   5 [webkit] › visitors.spec.mjs:708:63 › Leaving the page: collapse, reset and retain fields / de (3.0s)
+  ✓   6 [webkit] › visitors.spec.mjs:708:63 › Leaving the page: collapse, reset and retain fields / en (2.6s)
+  ✓   7 [webkit] › visitors.spec.mjs:708:63 › Leaving the page: collapse, reset and retain fields / de (3.0s)
+  ✓   8 [webkit] › visitors.spec.mjs:708:63 › Leaving the page: collapse, reset and retain fields / en (2.4s)
+  ✓   9 [webkit] › visitors.spec.mjs:708:63 › Leaving the page: collapse, reset and retain fields / de (3.1s)
+  ✓  10 [webkit] › visitors.spec.mjs:708:63 › Leaving the page: collapse, reset and retain fields / en (2.5s)
+
+  10 passed (29.5s)

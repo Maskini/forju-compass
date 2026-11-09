@@ -1,0 +1,1122 @@
+{
+  "stats": {
+    "startTime": "2026-11-09T19:55:31.613Z",
+    "duration": 239652.096,
+    "expected": 184,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "counts": {
+    "chromium": 54,
+    "firefox": 54,
+    "webkit": 54,
+    "mobile-webkit": 22
+  },
+  "checks": [
+    {
+      "title": "standalone / de / reload restores conversation, follow-up and unsent text, then trash removes recovery",
+      "browser": "chromium",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "standalone / de / reload restores conversation, follow-up and unsent text, then trash removes recovery",
+      "browser": "firefox",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "standalone / de / reload restores conversation, follow-up and unsent text, then trash removes recovery",
+      "browser": "webkit",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "standalone / de / reload restores conversation, follow-up and unsent text, then trash removes recovery",
+      "browser": "mobile-webkit",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "standalone / de / project recovers after refresh and lost acknowledgement without duplicate delivery",
+      "browser": "chromium",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "standalone / de / project recovers after refresh and lost acknowledgement without duplicate delivery",
+      "browser": "firefox",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "standalone / de / project recovers after refresh and lost acknowledgement without duplicate delivery",
+      "browser": "webkit",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "standalone / de / project recovers after refresh and lost acknowledgement without duplicate delivery",
+      "browser": "mobile-webkit",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "standalone / en / reload restores conversation, follow-up and unsent text, then trash removes recovery",
+      "browser": "chromium",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "standalone / en / reload restores conversation, follow-up and unsent text, then trash removes recovery",
+      "browser": "firefox",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "standalone / en / reload restores conversation, follow-up and unsent text, then trash removes recovery",
+      "browser": "webkit",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "standalone / en / reload restores conversation, follow-up and unsent text, then trash removes recovery",
+      "browser": "mobile-webkit",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "standalone / en / project recovers after refresh and lost acknowledgement without duplicate delivery",
+      "browser": "chromium",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "standalone / en / project recovers after refresh and lost acknowledgement without duplicate delivery",
+      "browser": "firefox",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "standalone / en / project recovers after refresh and lost acknowledgement without duplicate delivery",
+      "browser": "webkit",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "standalone / en / project recovers after refresh and lost acknowledgement without duplicate delivery",
+      "browser": "mobile-webkit",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "embedded / de / reload restores conversation, follow-up and unsent text, then trash removes recovery",
+      "browser": "chromium",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "embedded / de / reload restores conversation, follow-up and unsent text, then trash removes recovery",
+      "browser": "firefox",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "embedded / de / reload restores conversation, follow-up and unsent text, then trash removes recovery",
+      "browser": "webkit",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "embedded / de / reload restores conversation, follow-up and unsent text, then trash removes recovery",
+      "browser": "mobile-webkit",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "embedded / de / project recovers after refresh and lost acknowledgement without duplicate delivery",
+      "browser": "chromium",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "embedded / de / project recovers after refresh and lost acknowledgement without duplicate delivery",
+      "browser": "firefox",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "embedded / de / project recovers after refresh and lost acknowledgement without duplicate delivery",
+      "browser": "webkit",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "embedded / de / project recovers after refresh and lost acknowledgement without duplicate delivery",
+      "browser": "mobile-webkit",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "embedded / en / reload restores conversation, follow-up and unsent text, then trash removes recovery",
+      "browser": "chromium",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "embedded / en / reload restores conversation, follow-up and unsent text, then trash removes recovery",
+      "browser": "firefox",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "embedded / en / reload restores conversation, follow-up and unsent text, then trash removes recovery",
+      "browser": "webkit",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "embedded / en / reload restores conversation, follow-up and unsent text, then trash removes recovery",
+      "browser": "mobile-webkit",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "embedded / en / project recovers after refresh and lost acknowledgement without duplicate delivery",
+      "browser": "chromium",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "embedded / en / project recovers after refresh and lost acknowledgement without duplicate delivery",
+      "browser": "firefox",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "embedded / en / project recovers after refresh and lost acknowledgement without duplicate delivery",
+      "browser": "webkit",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "embedded / en / project recovers after refresh and lost acknowledgement without duplicate delivery",
+      "browser": "mobile-webkit",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "expired or corrupted recovery is ignored; storage-blocked visitors can still use the chat",
+      "browser": "chromium",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "expired or corrupted recovery is ignored; storage-blocked visitors can still use the chat",
+      "browser": "firefox",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "expired or corrupted recovery is ignored; storage-blocked visitors can still use the chat",
+      "browser": "webkit",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "expired or corrupted recovery is ignored; storage-blocked visitors can still use the chat",
+      "browser": "mobile-webkit",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "refresh during a pending answer restores the unsent question without automatically posting it",
+      "browser": "chromium",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "refresh during a pending answer restores the unsent question without automatically posting it",
+      "browser": "firefox",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "refresh during a pending answer restores the unsent question without automatically posting it",
+      "browser": "webkit",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "refresh during a pending answer restores the unsent question without automatically posting it",
+      "browser": "mobile-webkit",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "clearing a project while a send response is pending never resurrects its saved data",
+      "browser": "chromium",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "clearing a project while a send response is pending never resurrects its saved data",
+      "browser": "firefox",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "clearing a project while a send response is pending never resurrects its saved data",
+      "browser": "webkit",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "clearing a project while a send response is pending never resurrects its saved data",
+      "browser": "mobile-webkit",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "late clear-dialog focus acknowledgement leaves a visitor already typing in control",
+      "browser": "chromium",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "late clear-dialog focus acknowledgement leaves a visitor already typing in control",
+      "browser": "firefox",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "late clear-dialog focus acknowledgement leaves a visitor already typing in control",
+      "browser": "webkit",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "late clear-dialog focus acknowledgement leaves a visitor already typing in control",
+      "browser": "mobile-webkit",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "standalone / teacher books with the published workshop contact",
+      "browser": "chromium",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "standalone / teacher books with the published workshop contact",
+      "browser": "firefox",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "standalone / teacher books with the published workshop contact",
+      "browser": "webkit",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "standalone / teacher books with the published workshop contact",
+      "browser": "mobile-webkit",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "standalone / edit, resume and send exactly the final project once in an isolated session",
+      "browser": "chromium",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "standalone / edit, resume and send exactly the final project once in an isolated session",
+      "browser": "firefox",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "standalone / edit, resume and send exactly the final project once in an isolated session",
+      "browser": "webkit",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "standalone / edit, resume and send exactly the final project once in an isolated session",
+      "browser": "mobile-webkit",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "standalone / new visitor follow-up reaches the offer-specific next step",
+      "browser": "chromium",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "standalone / new visitor follow-up reaches the offer-specific next step",
+      "browser": "firefox",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "standalone / new visitor follow-up reaches the offer-specific next step",
+      "browser": "webkit",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "standalone / new visitor follow-up reaches the offer-specific next step",
+      "browser": "mobile-webkit",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "standalone / wrong-answer report survives lost acknowledgement, one local email",
+      "browser": "chromium",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "standalone / wrong-answer report survives lost acknowledgement, one local email",
+      "browser": "firefox",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "standalone / wrong-answer report survives lost acknowledgement, one local email",
+      "browser": "webkit",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "standalone / wrong-answer report survives lost acknowledgement, one local email",
+      "browser": "mobile-webkit",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "embedded / teacher books with the published workshop contact",
+      "browser": "chromium",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "embedded / teacher books with the published workshop contact",
+      "browser": "firefox",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "embedded / teacher books with the published workshop contact",
+      "browser": "webkit",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "embedded / teacher books with the published workshop contact",
+      "browser": "mobile-webkit",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "embedded / edit, resume and send exactly the final project once in an isolated session",
+      "browser": "chromium",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "embedded / edit, resume and send exactly the final project once in an isolated session",
+      "browser": "firefox",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "embedded / edit, resume and send exactly the final project once in an isolated session",
+      "browser": "webkit",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "embedded / edit, resume and send exactly the final project once in an isolated session",
+      "browser": "mobile-webkit",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "embedded / new visitor follow-up reaches the offer-specific next step",
+      "browser": "chromium",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "embedded / new visitor follow-up reaches the offer-specific next step",
+      "browser": "firefox",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "embedded / new visitor follow-up reaches the offer-specific next step",
+      "browser": "webkit",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "embedded / new visitor follow-up reaches the offer-specific next step",
+      "browser": "mobile-webkit",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "embedded / wrong-answer report survives lost acknowledgement, one local email",
+      "browser": "chromium",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "embedded / wrong-answer report survives lost acknowledgement, one local email",
+      "browser": "firefox",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "embedded / wrong-answer report survives lost acknowledgement, one local email",
+      "browser": "webkit",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "embedded / wrong-answer report survives lost acknowledgement, one local email",
+      "browser": "mobile-webkit",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "unapproved local HTTPS origin cannot display the Compass frame",
+      "browser": "chromium",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "unapproved local HTTPS origin cannot display the Compass frame",
+      "browser": "firefox",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "unapproved local HTTPS origin cannot display the Compass frame",
+      "browser": "webkit",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "unapproved local HTTPS origin cannot display the Compass frame",
+      "browser": "mobile-webkit",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "visitor markup is inert and cannot trigger egress",
+      "browser": "chromium",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "visitor markup is inert and cannot trigger egress",
+      "browser": "firefox",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "visitor markup is inert and cannot trigger egress",
+      "browser": "webkit",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "visitor markup is inert and cannot trigger egress",
+      "browser": "mobile-webkit",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "Unpublished details retain context / de / widget",
+      "browser": "chromium",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "Unpublished details retain context / de / widget",
+      "browser": "firefox",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "Unpublished details retain context / de / widget",
+      "browser": "webkit",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "Unpublished details retain context / en / standalone",
+      "browser": "chromium",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "Unpublished details retain context / en / standalone",
+      "browser": "firefox",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "Unpublished details retain context / en / standalone",
+      "browser": "webkit",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "Unpublished details retain context / de / standalone",
+      "browser": "chromium",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "Unpublished details retain context / de / standalone",
+      "browser": "firefox",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "Unpublished details retain context / de / standalone",
+      "browser": "webkit",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "Unpublished details retain context / en / widget",
+      "browser": "chromium",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "Unpublished details retain context / en / widget",
+      "browser": "firefox",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "Unpublished details retain context / en / widget",
+      "browser": "webkit",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "Clear conversation / de / widget / 1280",
+      "browser": "chromium",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "Clear conversation / de / widget / 1280",
+      "browser": "firefox",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "Clear conversation / de / widget / 1280",
+      "browser": "webkit",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "Clear conversation / en / widget / 390",
+      "browser": "chromium",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "Clear conversation / en / widget / 390",
+      "browser": "firefox",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "Clear conversation / en / widget / 390",
+      "browser": "webkit",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "Clear conversation / en / standalone / 1280",
+      "browser": "chromium",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "Clear conversation / en / standalone / 1280",
+      "browser": "firefox",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "Clear conversation / en / standalone / 1280",
+      "browser": "webkit",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "Clear conversation / de / standalone / 390",
+      "browser": "chromium",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "Clear conversation / de / standalone / 390",
+      "browser": "firefox",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "Clear conversation / de / standalone / 390",
+      "browser": "webkit",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "A delayed project-close event preserves the visitor\u2019s new composer focus",
+      "browser": "chromium",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "A delayed project-close event preserves the visitor\u2019s new composer focus",
+      "browser": "firefox",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "A delayed project-close event preserves the visitor\u2019s new composer focus",
+      "browser": "webkit",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "Clear conversation cancels a pending answer without reviving old context",
+      "browser": "chromium",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "Clear conversation cancels a pending answer without reviving old context",
+      "browser": "firefox",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "Clear conversation cancels a pending answer without reviving old context",
+      "browser": "webkit",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "Clear conversation on the homepage leaves another visitor untouched",
+      "browser": "chromium",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "Clear conversation on the homepage leaves another visitor untouched",
+      "browser": "firefox",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "Clear conversation on the homepage leaves another visitor untouched",
+      "browser": "webkit",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "Personal introduction / German standalone desktop",
+      "browser": "chromium",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "Personal introduction / German standalone desktop",
+      "browser": "firefox",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "Personal introduction / German standalone desktop",
+      "browser": "webkit",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "Personal introduction / English widget phone",
+      "browser": "chromium",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "Personal introduction / English widget phone",
+      "browser": "firefox",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "Personal introduction / English widget phone",
+      "browser": "webkit",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "German on mobile: answer whether a Vienna workshop is available in Graz",
+      "browser": "chromium",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "German on mobile: answer whether a Vienna workshop is available in Graz",
+      "browser": "firefox",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "German on mobile: answer whether a Vienna workshop is available in Graz",
+      "browser": "webkit",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "English: edit and copy an equipment email with the visitor\u2019s month",
+      "browser": "chromium",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "English: edit and copy an equipment email with the visitor\u2019s month",
+      "browser": "firefox",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "English: edit and copy an equipment email with the visitor\u2019s month",
+      "browser": "webkit",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "Separate website origin: open the widget by keyboard, ask, close and resume",
+      "browser": "chromium",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "Separate website origin: open the widget by keyboard, ask, close and resume",
+      "browser": "firefox",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "Separate website origin: open the widget by keyboard, ask, close and resume",
+      "browser": "webkit",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "Accessibility: standalone chat with a German answer",
+      "browser": "chromium",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "Accessibility: standalone chat with a German answer",
+      "browser": "firefox",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "Accessibility: standalone chat with a German answer",
+      "browser": "webkit",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "Accessibility: mobile project draft open",
+      "browser": "chromium",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "Accessibility: mobile project draft open",
+      "browser": "firefox",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "Accessibility: mobile project draft open",
+      "browser": "webkit",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "Standalone homepage: turn a school workshop enquiry into a German email",
+      "browser": "chromium",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "Standalone homepage: turn a school workshop enquiry into a German email",
+      "browser": "firefox",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "Standalone homepage: turn a school workshop enquiry into a German email",
+      "browser": "webkit",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "stakeholder preview: launch the German widget and recover from an unrelated question",
+      "browser": "chromium",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "stakeholder preview: launch the German widget and recover from an unrelated question",
+      "browser": "firefox",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "stakeholder preview: launch the German widget and recover from an unrelated question",
+      "browser": "webkit",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "English mobile: correct what the class measures, accept a draft, then ask a person",
+      "browser": "chromium",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "English mobile: correct what the class measures, accept a draft, then ask a person",
+      "browser": "firefox",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "English mobile: correct what the class measures, accept a draft, then ask a person",
+      "browser": "webkit",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "a teacher can choose between two classroom needs and prepare an enquiry on a phone",
+      "browser": "chromium",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "a teacher can choose between two classroom needs and prepare an enquiry on a phone",
+      "browser": "firefox",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "a teacher can choose between two classroom needs and prepare an enquiry on a phone",
+      "browser": "webkit",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "an English-speaking lab can offer equipment and prepare an email to the partnership contact",
+      "browser": "chromium",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "an English-speaking lab can offer equipment and prepare an email to the partnership contact",
+      "browser": "firefox",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "an English-speaking lab can offer equipment and prepare an email to the partnership contact",
+      "browser": "webkit",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "English phone widget: one Send, retained draft on failure, stable retry and receipt",
+      "browser": "chromium",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "English phone widget: one Send, retained draft on failure, stable retry and receipt",
+      "browser": "firefox",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "English phone widget: one Send, retained draft on failure, stable retry and receipt",
+      "browser": "webkit",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "German desktop: keep the project in the form while offline, then send when delivery recovers",
+      "browser": "chromium",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "German desktop: keep the project in the form while offline, then send when delivery recovers",
+      "browser": "firefox",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "German desktop: keep the project in the form while offline, then send when delivery recovers",
+      "browser": "webkit",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "Project form: prefill, edit, resume and review / de",
+      "browser": "chromium",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "Project form: prefill, edit, resume and review / de",
+      "browser": "firefox",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "Project form: prefill, edit, resume and review / de",
+      "browser": "webkit",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "Project form: prefill, edit, resume and review / en",
+      "browser": "chromium",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "Project form: prefill, edit, resume and review / en",
+      "browser": "firefox",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "Project form: prefill, edit, resume and review / en",
+      "browser": "webkit",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "Conversation repairs and session preferences / de / widget",
+      "browser": "chromium",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "Conversation repairs and session preferences / de / widget",
+      "browser": "firefox",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "Conversation repairs and session preferences / de / widget",
+      "browser": "webkit",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "Conversation repairs and session preferences / en / standalone",
+      "browser": "chromium",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "Conversation repairs and session preferences / en / standalone",
+      "browser": "firefox",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "Conversation repairs and session preferences / en / standalone",
+      "browser": "webkit",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "Floating widget: drag, keyboard positions, page scroll and resume across layouts",
+      "browser": "chromium",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "Floating widget: drag, keyboard positions, page scroll and resume across layouts",
+      "browser": "firefox",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "Floating widget: drag, keyboard positions, page scroll and resume across layouts",
+      "browser": "webkit",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "Leaving the page: collapse, reset and retain fields / de",
+      "browser": "chromium",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "Leaving the page: collapse, reset and retain fields / de",
+      "browser": "firefox",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "Leaving the page: collapse, reset and retain fields / de",
+      "browser": "webkit",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "Leaving the page: collapse, reset and retain fields / en",
+      "browser": "chromium",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "Leaving the page: collapse, reset and retain fields / en",
+      "browser": "firefox",
+      "status": "expected",
+      "attempts": 1
+    },
+    {
+      "title": "Leaving the page: collapse, reset and retain fields / en",
+      "browser": "webkit",
+      "status": "expected",
+      "attempts": 1
+    }
+  ]
+}

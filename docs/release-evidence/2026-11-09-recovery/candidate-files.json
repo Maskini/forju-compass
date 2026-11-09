@@ -1,0 +1,16 @@
+{
+  "app/components/clear-conversation.tsx": "b6d4c2a58bd4ea12bfd8d872308571d48ac9524b3b831834a61977d5e723b8ac",
+  "app/components/project-delivery.tsx": "9aa9f4f6b279d9a0952105b144865e1f1f1810e79232ab355e12e1b0b784601e",
+  "app/components/project-draft.tsx": "238746efa3ccb391609b7d24d91e47705aa9f25533f0d2ca2a47a73985ded78e",
+  "app/embed/panel.tsx": "5c7e6e1776f807f09552203031045ce89b5e7cc52d085fcc3dabc24b98b233e0",
+  "app/page.tsx": "dd298f8fdc7205a1fa61785801f303543ee71046198ef0ec06588e2fe463a2df",
+  "lib/server/feedback-email.ts": "168861a1e0153e8f196dcc6016ad9b49b5391936c86d5340c3dfc2f72c20a4f1",
+  "lib/server/project-submission.ts": "bb9ce4688c49aee7697fc35f2a2dba6468d9164a425de3afe653e1c8558dfffb",
+  "lib/use-compass-chat.ts": "34ec375d28cfcdfd58860165e406f72843c43ad77c6675201b0535a1be8f2a2e",
+  "public/compass-widget.js": "922542fdca41204fd05077b5afec79ac857e904b590653cb2efa32f31159a449",
+  "app/components/session-notice.css": "5c54bea86f16014678a883e1cbd2d5021c3cc488c364da7e3eb780ea69b67cae",
+  "app/components/session-notice.tsx": "2e93f2540ffa798bf9b3807927a6adc7f1ca6e0a26c4f0ca544f3392996925a2",
+  "lib/server/mail-diagnostics.ts": "3c830f74ba8b71173c71ba9b7cb198df7116cdb86effee3c409f5091514b1b8d",
+  "lib/tab-recovery.ts": "d3f246424adab76d894fc703c96d272dd30b93fa5ae17d0cd5c19ab0eff39dc9",
+  "lib/use-tab-recovery.ts": "98235135f70432a48b6a185861d98e6fb63219d3a8c8c5c83facb00621bc2569"
+}

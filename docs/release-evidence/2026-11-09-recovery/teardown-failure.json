@@ -1,0 +1,22 @@
+{
+  "stats": {
+    "startTime": "2026-11-09T19:49:27.988Z",
+    "duration": 252908.61500000002,
+    "expected": 182,
+    "skipped": 0,
+    "unexpected": 2,
+    "flaky": 0
+  },
+  "failures": [
+    {
+      "title": "Leaving the page: collapse, reset and retain fields / de",
+      "project": "webkit",
+      "error": "Error: route.fulfill: Fetch response has been disposed"
+    },
+    {
+      "title": "Leaving the page: collapse, reset and retain fields / en",
+      "project": "webkit",
+      "error": "Error: route.fulfill: Fetch response has been disposed"
+    }
+  ]
+}

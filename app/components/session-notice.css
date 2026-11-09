@@ -1,0 +1,4 @@
+.session-notice { font-size: .85rem; line-height: 1.5; color: #6b5a5a; margin: .75rem 0; }
+.session-notice summary { cursor: pointer; text-decoration: underline; text-underline-offset: .2em; }
+.session-notice summary:focus-visible { outline: 2px solid #a41565; outline-offset: 4px; border-radius: 4px; }
+.session-notice p { font-size: inherit; margin: .5rem 0; }

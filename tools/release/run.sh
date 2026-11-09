@@ -32,7 +32,7 @@ docker run -d --name "$box" --network none --shm-size=1g -v "$out:/out" \
   -e COMPASS_TEST_QUOTA=/tmp/compass-check-release/quota.sqlite forju-release-tools:local sleep infinity >/dev/null
 # Only app source, approved assets and test programs enter the isolated machine.
 git ls-files -co --exclude-standard -z -- app lib public tests knowledge/catalog.json knowledge/source-review.json knowledge/public-sources.json knowledge/language scripts \
-  tools/knowledge-checks tools/visitor-checks/'*.mjs' tools/visitor-checks/package.json tools/release \
+  tools/mail-status.mjs tools/knowledge-checks tools/visitor-checks/'*.mjs' tools/visitor-checks/package.json tools/release \
   tsconfig.json proxy.ts next.config.ts eslint.config.mjs postcss.config.mjs package.json .node-version \
   | COPYFILE_DISABLE=1 tar -cf - --null -T - | docker exec -i "$box" tar --warning=no-unknown-keyword -xf - -C /app
 # Freeze the same test inputs for the three independent tool containers.

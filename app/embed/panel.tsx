@@ -1,4 +1,5 @@
 "use client";
+import {SessionNotice} from "@/app/components/session-notice";
 import {EnquiryDraft} from "@/app/components/enquiry-draft";
 import {ChatChoices} from "@/app/components/chat-choices";
 import {useEffect,useEffectEvent,useRef,useState} from "react";
@@ -50,13 +51,13 @@ export default function CompassPanel({initialLanguage,widget=false}:{initialLang
   useEffect(()=>{drain()},[loading]);
   useEffect(()=>{document.documentElement.lang=lang},[lang]);
   useEffect(()=>{
-    if(!widget||window.parent===window)return;
+    if(!widget||!ready||window.parent===window)return;
     const message=(e:MessageEvent)=>handleMessage(e);
     const key=(e:KeyboardEvent)=>{if(e.key==="Escape")window.parent.postMessage({type:"forju:close"},"*")};
     window.addEventListener("message",message);window.addEventListener("keydown",key);
     window.parent.postMessage({type:"forju:ready"},"*");
     return ()=>{window.removeEventListener("message",message);window.removeEventListener("keydown",key)};
-  },[widget]);
+  },[widget,ready]);
   const reports = useRef<ReportControls>(null);
   const suggestions:Topic[]=["projects","volunteer","funding","idea"];
   return <main lang={lang} className={"embed-panel"+(widget?" widget-mode":"")}>
@@ -67,6 +68,7 @@ export default function CompassPanel({initialLanguage,widget=false}:{initialLang
     <div data-read-latest="start" className="embed-log" ref={transcript} tabIndex={0} aria-label={en?"Conversation":"Gespräch"}>
       <section className="greeting"><img src="/forju/origami/pink-airplane.png" alt=""/><h1>{en?"How can we help?":"Wie können wir dir helfen?"}</h1>
         <p>{en?"Ask about a school workshop, explore funding or tell us what you’d like to research.":"Frag nach einem Schulworkshop, finde Unterstützung oder erzähl uns, was du erforschen möchtest."}</p>
+        <SessionNotice language={lang}/>
         <h2>{en?"Popular questions":"Beliebte Fragen"}</h2>
         <div className="suggestions">{suggestions.map(t=><button className={t} key={t} disabled={!ready||loading} onClick={()=>submit(prompts[t][en?1:0])}><i><Icon type={t}/></i><span>{prompts[t][en?1:0]}</span><b aria-hidden="true">→</b></button>)}</div>
       </section>
