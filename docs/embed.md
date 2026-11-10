@@ -51,6 +51,8 @@ retry or open ForJu’s public contact page.
    public DE/EN catalog. This bypasses OpenAI and Supabase for visitor chat
    and search even when credentials are present. No provider key is required.
    Feedback email, if enabled, uses the existing server-side Resend settings.
+   For flexible AI answers, follow [the AI rollout instructions](ai-conversation.md).
+   Both surfaces use the same assistant; the installation snippet does not change.
 4. For a single Node host use a persistent local volume for COMPASS_QUOTA_DB,
    e.g. /data/compass/quota.sqlite. Node 24 is required. Local default:
    work/ai-quota.sqlite. Restarting preserves limits if the filesystem persists;

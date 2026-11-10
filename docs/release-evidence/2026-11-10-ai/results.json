@@ -1,0 +1,80 @@
+[
+  {
+    "surface": "separate-origin browser-only preview",
+    "viewport": "1440x900",
+    "language": "de",
+    "answers": [
+      {
+        "question": "Welche Workshops bietet ihr für Schulen an?",
+        "answer": "Für Schulen in Wien bietet ForJu Workshops zu Klima, Konflikten im Team, Medienkompetenz, Rollenbildern, Ethik, Stressbewältigung, Selbstmanagement und Zukunftsplanung an. Junge Trainer:innen arbeiten dabei mit den Lehrkräften zusammen. Die aktuellen Termine, Kosten und Verfügbarkeit solltest du direkt bei ForJu erfragen.\n\nWenn du möchtest, kann ich dir auch eine kurze Anfrage für einen bestimmten Workshop formulieren.",
+        "sources": [
+          {
+            "title": "Schulworkshops in Wien",
+            "url": "https://forju.at/de/projects/schulworkshops"
+          }
+        ],
+        "mode": "ai",
+        "preferredLanguage": "de",
+        "topic": "workshops"
+      },
+      {
+        "question": "Und wie melde ich meine Klasse dafür an?",
+        "answer": "Schreib Anja Hofer an anja.hofer@forju.at und nenne das gewünschte Workshop-Thema. Frag sie dabei nach einem passenden Termin für deine Klasse; aktuelle Kosten und die Durchführung solltest du ebenfalls bestätigen lassen.",
+        "sources": [
+          {
+            "title": "Schulworkshops in Wien",
+            "url": "https://forju.at/de/projects/schulworkshops"
+          }
+        ],
+        "mode": "ai",
+        "preferredLanguage": "de",
+        "topic": "workshops"
+      }
+    ],
+    "sourceOpened": "https://forju.at/de/projects/schulworkshops",
+    "reopened": true
+  },
+  {
+    "surface": "separate-origin browser-only preview",
+    "viewport": "390x844",
+    "language": "en",
+    "answers": [
+      {
+        "question": "Hi, we want to measure the air in our classroom. Could we borrow a sensor?",
+        "answer": "Schools and research teams can ask ForJu to find measuring equipment through its partners. A particular sensor, availability, dates and any cost need to be confirmed by the team.\n\nYou could use the resources enquiry to describe the classroom, the air measurements you want to take, the sensor needed, and your preferred dates. ForJu can then check with its partners.",
+        "sources": [
+          {
+            "title": "Rooms and equipment",
+            "url": "https://forju.at/en/services/ressourcen"
+          },
+          {
+            "title": "Enquire with ForJu",
+            "url": "https://forju.at/en/kontakt?intent=service&thema=ressourcen"
+          }
+        ],
+        "mode": "ai",
+        "preferredLanguage": "en",
+        "topic": "ressourcen"
+      },
+      {
+        "question": "What would that cost us?",
+        "answer": "ForJu’s resources page does not give a loan price. The cost for a sensor and your requested dates would need to be confirmed by the team.\n\nInclude the sensor type and preferred dates in the resources enquiry and ask ForJu to confirm the cost. This is a suggestion for your message, not a published fee.",
+        "sources": [
+          {
+            "title": "Rooms and equipment",
+            "url": "https://forju.at/en/services/ressourcen"
+          },
+          {
+            "title": "Enquire with ForJu",
+            "url": "https://forju.at/en/kontakt?intent=service&thema=ressourcen"
+          }
+        ],
+        "mode": "ai",
+        "preferredLanguage": "en",
+        "topic": "ressourcen"
+      }
+    ],
+    "sourceOpened": "https://forju.at/en/services/ressourcen",
+    "reopened": true
+  }
+]

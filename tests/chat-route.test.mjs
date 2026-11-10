@@ -1,3 +1,4 @@
+import {assistantHarness} from './helpers/assistant-harness.mjs';
 import MiniSearch from 'minisearch';
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
@@ -19,54 +20,31 @@ const knowledgeCode = ts.transpileModule(readFileSync(new URL('../lib/knowledge.
 new Function('require','exports',knowledgeCode)(id=>id==='minisearch'?MiniSearch:catalog,knowledgeModule);
 
 const compiled = ts.transpileModule(readFileSync(new URL('../app/api/chat/route.ts',import.meta.url),'utf8'), {compilerOptions:{module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2022}}).outputText;
-function setup({matches=[],searchError=null,answer=JSON.stringify({paragraphs:[{text:'Antwort',sources:[1]}],readMore:[1]}),status='completed'}={}) {
-  const calls={embeddings:[],responses:[]};
-  class OpenAI {
-    embeddings={create:async (input)=>{calls.embeddings.push(input);return {data:[{embedding:[0.1]}]};}};
-    responses={create:async (input)=>{calls.responses.push(input);return {status,output_text:answer};}};
-  }
-  const modules={"@/lib/server/request-body.mjs":requestBody,"@/lib/visitor-guidance":visitorGuidance,"@/lib/workshop-guide":workshopGuide,"@/lib/visitor-enquiry":{visitorEnquiry},"@/lib/dialogue":{guidedReply,isGuidedPrompt},"@/lib/conversation":conversation,"@/lib/server/ai-limit":{takeAiRequest:()=>0},openai:{default:OpenAI},'next/server':{NextResponse:Response},'@/lib/chat':chat,'@/lib/knowledge':knowledgeModule,'@/lib/server/public-retrieval':{retrievePublicKnowledge:async()=>{if(searchError)throw Error('Search failed');return matches;}}};
+function setup(options={}) {
+  const assistant=assistantHarness(catalog,options);
+  const modules={"@/lib/server/request-body.mjs":requestBody,"@/lib/visitor-guidance":visitorGuidance,"@/lib/workshop-guide":workshopGuide,"@/lib/visitor-enquiry":{visitorEnquiry},"@/lib/dialogue":{guidedReply,isGuidedPrompt},"@/lib/conversation":conversation,"@/lib/server/ai-limit":{takeAiRequest:()=>0},'@/lib/server/assistant':assistant,'next/server':{NextResponse:Response},'@/lib/chat':chat,'@/lib/knowledge':knowledgeModule};
   const exports={};
   new Function('require','exports',compiled)((id)=>id==='@/lib/offer-follow-up'?offerFollowUp:modules[id],exports);
-  return {POST:exports.POST,calls};
+  // Existing catalog-mode assertions intentionally still require zero AI calls.
+  return {POST:exports.POST,calls:{embeddings:assistant.calls.embeddings,responses:assistant.calls.responses}};
 }
 const request=(body)=>new Request('http://localhost/api/chat',{method:'POST',body:JSON.stringify(body)});
-const knowledge=[{title:catalog[0].indexTitle,content:'Untrusted DB text',source_url:'https://example.com/workshop',similarity:0.8}];
-
-test('chat request flow',async(t)=>{
- const mode=process.env.COMPASS_LOCAL_ONLY; process.env.COMPASS_LOCAL_ONLY='false';
- const original=process.env.OPENAI_API_KEY; process.env.OPENAI_API_KEY='test-only';
- try {
-  await t.test('invalid JSON is rejected before external calls',async()=>{
-   const {POST,calls}=setup();const result=await POST(new Request('http://localhost/api/chat',{method:'POST',body:'{'}));
-   assert.equal(result.status,400);assert.equal(calls.embeddings.length,0);
-  });
-  await t.test('empty retrieval returns fallback without generation',async()=>{
-   const {POST,calls}=setup();const result=await POST(request({message:'Wer?'}));
-   assert.equal(result.status,200);assert.deepEqual((await result.json()).sources,[]);assert.equal(calls.responses.length,0);
-  });
-  await t.test('follow-up reaches retrieval and model with safe source links',async()=>{
-   const {POST,calls}=setup({matches:knowledge});
-   const history=[{role:'user',content:'Schulworkshop?'},{role:'assistant',content:'Ein Workshop für Schulen.'}];
-   const result=await POST(request({message:'Und welche Themen gibt es?',history}));
-   assert.equal(result.status,200);assert.match(calls.embeddings[0].input,/Schulworkshop/);
-   assert.deepEqual(calls.responses[0].input.slice(0,2),history);assert.equal(calls.responses[0].store,false);
-   assert.deepEqual((await result.json()).sources,[{title:catalog[0].title,url:catalog[0].sourceUrl}]);
-  });
-  await t.test('missing citations return a cautious fallback',async()=>{
-   const {POST}=setup({matches:knowledge,answer:'Guaranteed money'});const result=await POST(request({message:'Welche Mondstationen gibt es?'}));
-   assert.match((await result.json()).answer,/keine gesicherte/);
-  });
-  await t.test('incomplete generation still returns a reviewed workshop answer',async()=>{
-    const result=await setup({matches:knowledge,status:'incomplete'}).POST(request({message:'TikTok Workshop'}));
-    const reply=await result.json();assert.equal(reply.mode,'library');assert.match(reply.answer,/TikTok/);assert.match(reply.sources[0].url,/schulworkshops/);
-  });
-  await t.test('a failed database does not turn an unknown topic into a fabricated answer',async()=>{
-    const result=await setup({searchError:Error()}).POST(new Request('http://localhost/api/chat',{method:'POST',headers:{'Accept-Language':'en'},body:JSON.stringify({message:'quantum penguins'})}));
-    const reply=await result.json();assert.match(reply.answer,/verified information/);assert.deepEqual(reply.sources,[]);
-  });
- } finally { if(mode===undefined) delete process.env.COMPASS_LOCAL_ONLY; else process.env.COMPASS_LOCAL_ONLY=mode;
-   if(original===undefined) delete process.env.OPENAI_API_KEY; else process.env.OPENAI_API_KEY=original; }
+test('AI owns conversation before catalog handlers; failures remain a labelled fallback',async()=>{
+ const mode=process.env.COMPASS_LOCAL_ONLY,original=process.env.OPENAI_API_KEY;
+ process.env.COMPASS_LOCAL_ONLY='false';process.env.OPENAI_API_KEY='synthetic-key';
+ try{
+  const answer=JSON.stringify({language:'de',topic:null,paragraphs:[{kind:'conversation',text:'Schön, dich kennenzulernen, Adam! Was möchtest du machen?',evidence:[]}],readMore:[]});
+  for(const message of ['my nam e is adam','Hallo','Ich weiß nicht, welches Angebot zu mir passt']){
+   const {POST,calls}=setup({answer});const response=await POST(request({message}));
+   assert.equal(response.headers.get('x-compass-answer-mode'),'openai');assert.equal((await response.json()).mode,'ai');assert.equal(calls.responses.length,1);
+   assert.equal(calls.responses[0].input.at(-1).content,message);assert.equal(calls.responses[0].store,false);
+  }
+  const h=setup({providerError:{status:401}});const fallback=await h.POST(request({message:'Welche Workshops bietet ihr für Schulen an?'}));
+  assert.equal(fallback.headers.get('x-compass-answer-mode'),'fallback');assert.equal(fallback.headers.get('x-compass-fallback'),'invalid-key');assert.match((await fallback.json()).sources[0].url,/schulworkshops/);
+  const rejected=await setup({answer:'unsafe reply'}).POST(request({message:'Wir sind doch in Graz, nicht Wien.',topic:'workshops',history:[{role:'user',content:'Schulworkshops?'},{role:'assistant',content:'Ein Workshop für Schulen.'}]}));
+  const rejectedBody=await rejected.json();assert.equal(rejected.headers.get('x-compass-fallback'),'invalid-evidence');assert.match(rejectedBody.answer,/verlässliche Antwort/);assert.match(rejectedBody.sources[0].url,/schulworkshops/);assert.doesNotMatch(rejectedBody.answer,/ZVR|Impressum/);
+  const invalid=await setup().POST(new Request('http://localhost/api/chat',{method:'POST',body:'{'}));assert.equal(invalid.status,400);
+ }finally{if(mode===undefined)delete process.env.COMPASS_LOCAL_ONLY;else process.env.COMPASS_LOCAL_ONLY=mode;if(original===undefined)delete process.env.OPENAI_API_KEY;else process.env.OPENAI_API_KEY=original;}
 });
 test('public catalog fallback handles bilingual questions and a contact follow-up without credentials',async()=>{
  const original=process.env.OPENAI_API_KEY;

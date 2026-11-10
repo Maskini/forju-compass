@@ -38,10 +38,14 @@ No browser-exposed environment variables are required.
 
 For the catalog-only release, set COMPASS_LOCAL_ONLY=true and configure
 COMPASS_EMBED_ORIGINS before building, as described in [the embed guide](embed.md).
-OpenAI and Supabase credentials are optional and used only by the separate AI mode.
+OpenAI credentials are optional and used only by AI mode. The new conversation
+path uses the reviewed public catalog directly and does not need Supabase. See
+[AI conversation architecture and live checks](ai-conversation.md) before enabling
+it; a key on the laptop does not configure Render.
 
 Optional server-only configuration:
-- OPENAI_CHAT_MODEL: override the existing model.
+- OPENAI_CHAT_MODEL: keep the priced model from `.env.example`; other overrides fail closed.
+- COMPASS_AI_DAILY_BUDGET_USD: conservative daily single-host allowance (default $0.25).
 - RESEND_API_KEY, FEEDBACK_FROM_EMAIL, FEEDBACK_TO_EMAIL: feedback delivery.
 - FEEDBACK_IP_HEADER: only a header the hosting proxy reliably overwrites.
 - KNOWLEDGE_FEEDBACK_DIR: requires durable private storage; omit on free Render.

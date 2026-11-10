@@ -1,0 +1,158 @@
+
+> forju-compass@0.1.0 test
+> node --test tests/*.test.mjs
+
+(node:62156) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///private/tmp/forju-project-flow/lib/assistant.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /private/tmp/forju-project-flow/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[compass-assistant] invalid-key
+[compass-assistant] provider-unavailable
+✔ only public records enter the bounded model context; internal sources are excluded (3.7875ms)
+✔ conversation retains exact wording, corrections and language requests without rewriting the user (0.481625ms)
+✔ fact citations must reference supplied passages; only server-owned links are rendered (0.963833ms)
+✔ acknowledgements and a useful clarification do not need fabricated citations (0.093834ms)
+✔ a next-step paragraph may reuse a verified contact cited in the preceding fact (0.481541ms)
+✔ a prepared message can link the current enquiry form without inventing factual citations (0.101667ms)
+✔ an offer without a separate request URL resolves to its verified contact page (0.17525ms)
+✔ internal evidence annotations cannot leak into visible prose (0.13275ms)
+✔ a verified contact link does not force an unrelated factual citation (0.086667ms)
+▶ AI transport is bounded and fails safely; local mode cannot make a provider call
+  ✔ one Responses call, no embedding or new provider (1.462417ms)
+  ✔ 401 opens a cooldown and is not mistaken for AI success (0.768459ms)
+  ✔ timeout (0.422625ms)
+  ✔ incomplete (0.378917ms)
+  ✔ unsafe (0.743916ms)
+  ✔ budget (1.049833ms)
+✔ AI transport is bounded and fails safely; local mode cannot make a provider call (5.776875ms)
+✔ budget reservations survive a restart and reset on the next UTC day (3.348416ms)
+(node:62157) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///private/tmp/forju-project-flow/lib/assistant.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /private/tmp/forju-project-flow/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[compass-assistant] invalid-key
+✔ AI owns conversation before catalog handlers; failures remain a labelled fallback (67.07925ms)
+✔ public catalog fallback handles bilingual questions and a contact follow-up without credentials (19.302208ms)
+✔ school registration uses reviewed contact details before any provider call (2.513417ms)
+✔ catalog follows an equipment request through cost and contact questions (2.452291ms)
+✔ ordinary conversation needs neither a knowledge citation nor a provider call (6.20625ms)
+✔ a mixed greeting still answers the actual question, and thanks does not erase the topic (3.554084ms)
+✔ choice explanations retain selection and next steps in both languages (14.499167ms)
+✔ explaining a choice adds information without inventing a selection (2.636958ms)
+✔ introductions with typos acknowledge the visitor and continue volunteering (3.119292ms)
+✔ introductions and corrections use only the visitor’s recent words, in either language (10.450958ms)
+✔ an introduction never swallows the question or its missing deadline (4.601583ms)
+✔ names are not inferred from roles, third parties, source contacts or assistant messages (1.199459ms)
+✔ an unsure class can describe its need, simplify the equipment answer and act on it (2.1515ms)
+✔ an English visitor can select by number, change their mind and ask for the actual workshop contact (1.655875ms)
+✔ specific questions, unsupported deadlines, and off-topic questions bypass the navigation choices (2.413667ms)
+✔ a bare yes does not guess which option, and the pronoun it does not imply IT jobs (1.081667ms)
+✔ a German workshop enquiry retains the town, workshop theme and the public workshop contact (6.963875ms)
+✔ equipment email uses the latest time in the visitor’s own words and only relevant details (34.334083ms)
+✔ clarify an unanchored draft request and handle bare German months and uncertain dates (1.231584ms)
+✔ a new equipment request leaves the previous workshop location and month out of the draft (0.796334ms)
+✔ a mixed workshop question covers both the location and current price (24.305333ms)
+✔ a corrected month replaces the old month in a bilingual equipment draft (35.597583ms)
+✔ both the cited destination and answer topic match visitor goals in German and English (15.068042ms)
+✔ a visitor can change the subject to an unrelated question and recover via a suggestion (0.841208ms)
+✔ a receipt or introduction enquiry keeps the right public destination through to an email draft (1.715542ms)
+✔ a visitor can replace a rejected goal and reach the right person, without carrying over the old loan (1.081209ms)
+✔ explicit corrections replace the device or measurement, before and after drafting (2.980916ms)
+✔ misunderstandings can be repaired or taken to a verified human contact (1.385458ms)
+✔ plain language and a price follow-up stay with the specific workshop (1.563708ms)
+✔ questions and additive contrasts retain their full meaning (0.045375ms)
+✔ two misses offer a way out instead of cycling through the same clarification (1.006709ms)
+✔ support enquiries answer the requested detail and cite a page the visitor can act on (8.812792ms)
+✔ teachers can describe the situation without knowing the official workshop title (5.718542ms)
+✔ two classroom needs give a choice; both numbered and named replies reach the right workshop contact (1.347625ms)
+✔ a supporting organisation gets its partnership form and an editable offer, while a borrower gets the loan form (0.993083ms)
+✔ campaign goals stay distinct from reimbursements and PayPal instructions stay within the FAQ (0.636042ms)
+✔ additional visitor phrasings keep offers, requests and unrelated tasks separate (5.441833ms)
+✔ a teacher can ask about both suggested workshops without being promised a combined session (0.878208ms)
+✔ November 7 independent bilingual knowledge scenarios keep facts, topic and exact source (17.421333ms)
+✔ a specific device-availability follow-up never turns into a dated seminar offer (0.960917ms)
+✔ logistical follow-ups keep their offer and distinguish published facts from missing details (9.737708ms)
+✔ a logistical resolver does not reuse an old offer for named unrelated subjects (0.094708ms)
+✔ final visitor goals retain the offer through contact and logistics questions (8.147209ms)
+✔ session preferences, clarification and role-specific passages through the chat route (10.43475ms)
+✔ explicit name survives the history window and stays inside one session (1.115916ms)
+✔ language requests are commands, not workshop subjects or untrusted language values (0.052709ms)
+✔ project introduction: own-pond-de (0.500833ms)
+✔ project introduction: own-pond-en (0.526708ms)
+✔ project introduction: idea-garden-de (0.533542ms)
+✔ project introduction: working-bees-en (0.382291ms)
+✔ project introduction: building-weather-de (0.4885ms)
+✔ project introduction: project-typo-en (0.379083ms)
+✔ project introduction: new-project-after-workshop-de (0.9415ms)
+✔ project introduction: project-to-equipment-en (0.618416ms)
+✔ project introduction: project-to-funding-de (0.490708ms)
+✔ project introduction: project-correct-choice-en (0.886958ms)
+✔ project introduction: specific-project-question-en (0.884375ms)
+✔ project introduction: forju-projects-question-de (0.5755ms)
+✔ project introduction: unrelated-room-text-en (0.63275ms)
+✔ fresh everyday questions select supported facts and preserve missing details (23.789833ms)
+(node:62158) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///private/tmp/forju-project-flow/lib/chat.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /private/tmp/forju-project-flow/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ accepts first questions and complete follow-up exchanges (1.037792ms)
+✔ rejects malformed, excessive and privileged conversation inputs (0.156917ms)
+✔ rejects weak and malformed knowledge and limits context (1.721833ms)
+✔ only permits ordinary HTTP source links (0.184291ms)
+✔ feedback validates required fields, bounds, metadata and optional email (4.506666ms)
+✔ API sends only validated reports, stable idempotency keys and safe success (44.190166ms)
+✔ API rejects malformed, oversized, cross-site and wrong-content requests before sending (7.208709ms)
+✔ honeypot is ignored and rate limit returns Retry-After without sending (1.206875ms)
+✔ missing configuration and provider failures never claim success or leak details (2.340542ms)
+✔ rate limiter allows five attempts and expires after ten minutes (0.11825ms)
+✔ email escapes markup, strips URL secrets and leaves nonexistent IDs out (0.421333ms)
+✔ configuration requires the fixed server receiver and a valid sender (0.470583ms)
+✔ production feedback uses a domain sender and ForJu receiver independently of account login (0.568292ms)
+✔ SDK receives server sender/receiver, optional Reply-To and idempotency; rejection is surfaced (17.108959ms)
+✔ both environments can use the explicitly selected iCloud account inbox (0.430375ms)
+✔ obsolete flags cannot override the configured recipient or enable a sandbox ForJu send (0.174834ms)
+✔ embedded reports allow one selected exchange on the public origin (1.090417ms)
+(node:62160) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///private/tmp/forju-project-flow/lib/feedback.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /private/tmp/forju-project-flow/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ unknown and superseded database rows cannot become knowledge (1.984417ms)
+✔ catalog content and statuses win over manipulated database payloads (0.88775ms)
+✔ internal staff guidance is excluded and every entry has provenance (0.251542ms)
+✔ invalid scores and duplicate rows do not create misleading sources (0.088791ms)
+✔ citations must exist and refer to supplied evidence (0.158625ms)
+✔ feedback requires explicit opt-in and bounded content (0.14ms)
+✔ structured answers validate evidence without visible citation clutter (0.165417ms)
+✔ read-more links are optional and must be supported by the answer (0.168833ms)
+✔ public provenance gate rejects internal documents even when active (11.360625ms)
+✔ new topics are retrievable before vector import and planned work stays labelled (0.356291ms)
+✔ launcher and panel prompts retrieve the intended public topic in German and English (18.303958ms)
+✔ delivery lookup uses only a GET with the receipt ID and never prints message contents (28.534209ms)
+✔ sending-only credentials, missing records, errors and unknown states are explicit without provider content (11.5945ms)
+✔ acceptance logger emits only whitelisted receipt metadata, not unsafe provider strings (56.653625ms)
+✔ missing or sandbox sender disables direct mail (3.957833ms)
+✔ project sender can use a different domain without changing the fixed ForJu receiver (1.848125ms)
+✔ no confirmation, alternative recipient, chat history, invalid reply-to, oversize or cross-site must not call transport (15.378917ms)
+✔ mock provider rejection and retry use identical key; only provider acceptance yields success (1.985125ms)
+✔ project delivery uses the same selected iCloud recipient as feedback (0.306084ms)
+(node:62163) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///private/tmp/forju-project-flow/lib/project-seed.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /private/tmp/forju-project-flow/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ draft uses the visitor’s description, never assistant suggestions or unrelated follow-ups (1.073458ms)
+✔ explicit titles and goals carry across turns without adding stale project details (0.13775ms)
+✔ retrieval queries only public titles, never private document content (1.215709ms)
+✔ one visitor cannot spend the shared budget; restart preserves both counters (8.287833ms)
+✔ catalog search cannot bypass the AI budget with an embeddings or database call (51.237709ms)
+✔ per-tab recovery survives reads without extending expiry; expired, malformed and future data are removed (2.044291ms)
+✔ blocked storage stays usable in memory and never throws; oversize data removes stale recovery (0.571583ms)
+✔ clear removes chat and project in this surface only; distinct tabs cannot read each other (0.104625ms)
+✔ restore validates source URLs and preserves project idempotency and accepted identity, not an open dialog (1.7515ms)
+ℹ tests 122
+ℹ suites 0
+ℹ pass 122
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1131.845208

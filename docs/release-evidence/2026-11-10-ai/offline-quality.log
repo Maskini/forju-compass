@@ -1,0 +1,189 @@
+Cache is disabled.
+Starting evaluation eval-gy0-2026-11-10T12:19:50
+Running 126 test cases (up to 1 at a time)...
+
+┌────────────────────────────────────────────────────────────┬────────────────────────────────────────────────────────────┐
+│ caseId                                                     │ [compass-local-http] {{caseId}}                            │
+├────────────────────────────────────────────────────────────┼────────────────────────────────────────────────────────────┤
+│ de-teacher                                                 │ [PASS]                                                     │
+│                                                            │ {"mode":"library","topic":"workshop-konflikte","answer":"… │
+│                                                            │ einen Schulworkshop zu vereinbaren, schreib Anja Hofer an  │
+│                                                            │ anja.hofer@forju.at und frag nach einem Termin für deine   │
+│                                                            │ Klasse.","sources":[{"title":"Schulworkshops in            │
+│                                                            │ Wien","url":"https://for...                                │
+├────────────────────────────────────────────────────────────┼────────────────────────────────────────────────────────────┤
+│ en-paraphrase                                              │ [PASS]                                                     │
+│                                                            │ {"mode":"library","topic":"workshop-konflikte","answer":"… │
+│                                                            │ conflict\n\nStudents practise recognising conflict and     │
+│                                                            │ finding solutions through role play and group              │
+│                                                            │ exercises.","sources":[{"title":"School workshops at       │
+│                                                            │ ForJu","url":"https://forju.at/...                         │
+├────────────────────────────────────────────────────────────┼────────────────────────────────────────────────────────────┤
+│ de-typo                                                    │ [PASS]                                                     │
+│                                                            │ {"mode":"library","topic":"workshop-klima","answer":"ForJu │
+│                                                            │ bietet diese Schulworkshops an. Um einen Schulworkshop zu  │
+│                                                            │ vereinbaren, schreib Anja Hofer an anja.hofer@forju.at und │
+│                                                            │ frag nach einem Termin für deine                           │
+│                                                            │ Klasse.\n\nKlimadetektiv:innen – unser...                  │
+├────────────────────────────────────────────────────────────┼────────────────────────────────────────────────────────────┤
+│ en-instrument                                              │ [PASS]                                                     │
+│                                                            │ {"mode":"library","topic":"ressourcen","answer":"Schools   │
+│                                                            │ and research teams can ask ForJu to find space or          │
+│                                                            │ measuring equipment through its partners. ForJu helps      │
+│                                                            │ coordinate supervision and liability. A particular device, │
+│                                                            │ date or price needs confirm...                             │
+├────────────────────────────────────────────────────────────┼────────────────────────────────────────────────────────────┤
+│ de-funding                                                 │ [PASS]                                                     │
+│                                                            │ {"mode":"library","topic":"finanzierung","answer":"ForJu   │
+│                                                            │ sponsert Projekte nicht selbst. Das Team hilft dir bei der │
+│                                                            │ Kostenschätzung und vermittelt Kontakte zu möglichen       │
+│                                                            │ Förderpartnern. Beschreibe dein Projekt in der             │
+│                                                            │ Finanzierungsanfrage.","sources...                         │
+├────────────────────────────────────────────────────────────┼────────────────────────────────────────────────────────────┤
+│ en-correction                                              │ [PASS]                                                     │
+│                                                            │ {"mode":"draft","topic":"ressourcen","answer":"Hello ForJu │
+│                                                            │ team,\n\nOur class would like to borrow a sensor to        │
+│                                                            │ measure water quality. Could you confirm availability and  │
+│                                                            │ any cost?\n\nThank you!","sources":[{"title":"Rooms and    │
+│                                                            │ equipment","url":"http...                                  │
+├────────────────────────────────────────────────────────────┼────────────────────────────────────────────────────────────┤
+│ de-switch                                                  │ [PASS]                                                     │
+│                                                            │ {"mode":"library","topic":"finanzierung","answer":"Beim    │
+│                                                            │ Finanzierungsservice hilft ForJu euch, Kosten              │
+│                                                            │ abzuschätzen, die Machbarkeit zu prüfen und mögliche       │
+│                                                            │ Förderpartner zu finden. Der Service beschreibt            │
+│                                                            │ Vermittlung statt direktem Sponsoring. Besch...            │
+├────────────────────────────────────────────────────────────┼────────────────────────────────────────────────────────────┤
+│ en-ambiguous                                               │ [PASS] {"mode":"conversation","answer":"What brings you to │
+│                                                            │ ForJu: are you looking for something for your class,       │
+│                                                            │ working on your own project, or hoping to                  │
+│                                                            │ volunteer?","sources":[],"suggestions":["For my            │
+│                                                            │ class","For my project","Volunteer my time"]}              │
+├────────────────────────────────────────────────────────────┼────────────────────────────────────────────────────────────┤
+│ en-make-up-fee                                             │ [PASS] {"mode":"library","topic":"workshops","answer":"For │
+│                                                            │ your class in Vienna, you can ask about workshops on       │
+│                                                            │ climate, team conflict, media literacy or gender roles.    │
+│                                                            │ Other topics include ethics, managing stress,              │
+│                                                            │ self-management and planning for the fut...                │
+├────────────────────────────────────────────────────────────┼────────────────────────────────────────────────────────────┤
+│ de-deadline                                                │ [PASS] {"mode":"library","topic":"workshops","answer":"Die │
+│                                                            │ Seite zu den Schulworkshops nennt keine Anmeldefrist. Um   │
+│                                                            │ einen Schulworkshop zu vereinbaren, schreib Anja Hofer an  │
+│                                                            │ anja.hofer@forju.at und frag nach einem Termin für deine   │
+│                                                            │ Klasse.","sources":[{"t...                                 │
+├────────────────────────────────────────────────────────────┼────────────────────────────────────────────────────────────┤
+│ en-eligibility                                             │ [PASS]                                                     │
+│                                                            │ {"mode":"library","topic":"finanzierung","answer":"The     │
+│                                                            │ funding page does not confirm eligibility based on age or  │
+│                                                            │ location. ForJu does not directly sponsor projects.        │
+│                                                            │ Describe your idea so the team can help you find partners  │
+│                                                            │ and check their criteria...                                │
+├────────────────────────────────────────────────────────────┼────────────────────────────────────────────────────────────┤
+│ de-inventory                                               │ [PASS]                                                     │
+│                                                            │ {"mode":"library","topic":"ressourcen","answer":"Schulen   │
+│                                                            │ und Forschungsteams können über ForJu bei Partnern Räume   │
+│                                                            │ und Messgeräte anfragen. ForJu hilft bei der Organisation  │
+│                                                            │ und klärt Fragen zu Aufsicht und Haftung. Ob ein           │
+│                                                            │ bestimmtes Gerät zu eurem ...                              │
+├────────────────────────────────────────────────────────────┼────────────────────────────────────────────────────────────┤
+│ hold-de-donations                                          │ [PASS] {"mode":"library","topic":"spenden","answer":"Mit   │
+│                                                            │ den Spenden plant ForJu unter anderem Material für         │
+│                                                            │ Jugendprojekte, Fahrten zu Wettbewerben und kleine         │
+│                                                            │ Beiträge für Abschlussarbeiten zu finanzieren. Weitere     │
+│                                                            │ Bereiche sind Schulworkshops, Veranstalt...                │
+├────────────────────────────────────────────────────────────┼────────────────────────────────────────────────────────────┤
+│ hold-en-partner                                            │ [PASS]                                                     │
+│                                                            │ {"mode":"library","topic":"partnerpool","answer":"For      │
+│                                                            │ partnerships, email Alexander Bayer at                     │
+│                                                            │ alexander.bayer@forju.at or use the partnership            │
+│                                                            │ form.","sources":[{"title":"Partnership                    │
+│                                                            │ enquiries","url":"https://forju.at/en/kontakt?intent=part… │
+├────────────────────────────────────────────────────────────┼────────────────────────────────────────────────────────────┤
+│ fresh-de-partners                                          │ [PASS]                                                     │
+│                                                            │ {"mode":"library","topic":"finanzierung","answer":"ForJu   │
+│                                                            │ sponsert Projekte nicht selbst. Das Team hilft dir bei der │
+│                                                            │ Kostenschätzung und vermittelt Kontakte zu möglichen       │
+│                                                            │ Förderpartnern. Beschreibe dein Projekt in der             │
+│                                                            │ Finanzierungsanfrage.","sources...                         │
+├────────────────────────────────────────────────────────────┼────────────────────────────────────────────────────────────┤
+│ fresh-en-workshop                                          │ [PASS] {"mode":"library","topic":"workshops","answer":"To  │
+│                                                            │ arrange a school workshop, email Anja Hofer at             │
+│                                                            │ anja.hofer@forju.at and ask about a date for your          │
+│                                                            │ class.","sources":[{"title":"Vienna school                 │
+│                                                            │ workshops","url":"https://forju.at/en/projects/schulwork.… │
+├────────────────────────────────────────────────────────────┼────────────────────────────────────────────────────────────┤
+│ hold-en-booking                                            │ [PASS] {"mode":"library","topic":"workshops","answer":"To  │
+│                                                            │ arrange a school workshop, email Anja Hofer at             │
+│                                                            │ anja.hofer@forju.at and ask about a date for your          │
+│                                                            │ class.","sources":[{"title":"Vienna school                 │
+│                                                            │ workshops","url":"https://forju.at/en/projects/schulwork.… │
+├────────────────────────────────────────────────────────────┼────────────────────────────────────────────────────────────┤
+│ hold-de-room                                               │ [PASS]                                                     │
+│                                                            │ {"mode":"library","topic":"ressourcen","answer":"Schulen   │
+│                                                            │ und Forschungsteams können über ForJu bei Partnern Räume   │
+│                                                            │ und Messgeräte anfragen. ForJu hilft bei der Organisation  │
+│                                                            │ und klärt Fragen zu Aufsicht und Haftung. Ob ein           │
+│                                                            │ bestimmtes Gerät zu eurem ...                              │
+├────────────────────────────────────────────────────────────┼────────────────────────────────────────────────────────────┤
+│ hold-en-finance                                            │ [PASS]                                                     │
+│                                                            │ {"mode":"library","topic":"finanzierung","answer":"ForJu   │
+│                                                            │ does not sponsor projects directly. The team can help      │
+│                                                            │ estimate costs and introduce you to potential funding      │
+│                                                            │ partners. Describe your project in the funding             │
+│                                                            │ enquiry.","sources":[{"title":"Proj...                     │
+├────────────────────────────────────────────────────────────┼────────────────────────────────────────────────────────────┤
+│ knowledge-devices-de                                       │ [PASS]                                                     │
+│                                                            │ {"mode":"library","topic":"ressourcen","answer":"Schulen   │
+│                                                            │ und Forschungsteams können über ForJu bei Partnern Räume   │
+│                                                            │ und Messgeräte anfragen. ForJu hilft bei der Organisation  │
+│                                                            │ und klärt Fragen zu Aufsicht und Haftung. Ob ein           │
+│                                                            │ bestimmtes Gerät zu eurem ...                              │
+├────────────────────────────────────────────────────────────┼────────────────────────────────────────────────────────────┤
+│ knowledge-equipment-typo-en                                │ [PASS]                                                     │
+│                                                            │ {"mode":"library","topic":"ressourcen","answer":"Schools   │
+│                                                            │ and research teams can ask ForJu to find space or          │
+│                                                            │ measuring equipment through its partners. ForJu helps      │
+│                                                            │ coordinate supervision and liability. A particular device, │
+│                                                            │ date or price needs confirm...                             │
+├────────────────────────────────────────────────────────────┼────────────────────────────────────────────────────────────┤
+│ knowledge-devices-typo-de                                  │ [PASS]                                                     │
+│                                                            │ {"mode":"library","topic":"ressourcen","answer":"Schulen   │
+│                                                            │ und Forschungsteams können über ForJu bei Partnern Räume   │
+│                                                            │ und Messgeräte anfragen. ForJu hilft bei der Organisation  │
+│                                                            │ und klärt Fragen zu Aufsicht und Haftung. Ob ein           │
+│                                                            │ bestimmtes Gerät zu eurem ...                              │
+├────────────────────────────────────────────────────────────┼────────────────────────────────────────────────────────────┤
+│ knowledge-expert-en                                        │ [PASS] {"mode":"library","topic":"know-how","answer":"If   │
+│                                                            │ you are stuck implementing a project, ForJu can connect    │
+│                                                            │ you with practical expertise from academia or industry,    │
+│                                                            │ including technology and business. Use the consultation    │
+│                                                            │ form to explain the problem a...                           │
+├────────────────────────────────────────────────────────────┼────────────────────────────────────────────────────────────┤
+│ knowledge-expert-de                                        │ [PASS] {"mode":"library","topic":"know-how","answer":"Wenn │
+│                                                            │ ihr bei der Umsetzung eines Projekts fachlich feststeckt,  │
+│                                                            │ vermittelt ForJu Unterstützung aus Wissenschaft und        │
+│                                                            │ Wirtschaft, etwa zu Technik oder Geschäftsfragen.          │
+│                                                            │ Beschreibt in der Beratungsanfrage ...                     │
+├────────────────────────────────────────────────────────────┼────────────────────────────────────────────────────────────┤
+│ knowledge-seminar-en                                       │ [PASS] {"mode":"library","topic":"seminare","answer":"The  │
+│                                                            │ April 2024 project description covers seminars on research │
+│                                                            │ funding in Austria, pitch decks for research projects,     │
+│                                                            │ public speaking, leadership and project management.        │
+│                                                            │ Participants learn and exchang...                          │
+└────────────────────────────────────────────────────────────┴────────────────────────────────────────────────────────────┘
+... 101 more rows not shown ...
+
+✓ Eval complete (ID: eval-gy0-2026-11-10T12:19:50)
+
+» View results: promptfoo view
+» Share with your team: https://promptfoo.app
+» Feedback: https://promptfoo.dev/feedback
+
+
+Results:
+  ✓ 126 passed (100%)
+  0 failed (0%)
+  0 errors (0%)
+Duration: 2s (concurrency: 1)
+
+Writing output to /out/promptfoo.json

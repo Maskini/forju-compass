@@ -1,0 +1,48 @@
+[
+  {
+    "id": "fresh-name-project",
+    "language": "en",
+    "turns": [
+      {
+        "question": "my nam e is Adam",
+        "required": [
+          "Adam"
+        ],
+        "forbidden": [
+          "no verified information|which ForJu service"
+        ]
+      },
+      {
+        "question": "I'd like to build a little robot with my class, but I don't know where to start.",
+        "required": [
+          "robot|goal|idea|project"
+        ]
+      },
+      {
+        "question": "Can you send a project about that for us right now?",
+        "required": [
+          "can't|cannot|form|Send"
+        ],
+        "forbidden": [
+          "I have sent|successfully submitted|server receipt|backend|API",
+          "ForJu[’']s six.step|official six.step"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "fresh-unrelated-paste",
+    "language": "de",
+    "turns": [
+      {
+        "question": "In meiner Workspace-App steht: You can archive the room or move it to Trash in Access & ownership. Trashed rooms can be restored for 30 days. Was bedeutet das?",
+        "required": [
+          "ForJu|Workspace|App|Archiv|archiv|Papierkorb"
+        ],
+        "forbidden": [
+          "Messgeräte|Laborräume|Ressourcenformular"
+        ]
+      }
+    ]
+  }
+]

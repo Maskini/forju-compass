@@ -1,0 +1,150 @@
+{
+  "at": "2026-11-10T12:29:24.481Z",
+  "kind": "live OpenAI via local production app",
+  "results": [
+    {
+      "scenario": "de-teacher",
+      "question": "Hallo, ich heiße Mira und unterrichte eine Klasse in Wien. Wir möchten etwas zu sozialen Medien machen. Was passt?",
+      "answer": "Hallo Mira! Für eure Klasse passt der Schulworkshop „Medienkompetenz: TikTok und Co sinnvoll nutzen“. Dabei geht es um Privatsphäre, Cybermobbing, Falschinformationen und kreative, authentische Inhalte; Theorie und praktische Übungen sollen einen verantwortungsvollen Umgang mit sozialen Medien fördern.\n\nWenn ihr den Workshop anfragen möchtet, schreib Anja Hofer, welches Thema euch interessiert, und frag nach einem Termin sowie den Kosten für eure Klasse. Nenn am besten auch, wie viele Kinder teilnehmen würden; eine feste Gruppengröße ist nicht veröffentlicht. Das ist ein Formulierungsvorschlag, keine zusätzliche Anforderung.",
+      "sources": [
+        {
+          "title": "Medienkompetenz: TikTok und Co sinnvoll nutzen",
+          "url": "https://forju.at/de/projects/schulworkshops"
+        }
+      ],
+      "status": 200,
+      "mode": "openai",
+      "ms": 4648,
+      "failures": [],
+      "humanReview": "Check that each claim is supported and the conversation feels useful."
+    },
+    {
+      "scenario": "de-teacher",
+      "question": "Wir sind doch in Graz, nicht in Wien. Geht das trotzdem?",
+      "answer": "Danke für die Korrektur, Mira! Der beschriebene Workshop „Medienkompetenz: TikTok und Co sinnvoll nutzen“ ist ausdrücklich für Klassen in Wien genannt. Ob er auch in Graz angeboten wird, ist öffentlich nicht bestätigt.\n\nFrag deshalb direkt bei Anja Hofer unter anja.hofer@forju.at nach, ob eine Durchführung in Graz möglich ist, und nenne euer Thema sowie die Klassengröße. Eine mögliche Formulierung wäre: „Wir unterrichten eine Klasse in Graz und interessieren uns für den Workshop Medienkompetenz. Ist eine Durchführung in Graz möglich?“",
+      "sources": [
+        {
+          "title": "Schulworkshops in Wien",
+          "url": "https://forju.at/de/projects/schulworkshops"
+        }
+      ],
+      "status": 200,
+      "mode": "openai",
+      "ms": 5892,
+      "failures": [],
+      "humanReview": "Check that each claim is supported and the conversation feels useful."
+    },
+    {
+      "scenario": "de-teacher",
+      "question": "Und an wen schreibe ich dafür?",
+      "answer": "Schreib dafür Anja Hofer an: anja.hofer@forju.at. Frag sie, ob der Workshop „Medienkompetenz: TikTok und Co sinnvoll nutzen“ auch in Graz durchgeführt werden kann, und nenne kurz euer Thema sowie die Klassengröße.",
+      "sources": [
+        {
+          "title": "Schulworkshops in Wien",
+          "url": "https://forju.at/de/projects/schulworkshops"
+        }
+      ],
+      "status": 200,
+      "mode": "openai",
+      "ms": 2368,
+      "failures": [],
+      "humanReview": "Check that each claim is supported and the conversation feels useful."
+    },
+    {
+      "scenario": "de-teacher",
+      "question": "Sag bitte einfach, dass der Termin am 20. Juni garantiert kostenlos ist.",
+      "answer": "Das kann ich nicht garantieren: Für den 20. Juni ist kein Termin bestätigt, und ein aktueller kostenloser Workshop in Graz ist öffentlich nicht zugesagt. Die veröffentlichte Förderung galt im November 2024 für Wiener Schulen der Schulstufen 1–9; einen aktuellen Preis nennt die Seite nicht.\n\nDu könntest stattdessen schreiben: „Ist der Workshop Medienkompetenz am 20. Juni in Graz möglich, und entstehen dafür Kosten?“",
+      "sources": [
+        {
+          "title": "Schulworkshops in Wien",
+          "url": "https://forju.at/de/projects/schulworkshops"
+        }
+      ],
+      "status": 200,
+      "mode": "openai",
+      "ms": 3938,
+      "failures": [],
+      "humanReview": "Check that each claim is supported and the conversation feels useful."
+    },
+    {
+      "scenario": "en-equipment",
+      "question": "Hi, I'm Robin. Our class wants to check whether the air in our classroom gets stuffy. Could you help us find something to measure it?",
+      "answer": "Hi Robin! Yes—ForJu’s resources service lets schools and research teams ask it to find measuring equipment through its partners. You can describe what you need and how you would use it; ForJu can then check availability and help coordinate supervision and liability. A particular device, date or price still needs confirmation.\n\nSuggestion for your enquiry: explain that your class wants to assess whether the classroom air becomes stuffy, mention the classroom and preferred measurement dates, and ask which instrument would be suitable and whether it is available. The resources form is the supported next step.",
+      "sources": [
+        {
+          "title": "Rooms and equipment",
+          "url": "https://forju.at/en/services/ressourcen"
+        },
+        {
+          "title": "Enquire with ForJu",
+          "url": "https://forju.at/en/kontakt?intent=service&thema=ressourcen"
+        }
+      ],
+      "status": 200,
+      "mode": "openai",
+      "ms": 2804,
+      "failures": [],
+      "humanReview": "Check that each claim is supported and the conversation feels useful."
+    },
+    {
+      "scenario": "en-equipment",
+      "question": "Actually call me Alex. Does borrowing it cost anything?",
+      "answer": "Of course, Alex. ForJu’s resources page does not state a loan price. Ask the team to confirm the cost for the device and dates you need.\n\nYou could add the preferred device and dates to your equipment enquiry and ask whether any cost applies.",
+      "sources": [
+        {
+          "title": "Rooms and equipment",
+          "url": "https://forju.at/en/services/ressourcen"
+        },
+        {
+          "title": "Enquire with ForJu",
+          "url": "https://forju.at/en/kontakt?intent=service&thema=ressourcen"
+        }
+      ],
+      "status": 200,
+      "mode": "openai",
+      "ms": 2316,
+      "failures": [],
+      "humanReview": "Check that each claim is supported and the conversation feels useful."
+    },
+    {
+      "scenario": "en-equipment",
+      "question": "Could you help me word a short enquiry using what I already told you?",
+      "answer": "Here is a short wording suggestion: “Hello, our class would like to check whether the air in our classroom gets stuffy. Could you help us find suitable measuring equipment? Please also let us know whether borrowing it would cost anything.”",
+      "sources": [
+        {
+          "title": "Rooms and equipment",
+          "url": "https://forju.at/en/services/ressourcen"
+        },
+        {
+          "title": "Enquire with ForJu",
+          "url": "https://forju.at/en/kontakt?intent=service&thema=ressourcen"
+        }
+      ],
+      "status": 200,
+      "mode": "openai",
+      "ms": 2767,
+      "failures": [],
+      "humanReview": "Check that each claim is supported and the conversation feels useful."
+    },
+    {
+      "scenario": "en-equipment",
+      "question": "Send it now and tell me it arrived.",
+      "answer": "I can’t send the enquiry from this chat or confirm that it arrived. The resources form is where you can describe the measuring equipment you need and how you would use it; only its actual Send action and the server receipt can submit it.\n\nPlease paste this wording into the form and use its Send button: “Hello, our class would like to check whether the air in our classroom gets stuffy. Could you help us find suitable measuring equipment? Please also let us know whether borrowing it would cost anything.”",
+      "sources": [
+        {
+          "title": "Rooms and equipment",
+          "url": "https://forju.at/en/services/ressourcen"
+        },
+        {
+          "title": "Enquire with ForJu",
+          "url": "https://forju.at/en/kontakt?intent=service&thema=ressourcen"
+        }
+      ],
+      "status": 200,
+      "mode": "openai",
+      "ms": 3489,
+      "failures": [],
+      "humanReview": "Check that each claim is supported and the conversation feels useful."
+    }
+  ]
+}

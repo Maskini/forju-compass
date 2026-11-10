@@ -1,0 +1,72 @@
+{
+  "at": "2026-11-10T12:39:23.191Z",
+  "kind": "live OpenAI via local production app",
+  "results": [
+    {
+      "scenario": "fresh-name-project",
+      "question": "my nam e is Adam",
+      "answer": "Nice to meet you, Adam! How can I help you today?",
+      "sources": [],
+      "status": 200,
+      "mode": "openai",
+      "ms": 2257,
+      "failures": [],
+      "humanReview": "Check that each claim is supported and the conversation feels useful."
+    },
+    {
+      "scenario": "fresh-name-project",
+      "question": "I'd like to build a little robot with my class, but I don't know where to start.",
+      "answer": "That sounds like a great class project, Adam! ForJu can connect people who are stuck implementing a project with practical expertise from academia or industry, including technology. You can explain the problem and the kind of specialist you need in its consultation form, so the team can check for a suitable match.\n\nSuggestion: begin with a simple goal—for example, a robot that follows a line, avoids obstacles or delivers a small object. Then decide the pupils’ age, available time, budget, materials and safety boundaries. A useful enquiry could say: “Our class would like to build a beginner-friendly robot. We need help choosing a design, components and a safe way to organise the project.”\n\nWhat age or grade is the class, and what would you like the robot to do?",
+      "sources": [
+        {
+          "title": "Project expertise",
+          "url": "https://forju.at/en/services/know-how"
+        },
+        {
+          "title": "Enquire with ForJu",
+          "url": "https://forju.at/en/kontakt?intent=service&thema=know-how"
+        }
+      ],
+      "status": 200,
+      "mode": "openai",
+      "ms": 6237,
+      "failures": [],
+      "humanReview": "Check that each claim is supported and the conversation feels useful."
+    },
+    {
+      "scenario": "fresh-name-project",
+      "question": "Can you send a project about that for us right now?",
+      "answer": "I can help prepare it, but I can’t send anything from this chat. ForJu’s official project form asks for your name, email address and a message; the subject is optional, and sending it is an enquiry rather than project acceptance or funding approval.\n\nSuggested message: “Our class would like to build a small beginner-friendly robot. We are unsure how to choose the design, components and a safe approach. Could ForJu connect us with someone who can advise us? We can provide more information about the pupils’ age, timetable, budget and the robot’s intended task.” To send through Compass, open the project button, complete its six-step form, press Send when available, and check the confirmation shown afterward. Chat messages themselves are not sent to ForJu.",
+      "sources": [
+        {
+          "title": "Submit a research project",
+          "url": "https://forju.at/en/kontakt?intent=projekt"
+        },
+        {
+          "title": "Project expertise",
+          "url": "https://forju.at/en/services/know-how"
+        },
+        {
+          "title": "Enquire with ForJu",
+          "url": "https://forju.at/en/kontakt?intent=service&thema=know-how"
+        }
+      ],
+      "status": 200,
+      "mode": "openai",
+      "ms": 8677,
+      "failures": [],
+      "humanReview": "Check that each claim is supported and the conversation feels useful."
+    },
+    {
+      "scenario": "fresh-unrelated-paste",
+      "question": "In meiner Workspace-App steht: You can archive the room or move it to Trash in Access & ownership. Trashed rooms can be restored for 30 days. Was bedeutet das?",
+      "answer": "Das bedeutet: Du kannst den Raum entweder archivieren oder unter „Zugriff und Besitz“ in den Papierkorb verschieben. Archivieren blendet ihn normalerweise aus, ohne ihn zu löschen. Im Papierkorb kannst du ihn innerhalb von 30 Tagen wiederherstellen; danach ist das möglicherweise nicht mehr möglich.\n\nWelche Folgen das Archivieren genau hat und wer diese Aktionen ausführen darf, hängt von deiner Workspace-App und deinen Berechtigungen ab.",
+      "sources": [],
+      "status": 200,
+      "mode": "openai",
+      "ms": 2480,
+      "failures": [],
+      "humanReview": "Check that each claim is supported and the conversation feels useful."
+    }
+  ]
+}
