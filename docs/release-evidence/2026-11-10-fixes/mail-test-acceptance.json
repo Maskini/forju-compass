@@ -1,0 +1,20 @@
+{
+  "recipient": "adam.maskini@icloud.com",
+  "at": "2026-11-10T13:33:55.769Z",
+  "results": [
+    {
+      "endpoint": "feedback",
+      "status": 200,
+      "body": {
+        "success": true
+      }
+    },
+    {
+      "endpoint": "project-submission",
+      "status": 200,
+      "body": {
+        "accepted": true
+      }
+    }
+  ]
+}

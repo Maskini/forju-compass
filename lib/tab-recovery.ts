@@ -13,7 +13,7 @@ const source = z.object({title:z.string().max(500), url:z.string().max(2048).ref
 export const chatRecoverySchema = z.object({
   question:z.string().max(2000),pending:z.string().max(2000),
   turns:z.array(z.object({question:z.string().max(2000),answer:z.string().max(12000),sources:z.array(source).max(10),
-    suggestions:z.array(z.string().max(80)).max(4),topic:z.string().max(48).optional(),draft:z.boolean(),
+    suggestions:z.array(z.string().max(80)).max(4),topic:z.string().max(48).optional(),draft:z.boolean(),limited:z.boolean().optional(),
     recipient:z.string().regex(/^[\w.+-]+@forju\.at$/i).optional(),answeredAt:z.number().finite().min(0).max(8.64e15)})).max(30),
   preferredLanguage:lang.optional(),visitorName:z.string().max(80).optional(),uiLanguage:lang,
 });

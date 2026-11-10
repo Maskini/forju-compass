@@ -1,0 +1,60 @@
+time="2026-11-10T14:13:29Z" level=info msg="quota window check {\"client\":\"2026-11-10T14:13:29.275Z\",\"server\":\"Tue, 10 Nov 2026 14:13:29 GMT\"}" source=console
+time="2026-11-10T14:13:33Z" level=info msg="sixth request {\"status\":429,\"server\":\"Tue, 10 Nov 2026 14:13:33 GMT\"}" source=console
+
+
+  █ THRESHOLDS
+
+    burst_ms
+    ✓ 'p(95)<2500' p(95)=157.42ms
+
+    checks
+    ✓ 'rate==1' rate=100.00%
+
+    expected_429
+    ✓ 'count>0' count=14
+
+    normal_ms
+    ✓ 'p(95)<1500' p(95)=181.68ms
+
+    unexpected_errors
+    ✓ 'count==0' count=0
+
+
+  █ TOTAL RESULTS
+
+    checks_total.......: 10      0.02563/s
+    checks_succeeded...: 100.00% 10 out of 10
+    checks_failed......: 0.00%   0 out of 10
+
+    ✓ normal answers accepted
+    ✓ identified visitor limited before shared capacity is full
+    ✓ burst: seven remaining global slots
+    ✓ burst: thirteen expected limits
+    ✓ bounded Retry-After
+    ✓ recovery after real window reset
+
+    CUSTOM
+    accepted.......................: 13     0.033318/s
+    burst_accepted_ms..............: avg=46.65ms  max=91.91ms  p(95)=82.67ms
+    burst_limited_ms...............: avg=103.82ms max=162.95ms p(95)=159.45ms
+    burst_ms.......................: avg=83.81ms  max=162.95ms p(95)=157.42ms
+    expected_429...................: 14     0.035881/s
+    normal_ms......................: avg=71.94ms  max=201.22ms p(95)=181.68ms
+    recovery_ms....................: avg=46.87ms  max=46.87ms  p(95)=46.87ms
+    unexpected_errors..............: 0      0/s
+
+    HTTP
+    http_req_duration..............: avg=74.95ms  max=201.22ms p(95)=160.91ms
+      { expected_response:true }...: avg=74.95ms  max=201.22ms p(95)=160.91ms
+    http_req_failed................: 0.00%  0 out of 28
+    http_reqs......................: 28     0.071763/s
+
+    EXECUTION
+    iteration_duration.............: avg=32.16s   max=32.16s   p(95)=32.16s
+    iterations.....................: 1      0.002563/s
+    vus............................: 1      min=1       max=1
+    vus_max........................: 1      min=1       max=1
+
+    NETWORK
+    data_received..................: 29 kB  73 B/s
+    data_sent......................: 5.8 kB 15 B/s

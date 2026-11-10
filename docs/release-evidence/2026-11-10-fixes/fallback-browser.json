@@ -1,0 +1,72 @@
+[
+  {
+    "surface": "separate-origin browser-only preview",
+    "viewport": "1440x900",
+    "language": "de",
+    "answers": [
+      {
+        "question": "Ich möchte bei euch mithelfen. Ich habe aber nur zwei Stunden pro Monat.",
+        "mode": "library",
+        "topic": "jobs-working-conditions",
+        "answer": "Du hast zwei Stunden pro Monat angegeben. Der veröffentlichte wöchentliche Zeitbedarf liegt über deiner verfügbaren Zeit. \n\nFür Chief of Staff | Strategy & Operations nennt die Jobs-Seite ungefähr 2–5 Stunden pro Woche und flexible Zeiteinteilung. Eine Aufgabe mit deinem Zeitbudget ist in den veröffentlichten Angaben nicht bestätigt. Frag beim Team nach, ob es eine kleinere Aufgabe gibt, die zu deiner verfügbaren Zeit passt.",
+        "sources": [
+          {
+            "title": "Ehrenamt: Arbeitsweise und Anforderungen",
+            "url": "https://forju.at/de/jobs"
+          }
+        ],
+        "limited": true
+      },
+      {
+        "question": "Eigentlich habe ich drei Stunden im Monat und kann nicht nach Wien fahren.",
+        "mode": "library",
+        "topic": "jobs-working-conditions",
+        "answer": "Du hast drei Stunden im Monat angegeben. Der veröffentlichte wöchentliche Zeitbedarf liegt über deiner verfügbaren Zeit. \n\nFür Chief of Staff | Strategy & Operations nennt die Jobs-Seite ungefähr 2–5 Stunden pro Woche und flexible Zeiteinteilung. Eine Aufgabe mit deinem Zeitbudget ist in den veröffentlichten Angaben nicht bestätigt. Frag beim Team nach, ob es eine kleinere Aufgabe gibt, die zu deiner verfügbaren Zeit passt. Erwähne, dass du von zu Hause mithelfen möchtest.",
+        "sources": [
+          {
+            "title": "Ehrenamt: Arbeitsweise und Anforderungen",
+            "url": "https://forju.at/de/jobs"
+          }
+        ],
+        "limited": true
+      }
+    ],
+    "sourceOpened": "https://forju.at/de/jobs",
+    "reopened": true
+  },
+  {
+    "surface": "separate-origin browser-only preview",
+    "viewport": "390x844",
+    "language": "en",
+    "answers": [
+      {
+        "question": "I want to volunteer but only have two hours a month and cannot travel to Vienna. Is there anything I can do?",
+        "mode": "library",
+        "topic": "jobs-working-conditions",
+        "answer": "You mentioned two hours a month. The published weekly commitment is higher than your available time. \n\nFor Chief of Staff | Strategy & Operations, the jobs page says about 2–5 hours per week with flexible scheduling. A role with your time commitment is not confirmed in the published information. Ask the team whether there is a smaller task that fits your availability. Mention that you need to help remotely.",
+        "sources": [
+          {
+            "title": "Volunteering: working arrangements and requirements",
+            "url": "https://forju.at/en/jobs"
+          }
+        ],
+        "limited": true
+      },
+      {
+        "question": "Actually I have three hours per month, still remotely. Does that change things?",
+        "mode": "library",
+        "topic": "jobs-working-conditions",
+        "answer": "You mentioned three hours per month. The published weekly commitment is higher than your available time. \n\nFor Chief of Staff | Strategy & Operations, the jobs page says about 2–5 hours per week with flexible scheduling. A role with your time commitment is not confirmed in the published information. Ask the team whether there is a smaller task that fits your availability. Mention that you need to help remotely.",
+        "sources": [
+          {
+            "title": "Volunteering: working arrangements and requirements",
+            "url": "https://forju.at/en/jobs"
+          }
+        ],
+        "limited": true
+      }
+    ],
+    "sourceOpened": "https://forju.at/en/jobs",
+    "reopened": true
+  }
+]

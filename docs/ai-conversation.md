@@ -79,10 +79,19 @@ The existing model is retained. Standard prices checked against
 [OpenAI's model page](https://developers.openai.com/api/docs/models/gpt-5.6-luna)
 on 10 November 2026 are $0.20/M input and $1.20/M output tokens. The ledger reserves
 a conservative estimate before each call: input UTF-8 byte count plus overhead,
-and the full 1,800 output-token ceiling, without cache discounts or refunds. It
-can therefore stop earlier than the actual invoice would require. Recheck prices
-before changing the model; an unpriced model override fails closed. A zero budget
-disables calls. Existing HTTP rate limits also apply.
+at the maximum cache-write rate, and the full 1,800 output-token ceiling. A
+completed standard-tier response reconciles this hold against provider-reported
+usage (including cache reads and writes). The persisted reservation can settle
+only once, even across a restart or midnight. Unknown cache-write TTL is charged
+at the higher rate. Missing/invalid usage, timeouts and crashes keep the full
+hold; an unexpected overrun is charged in full and stops subsequent calls. Old
+unsettled allowances are not retroactively refunded.
+
+Cached input is $0.02/M; cache writes are 1.25x/2.5x input for 30-minute/12-hour
+storage, as documented in [OpenAI prompt caching](https://developers.openai.com/api/docs/guides/prompt-caching).
+This is application accounting, not a verified invoice. Recheck prices before
+changing the model; an unpriced override fails closed. A zero budget disables
+calls. Existing HTTP rate limits also apply.
 
 This is a single-host application allowance, **not** an account-wide billing cap.
 It survives a process restart only when the database survives. Render free
@@ -93,8 +102,9 @@ does not change account billing settings or buy a persistent disk.
 
 Rollback: set `COMPASS_LOCAL_ONLY=true` and restart the service. The same widget,
 URL and forms work with local answers. Reverting this release is not necessary
-just to turn off inference. For code rollback, revert its release commit and
-follow the existing Render rollback instructions in `deployment.md`.
+just to turn off inference. Keep the security dependency upgrades when reverting
+behaviour changes; the preceding lockfile has known advisories. The existing
+Render rollback procedure is documented in `deployment.md`.
 
 ## Privacy
 
@@ -105,21 +115,24 @@ The source catalog contains approved public summaries, not the internal uploaded
 document. No conversation database or new provider was introduced. Existing
 per-tab recovery remains, and the expandable visitor notice now describes AI
 processing. Project/report data still goes through the existing Resend adapter
-only after the visitor sends the form; there were no real mail sends in this pass.
-The host's privacy information must cover this processing before public use.
+only after the visitor sends the form. The release-fix pass sent two authorised,
+labelled synthetic tests; provider acceptance and inbox verification are recorded
+separately in `release-fixes-2026-11-10.md`. The host's privacy information must
+cover this processing before public use.
 
 ## Repeatable checks
 
-Offline and free:
+Local checks (no model calls):
 
 ```sh
 npm test
 npm run test:release
 ```
 
-The full release suite uses isolated storage, blocked outbound traffic and local
-mail fixtures; it must remain `COMPASS_LOCAL_ONLY=true`. It cannot establish live
-AI answer quality.
+The visitor tests use isolated storage, blocked outbound traffic and local mail
+fixtures; they must remain `COMPASS_LOCAL_ONLY=true`. Public tool downloads and
+the dependency metadata audit happen before those isolated tests. This suite
+cannot establish live AI answer quality.
 
 For a live synthetic trial, build first and start a **separate loopback** server
 with the configuration above, an isolated quota database and `RESEND_API_KEY=`:
@@ -152,7 +165,41 @@ never load it on a public service or when a real visitor is testing.
 `X-Compass-Answer-Mode` distinguishes `openai`, `local` and `fallback` on chat
 responses. `X-Compass-Fallback` provides a bounded reason code without revealing
 prompts, credentials or raw provider errors. These are maintainer diagnostics,
-not extra labels in the conversation.
+not technical labels in the conversation. When AI is unavailable, both chat
+surfaces instead show a short visitor-facing notice explaining that the answer
+is general information and offering the team for individual help.
 
 No new dependencies were added. Reused OpenAI JS SDK: Apache-2.0; MiniSearch: MIT;
 Zod: MIT; existing Playwright and axe tooling remain development-only.
+
+
+## Availability checks
+
+`/api/health` makes no provider calls and returns no credentials or conversation
+content. `alive` means the app can serve requests, **not** that OpenAI or an inbox
+is verified. `assistant.state` distinguishes local mode, missing settings,
+budget exhaustion, provider problems and recent success. `providerVerified`
+requires a successful AI answer within 15 minutes; a cold process starts
+unverified. `projectDelivery: configured-not-verified` never means delivered.
+Only an unusable quota store produces HTTP 503. An exhausted daily allowance
+remains HTTP 200 so a host health check cannot restart the app to reset a limit.
+Render's health path is `/api/health` in the blueprint; an existing manually
+configured service may need that setting changed in its dashboard.
+
+```sh
+COMPASS_CHECK_URL=https://forju-compass.onrender.com node tools/assistant-checks/readiness.mjs
+# After one authorised synthetic AI conversation:
+COMPASS_CHECK_URL=https://forju-compass.onrender.com node tools/assistant-checks/readiness.mjs --require-ai --require-mail
+```
+
+A nonzero exit requires investigation. The strict command intentionally fails
+before AI has actually answered. Logs contain only outcome and duration, never
+questions, names or raw provider errors. This is a manual preflight, not a
+scheduled monitoring service.
+
+The revised local fallback compares a visitor's weekly/monthly volunteering
+availability against the published role, without inventing smaller openings.
+Targeted answer guards reject universal free/eligibility promises, currency
+amounts absent from cited passages, and common fabricated delivery claims.
+These checks do not provide general semantic verification or cover every
+possible phrasing. Continue inspecting real answers and approved source updates.

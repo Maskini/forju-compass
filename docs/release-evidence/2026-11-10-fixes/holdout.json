@@ -1,0 +1,68 @@
+{
+  "at": "2026-11-10T13:52:13.139Z",
+  "kind": "live OpenAI via local production app",
+  "results": [
+    {
+      "scenario": "fresh-name-project",
+      "question": "my nam e is Adam",
+      "answer": "Nice to meet you, Adam! How can I help you today?",
+      "sources": [],
+      "status": 200,
+      "mode": "openai",
+      "ms": 2306,
+      "failures": [],
+      "humanReview": "Check that each claim is supported and the conversation feels useful."
+    },
+    {
+      "scenario": "fresh-name-project",
+      "question": "I'd like to build a little robot with my class, but I don't know where to start.",
+      "answer": "That sounds like a great class project, Adam. A good starting point is to choose one simple task for the robot—such as moving around, avoiding obstacles or sorting objects—then list the materials, skills and class time you have. This is a planning suggestion, not a ForJu requirement.\n\nForJu may be able to connect you with practical expertise in technology. Its consultation form asks you to explain the problem and the kind of specialist you need, so you could ask whether someone can help you shape the robot project. A match would need to be checked.",
+      "sources": [
+        {
+          "title": "Project expertise",
+          "url": "https://forju.at/en/services/know-how"
+        },
+        {
+          "title": "Enquire with ForJu",
+          "url": "https://forju.at/en/kontakt?intent=service&thema=know-how"
+        }
+      ],
+      "status": 200,
+      "mode": "openai",
+      "ms": 5651,
+      "failures": [],
+      "humanReview": "Check that each claim is supported and the conversation feels useful."
+    },
+    {
+      "scenario": "fresh-name-project",
+      "question": "Can you send a project about that for us right now?",
+      "answer": "I can’t send it directly from this chat. If you want to present your class robot idea as your own project, open Compass’s project button, complete its six steps, press Send when available, and check the confirmation shown afterwards. Chat messages themselves do not submit anything.\n\nIf you want ForJu to help you find practical technology expertise, use its know-how consultation form instead. Explain that your class wants to build a small robot, what the robot should do, your pupils’ age or level, and what support you need. ForJu can then check whether a suitable specialist may be available; this is not guaranteed.",
+      "sources": [
+        {
+          "title": "Project expertise",
+          "url": "https://forju.at/en/services/know-how"
+        },
+        {
+          "title": "Enquire with ForJu",
+          "url": "https://forju.at/en/kontakt?intent=service&thema=know-how"
+        }
+      ],
+      "status": 200,
+      "mode": "openai",
+      "ms": 5948,
+      "failures": [],
+      "humanReview": "Check that each claim is supported and the conversation feels useful."
+    },
+    {
+      "scenario": "fresh-unrelated-paste",
+      "question": "In meiner Workspace-App steht: You can archive the room or move it to Trash in Access & ownership. Trashed rooms can be restored for 30 days. Was bedeutet das?",
+      "answer": "Das bedeutet: Du kannst den Raum entweder archivieren oder über „Access & ownership“ in den Papierkorb verschieben. Beim Archivieren bleibt er normalerweise erhalten, ist aber nicht mehr aktiv im normalen Arbeitsbereich. Im Papierkorb kann der Raum laut deinem Hinweis 30 Tage lang wiederhergestellt werden; danach könnte er dauerhaft gelöscht werden. Die genauen Folgen für Zugriffe und Inhalte hängen von deiner Workspace-App ab.\n\nWenn du nur vorübergehend aufräumen möchtest, ist Archivieren meist die vorsichtigere Option. Wenn der Raum wirklich weg soll, verschiebe ihn in den Papierkorb. Prüfe vorher, ob andere Personen ihn noch brauchen oder ob wichtige Inhalte darin liegen.",
+      "sources": [],
+      "status": 200,
+      "mode": "openai",
+      "ms": 2957,
+      "failures": [],
+      "humanReview": "Check that each claim is supported and the conversation feels useful."
+    }
+  ]
+}

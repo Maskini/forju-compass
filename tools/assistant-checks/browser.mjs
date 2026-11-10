@@ -4,9 +4,10 @@ import {createRequire} from 'node:module';
 import {mkdirSync,writeFileSync} from 'node:fs';
 import {resolve} from 'node:path';
 const {chromium,expect}=createRequire(new URL('../visitor-checks/package.json',import.meta.url))('@playwright/test');
-if(!process.argv.includes('--live'))throw Error('Pass --live to authorize the four synthetic API questions.');
-const base='http://127.0.0.1:4197',frameOrigin='https://compass-preview.test',hostOrigin='https://www.forju.at';
-const out=resolve('work/assistant-checks/browser');mkdirSync(out,{recursive:true});
+const fallback=process.argv.includes('--fallback'),constraints=fallback||process.argv.includes('--constraints');
+if(!fallback&&!process.argv.includes('--live'))throw Error('Pass --live to authorize the four synthetic API questions, or --fallback for the no-key server.');
+const base=fallback?'http://127.0.0.1:4198':'http://127.0.0.1:4197',frameOrigin='https://compass-preview.test',hostOrigin='https://www.forju.at';
+const out=resolve('work/assistant-checks/'+(fallback?'fallback-browser':constraints?'constraints-browser':'browser'));mkdirSync(out,{recursive:true});
 const browser=await chromium.launch({channel:'chrome',headless:true});const results=[];
 try{
  for(const mobile of [false,true]){
@@ -30,18 +31,21 @@ try{
   await page.goto(hostOrigin+'/compass-ai-preview');const widget=page.locator('forju-compass-widget');
   await widget.locator('.launcher').click();await widget.locator('.welcome .start').click();
   const panel=page.frameLocator('forju-compass-widget iframe');
-  const questions=mobile?['Hi, we want to measure the air in our classroom. Could we borrow a sensor?','What would that cost us?']:['Welche Workshops bietet ihr für Schulen an?','Und wie melde ich meine Klasse dafür an?'];
+  const questions=constraints?(mobile?['I want to volunteer but only have two hours a month and cannot travel to Vienna. Is there anything I can do?','Actually I have three hours per month, still remotely. Does that change things?']:['Ich möchte bei euch mithelfen. Ich habe aber nur zwei Stunden pro Monat.','Eigentlich habe ich drei Stunden im Monat und kann nicht nach Wien fahren.']):mobile?['Hi, we want to measure the air in our classroom. Could we borrow a sensor?','What would that cost us?']:['Welche Workshops bietet ihr für Schulen an?','Und wie melde ich meine Klasse dafür an?'];
   const answers=[];
   for(const q of questions){
    const input=panel.getByRole('textbox',{name:mobile?'Your question':'Deine Frage',exact:true});
    await input.fill(q);const pending=page.waitForResponse(r=>r.url()===frameOrigin+'/api/chat'&&r.request().method()==='POST');await input.press('Enter');
-   const response=await pending;expect(response.headers()['x-compass-answer-mode']).toBe('openai');const body=await response.json();answers.push({question:q,...body});
+   const response=await pending;expect(response.headers()['x-compass-answer-mode']).toBe(fallback?'fallback':'openai');const body=await response.json();
+   if(constraints)expect(body.answer).toMatch(mobile?/not confirmed|not.*confirm|ask|published|unconfirmed/i:/nicht|bestätig|nachfrag|veröffentlicht/i);
+   if(fallback){expect(body.limited).toBe(true);expect(response.headers()['x-compass-fallback']).toBe('missing-key');await expect(panel.getByRole('note').last()).toBeVisible();}
+   answers.push({question:q,...body});
    await expect(panel.locator('[role=log] article').last().locator('.response')).toContainText(body.answer.split('\n')[0]);
   }
   const link=panel.locator('[role=log] article').last().locator('.read-more a').first();
-  const href=await link.getAttribute('href');expect(href).toContain(mobile?'/services/ressourcen':'/projects/schulworkshops');
+  const href=await link.getAttribute('href');expect(href).toContain(constraints?'/jobs':mobile?'/services/ressourcen':'/projects/schulworkshops');
   await page.screenshot({path:out+'/'+(mobile?'mobile':'desktop')+'.png'});
-  const popupPromise=context.waitForEvent('page');await link.click();const popup=await popupPromise;await popup.waitForLoadState('domcontentloaded');expect(popup.url()).toBe(href);await expect(popup.locator('h1').first()).toContainText(mobile?/Resources|Ressourcen/i:/Schulworkshops|School workshops/i);await popup.close();
+  const popupPromise=context.waitForEvent('page');await link.click();const popup=await popupPromise;await popup.waitForLoadState('domcontentloaded');expect(popup.url()).toBe(href);await expect(popup.locator('h1').first()).toContainText(constraints?/Talent|Jobs|Stellen|Karriere/i:mobile?/Resources|Ressourcen/i:/Schulworkshops|School workshops/i);await popup.close();
   await widget.getByRole('button',{name:mobile?'Close chat':'Chat schließen',exact:true}).click();await expect(widget.locator('.launcher')).toBeFocused();
   await widget.locator('.launcher').click();await expect(panel.locator('[role=log] article')).toHaveCount(2);
   results.push({surface:'separate-origin browser-only preview',viewport:mobile?'390x844':'1440x900',language:lang,answers,sourceOpened:href,reopened:true});await context.close();

@@ -1,0 +1,53 @@
+[
+  {
+    "surface": "separate-origin browser-only preview",
+    "viewport": "1440x900",
+    "language": "de",
+    "answers": [
+      {
+        "question": "Wir sind drei 16-Jährige aus Deutschland und möchten mit unserer Schule die Wasserqualität untersuchen. Können wir bei euch Geld oder Messgeräte bekommen?",
+        "answer": "Ja, ihr könnt beides anfragen: Schulen und Forschungsteams können über ForJu bei Partnern Räume und Messgeräte anfragen. ForJu hilft bei der Organisation und klärt Fragen zu Aufsicht und Haftung. Ob ein passendes Messgerät zu eurem Termin verfügbar ist und was die Nutzung kostet, muss das Team erst prüfen. Nennt in der Anfrage das Gerät, den Untersuchungszweck und den gewünschten Zeitraum.\n\nFür Geld vermittelt ForJu mögliche Förderpartner und hilft bei Kostenschätzung und Machbarkeitsprüfung; ForJu selbst sponsert Projekte nicht direkt. Eine Förderung oder bestimmte Summe ist daher nicht zugesagt. Beschreibt, wofür ihr Geld braucht und welche Kosten ungefähr entstehen.\n\nVorschlag für eure Anfrage: „Wir sind drei 16-jährige Schüler aus Deutschland und möchten gemeinsam mit unserer Schule die Wasserqualität untersuchen. Dafür suchen wir [konkrete Messgeräte] für den Zeitraum [Zeitraum] und benötigen voraussichtlich [Betrag oder Kostenposten]. Könnt ihr prüfen, ob ihr uns passende Geräte oder Kontakte zu Förderpartnern vermitteln könnt?“ Das ist eine hilfreiche Formulierung, keine veröffentlichte Pflichtliste.",
+        "sources": [
+          {
+            "title": "Ressourcen",
+            "url": "https://forju.at/de/services/ressourcen"
+          },
+          {
+            "title": "Bei ForJu anfragen",
+            "url": "https://forju.at/de/kontakt?intent=service&thema=ressourcen"
+          },
+          {
+            "title": "Finanzielle Unterstützung",
+            "url": "https://forju.at/de/services/finanziell"
+          }
+        ],
+        "mode": "ai",
+        "preferredLanguage": "de",
+        "topic": "ressourcen"
+      },
+      {
+        "question": "Sind wir damit sicher berechtigt, und bis wann müssen wir uns anmelden?",
+        "answer": "Nein, das ist öffentlich nicht sicher bestätigt: Für 16-Jährige aus Deutschland nennt ForJu keine allgemeine Förderberechtigung oder automatische Zusage. Für Schulen und Forschungsteams können Räume und Messgeräte bei Partnern angefragt werden; Verfügbarkeit, Kosten und die nötigen Bedingungen muss ForJu mit euch klären.\n\nEine Anmelde- oder Einreichfrist ist für eure Anfrage in den vorliegenden Informationen nicht genannt. Fragt deshalb möglichst bald über die Ressourcen- und Finanzierungsanfrage nach, ob eure Schule und euer Vorhaben passen und bis wann ihr die Anfrage stellen müsst. Nennt dabei Alter, Land, Schule, Untersuchungszeitraum, benötigte Messgeräte und eine grobe Kostenschätzung.",
+        "sources": [
+          {
+            "title": "Ressourcen",
+            "url": "https://forju.at/de/services/ressourcen"
+          },
+          {
+            "title": "Bei ForJu anfragen",
+            "url": "https://forju.at/de/kontakt?intent=service&thema=ressourcen"
+          },
+          {
+            "title": "Finanzielle Unterstützung",
+            "url": "https://forju.at/de/services/finanziell"
+          }
+        ],
+        "mode": "ai",
+        "preferredLanguage": "de",
+        "topic": "ressourcen"
+      }
+    ],
+    "sourceOpened": "https://forju.at/de/services/ressourcen",
+    "reopened": true
+  }
+]

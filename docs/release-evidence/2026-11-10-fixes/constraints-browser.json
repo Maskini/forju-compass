@@ -1,0 +1,88 @@
+[
+  {
+    "surface": "separate-origin browser-only preview",
+    "viewport": "1440x900",
+    "language": "de",
+    "answers": [
+      {
+        "question": "Ich möchte bei euch mithelfen. Ich habe aber nur zwei Stunden pro Monat.",
+        "answer": "Schön, dass du ForJu unterstützen möchtest! Zwei Stunden pro Monat sind für die veröffentlichte Rolle „Chief of Staff | Strategy & Operations“ wahrscheinlich nicht passend: Dort werden etwa 2–5 Stunden pro Woche genannt. Das gilt aber nicht automatisch für alle ehrenamtlichen Rollen. Welche Aufgaben mit deinem kleinen Zeitbudget möglich sind, muss das ForJu-Team bestätigen.\n\nMein Vorschlag: Schreib an bewerbung@forju.at, dass du ungefähr zwei Stunden monatlich beitragen kannst, und nenne kurz deine Interessen oder Fähigkeiten. Frag nach einer passenden, möglichst flexiblen Möglichkeit; die aktuelle Verfügbarkeit und Anforderungen solltest du vorher bestätigen lassen.",
+        "sources": [
+          {
+            "title": "Ehrenamt: Arbeitsweise und Anforderungen",
+            "url": "https://forju.at/de/jobs"
+          },
+          {
+            "title": "Bei ForJu ehrenamtlich mitarbeiten",
+            "url": "https://forju.at/de/ueber-uns"
+          }
+        ],
+        "mode": "ai",
+        "preferredLanguage": "de",
+        "topic": "ehrenamt"
+      },
+      {
+        "question": "Eigentlich habe ich drei Stunden im Monat und kann nicht nach Wien fahren.",
+        "answer": "Danke für die Korrektur — drei Stunden im Monat und keine Fahrt nach Wien sind deine Rahmenbedingungen. Die ausgeschriebene Rolle „Chief of Staff | Strategy & Operations“ ist zwar vollständig remote, nennt aber ungefähr 2–5 Stunden pro Woche und passt daher vermutlich nicht zu deinem Zeitbudget. Für andere Rollen gelten jeweils eigene Anforderungen; ob eine passende remote Möglichkeit mit drei Stunden pro Monat existiert, ist nicht bestätigt.\n\nMein Vorschlag für deine Anfrage: „Ich möchte ForJu ehrenamtlich unterstützen, kann aber nur etwa drei Stunden pro Monat einbringen und nicht nach Wien kommen. Gibt es eine vollständig remote mögliche Aufgabe mit diesem Zeitumfang?“ Ergänze gern, welche Fähigkeiten oder Themen dich interessieren. So kann das Team prüfen, ob aktuell etwas Passendes offen ist.",
+        "sources": [
+          {
+            "title": "Ehrenamt: Arbeitsweise und Anforderungen",
+            "url": "https://forju.at/de/jobs"
+          },
+          {
+            "title": "Bei ForJu ehrenamtlich mitarbeiten",
+            "url": "https://forju.at/de/ueber-uns"
+          }
+        ],
+        "mode": "ai",
+        "preferredLanguage": "de",
+        "topic": "ehrenamt"
+      }
+    ],
+    "sourceOpened": "https://forju.at/de/jobs",
+    "reopened": true
+  },
+  {
+    "surface": "separate-origin browser-only preview",
+    "viewport": "390x844",
+    "language": "en",
+    "answers": [
+      {
+        "question": "I want to volunteer but only have two hours a month and cannot travel to Vienna. Is there anything I can do?",
+        "answer": "ForJu has volunteer opportunities in areas such as education, communications, editorial work, IT and operations. However, the published Chief of Staff role is fully remote but expects about 2–5 hours per week, so it does not match two hours per month. Other roles may have different requirements, but their remote options, time commitment and current availability are not confirmed.\n\nA useful next step is to check the individual roles and ask whether any can be done remotely for around two hours per month. You could write: “I’d like to support ForJu remotely, but I can contribute about two hours per month and cannot travel to Vienna. Are there any current volunteer tasks that would fit?”",
+        "sources": [
+          {
+            "title": "Volunteering",
+            "url": "https://forju.at/en/ueber-uns"
+          },
+          {
+            "title": "Volunteering: working arrangements and requirements",
+            "url": "https://forju.at/en/jobs"
+          }
+        ],
+        "mode": "ai",
+        "preferredLanguage": "en",
+        "topic": "ehrenamt"
+      },
+      {
+        "question": "Actually I have three hours per month, still remotely. Does that change things?",
+        "answer": "Thanks for clarifying. Three hours per month is still much less than the published Chief of Staff role, which is remote but expects about 2–5 hours per week. So that specific role does not look like a fit. Other volunteer roles may have different arrangements, but their time requirements, remote suitability and current availability are not confirmed. They would need to be checked individually.\n\nYou could ask whether ForJu has a small, remote task that fits your availability: “I’d like to support ForJu remotely for about three hours per month and cannot travel to Vienna. Are there any current volunteer tasks that would fit?”",
+        "sources": [
+          {
+            "title": "Volunteering: working arrangements and requirements",
+            "url": "https://forju.at/en/jobs"
+          },
+          {
+            "title": "Volunteering",
+            "url": "https://forju.at/en/ueber-uns"
+          }
+        ],
+        "mode": "ai",
+        "preferredLanguage": "en",
+        "topic": "ehrenamt"
+      }
+    ],
+    "sourceOpened": "https://forju.at/en/jobs",
+    "reopened": true
+  }
+]

@@ -62,6 +62,7 @@ export function visitorTopic(input: string) {
   if (/fordermoglichkeit|funding|financial support|fund my|finanzier/.test(q) && !/workshop|spende|donat|seminar/.test(q)) return "finanzierung";
   if (/welche projekte gibt|what projects (does|are)|which projects/.test(q)) return "projekte";
   if (/ehrenamtlich engagieren|how can i (volunteer|get involved)/.test(q)) return "ehrenamt";
+  if (/^(?:ich|wir) (?:mochte|mochten|will|wollen|wurde|wurden) (?:gern(?:e)? )?(?:bei (?:euch|forju) |euch )?mithelfen[.!? ]*$/.test(q)) return "ehrenamt";
   const offersTime = /^(?:i|we|ich|wir)\b/.test(q) && /(?:spare|free) time|freizeit|(?:give|offer|contribute) .{0,20}hours/.test(q);
   if (offersTime && /organisation|organization|forju|lend a hand|mithelfen|mitarbeiten/.test(q)) return "ehrenamt";
   return null;

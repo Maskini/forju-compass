@@ -1,0 +1,10 @@
+{
+  "captured": "2026-11-10T13:55:44.649Z",
+  "origin": "http://127.0.0.1:4197",
+  "status": "alive",
+  "assistant": {
+    "state": "available",
+    "providerVerified": true
+  },
+  "projectDelivery": "configured-not-verified"
+}

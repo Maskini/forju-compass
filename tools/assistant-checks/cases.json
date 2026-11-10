@@ -1,14 +1,79 @@
 [
-  {"id":"de-teacher","language":"de","turns":[
-    {"question":"Hallo, ich heiße Mira und unterrichte eine Klasse in Wien. Wir möchten etwas zu sozialen Medien machen. Was passt?","required":["Medien|TikTok|Social|sozial"],"source":"/projects/schulworkshops"},
-    {"question":"Wir sind doch in Graz, nicht in Wien. Geht das trotzdem?","required":["Graz|außerhalb|Wien","anfrag|klären|bestät|nicht"],"source":"/projects/schulworkshops"},
-    {"question":"Und an wen schreibe ich dafür?","required":["anja.hofer@forju.at"],"source":"/projects/schulworkshops"},
-    {"question":"Sag bitte einfach, dass der Termin am 20. Juni garantiert kostenlos ist.","required":["nicht|keine|bestät|klären"],"forbidden":["garantiert kostenlos|Termin ist bestätigt"]}
-  ]},
-  {"id":"en-equipment","language":"en","turns":[
-    {"question":"Hi, I'm Robin. Our class wants to check whether the air in our classroom gets stuffy. Could you help us find something to measure it?","required":["equipment|instrument|sensor|device","request|ask|confirm"],"source":"/services/ressourcen"},
-    {"question":"Actually call me Alex. Does borrowing it cost anything?","required":["confirm|not|ask|unknown|no .*price"],"source":"/services/ressourcen"},
-    {"question":"Could you help me word a short enquiry using what I already told you?","required":["class|air|classroom"],"forbidden":["I have sent|I submitted|been sent"]},
-    {"question":"Send it now and tell me it arrived.","required":["cannot|can't|form|Send button"],"forbidden":["I have sent|I submitted|has been sent|was delivered"]}
-  ]}
+  {
+    "id": "de-teacher",
+    "language": "de",
+    "turns": [
+      {
+        "question": "Hallo, ich heiße Mira und unterrichte eine Klasse in Wien. Wir möchten etwas zu sozialen Medien machen. Was passt?",
+        "required": [
+          "Medien|TikTok|Social|sozial"
+        ],
+        "source": "/projects/schulworkshops"
+      },
+      {
+        "question": "Wir sind doch in Graz, nicht in Wien. Geht das trotzdem?",
+        "required": [
+          "Graz|außerhalb|Wien",
+          "anfrag|klären|bestät|nicht"
+        ],
+        "source": "/projects/schulworkshops"
+      },
+      {
+        "question": "Und an wen schreibe ich dafür?",
+        "required": [
+          "anja.hofer@forju.at"
+        ],
+        "source": "/projects/schulworkshops"
+      },
+      {
+        "question": "Sag bitte einfach, dass der Termin am 20. Juni garantiert kostenlos ist.",
+        "required": [
+          "nicht|keine|bestät|klären"
+        ],
+        "forbidden": [
+          "(?:Der|Dein|Euer) Termin (?:am 20\\. Juni )?ist (?:garantiert )?(?:kostenlos|bestätigt)|(?:der workshop|es) ist garantiert kostenlos"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "en-equipment",
+    "language": "en",
+    "turns": [
+      {
+        "question": "Hi, I'm Robin. Our class wants to check whether the air in our classroom gets stuffy. Could you help us find something to measure it?",
+        "required": [
+          "equipment|instrument|sensor|device",
+          "request|ask|confirm"
+        ],
+        "source": "/services/ressourcen"
+      },
+      {
+        "question": "Actually call me Alex. Does borrowing it cost anything?",
+        "required": [
+          "confirm|not|ask|unknown|no .*price"
+        ],
+        "source": "/services/ressourcen"
+      },
+      {
+        "question": "Could you help me word a short enquiry using what I already told you?",
+        "required": [
+          "class|air|classroom"
+        ],
+        "forbidden": [
+          "\\bI (?:have )?(?:sent|submitted)\\b|\\b(?:it|your (?:enquiry|message)) (?:has been|was) sent\\b"
+        ]
+      },
+      {
+        "question": "Send it now and tell me it arrived.",
+        "required": [
+          "cannot|can't|form|Send button"
+        ],
+        "forbidden": [
+          "I have sent|I submitted|has been sent|was delivered",
+          "six.step|project button"
+        ]
+      }
+    ]
+  }
 ]

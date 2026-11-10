@@ -17,7 +17,7 @@ for(const scenario of cases){
   const failures=[];
   if(response.status!==200||mode!=='openai')failures.push('Not an actual OpenAI answer: '+response.status+' '+(response.headers.get('x-compass-fallback')||mode));
   else{
-   if(/\[(?:interne?|internal|Evidence|Evidenz|Quelle|Source)\b/i.test(value.answer))failures.push('Internal citation label leaked into the answer');
+   if(/\uE200|\uE201|\[(?:interne?|internal|Evidence|Evidenz|Quelle|Source)\b|\[(?:fact|conversation|guidance|unknown)\]/i.test(value.answer))failures.push('Internal citation label leaked into the answer');
    for(const pattern of turn.required||[])if(!new RegExp(pattern,'iu').test(value.answer))failures.push('Missing expected fact: '+pattern);
    for(const pattern of turn.forbidden||[])if(new RegExp(pattern,'iu').test(value.answer))failures.push('Unsafe claim: '+pattern);
    if(turn.source&&!value.sources.some(s=>s.url===`https://forju.at/${scenario.language}${turn.source}`))failures.push('Missing supporting page: '+turn.source);

@@ -1,0 +1,80 @@
+[
+  {
+    "surface": "separate-origin browser-only preview",
+    "viewport": "1440x900",
+    "language": "de",
+    "answers": [
+      {
+        "question": "Welche Workshops bietet ihr für Schulen an?",
+        "answer": "Für Schulklassen in Wien bietet ForJu Workshops zu Klima, Konflikten im Team, Medienkompetenz und Rollenbildern an. Weitere genannte Themen sind Ethik, Stressbewältigung, Selbstmanagement und Zukunftsplanung. Junge Trainer:innen arbeiten dabei mit den Lehrkräften zusammen. Termine, aktuelle Durchführbarkeit und Kosten sind in den vorliegenden Angaben nicht bestätigt.\n\nWenn du mir sagst, welches Thema und welche Schulstufe eure Klasse hat, kann ich dir die passende Beschreibung zusammenfassen. Für einen Termin und die Kosten könnt ihr Anja Hofer unter anja.hofer@forju.at fragen.",
+        "sources": [
+          {
+            "title": "Schulworkshops in Wien",
+            "url": "https://forju.at/de/projects/schulworkshops"
+          }
+        ],
+        "mode": "ai",
+        "preferredLanguage": "de",
+        "topic": "workshops"
+      },
+      {
+        "question": "Und wie melde ich meine Klasse dafür an?",
+        "answer": "Für eine Anmeldung schreibst du Anja Hofer an: anja.hofer@forju.at. Nenne das gewünschte Workshop-Thema und frag nach einem passenden Termin für eure Klasse. Die Workshopseite nennt keine Anmeldefrist; auch die aktuellen Kosten und die genaue Durchführbarkeit solltest du dir bestätigen lassen.",
+        "sources": [
+          {
+            "title": "Schulworkshops in Wien",
+            "url": "https://forju.at/de/projects/schulworkshops"
+          }
+        ],
+        "mode": "ai",
+        "preferredLanguage": "de",
+        "topic": "workshops"
+      }
+    ],
+    "sourceOpened": "https://forju.at/de/projects/schulworkshops",
+    "reopened": true
+  },
+  {
+    "surface": "separate-origin browser-only preview",
+    "viewport": "390x844",
+    "language": "en",
+    "answers": [
+      {
+        "question": "Hi, we want to measure the air in our classroom. Could we borrow a sensor?",
+        "answer": "Yes, you can ask ForJu about measuring equipment for a school or research team. Their partners may be able to provide space or equipment, while supervision and liability can be coordinated. A particular sensor, date and price are not confirmed until ForJu checks availability.\n\nPlease use the resources enquiry and explain that you want to measure classroom air, which sensor you need if known, and your preferred dates. Ask them to confirm availability, loan period and cost.",
+        "sources": [
+          {
+            "title": "Rooms and equipment",
+            "url": "https://forju.at/en/services/ressourcen"
+          },
+          {
+            "title": "Enquire with ForJu",
+            "url": "https://forju.at/en/kontakt?intent=service&thema=ressourcen"
+          }
+        ],
+        "mode": "ai",
+        "preferredLanguage": "en",
+        "topic": "ressourcen"
+      },
+      {
+        "question": "What would that cost us?",
+        "answer": "ForJu’s resources page does not list a loan price. The cost depends on the equipment and dates, so ForJu would need to confirm it with its partners.\n\nIn your enquiry, mention that you want to measure classroom air, identify the sensor if you know which one you need, and give your preferred dates. Ask them to confirm the price and any other conditions.",
+        "sources": [
+          {
+            "title": "Rooms and equipment",
+            "url": "https://forju.at/en/services/ressourcen"
+          },
+          {
+            "title": "Enquire with ForJu",
+            "url": "https://forju.at/en/kontakt?intent=service&thema=ressourcen"
+          }
+        ],
+        "mode": "ai",
+        "preferredLanguage": "en",
+        "topic": "ressourcen"
+      }
+    ],
+    "sourceOpened": "https://forju.at/en/services/ressourcen",
+    "reopened": true
+  }
+]

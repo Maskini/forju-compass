@@ -40,7 +40,7 @@ async function visit(page,widget,lang){
 async function ask(panel,widget,text){
   const turns=panel.locator(widget?'[role=log] article':'.chat-turn');
   const index=await turns.count();
-  const input=panel.getByRole('textbox',{name:/^(Frage an ForJu Compass|Your question|Deine Frage)$/});
+  const input=panel.getByRole('textbox',{name:/^(Frage an ForJu Compass|Question for ForJu Compass|Your question|Deine Frage)$/});
   await input.fill(text);await input.press('Enter');const turn=turns.nth(index);
   await expect(turn).toBeVisible();return turn;
 }
@@ -54,6 +54,25 @@ async function scan(page,info,state){
 }
 for(const widget of [false,true]){
   const surface=widget?'embedded':'standalone';
+  for(const lang of ['de','en']) test(surface+' / limited availability and visible fallback notice / '+lang,async({page,context},info)=>{
+    // Exercise the real local answer path, then simulate only the AI-outage flag.
+    // API unit tests separately prove that actual provider failures emit it.
+    await context.route('**/api/chat',async route=>{
+      const response=await route.fetch(),body=await response.json();
+      await route.fulfill({response,json:{...body,limited:true}});
+    });
+    const panel=await visit(page,widget,lang),en=lang==='en';
+    if(!widget&&en)await page.getByRole('button',{name:'EN',exact:true}).click();
+    const turn=await ask(panel,widget,en?'I want to volunteer, but only have two hours a month.':'Ich möchte mithelfen, habe aber nur zwei Stunden pro Monat.');
+    await expect(turn).toContainText(en?'higher than your available time':'über deiner verfügbaren Zeit');
+    const notice=turn.getByRole('note');
+    await expect(notice).toContainText(en?'general information only':'nur allgemeine Informationen');
+    await expect(notice).toBeVisible();
+    await expect(turn.locator('a[href="https://forju.at/'+lang+'/jobs"]').first()).toBeVisible();
+    const accessibility=new AxeBuilder({page}).include(widget?'forju-compass-widget':'.chat-turn');
+    expect((await accessibility.withTags(['wcag2aa']).analyze()).violations).toEqual([]);
+    await info.attach('fallback-notice.png',{body:await page.screenshot(),contentType:'image/png'});
+  });
   for(const lang of ['de','en'])test(surface+' / unsure visitor chooses after an explanation / '+lang,async({page},info)=>{
     const panel=await visit(page,widget,lang), en=lang==='en';
     const initial=await ask(panel,widget,en?"I'm a teacher":'Ich bin Lehrerin');

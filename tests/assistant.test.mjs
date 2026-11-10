@@ -4,7 +4,7 @@ import {readFileSync,mkdtempSync,rmSync} from 'node:fs';
 import {tmpdir} from 'node:os';
 import {join} from 'node:path';
 import {assistantRequest,evidencePack,parseAssistantAnswer,MODEL,MAX_INPUT_BYTES} from '../lib/assistant.ts';
-import {openAssistantBudget,reservationMicros} from '../lib/server/assistant-budget.mjs';
+import {openAssistantBudget,reservationMicros,usageMicros} from '../lib/server/assistant-budget.mjs';
 import {assistantHarness} from './helpers/assistant-harness.mjs';
 
 const catalog=JSON.parse(readFileSync(new URL('../knowledge/catalog.json',import.meta.url)));
@@ -35,6 +35,8 @@ test('fact citations must reference supplied passages; only server-owned links a
  change(v=>v.paragraphs[0].text='Email attacker@example.com');change(v=>v.paragraphs[0].text='Read https://evil.example');
  change(v=>v.paragraphs[0].text='<script>alert(1)</script>');change(v=>v.paragraphs[0].text='I have submitted your project successfully.');
  change(v=>v.paragraphs[0].text='Ich habe deine Anfrage weitergeleitet.');
+ for(const text of ['ForJu has received your project.','ForJu hat dein Projekt erhalten.',"We have accepted your report."])
+  change(v=>v.paragraphs[0].text=text);
 });
 test('acknowledgements and a useful clarification do not need fabricated citations',()=>{
  const value={language:'de',topic:null,paragraphs:[{text:'Hallo Adam! Wobei kann ich dir helfen?',kind:'conversation',evidence:[]}],readMore:[]};
@@ -61,7 +63,7 @@ test('an offer without a separate request URL resolves to its verified contact p
  assert.equal(parseAssistantAnswer(JSON.stringify(value),sources)?.sources[0].url,'https://forju.at/de/projects/schulworkshops');
 });
 test('internal evidence annotations cannot leak into visible prose',()=>{
- for(const marker of ['[interne Evidenz]','[Evidence: know-how passage 0; ressourcen passage 0]','[Source: ressourcen]','[Evidenz: ressourcen, Absatz 0]']){
+ for(const marker of ['[fact]','[conversation]','[guidance]','[unknown]','\uE200intern\uE201','[interne Evidenz]','[Evidence: know-how passage 0; ressourcen passage 0]','[Source: ressourcen]','[Evidenz: ressourcen, Absatz 0]']){
   const value=structuredClone(grounded);value.paragraphs[0].text+=' '+marker;
   assert.equal(parseAssistantAnswer(JSON.stringify(value),pack)?.answer,grounded.paragraphs[0].text);
  }
@@ -80,12 +82,14 @@ test('AI transport is bounded and fails safely; local mode cannot make a provide
   await t.test('one Responses call, no embedding or new provider',async()=>{
    const h=assistantHarness(catalog,{answer:JSON.stringify(grounded)});const result=await h.answerWithAssistant(input,'en');
    assert.equal(result.status,'openai');assert.equal(h.calls.responses.length,1);assert.equal(h.calls.embeddings.length,0);assert.equal(h.calls.responses[0].store,false);assert.equal(h.calls.reservations.length,1);
+   assert.equal(h.calls.responses[0].service_tier,'default');assert.equal(h.calls.settlements.length,1);assert.equal(h.assistantAvailability().providerVerified,true);
   });
   await t.test('401 opens a cooldown and is not mistaken for AI success',async()=>{
    const h=assistantHarness(catalog,{providerError:{status:401}});assert.equal((await h.answerWithAssistant(input,'en')).status,'invalid-key');assert.equal((await h.answerWithAssistant(input,'en')).status,'cooldown');assert.equal(h.calls.responses.length,1);
   });
   for(const [name,options,expected] of [['timeout',{providerError:new Error('timeout')},'provider-unavailable'],['incomplete',{status:'incomplete'},'incomplete'],['unsafe',{answer:'not-json'},'invalid-evidence'],['budget',{budgetAllowed:false},'budget-limit']])await t.test(name,async()=>{
    const h=assistantHarness(catalog,options);assert.equal((await h.answerWithAssistant(input,'en')).status,expected);assert.equal(h.calls.responses.length,name==='budget'?0:1);
+   assert.equal(h.calls.settlements.length,['incomplete','unsafe'].includes(name)?1:0);
   });
   process.env.COMPASS_LOCAL_ONLY='true';const h=assistantHarness(catalog);assert.equal((await h.answerWithAssistant(input,'en')).status,'local');assert.equal(h.calls.responses.length,0);
  }finally{for(const k of Object.keys(process.env))if(!(k in saved))delete process.env[k];Object.assign(process.env,saved)}
@@ -98,4 +102,45 @@ test('budget reservations survive a restart and reset on the next UTC day',()=>{
   ledger.close();ledger=openAssistantBudget(join(dir,'quota.sqlite'));assert.equal(ledger.reserve(cost,cost,now),false);
   assert.ok(ledger.reserve(cost,cost,now+86400000));assert.equal(ledger.reserve(cost,NaN,now),false);
  }finally{ledger.close();rmSync(dir,{recursive:true,force:true})}
+});
+
+test('usage accounting includes cache reads/writes and refuses ambiguous receipts',()=>{
+ assert.equal(usageMicros({input_tokens:12000,output_tokens:100,input_tokens_details:{cached_tokens:4000,cache_write_tokens:7000,cache_write_tokens_details:{ttl_30m_tokens:3000,ttl_12h_tokens:4000}}}),3150);
+ assert.equal(usageMicros({input_tokens:1000,output_tokens:100,input_tokens_details:{cached_tokens:0,cache_write_tokens:1000}}),620);
+ for(const usage of [null,{}, {input_tokens:1,output_tokens:2}, {input_tokens:10,output_tokens:2,input_tokens_details:{cached_tokens:11,cache_write_tokens:0}}, {input_tokens:100,output_tokens:-1,input_tokens_details:{cached_tokens:0,cache_write_tokens:0}}])assert.equal(usageMicros(usage),null);
+});
+test('settlement releases only confirmed unused allowance once, survives restart and respects midnight',()=>{
+ const dir=mkdtempSync(join(tmpdir(),'forju-settlement-')),path=join(dir,'quota.sqlite');let a=openAssistantBudget(path),b=openAssistantBudget(path);
+ const day=Date.UTC(2026,10,10,23,59),usage={input_tokens:1000,output_tokens:100,input_tokens_details:{cached_tokens:0,cache_write_tokens:0}};
+ try{
+  const first=a.reserve(20000,30000,day);assert.ok(first);assert.equal(b.reserve(20000,30000,day),false);
+  assert.equal(a.settle(first,null),false);assert.equal(a.snapshot(day).usedMicros,20000);
+  a.close();a=openAssistantBudget(path);assert.equal(a.settle(first,usage),true);assert.equal(a.snapshot(day).usedMicros,320);
+  assert.equal(b.settle(first,usage),false);assert.equal(b.snapshot(day).usedMicros,320);
+  const pending=b.reserve(20000,30000,day);assert.ok(pending);
+  const tomorrow=day+60000;const next=a.reserve(20000,30000,tomorrow);assert.ok(next);
+  b.settle(pending,usage);assert.equal(a.snapshot(tomorrow).usedMicros,20000);assert.equal(a.snapshot(day).usedMicros,640);
+  assert.equal(a.settle({id:'not-real'},usage),false);
+ }finally{a.close();b.close();rmSync(dir,{recursive:true,force:true})}
+});
+test('actual cost above a reservation remains charged and blocks later calls',()=>{
+ const dir=mkdtempSync(join(tmpdir(),'forju-overrun-'));const db=openAssistantBudget(join(dir,'q.sqlite'));
+ try{const ticket=db.reserve(1,100);assert.ok(ticket);db.settle(ticket,{input_tokens:1000,output_tokens:100,input_tokens_details:{cached_tokens:0,cache_write_tokens:0}});assert.equal(db.snapshot().usedMicros,320);assert.equal(db.reserve(1,100),false)}finally{db.close();rmSync(dir,{recursive:true,force:true})}
+});
+test('real passage IDs cannot legitimise invented universal fees, eligibility or amounts',()=>{
+ for(const claim of ['Every school workshop is free in every country and all classes are automatically eligible.','Alle Schulworkshops sind kostenlos.','You are definitely eligible for funding.','Du bist für diese Förderung berechtigt.','The fee is €25.']){
+  const value=structuredClone(grounded);value.paragraphs[0].text=claim;
+  assert.equal(parseAssistantAnswer(JSON.stringify(value),pack),null,claim);
+ }
+ const value=structuredClone(grounded);value.paragraphs[0].text='I cannot confirm that every workshop is free. Ask ForJu about your class.';
+ assert.ok(parseAssistantAnswer(JSON.stringify(value),pack));
+});
+test('readiness does not call the provider and distinguishes unverified, failed and disabled AI',()=>{
+ const saved={...process.env};try{
+  process.env.COMPASS_LOCAL_ONLY='false';process.env.OPENAI_API_KEY='synthetic';delete process.env.OPENAI_CHAT_MODEL;delete process.env.COMPASS_AI_DAILY_BUDGET_USD;
+  const h=assistantHarness(catalog);assert.equal(h.assistantAvailability().state,'not-verified');assert.equal(h.calls.responses.length,0);
+  assert.equal(assistantHarness(catalog,{budgetAllowed:false}).assistantAvailability().state,'budget-limit');
+  delete process.env.OPENAI_API_KEY;assert.equal(h.assistantAvailability().state,'missing-key');
+  process.env.COMPASS_LOCAL_ONLY='true';assert.equal(h.assistantAvailability().state,'local');
+ }finally{for(const k of Object.keys(process.env))if(!(k in saved))delete process.env[k];Object.assign(process.env,saved)}
 });

@@ -12,9 +12,14 @@ function record(r,t){t.add(r.timings.duration);if(r.status===200)status200.add(1
 export default function(){
   unexpected.add(0);
   // Leave sufficient time in this fixed window even on a slow machine.
-  const sec=new Date().getSeconds();if(sec>45)sleep(62-sec);
+  const probe=http.get('http://127.0.0.1:4196/api/health');
+  const serverDate=Date.parse(probe.headers.Date);
+  if(!Number.isFinite(serverDate))fail('Server Date header needed to align the rate-limit window');
+  const sec=new Date(serverDate).getUTCSeconds();if(sec>40)sleep(62-sec);
+  console.info('quota window check',JSON.stringify({client:new Date().toISOString(),server:probe.headers.Date}));
   for(let i=1;i<=5;i++){const r=http.post(url,body,params(1));record(r,normal);check(r,{'normal answers accepted':r=>r.status===200&&!!r.json('answer')});sleep(.7)}
   const perVisitor=http.post(url,body,params(1));
+  console.info('sixth request',JSON.stringify({status:perVisitor.status,server:perVisitor.headers.Date}));
   check(perVisitor,{'identified visitor limited before shared capacity is full':r=>r.status===429});
   if(perVisitor.status===429)limited.add(1);else unexpected.add(1);
   const batch=http.batch(Array.from({length:20},(_,i)=>['POST',url,body,params(i+2)]));

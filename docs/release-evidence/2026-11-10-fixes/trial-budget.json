@@ -1,0 +1,10 @@
+{
+  "captured": "2026-11-10T13:55:44.607Z",
+  "day": "2026-11-10",
+  "micros": 90202,
+  "total": 48,
+  "settled": 48,
+  "limitUSD": 0.15,
+  "accountedUSD": 0.090202,
+  "scope": "Local synthetic trial including reruns, based on provider usage. Not an invoice; old exhausted ledger unchanged."
+}

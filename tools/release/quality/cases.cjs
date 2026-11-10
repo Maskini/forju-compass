@@ -8,6 +8,8 @@ function scenario(id, lang, turns, page, fact, unknown, must, forbid=[], holdout
   return {id,lang,turns,source:page ? 'https://forju.at/'+lang+'/'+page : null,fact,unknown,must,forbid,holdout};
 }
 module.exports=[
+ scenario('en-volunteer-monthly-limit','en',['I want to volunteer but only have two hours a month.'],'jobs','The published Chief of Staff role specifies 2–5 hours/week, not per month.','A smaller role is unconfirmed.',['higher than your available time','not confirmed','smaller task','2–5']),
+ scenario('de-volunteer-correction','de',['Ich möchte bei euch mithelfen.','Eigentlich habe ich nur drei Stunden pro Monat.'],'jobs','Der Zeitaufwand für Chief of Staff liegt bei 2–5 Stunden pro Woche.','Keine passende kleinere Aufgabe zugesagt.',['über deiner verfügbaren Zeit','kleinere Aufgabe','2–5']),
  scenario('de-teacher','de',['Welche Schulworkshops gibt es zu Streit in der Klasse?','Und wie melde ich meine Klasse dafür an?'],workshop,'Termin per E-Mail mit Anja Hofer vereinbaren.','Kein Buchungstermin bestätigt.',[contact,'Termin|anfrag|schreib']),
  scenario('en-paraphrase','en',['Where could my pupils get help dealing with arguments in class?'],workshop,'The school offer covers constructive conflict resolution.','No slot or local availability is promised.',['conflict|disagree|argument']),
  scenario('de-typo','de',['Wer organisiert Schulworkshpos zum Klimaschutz?'],workshop,'ForJu bietet den Klimaworkshop an; Anja Hofer ist die Kontaktperson.','Keine nächste Veranstaltung veröffentlicht.',['umwelt|klima',contact,'ForJu bietet|ForJu organisiert']),

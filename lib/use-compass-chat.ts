@@ -103,7 +103,7 @@ export function useCompassChat(language:"en"|"de") {
       setSaved(previous => ({...previous, pending:"",
         visitorName:typeof data.visitorName === "string" && data.visitorName.length <= 80 ? data.visitorName : previous.visitorName,
         preferredLanguage:data.preferredLanguage === "de" || data.preferredLanguage === "en" ? data.preferredLanguage : previous.preferredLanguage,
-        turns:[...previous.turns, { question: next, answer: data.answer, sources, suggestions, topic:typeof data.topic==="string"?data.topic:undefined, draft:data.mode === "draft", recipient: typeof data.recipient==="string" && /^[\w.+-]+@forju\.at$/i.test(data.recipient) ? data.recipient : undefined, answeredAt:Date.now() }].slice(-30)}));
+        turns:[...previous.turns, { question: next, answer: data.answer, sources, suggestions, limited:data.limited===true, topic:typeof data.topic==="string"?data.topic:undefined, draft:data.mode === "draft", recipient: typeof data.recipient==="string" && /^[\w.+-]+@forju\.at$/i.test(data.recipient) ? data.recipient : undefined, answeredAt:Date.now() }].slice(-30)}));
       setSubmittedQuestion("");
     } catch (err) {
       if (version !== requestVersion.current) return;

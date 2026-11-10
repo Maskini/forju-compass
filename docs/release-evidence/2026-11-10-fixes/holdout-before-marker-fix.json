@@ -1,0 +1,64 @@
+{
+  "at": "2026-11-10T13:37:48.269Z",
+  "kind": "live OpenAI via local production app",
+  "results": [
+    {
+      "scenario": "fresh-name-project",
+      "question": "my nam e is Adam",
+      "answer": "Nice to meet you, Adam! How can I help you today?",
+      "sources": [],
+      "status": 200,
+      "mode": "openai",
+      "ms": 2356,
+      "failures": [],
+      "humanReview": "Check that each claim is supported and the conversation feels useful."
+    },
+    {
+      "scenario": "fresh-name-project",
+      "question": "I'd like to build a little robot with my class, but I don't know where to start.",
+      "answer": "That sounds like a great class project, Adam. A good starting point is to choose one simple task for the robot—such as following a line, avoiding obstacles or moving an object—then list the materials, skills and budget you have. Build the project in small stages: movement first, then sensors, then the final challenge.\n\nIf you are stuck with the technical planning, ForJu’s know-how service can check whether a suitable specialist from academia or industry could help. You can explain the problem and the kind of expertise you need in its consultation enquiry; this does not confirm a match in advance.\n\nWhat class age or grade is this for, and do you already have any robot kit or parts?",
+      "sources": [
+        {
+          "title": "Project expertise",
+          "url": "https://forju.at/en/services/know-how"
+        },
+        {
+          "title": "Enquire with ForJu",
+          "url": "https://forju.at/en/kontakt?intent=service&thema=know-how"
+        }
+      ],
+      "status": 200,
+      "mode": "openai",
+      "ms": 7395,
+      "failures": [],
+      "humanReview": "Check that each claim is supported and the conversation feels useful."
+    },
+    {
+      "scenario": "fresh-name-project",
+      "question": "Can you send a project about that for us right now?",
+      "answer": "I can’t send it from this chat. If you want to contact ForJu, use its official project form and briefly describe the class, the robot idea and the help you need. An enquiry is not confirmation that ForJu will accept or support the project. [fact]\n\nYou can also use Compass’s project button to complete its separate six-step form, then select Send and check the confirmation shown afterward. Chat messages themselves do not submit anything. Would you like me to help phrase the project message first?",
+      "sources": [
+        {
+          "title": "Submit a research project",
+          "url": "https://forju.at/en/kontakt?intent=projekt"
+        }
+      ],
+      "status": 200,
+      "mode": "openai",
+      "ms": 5805,
+      "failures": [],
+      "humanReview": "Check that each claim is supported and the conversation feels useful."
+    },
+    {
+      "scenario": "fresh-unrelated-paste",
+      "question": "In meiner Workspace-App steht: You can archive the room or move it to Trash in Access & ownership. Trashed rooms can be restored for 30 days. Was bedeutet das?",
+      "answer": "Das bedeutet: Du kannst den Raum entweder archivieren oder unter „Access & ownership“ in den Papierkorb verschieben. Beim Archivieren bleibt er normalerweise erhalten, ist aber nicht mehr aktiv im normalen Zugriff. Ein gelöschter Raum landet im Papierkorb und kann laut deiner Meldung noch 30 Tage lang wiederhergestellt werden. Danach ist eine Wiederherstellung möglicherweise nicht mehr möglich.",
+      "sources": [],
+      "status": 200,
+      "mode": "openai",
+      "ms": 2259,
+      "failures": [],
+      "humanReview": "Check that each claim is supported and the conversation feels useful."
+    }
+  ]
+}

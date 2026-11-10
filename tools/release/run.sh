@@ -57,6 +57,9 @@ stage(){
   fi >>"$out/status.tsv"
 }
 inside sh -c 'mkdir -p /tmp/compass-check-release && openssl req -x509 -newkey rsa:2048 -nodes -days 1 -subj /CN=localhost -addext subjectAltName=IP:127.0.0.1 -keyout /tmp/release.key -out /tmp/release.crt 2>/dev/null'
+# Public dependency metadata only; no visitor fixtures run outside isolation.
+# Keep this audit outside --network none, like the locked-toolchain bootstrap.
+stage dependency-audit npm audit --omit=dev --json
 stage unit inside env -u RENDER_EXTERNAL_URL npm test
 stage source-tools inside npm run test:knowledge
 stage catalog inside npm run knowledge:check
@@ -94,7 +97,10 @@ if [ "$phase" != baseline ]; then
   # ZAP's baseline only spiders and passively scans. No active attacks or real deliveries.
   zap_scan(){
     local code=0
-    docker run "${share[@]}" -v "$out:/zap/wrk:rw" -v "$out/fixtures/zap-hook.py:/audit/hook.py:ro" "$zap" zap-baseline.py -t http://127.0.0.1:4196 -m 1 -T 5 -J zap.json -r zap.html -I --autooff --hook=/audit/hook.py || code=$?
+    # A random ephemeral proxy port can be reused by a connection before Java
+    # binds it. This namespace is isolated and 8090 is reserved for ZAP.
+    # Keep the pinned image's rules; no telemetry or add-on update attempts.
+    docker run "${share[@]}" -v "$out:/zap/wrk:rw" -v "$out/fixtures/zap-hook.py:/audit/hook.py:ro" "$zap" zap-baseline.py -t http://127.0.0.1:4196 -P 8090 -z '-silent' -m 1 -T 5 -J zap.json -r zap.html -I --autooff --hook=/audit/hook.py || code=$?
     [ "$code" = 0 ] && [ -s "$out/zap.json" ]
   }
   stage zap zap_scan

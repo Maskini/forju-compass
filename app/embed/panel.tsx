@@ -1,5 +1,6 @@
 "use client";
 import {SessionNotice} from "@/app/components/session-notice";
+import {LimitedAnswer} from "@/app/components/limited-answer";
 import {EnquiryDraft} from "@/app/components/enquiry-draft";
 import {ChatChoices} from "@/app/components/chat-choices";
 import {useEffect,useEffectEvent,useRef,useState} from "react";
@@ -75,6 +76,7 @@ export default function CompassPanel({initialLanguage,widget=false}:{initialLang
       <div role="log" aria-live="polite" aria-relevant="additions">{turns.map((turn,i)=><article key={i}>
         <div className="question-bubble"><p>{turn.question}</p><i><Icon type="user"/></i></div>
         <div className="response"><i className="compass-avatar" aria-hidden="true"/><div>{turn.draft ? <EnquiryDraft answer={turn.answer} recipient={turn.recipient} en={en}/> : <p>{turn.answer}</p>}</div></div>
+        {turn.limited&&<LimitedAnswer en={en}/>}
         {!!turn.sources.length&&<nav className="read-more" aria-label={en?"Read more":"Mehr dazu"}>{turn.sources.map(s=><a className="fj-action fj-source" href={s.url} key={s.url} target="_blank" rel="noopener noreferrer"><span>{s.title}</span><span aria-hidden="true">↗</span></a>)}</nav>}
         <div className="answer-meta"><button type="button" className="report-answer" aria-haspopup="dialog" onClick={e=>reports.current?.reportAnswer(turn,e.currentTarget)}>{en?"Report this answer":"Diese Antwort melden"}</button>
         <time dateTime={new Date(turn.answeredAt).toISOString()}>{new Date(turn.answeredAt).toLocaleTimeString(lang,{hour:"2-digit",minute:"2-digit"})}</time></div>

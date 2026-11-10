@@ -1,0 +1,10 @@
+[
+  {
+    "kind": "feedback",
+    "error": "This key cannot read delivery status. Find the providerId in the signed-in Resend Emails dashboard. Sending-only keys are sufficient for Compass; do not broaden the production key."
+  },
+  {
+    "kind": "project",
+    "error": "This key cannot read delivery status. Find the providerId in the signed-in Resend Emails dashboard. Sending-only keys are sufficient for Compass; do not broaden the production key."
+  }
+]

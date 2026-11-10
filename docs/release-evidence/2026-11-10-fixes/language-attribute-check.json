@@ -1,0 +1,17 @@
+{
+  "kind": "Real Chromium, local production app, external requests blocked",
+  "results": [
+    {
+      "path": "/embed",
+      "language": "de",
+      "handler": null,
+      "executed": false
+    },
+    {
+      "path": "/preview",
+      "language": "de",
+      "handler": null,
+      "executed": false
+    }
+  ]
+}

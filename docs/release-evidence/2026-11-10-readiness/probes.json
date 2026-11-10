@@ -1,0 +1,41 @@
+{
+  "candidate": "f9e4282",
+  "date": "2026-11-10",
+  "configuration": "Local production build with real OpenAI, synthetic visitor questions; public deployment only read with GET",
+  "budgetReservationExamples": [
+    {
+      "language": "de",
+      "inputBytes": 38662,
+      "reservedUsd": 0.010712,
+      "shortRepliesWithDefault025Usd": 23
+    },
+    {
+      "language": "en",
+      "inputBytes": 29082,
+      "reservedUsd": 0.008796,
+      "shortRepliesWithDefault025Usd": 28
+    }
+  ],
+  "publicProjectStatusReads": [
+    {
+      "status": 200,
+      "direct": true,
+      "elapsedMs": 23974
+    },
+    {
+      "status": 200,
+      "direct": true,
+      "elapsedMs": 292
+    }
+  ],
+  "publicStatusLimit": "Configuration flag is not proof of provider acceptance or inbox delivery. Cause of first slow request was not independently established.",
+  "validatorProbe": {
+    "kind": "Synthetic validator input, NOT an actual model answer",
+    "text": "Every school workshop is free in every country and all classes are automatically eligible.",
+    "record": "workshops",
+    "passage": 0,
+    "unsupportedClaimAccepted": true
+  },
+  "trafficAnalyticsAvailable": false,
+  "codeChanges": false
+}

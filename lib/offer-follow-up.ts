@@ -4,6 +4,30 @@
 type Passage = {de:string; en:string; also?:string[]};
 type Card = {id:string; title:string; titleEn:string; sourceUrl:string; requestUrl?:string; pricing?:Passage; booking?:Passage; visitorAnswers?:Partial<Record<string,Passage>>};
 type Detail = "price" | "duration" | "groupSize" | "loanPeriod" | "eligibility" | "preparation" | "remote" | "hours" | "experience" | "contact" | "deadline" | "availability";
+// A visitor's availability is a constraint, not a request for a generic job
+// description. This works without a model and never invents a suitable vacancy.
+export function volunteerConstraints(message:string,topic:string|undefined,en:boolean,records:Card[]) {
+  const explicit=/\b(?:volunteer\w*|ehrenamt\w*|freiwillig\w*|mithelfen)\b/i.test(message);
+  const follow=/^(?:and |und )?(?:i |ich |only |nur |actually |eigentlich )/i.test(message.trim());
+  if(!explicit&&!(follow&&topic&&/^(?:ehrenamt|jobs-)/.test(topic)))return null;
+  if(!explicit&&/workshop|sensor|messgerät|funding|finanzier|projekt|project/i.test(message))return null;
+  const time=message.match(/\b(\d+(?:[.,]\d+)?|one|two|three|four|five|six|ein[es]?|zwei|drei|vier|fünf|sechs|few|wenige)\s+(?:hours?|Stunden?)\s+(?:(?:a|per|pro|im|in (?:the|a))\s+)?(month|week|Monat|Woche)\b/i);
+  if(!time)return null;
+  const card=records.find(r=>r.id==="jobs-working-conditions"),hours=card?.visitorAnswers?.hours;
+  if(!card||!hours)return null;
+  const words:Record<string,number>={one:1,two:2,three:3,four:4,five:5,six:6,ein:1,eine:1,eins:1,zwei:2,drei:3,vier:4,"fünf":5,sechs:6};
+  const amount=words[time[1].toLowerCase()]??Number(time[1].replace(",","."));
+  const monthly=/month|monat/i.test(time[2]);
+  const minimum=hours.en.match(/(\d+)\s*[–-]\s*\d+ hours per week/);
+  const tooLittle=minimum&&Number.isFinite(amount)&&amount<Number(minimum[1])*(monthly?4:1);
+  const stated=time[0].replace(/\s+/g," ");
+  const acknowledgment=en?`You mentioned ${stated}. `:`Du hast ${stated} angegeben. `;
+  const fit=tooLittle?(en?"The published weekly commitment is higher than your available time. ":"Der veröffentlichte wöchentliche Zeitbedarf liegt über deiner verfügbaren Zeit. "):"";
+  const next=en?"A role with your time commitment is not confirmed in the published information. Ask the team whether there is a smaller task that fits your availability.":"Eine Aufgabe mit deinem Zeitbudget ist in den veröffentlichten Angaben nicht bestätigt. Frag beim Team nach, ob es eine kleinere Aufgabe gibt, die zu deiner verfügbaren Zeit passt.";
+  const remote=/cannot travel|can.t travel|from home|remote|nicht.{0,18}(?:reisen|fahren)|von (?:zu )?hause/i.test(message)
+    ?(en?" Mention that you need to help remotely.":" Erwähne, dass du von zu Hause mithelfen möchtest."):"";
+  return {mode:"library",topic:card.id,answer:acknowledgment+fit+"\n\n"+hours[en?"en":"de"].split(/(?<=[.!?])\s+/)[0]+" "+next+remote,sources:[{title:en?card.titleEn:card.title,url:en?card.sourceUrl.replace("/de/","/en/"):card.sourceUrl}]};
+}
 export function offerDetail(message:string):Detail|undefined {
   const q=message.toLowerCase().normalize("NFKD").replace(/\p{M}/gu, "").replace(/ß/g,"ss")
     .replace(/[’']/g,"'").replace(/[?.!,]+/g," ").replace(/\s+/g," ").trim()

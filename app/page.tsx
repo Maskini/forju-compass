@@ -1,6 +1,7 @@
 "use client";
 
 import {SessionNotice} from "@/app/components/session-notice";
+import {LimitedAnswer} from "@/app/components/limited-answer";
 import {EnquiryDraft} from "@/app/components/enquiry-draft";
 import {ChatChoices} from "@/app/components/chat-choices";
 import { useEffect, useRef, type ReactNode } from "react";
@@ -316,6 +317,7 @@ export default function Home() {
                   <div className="chat-turn" key={index}>
                     <p className="answer-copy__question">{t("Du")}: {turn.question}</p>
                     {turn.draft ? <EnquiryDraft answer={turn.answer} recipient={turn.recipient} en={language==="en"}/> : <p className="chat-answer">{turn.answer}</p>}
+                    {turn.limited&&<LimitedAnswer en={language==="en"}/>}
         <button type="button" className="report-answer" aria-haspopup="dialog" onClick={e=>reports.current?.reportAnswer(turn,e.currentTarget)}>{language==="en"?"Report this answer":"Diese Antwort melden"}</button>
                     <KnowledgeFeedback question={turn.question} language={language} />
                     {turn.sources.length > 0 && (

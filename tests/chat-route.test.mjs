@@ -675,3 +675,25 @@ test('fresh everyday questions select supported facts and preserve missing detai
   }
  } finally {process.env.COMPASS_LOCAL_ONLY=mode;}
 });
+
+test('limited volunteering time is addressed in both local and unavailable-AI modes',async()=>{
+ const saved={...process.env};try{
+  for(const mode of ['true','false']){
+   process.env.COMPASS_LOCAL_ONLY=mode;process.env.OPENAI_API_KEY='synthetic-test';
+   for(const [question,lang,expected] of [
+    ['I want to volunteer, but I only have two hours a month and cannot travel to Vienna. Is there anything I can do?','en',/higher than your available time[\s\S]*not confirmed[\s\S]*smaller task/],
+    ['Ich möchte ehrenamtlich mithelfen, habe aber nur drei Stunden pro Monat und kann nicht nach Wien fahren.','de',/über deiner verfügbaren Zeit[\s\S]*kleinere Aufgabe/],
+   ]){
+    const {POST}=setup({providerError:{status:401}});const res=await POST(new Request('http://localhost/api/chat',{method:'POST',headers:{'accept-language':lang},body:JSON.stringify({message:question})}));
+    const body=await res.json();assert.match(body.answer,expected);assert.match(body.answer,/2–5/);assert.ok(body.sources.some(s=>s.url.endsWith('/jobs')));assert.equal(body.limited,mode==='false'?true:undefined);
+   }
+  }
+ }finally{for(const k of Object.keys(process.env))if(!(k in saved))delete process.env[k];Object.assign(process.env,saved)}
+});
+test('a correction to monthly availability retains volunteering but not a new workshop topic',async()=>{
+ const mode=process.env.COMPASS_LOCAL_ONLY;process.env.COMPASS_LOCAL_ONLY='true';try{
+ const history=[{role:'user',content:'I want to volunteer'},{role:'assistant',content:'Which role?'}];
+ const h=setup();const body=await (await h.POST(request({message:'Actually I only have 3 hours per month.',topic:'ehrenamt',history}))).json();assert.match(body.answer,/higher than your available time/);
+ const other=await (await h.POST(request({message:'I want a workshop for my class for two hours per month.',topic:'ehrenamt',history}))).json();assert.doesNotMatch(other.answer,/smaller task/);
+ }finally{if(mode===undefined)delete process.env.COMPASS_LOCAL_ONLY;else process.env.COMPASS_LOCAL_ONLY=mode}
+});

@@ -1,5 +1,7 @@
 @import "tailwindcss";
 
+.limited-answer { color: #6b5959; font-size: .875rem; line-height: 1.45; margin: .65rem 0; }
+
 :root {
   --paper: #fffdfb;
   --ink: #171318;

@@ -1,0 +1,25 @@
+[
+  {
+    "surface": "separate-origin browser-only preview",
+    "viewport": "390x844",
+    "language": "en",
+    "answers": [
+      {
+        "question": "I want to volunteer, but I only have two hours a month and cannot travel to Vienna. Is there anything I can do?",
+        "mode": "library",
+        "topic": "jobs-working-conditions",
+        "answer": "The published Chief of Staff | Strategy & Operations role describes fully remote volunteering for about 2–5 hours per week. Project-management or association experience is helpful but not required for that role. These conditions do not automatically apply to every position. Check the requirements and current availability of your chosen role on the jobs page. Applications: bewerbung@forju.at.",
+        "sources": [
+          {
+            "title": "Volunteering: working arrangements and requirements",
+            "url": "https://forju.at/en/jobs"
+          }
+        ],
+        "answerMode": "fallback",
+        "fallbackReason": "budget-limit"
+      }
+    ],
+    "sourceOpened": "https://forju.at/en/jobs",
+    "reopened": true
+  }
+]

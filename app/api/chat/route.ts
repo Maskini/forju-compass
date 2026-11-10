@@ -1,7 +1,7 @@
 import {BodyError, readBody} from "@/lib/server/request-body.mjs";
 import { offersPartnership, publicGuidance } from "@/lib/visitor-guidance";
 import { createWorkshopGuide } from "@/lib/workshop-guide";
-import { offerFollowUp } from "@/lib/offer-follow-up";
+import { offerFollowUp, volunteerConstraints } from "@/lib/offer-follow-up";
 import { visitorEnquiry } from "@/lib/visitor-enquiry";
 import {guidedReply,isGuidedPrompt} from "@/lib/dialogue";
 import {languageRequest, languageReplay, affirmedRequest, repairRequest, wantsTeam, conversationalReply, unsupportedAdvice, questionAfterGreeting, topicHistory, selfIntroduction, nameRecall, recentVisitorName, namePrompts} from "@/lib/conversation";
@@ -37,7 +37,7 @@ export async function POST(request: Request) {
   const message = affirmedRequest(raw);
   const englishUI = request.headers.get("accept-language")?.toLowerCase().startsWith("en") ?? false;
   const en = preferredLanguage ? preferredLanguage === "en" : introduction && !introduction.rest ? introduction.en
-    : /^(what|where|when|how|who|can|could|do you|is there|by what|i|we|for my|for our|not sure|explain|give me|help with)\b/i.test(message) ? true
+    : /^(what|where|when|how|who|can|could|do you|is there|by what|i|we|for my|for our|not sure|actually|only|explain|give me|help with)\b/i.test(message) ? true
     : /^(was|wo|wann|wie|wer|gibt|bietet|kann|bis wann|und wie|ich|wir|für|kannst|einfacher|hilfe bei)\b/i.test(message) ? false
     : request.headers.get("accept-language")?.toLowerCase().startsWith("en") ?? false;
   // The published English offers use the same paths as the German pages.
@@ -61,8 +61,10 @@ export async function POST(request: Request) {
   function reply(body: {answer:string; [key:string]:unknown}) {
     // Keep the substantive request after an introduction, including its sources.
     // An editable email draft must remain transferable without a chat preamble.
-    return NextResponse.json({...body, ...((introduction?.name ?? previousName) ? {visitorName:introduction?.name ?? previousName} : {}), ...(preferredLanguage ? {preferredLanguage} : {}), ...(introduction?.rest && body.mode !== "draft" ? {answer:acknowledgment+"\n\n"+body.answer} : {})}, {headers:{"X-Compass-Answer-Mode":ai.status === "local" ? "local" : "fallback", "X-Compass-Fallback":ai.status, "Cache-Control":"no-store"}});
+    return NextResponse.json({...body,...(ai.status!=="local"?{limited:true}:{}), ...((introduction?.name ?? previousName) ? {visitorName:introduction?.name ?? previousName} : {}), ...(preferredLanguage ? {preferredLanguage} : {}), ...(introduction?.rest && body.mode !== "draft" ? {answer:acknowledgment+"\n\n"+body.answer} : {})}, {headers:{"X-Compass-Answer-Mode":ai.status === "local" ? "local" : "fallback", "X-Compass-Fallback":ai.status, "Cache-Control":"no-store"}});
   }
+  const constrained=volunteerConstraints(originalInput.message,originalInput.topic,en,knowledgeCatalog);
+  if(constrained)return reply(constrained);
   if(ai.status === "invalid-evidence") {
     // Never replace a rejected AI answer with an accidental keyword match.
     // Offer the established topic and a real contact route without new claims.
