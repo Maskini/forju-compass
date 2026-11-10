@@ -67,7 +67,9 @@
 .composer input[type=text] { min-width: 0; flex: 1; background: transparent; border: 0; font: inherit; padding: 7px 8px 7px 12px; }
 .composer input[type=text]:focus { outline: none; }
 .composer button { flex: none; display: grid; place-items: center; min-height: 42px; width: 42px; padding: 0; border-radius: 10px; }
-.embed-panel > form > small { display: block; margin-top: 6px; text-align: center; color: #6c5c5c; font-size: 11px; line-height: 15px; }
+.embed-panel > form > small { display: flex; align-items: flex-end; gap: 8px; margin-top: 6px; text-align: center; color: #6c5c5c; font-size: 11px; line-height: 15px; }
+.embed-panel > form > small > span:first-child { flex: 1; }
+.embed-panel .beta-label { flex: none; color: #861456; font-weight: 600; }
 @media(hover:hover) { .suggestions button:hover { color: #861456; } }
 @media(max-width:640px) { .embed-panel > aside span { display: none; } }
 @media(max-height:500px) {

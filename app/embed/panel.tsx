@@ -105,7 +105,7 @@ export default function CompassPanel({initialLanguage,widget=false}:{initialLang
     <form onSubmit={e=>{e.preventDefault();void submit()}}><div className="composer fj-field">
       <input disabled={!ready} aria-label={en?"Your question":"Deine Frage"} type="text" maxLength={MAX_MESSAGE_LENGTH} value={question} onChange={e=>setQuestion(e.target.value)} placeholder={!ready?(en?"Opening Compass…":"Compass lädt …"):en?"Ask ForJu Compass…":"Stelle deine Frage an ForJu Compass …"}/>
       <button className="send fj-action" type="submit" disabled={!ready||loading||!question.trim()} aria-label={en?"Send question":"Frage senden"}><Icon type="send"/></button></div>
-      <small>{en?"ForJu Compass can make mistakes. Please check important information.":"ForJu Compass kann Fehler machen. Bitte prüfe wichtige Informationen."}</small>
+      <small><span>{en?"ForJu Compass can make mistakes. Please check important information.":"ForJu Compass kann Fehler machen. Bitte prüfe wichtige Informationen."}</span><span className="beta-label">Beta</span></small>
     </form>
   </main>
 }
