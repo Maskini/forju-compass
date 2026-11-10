@@ -151,6 +151,37 @@ function visitor(lang){
   }};
 }
 
+test('choice explanations retain selection and next steps in both languages',async()=>{
+  const cases=JSON.parse(readFileSync(new URL('../tools/knowledge-checks/decision-help-cases.json',import.meta.url),'utf8'));
+  for(const c of cases){
+    const v=visitor(c.lang); let answer;
+    for(const turn of c.turns)answer=await v.ask(turn);
+    assert.equal(answer.topic??null,c.topic,c.id);
+    for(const pattern of c.facts)assert.match(answer.answer,new RegExp(pattern,'iu'),c.id);
+    for(const pattern of c.forbid)assert.doesNotMatch(answer.answer,new RegExp(pattern,'iu'),c.id);
+    if(c.source)assert.ok(answer.sources.some(s=>s.url==='https://forju.at/'+c.lang+'/'+c.source),c.id);
+    else assert.deepEqual(answer.sources,[],c.id);
+    assert.deepEqual(v.calls,{embeddings:[],responses:[]},c.id);
+  }
+});
+
+test('explaining a choice adds information without inventing a selection',async()=>{
+  const v=visitor('de');
+  const initial=await v.ask('Ich bin Lehrerin');
+  const explanation=await v.ask('Ich weiß noch nicht, was am besten passt.');
+  assert.notEqual(explanation.answer,initial.answer);
+  assert.deepEqual(explanation.suggestions,initial.suggestions);
+  assert.equal(explanation.topic,undefined);
+  const simpler=await v.ask('Could you answer in English?');
+  assert.match(simpler.answer,/workshop/i);
+  const choice=await v.ask('The second one');
+  assert.equal(choice.topic,'ressourcen');
+  assert.ok(choice.sources.some(s=>s.url==='https://forju.at/en/services/ressourcen'));
+  const other=visitor('en');
+  const unprompted=await other.ask('The second one');
+  assert.notEqual(unprompted.topic,'ressourcen');
+});
+
 test('introductions with typos acknowledge the visitor and continue volunteering',async()=>{
   const v=visitor('de');
   await v.ask('Ich möchte ehrenamtlich mithelfen');

@@ -1,0 +1,378 @@
+{
+  "phase": "before",
+  "commit": "17e374cabefbb8fb34a2a49a5027daadf5a76231",
+  "catalogSha256": "1c846aa395d29ad6027d20ef8ebee4428c6cac0a4f7f6d1bde9075ab265d90d1",
+  "mode": "production local-only; synthetic; loopback only; independent quota per scenario",
+  "startupMs": 436,
+  "peakRssBytes": 161923072,
+  "catalogBytes": 88558,
+  "requests": 17,
+  "p95Ms": 50.14908300000002,
+  "passed": 1,
+  "total": 6,
+  "results": [
+    {
+      "id": "de-class-uncertain",
+      "lang": "de",
+      "turns": [
+        "Ich bin Lehrerin",
+        "Ich weiß noch nicht, was am besten passt."
+      ],
+      "topic": null,
+      "source": null,
+      "facts": [
+        "Workshop",
+        "selbst|Mess",
+        "Finanz|Geld",
+        "\\?"
+      ],
+      "forbid": [
+        "keine gesicherte",
+        "garantiert"
+      ],
+      "unknown": "The visitor has not chosen an offer; explain options without choosing or promising eligibility.",
+      "answers": [
+        {
+          "mode": "conversation",
+          "answer": "Was würde eurer Klasse helfen: ein Workshop, ein Gerät zum Messen oder Hilfe bei der Finanzierung?",
+          "sources": [],
+          "suggestions": [
+            "Einen Workshop",
+            "Ein Messgerät",
+            "Hilfe bei der Finanzierung"
+          ]
+        },
+        {
+          "mode": "library",
+          "answer": "Dazu habe ich keine gesicherte Information. Welchen ForJu-Service oder welches Projekt meinst du?",
+          "sources": [],
+          "suggestions": [
+            "Schulworkshops",
+            "Messgeräte ausleihen",
+            "Projektfinanzierung"
+          ]
+        }
+      ],
+      "checks": {
+        "topic": true,
+        "source": true,
+        "facts": false,
+        "noFabrication": false
+      },
+      "pass": false
+    },
+    {
+      "id": "en-project-recommend",
+      "lang": "en",
+      "turns": [
+        "I have a research idea",
+        "What would you recommend?"
+      ],
+      "topic": null,
+      "source": null,
+      "facts": [
+        "idea|question",
+        "equipment",
+        "fund|money",
+        "\\?"
+      ],
+      "forbid": [
+        "don't have verified",
+        "approved"
+      ],
+      "unknown": "No project details or eligibility are established; give conditional orientation.",
+      "answers": [
+        {
+          "mode": "conversation",
+          "answer": "Where do you need help with your project: shaping the idea, finding equipment, finding funding, or meeting someone in research?",
+          "sources": [],
+          "suggestions": [
+            "Shape my idea",
+            "Measuring equipment",
+            "Help with funding",
+            "Meet a researcher"
+          ]
+        },
+        {
+          "mode": "library",
+          "answer": "I don't have verified information about that. Which ForJu service or project do you mean?",
+          "sources": [],
+          "suggestions": [
+            "School workshops",
+            "Borrow equipment",
+            "Project funding"
+          ]
+        }
+      ],
+      "checks": {
+        "topic": true,
+        "source": true,
+        "facts": false,
+        "noFabrication": false
+      },
+      "pass": false
+    },
+    {
+      "id": "de-select-after-help",
+      "lang": "de",
+      "turns": [
+        "Ich bin Lehrerin",
+        "Ich weiß noch nicht, was am besten passt.",
+        "Das erste",
+        "Und wie melde ich meine Klasse dafür an?"
+      ],
+      "topic": "workshops",
+      "source": "projects/schulworkshops",
+      "facts": [
+        "anja\\.hofer@forju\\.at"
+      ],
+      "forbid": [
+        "angemeldet|bestätigter Termin"
+      ],
+      "unknown": "Selection must survive the extra explanation; no booking is confirmed.",
+      "answers": [
+        {
+          "mode": "conversation",
+          "answer": "Was würde eurer Klasse helfen: ein Workshop, ein Gerät zum Messen oder Hilfe bei der Finanzierung?",
+          "sources": [],
+          "suggestions": [
+            "Einen Workshop",
+            "Ein Messgerät",
+            "Hilfe bei der Finanzierung"
+          ]
+        },
+        {
+          "mode": "library",
+          "answer": "Dazu habe ich keine gesicherte Information. Welchen ForJu-Service oder welches Projekt meinst du?",
+          "sources": [],
+          "suggestions": [
+            "Schulworkshops",
+            "Messgeräte ausleihen",
+            "Projektfinanzierung"
+          ]
+        },
+        {
+          "mode": "library",
+          "topic": "science-beratung",
+          "answer": "Wenn du eine Forschungsidee hast und beim nächsten Schritt unsicher bist, kannst du per E-Mail an office@forju.at einen persönlichen Beratungstermin anfragen. Das Team kann mit dir die Idee weiterentwickeln und mögliche Förderwege besprechen.",
+          "sources": [
+            {
+              "title": "Individuelle Science-Beratung",
+              "url": "https://forju.at/de/projects/science-beratung"
+            },
+            {
+              "title": "Bei ForJu anfragen",
+              "url": "https://forju.at/de/kontakt?intent=projekt"
+            }
+          ]
+        },
+        {
+          "mode": "library",
+          "topic": "science-beratung",
+          "answer": "Wenn du eine Forschungsidee hast und beim nächsten Schritt unsicher bist, kannst du per E-Mail an office@forju.at einen persönlichen Beratungstermin anfragen. Das Team kann mit dir die Idee weiterentwickeln und mögliche Förderwege besprechen.",
+          "sources": [
+            {
+              "title": "Individuelle Science-Beratung",
+              "url": "https://forju.at/de/projects/science-beratung"
+            },
+            {
+              "title": "Bei ForJu anfragen",
+              "url": "https://forju.at/de/kontakt?intent=projekt"
+            }
+          ]
+        }
+      ],
+      "checks": {
+        "topic": false,
+        "source": false,
+        "facts": false,
+        "noFabrication": true
+      },
+      "pass": false
+    },
+    {
+      "id": "en-select-after-help",
+      "lang": "en",
+      "turns": [
+        "I have a research idea",
+        "What would you recommend?",
+        "The second one",
+        "What would it cost?"
+      ],
+      "topic": "ressourcen",
+      "source": "services/ressourcen",
+      "facts": [
+        "no loan price|confirm the cost"
+      ],
+      "forbid": [
+        "free of charge|guaranteed"
+      ],
+      "unknown": "Equipment enquiry is possible; specific inventory and price are unknown.",
+      "answers": [
+        {
+          "mode": "conversation",
+          "answer": "Where do you need help with your project: shaping the idea, finding equipment, finding funding, or meeting someone in research?",
+          "sources": [],
+          "suggestions": [
+            "Shape my idea",
+            "Measuring equipment",
+            "Help with funding",
+            "Meet a researcher"
+          ]
+        },
+        {
+          "mode": "library",
+          "answer": "I don't have verified information about that. Which ForJu service or project do you mean?",
+          "sources": [],
+          "suggestions": [
+            "School workshops",
+            "Borrow equipment",
+            "Project funding"
+          ]
+        },
+        {
+          "mode": "library",
+          "answer": "I still can’t match that to a ForJu offer. If you need an answer from ForJu, I can show you how to reach the team.",
+          "sources": [],
+          "suggestions": [
+            "Contact the ForJu team",
+            "School workshops",
+            "Borrow equipment",
+            "Project funding"
+          ]
+        },
+        {
+          "mode": "library",
+          "topic": "finanzierung",
+          "answer": "ForJu’s funding service helps you estimate project costs, assess feasibility and find funding partners. The service says it does not directly sponsor projects. Describe what you need in the funding enquiry so the team can check which options apply.",
+          "sources": [
+            {
+              "title": "Project funding",
+              "url": "https://forju.at/en/services/finanziell"
+            },
+            {
+              "title": "Enquire with ForJu",
+              "url": "https://forju.at/en/kontakt?intent=service&thema=finanziell"
+            }
+          ]
+        }
+      ],
+      "checks": {
+        "topic": false,
+        "source": false,
+        "facts": false,
+        "noFabrication": true
+      },
+      "pass": false
+    },
+    {
+      "id": "de-choice-simplify",
+      "lang": "de",
+      "turns": [
+        "Ich möchte ForJu unterstützen",
+        "Kannst du das einfacher sagen?"
+      ],
+      "topic": null,
+      "source": null,
+      "facts": [
+        "Zeit",
+        "Organisation",
+        "Geld|spenden",
+        "\\?"
+      ],
+      "forbid": [
+        "keine gesicherte"
+      ],
+      "unknown": "The person has not chosen time, organisational resources, or donation.",
+      "answers": [
+        {
+          "mode": "conversation",
+          "answer": "Wie möchtest du ForJu unterstützen: mit deiner Zeit, mit Ressourcen deiner Organisation oder mit einer Geldspende?",
+          "sources": [],
+          "suggestions": [
+            "Ehrenamtlich Zeit einbringen",
+            "Als Organisation etwas anbieten",
+            "Geld spenden"
+          ]
+        },
+        {
+          "mode": "conversation",
+          "answer": "Wie möchtest du ForJu unterstützen: mit deiner Zeit, mit Ressourcen deiner Organisation oder mit einer Geldspende?",
+          "sources": [],
+          "suggestions": [
+            "Ehrenamtlich Zeit einbringen",
+            "Als Organisation etwas anbieten",
+            "Geld spenden"
+          ]
+        }
+      ],
+      "checks": {
+        "topic": true,
+        "source": true,
+        "facts": true,
+        "noFabrication": true
+      },
+      "pass": true
+    },
+    {
+      "id": "en-still-uncertain",
+      "lang": "en",
+      "turns": [
+        "I need help",
+        "I'm not sure yet",
+        "Still not sure"
+      ],
+      "topic": null,
+      "source": null,
+      "facts": [
+        "own words|tell me|describe",
+        "team|contact",
+        "\\?"
+      ],
+      "forbid": [
+        "guaranteed|approved"
+      ],
+      "unknown": "Do not loop forever or infer a service. Ask for the visitor goal and offer team contact.",
+      "answers": [
+        {
+          "mode": "conversation",
+          "answer": "What brings you to ForJu: are you looking for something for your class, working on your own project, or hoping to volunteer?",
+          "sources": [],
+          "suggestions": [
+            "For my class",
+            "For my project",
+            "Volunteer my time"
+          ]
+        },
+        {
+          "mode": "library",
+          "answer": "I don't have verified information about that. Which ForJu service or project do you mean?",
+          "sources": [],
+          "suggestions": [
+            "School workshops",
+            "Borrow equipment",
+            "Project funding"
+          ]
+        },
+        {
+          "mode": "library",
+          "answer": "I still can’t match that to a ForJu offer. If you need an answer from ForJu, I can show you how to reach the team.",
+          "sources": [],
+          "suggestions": [
+            "Contact the ForJu team",
+            "School workshops",
+            "Borrow equipment",
+            "Project funding"
+          ]
+        }
+      ],
+      "checks": {
+        "topic": true,
+        "source": true,
+        "facts": false,
+        "noFabrication": true
+      },
+      "pass": false
+    }
+  ]
+}

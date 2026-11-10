@@ -1,0 +1,8 @@
+{
+  "lib/dialogue.ts": "5e9190f1a3dd34f37e3d711c20741d52a55439f9d760c29fd6fd627839be96db",
+  "tests/chat-route.test.mjs": "2663aaec61f69c012ee8abcdf2dfc5cafa39f451d4919c0d24369e11c48e3506",
+  "tools/knowledge-checks/decision-help-cases.json": "a7969fc80caf3b76b37d70e035dd3fca0f65bd0ecede837c8d0c72211d3c005f",
+  "tools/release/quality/cases.cjs": "ecbfc34f9ce1febc6258a7e8040f498f1f1d2099aafe12d03cfbf182804b0e55",
+  "tools/release/run.sh": "08859b5743f3069b56c44abd850300288524c8258e709dc4c69afb6078ade8bd",
+  "tools/visitor-checks/release.spec.mjs": "b07dbeb7fd32da7889b37177a2fa527faa6290902d64d3c945c5a4da16608ee1"
+}

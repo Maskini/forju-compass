@@ -42,3 +42,5 @@ module.exports.push(...projectIntroductions.map(c=>({...c,id:"project-"+c.id,sou
 // runs and the untouched final eight cases are retained in release evidence.
 const languageCases=[...require('../../semantic-checks/cases.json'),...require('../../semantic-checks/fresh-cases.json')];
 module.exports.push(...languageCases.map(c=>({...c,id:'language-'+c.id,source:c.source?'https://forju.at/'+c.lang+'/'+c.source:null,fact:c.facts.join('; '),must:c.facts,forbid:c.forbid||[]})));
+const decisions=require('../../knowledge-checks/decision-help-cases.json');
+module.exports.push(...decisions.map(c=>({...c,id:'decision-'+c.id,source:c.source?'https://forju.at/'+c.lang+'/'+c.source:null,fact:c.facts.join('; '),must:c.facts,forbid:c.forbid||[]})));

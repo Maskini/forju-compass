@@ -1,0 +1,261 @@
+{
+  "phase": "holdout",
+  "commit": "17e374cabefbb8fb34a2a49a5027daadf5a76231",
+  "catalogSha256": "1c846aa395d29ad6027d20ef8ebee4428c6cac0a4f7f6d1bde9075ab265d90d1",
+  "mode": "production local-only; synthetic; loopback only; independent quota per scenario",
+  "startupMs": 279,
+  "peakRssBytes": 159498240,
+  "catalogBytes": 88558,
+  "requests": 11,
+  "p95Ms": 51.265916000000004,
+  "passed": 4,
+  "total": 4,
+  "results": [
+    {
+      "id": "de-fresh-project-help",
+      "lang": "de",
+      "turns": [
+        "Unser Forschungsprojekt untersucht den Schulteich.",
+        "Was würdest du vorschlagen?",
+        "Ein Messgerät"
+      ],
+      "topic": "ressourcen",
+      "source": "services/ressourcen",
+      "facts": [
+        "Partner",
+        "Gerät|Mess"
+      ],
+      "forbid": [
+        "reserviert"
+      ],
+      "unknown": "Equipment may be requested, not confirmed available.",
+      "holdout": true,
+      "answers": [
+        {
+          "mode": "conversation",
+          "answer": "Wobei brauchst du für dein Projekt gerade Hilfe: die Idee ausarbeiten, Geräte finden, die Finanzierung klären oder jemanden aus der Forschung kennenlernen?",
+          "sources": [],
+          "suggestions": [
+            "Die Idee ausarbeiten",
+            "Ein Messgerät",
+            "Hilfe bei der Finanzierung",
+            "Kontakte knüpfen"
+          ]
+        },
+        {
+          "mode": "conversation",
+          "answer": "Wenn die Idee noch offen ist, beginnen wir beim Thema und eurer Forschungsfrage. Für einen geplanten Versuch geht es eher um Geräte, bei fehlendem Geld um Finanzierung. Für fachlichen Austausch können wir nach Kontakten schauen. Was fehlt euch im Moment am meisten?",
+          "sources": [],
+          "suggestions": [
+            "Die Idee ausarbeiten",
+            "Ein Messgerät",
+            "Hilfe bei der Finanzierung",
+            "Kontakte knüpfen"
+          ]
+        },
+        {
+          "mode": "library",
+          "answer": "Schulen und Forschungsteams können über ForJu bei Partnern Räume und Messgeräte anfragen. ForJu hilft bei der Organisation und klärt Fragen zu Aufsicht und Haftung. Ob ein bestimmtes Gerät zu eurem Termin verfügbar ist und was die Nutzung kostet, müsst ihr anfragen. Beschreibt im Ressourcenformular, welchen Raum oder welches Gerät ihr braucht und wofür.",
+          "sources": [
+            {
+              "title": "Ressourcen",
+              "url": "https://forju.at/de/services/ressourcen"
+            },
+            {
+              "title": "Anfrageformular öffnen",
+              "url": "https://forju.at/de/kontakt?intent=service&thema=ressourcen"
+            }
+          ],
+          "topic": "ressourcen",
+          "suggestions": [
+            "Was ist der nächste Schritt?"
+          ]
+        }
+      ],
+      "checks": {
+        "topic": true,
+        "source": true,
+        "facts": true,
+        "noFabrication": true
+      },
+      "pass": true
+    },
+    {
+      "id": "en-fresh-class-help",
+      "lang": "en",
+      "turns": [
+        "I'm a teacher",
+        "I can't decide",
+        "The first one",
+        "Who should we write to?"
+      ],
+      "topic": "workshops",
+      "source": "projects/schulworkshops",
+      "facts": [
+        "anja\\.hofer@forju\\.at"
+      ],
+      "forbid": [
+        "booked"
+      ],
+      "unknown": "The follow-up must reach the workshop contact, not generic advice.",
+      "holdout": true,
+      "answers": [
+        {
+          "mode": "conversation",
+          "answer": "What would help your class: a workshop, equipment to take measurements, or help finding funding?",
+          "sources": [],
+          "suggestions": [
+            "A workshop",
+            "Measuring equipment",
+            "Help with funding"
+          ]
+        },
+        {
+          "mode": "conversation",
+          "answer": "A workshop is a starting point if your class wants to explore a topic together. Measuring equipment is an option to enquire about for your own experiment. If money is missing, we can look at funding support. What does your class need help with first?",
+          "sources": [],
+          "suggestions": [
+            "A workshop",
+            "Measuring equipment",
+            "Help with funding"
+          ]
+        },
+        {
+          "mode": "library",
+          "answer": "For your class in Vienna, you can ask about workshops on climate, team conflict, media literacy or gender roles. Other topics include ethics, managing stress, self-management and planning for the future. Young trainers work with teachers.\n\nEmail Anja Hofer (anja.hofer@forju.at) with the topic your class wants to explore. Ask her about dates and costs. In November 2024, Wiener Bildungschancen covered the full cost for grades 1–9.",
+          "sources": [
+            {
+              "title": "Vienna school workshops",
+              "url": "https://forju.at/en/projects/schulworkshops"
+            }
+          ],
+          "topic": "workshops",
+          "suggestions": [
+            "What should I do next?"
+          ]
+        },
+        {
+          "mode": "library",
+          "topic": "workshops",
+          "answer": "To arrange a school workshop, email Anja Hofer at anja.hofer@forju.at and ask about a date for your class.",
+          "sources": [
+            {
+              "title": "Vienna school workshops",
+              "url": "https://forju.at/en/projects/schulworkshops"
+            }
+          ]
+        }
+      ],
+      "checks": {
+        "topic": true,
+        "source": true,
+        "facts": true,
+        "noFabrication": true
+      },
+      "pass": true
+    },
+    {
+      "id": "en-explicit-topic-change",
+      "lang": "en",
+      "turns": [
+        "I have a research idea",
+        "What would you recommend?",
+        "Actually, how can I volunteer?"
+      ],
+      "topic": "ehrenamt",
+      "source": "ueber-uns",
+      "facts": [
+        "volunt"
+      ],
+      "forbid": [
+        "measuring equipment"
+      ],
+      "unknown": "An explicit new subject must supersede the old menu.",
+      "holdout": true,
+      "answers": [
+        {
+          "mode": "conversation",
+          "answer": "Where do you need help with your project: shaping the idea, finding equipment, finding funding, or meeting someone in research?",
+          "sources": [],
+          "suggestions": [
+            "Shape my idea",
+            "Measuring equipment",
+            "Help with funding",
+            "Meet a researcher"
+          ]
+        },
+        {
+          "mode": "conversation",
+          "answer": "If the idea is still taking shape, start with your topic and research question. A planned experiment may need equipment; missing money points to funding support. If you want to discuss the subject with a researcher, we can explore contacts. What is missing most right now?",
+          "sources": [],
+          "suggestions": [
+            "Shape my idea",
+            "Measuring equipment",
+            "Help with funding",
+            "Meet a researcher"
+          ]
+        },
+        {
+          "mode": "library",
+          "topic": "ehrenamt",
+          "answer": "Volunteers can help with education, communications, editorial work, IT and operations. The jobs page describes individual roles. Check the requirements for a role that fits and email bewerbung@forju.at with why you would like to help. The team must confirm current availability.",
+          "sources": [
+            {
+              "title": "Volunteering",
+              "url": "https://forju.at/en/ueber-uns"
+            },
+            {
+              "title": "Enquire with ForJu",
+              "url": "https://forju.at/en/jobs"
+            }
+          ]
+        }
+      ],
+      "checks": {
+        "topic": true,
+        "source": true,
+        "facts": true,
+        "noFabrication": true
+      },
+      "pass": true
+    },
+    {
+      "id": "de-context-free-recommend",
+      "lang": "de",
+      "turns": [
+        "Was würdest du empfehlen?"
+      ],
+      "topic": null,
+      "source": null,
+      "facts": [
+        "Klasse",
+        "Projekt",
+        "\\?"
+      ],
+      "forbid": [
+        "keine gesicherte|garantiert"
+      ],
+      "unknown": "Without a visitor goal, ask for context rather than inventing a recommendation.",
+      "holdout": true,
+      "answers": [
+        {
+          "mode": "conversation",
+          "answer": "Was führt dich zu ForJu: Suchst du etwas für deine Klasse, arbeitest du an einem eigenen Projekt oder möchtest du mithelfen?",
+          "sources": [],
+          "suggestions": [
+            "Für meine Klasse",
+            "Für mein Projekt",
+            "Ehrenamtlich Zeit einbringen"
+          ]
+        }
+      ],
+      "checks": {
+        "topic": true,
+        "source": true,
+        "facts": true,
+        "noFabrication": true
+      },
+      "pass": true
+    }
+  ]
+}

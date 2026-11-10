@@ -15,6 +15,21 @@ const menus:Record<Menu,{ask:Pair; options:Intent[]}> = {
   class:{ask:["Was würde eurer Klasse helfen: ein Workshop, ein Gerät zum Messen oder Hilfe bei der Finanzierung?","What would help your class: a workshop, equipment to take measurements, or help finding funding?"],options:["workshops","ressourcen","finanzierung"]},
   project:{ask:["Wobei brauchst du für dein Projekt gerade Hilfe: die Idee ausarbeiten, Geräte finden, die Finanzierung klären oder jemanden aus der Forschung kennenlernen?","Where do you need help with your project: shaping the idea, finding equipment, finding funding, or meeting someone in research?"],options:["science-beratung","ressourcen","finanzierung","connections"]}
 };
+// Choice help is navigation, not a claim that an offer is suitable or available.
+// Preserve the menu order so “the second one” still means the same thing after
+// an explanation. These exact prompts can also survive a language switch.
+const choiceHelp:Record<Menu,Pair> = {
+  start:["Du musst das noch nicht genau wissen. Für deine Klasse können wir nach Lernangeboten suchen, für ein eigenes Projekt nach Unterstützung. Möchtest du selbst mithelfen, schauen wir nach Ehrenamt. Was passt am ehesten zu deinem Vorhaben?","You don’t need a complete plan yet. For your class, we can look at learning activities; for your own project, at support. If you want to contribute your time, we can explore volunteering. Which of those is closest to your goal?"],
+  class:["Ein Workshop passt als Ausgangspunkt, wenn ihr gemeinsam ein Thema kennenlernen möchtet. Ein Messgerät ist eine Möglichkeit für einen eigenen Versuch. Bei fehlendem Geld geht es um Finanzierung. Wobei braucht eure Klasse zuerst Hilfe?","A workshop is a starting point if your class wants to explore a topic together. Measuring equipment is an option to enquire about for your own experiment. If money is missing, we can look at funding support. What does your class need help with first?"],
+  project:["Wenn die Idee noch offen ist, beginnen wir beim Thema und eurer Forschungsfrage. Für einen geplanten Versuch geht es eher um Geräte, bei fehlendem Geld um Finanzierung. Für fachlichen Austausch können wir nach Kontakten schauen. Was fehlt euch im Moment am meisten?","If the idea is still taking shape, start with your topic and research question. A planned experiment may need equipment; missing money points to funding support. If you want to discuss the subject with a researcher, we can explore contacts. What is missing most right now?"],
+  contribute:["Mit deiner Zeit helfen bedeutet, dich ehrenamtlich einzubringen. Für eine Organisation geht es zum Beispiel darum, Ressourcen anzubieten. Geld geben heißt spenden. Welche Art der Unterstützung kommt für dich infrage?","Giving your time means volunteering. For an organisation, support could mean offering resources. Giving money means donating. Which kind of support would work for you?"],
+  advice:["Bei der Idee geht es darum, eine Forschungsfrage und einen ersten Plan zu entwickeln. Fachliche Hilfe betrifft eher ein konkretes Problem bei der Umsetzung. Stehst du noch am Anfang oder arbeitest du schon an einem Versuch?","Shaping an idea means developing a research question and an initial plan. Specialist help is more about a specific problem while carrying it out. Are you starting out, or already working on an experiment?"],
+};
+const choiceRecovery:Pair = ["Dann beschreib bitte in einem Satz, was du erreichen möchtest. Du musst keinen ForJu-Service kennen. Was soll am Ende anders sein? Wenn du lieber persönlich nachfragst, kannst du direkt mit dem ForJu-Team sprechen.","Tell me in your own words what you want to achieve—you don’t need to know a ForJu service name. What would you like to be different at the end? If you prefer, you can contact the ForJu team directly."];
+function asksForChoiceHelp(text:string) {
+  const q=normalize(text);
+  return /^(?:(?:ich |wir )?(?:weiss|wissen) (?:es |das )?(?:noch )?nicht(?: was (?:am besten )?passt)?|(?:noch |immer noch )?unsicher|(?:ich kann mich |wir konnen uns )?nicht entscheiden|keine ahnung|was (?:wurdest du|wurden sie) (?:empfehlen|vorschlagen)|(?:i |im |i am |we |were |we are )?(?:still )?(?:not sure|unsure)(?: yet)?|(?:i |we )?cant decide|(?:what (?:would|do) you|which (?:would|do) you) (?:recommend|suggest))(?: bitte| please)?$/.test(q);
+}
 const labels:Record<Intent,Pair> = {
   advice:["Beratung finden","Find advice"],"know-how":["Fachliche Hilfe bei der Umsetzung","Specialist help implementing it"],
   contribute:["ForJu unterstützen","Support ForJu"],partnerpool:["Als Organisation etwas anbieten","Offer resources as an organisation"],spenden:["Geld spenden","Donate money"],
@@ -96,12 +111,19 @@ function ordinal(s:string){
   return choices.findIndex(c=>c.includes(normalize(s)));
 }
 export function isGuidedPrompt(answer:string){
-  return Object.values(menus).some(m=>m.ask.includes(answer));
+  return Object.values(menus).some(m=>m.ask.includes(answer)) || Object.values(choiceHelp).some(pair=>pair.includes(answer)) || choiceRecovery.includes(answer);
 }
 export function guidedReply(message:string,en:boolean,history:ChatMessage[],records:Card[],topicHint?:string):Reply|null {
   const lang=en?1:0, last=history.filter(t=>t.role==="assistant").at(-1)?.content;
-  const menu=(Object.values(menus)).find(m=>m.ask.some(s=>s===last));
+  const menuId=(Object.keys(menus) as Menu[]).find(id=>menus[id].ask.includes(last??"") || choiceHelp[id].includes(last??""));
+  const menu=menuId ? menus[menuId] : undefined;
   const offer=(id:Menu):Reply=>({mode:"conversation",answer:menus[id].ask[lang],sources:[],suggestions:menus[id].options.map(o=>labels[o][lang])});
+  const explainChoice=():Reply=>({mode:"conversation",answer:choiceHelp[menuId!][lang],sources:[],suggestions:menu!.options.map(o=>labels[o][lang])});
+  if (asksForChoiceHelp(message)) {
+    if (choiceRecovery.includes(last??"") || menuId && choiceHelp[menuId].includes(last??"")) return {mode:"conversation",answer:choiceRecovery[lang],sources:[],suggestions:[en?"Contact the ForJu team":"Mit ForJu sprechen"]};
+    if (menuId) return explainChoice();
+    if (!topicHint) return offer("start");
+  }
   if (describesOwnProject(message)) return offer("project");
   // A deictic request without an earlier subject needs the existing topic menu.
   if (!history.length && /^(?:can (?:you|forju) help(?: me| us)? with (?:that|this|it)|kannst du (?:mir|uns) (?:damit|dabei) helfen)[?!. ]*$/i.test(message)) {
@@ -126,7 +148,7 @@ export function guidedReply(message:string,en:boolean,history:ChatMessage[],reco
   // The client may name a topic, never a source or a fact. Older clients can
   // recover it from an exact match to an answer the catalog actually contains.
   const known=records.find(r=>r.id===topicHint) ?? records.find(r=>[r.content,r.contentEn,r.booking?.de,r.booking?.en,...(isTopic(r.id)?brief[r.id]:[])].includes(last??""));
-  if(follow && menu) return {mode:"conversation",answer:menu.ask[lang],sources:[],suggestions:menu.options.map(o=>labels[o][lang])};
+  if(follow && menu) return kind==="short" ? explainChoice() : {mode:"conversation",answer:menu.ask[lang],sources:[],suggestions:menu.options.map(o=>labels[o][lang])};
   if(follow && !known) return offer("start");
   const card=follow?known:records.find(r=>r.id===kind);
   if(!card)return null;

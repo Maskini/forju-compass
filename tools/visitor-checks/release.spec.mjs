@@ -54,6 +54,19 @@ async function scan(page,info,state){
 }
 for(const widget of [false,true]){
   const surface=widget?'embedded':'standalone';
+  for(const lang of ['de','en'])test(surface+' / unsure visitor chooses after an explanation / '+lang,async({page},info)=>{
+    const panel=await visit(page,widget,lang), en=lang==='en';
+    const initial=await ask(panel,widget,en?"I'm a teacher":'Ich bin Lehrerin');
+    await expect(initial).toContainText(en?'class':'Klasse');
+    const help=await ask(panel,widget,en?"I'm not sure yet":'Ich weiß noch nicht, was am besten passt.');
+    await expect(help).toContainText(en?'experiment':'Versuch');
+    await expect(help).not.toContainText(en?'verified information':'keine gesicherte');
+    await ask(panel,widget,en?'The first one':'Das erste');
+    const booking=await ask(panel,widget,en?'Who should we write to?':'Und wie melde ich meine Klasse dafür an?');
+    await expect(booking).toContainText('anja.hofer@forju.at');
+    await expect(booking.locator('a[href="https://forju.at/'+lang+'/projects/schulworkshops"]').first()).toBeVisible();
+    await info.attach('decision-help.png',{body:await page.screenshot(),contentType:'image/png'});
+  });
   for(const lang of ['de','en']) test(surface+' / everyday workshop question and follow-up / '+lang,async({page})=>{
     const panel=await visit(page,widget,lang);
     const en=lang==='en';

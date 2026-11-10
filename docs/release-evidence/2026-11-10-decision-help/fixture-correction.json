@@ -1,0 +1,8 @@
+{
+  "case": "decision-en-explicit-topic-change",
+  "initialFailure": "Official volunteer jobs link was missing from this new fixture allowlist.",
+  "supportingSource": "https://forju.at/en/jobs",
+  "basis": "The reviewed ehrenamt record has requestUrl pointing to the official jobs page.",
+  "change": "Added that exact supporting URL to the new fixture. No application code or source changed for the rerun.",
+  "result": "All 126 cases passed in a separate isolated container."
+}

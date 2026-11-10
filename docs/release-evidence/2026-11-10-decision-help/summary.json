@@ -1,0 +1,59 @@
+{
+  "status": "tested local candidate; not deployed",
+  "baseCommit": "17e374cabefbb8fb34a2a49a5027daadf5a76231",
+  "unitTests": 110,
+  "promptfoo": {
+    "successes": 126,
+    "failures": 0,
+    "errors": 0,
+    "tokenUsage": {
+      "prompt": 0,
+      "completion": 0,
+      "cached": 0,
+      "total": 0,
+      "numRequests": 126,
+      "completionDetails": {
+        "reasoning": 0,
+        "acceptedPrediction": 0,
+        "rejectedPrediction": 0,
+        "cacheReadInputTokens": 0,
+        "cacheCreationInputTokens": 0
+      },
+      "assertions": {
+        "total": 0,
+        "prompt": 0,
+        "completion": 0,
+        "cached": 0,
+        "numRequests": 0,
+        "completionDetails": {
+          "reasoning": 0,
+          "acceptedPrediction": 0,
+          "rejectedPrediction": 0,
+          "cacheReadInputTokens": 0,
+          "cacheCreationInputTokens": 0
+        }
+      }
+    },
+    "durationMs": 2829,
+    "evaluationDurationMs": 2829
+  },
+  "browser": {
+    "startTime": "2026-11-10T11:40:19.147Z",
+    "duration": 326354.439,
+    "expected": 224,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "build": "PASS",
+  "security": "Targeted checks PASS; existing reviewed ZAP warnings remain",
+  "egress": "No monitored server/browser outbound traffic in isolated suite",
+  "realEmailsSent": false,
+  "normalP95ms": 14.9711078,
+  "burstAcceptedP95ms": 27.241304399999997,
+  "unexpectedErrors": 0,
+  "expected429": 14,
+  "fullRun": "work/release-audit/20261110T113935Z-final-57662",
+  "qualityRerun": "work/ams-comparison/quality-final",
+  "resolution": "The full run recorded one quality failure for a missing allowed official jobs citation. Only that fixture was corrected, then all 126 quality cases, 110 unit tests, catalog validation and build passed in a fresh isolated container. All browser/security/load stages passed on unchanged application code."
+}
